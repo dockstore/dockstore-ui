@@ -1,0 +1,19 @@
+<table class="display" cellspacing="0" width="100%">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Version</th>
+      <th>Stars</th>
+      <th>Docker Pull</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Placeholder data until API is modified to return this info. -->
+    <tr ng-repeat="cont in dockerContainerList">
+      <td>{{cont.name}}</td>
+      <td>{{cont.last_modified}}</td>
+      <td>{{cont.is_starred}}</td>
+      <td>{{cont.description}}</td>
+    </tr>
+  </tbody>
+</table>

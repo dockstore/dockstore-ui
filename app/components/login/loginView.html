@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="row">
+    <div class="panel login-panel panel-primary">
+      <div class="panel-heading">
+         <span>Log in to Collaboratory Dockstore</span>
+      </div>
+      <div class="panel-body">
+
+        <form data-ng-submit="login()" name="login_form">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-user"></span>
+              </span>
+              <input type="text" class="form-control" placeholder="Username" />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">
+                <span class="glyphicon glyphicon-lock"></span>
+              </span>
+              <input type="password" class="form-control" placeholder="Password" />
+            </div>
+          </div>
+          <button type="submit" class="btn btn-block btn-primary">Log in</button>
+          <div class="signup-or-separator">
+            <h6 class="text">or</h6>
+            <hr>
+          </div>
+        </form>
+
+        <button class="btn btn-block btn-github" data-ng-click="authenticate('github')">
+          <i class="ion-social-github"></i> Sign in with GitHub
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en-CA" ng-app="dockstore.ui">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dockstore &ndash; Cancer Collaboratory</title>
+
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="assets/libs/datatables/datatables.min.css" />
+  <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" />
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+
+  <!-- Libaries and Dependencies -->
+  <script type="text/javascript" src="assets/libs/jquery/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="assets/libs/angularjs/angular.min.js"></script>
+  <script type="text/javascript" src="assets/libs/angularjs/angular-route.min.js"></script>
+  <script type="text/javascript" src="assets/libs/ui-bootstrap/ui-bootstrap-0.13.4.min.js"></script>
+  <script type="text/javascript" src="assets/libs/satellizer/satellizer-ds.js"></script>
+  <script type="text/javascript" src="assets/libs/datatables/datatables.min.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <div navbar></div>
+
+  <!-- Content -->
+  <div ng-view></div>
+
+  <!-- Footer -->
+
+  <!-- dockstore-ui Application -->
+  <script type="text/javascript" src="app/app.module.js"></script>
+  <script type="text/javascript" src="app/app.routes.js"></script>
+  <script type="text/javascript" src="app/shared/dockerRepo/dockerRepoSrvc.js"></script>
+  <script type="text/javascript" src="app/shared/navbar/navbarCtrl.js"></script>
+  <script type="text/javascript" src="app/shared/navbar/navbarDrtv.js"></script>
+  <script type="text/javascript" src="app/shared/dockerContGrid/dockerContGridDrtv.js"></script>
+  <script type="text/javascript" src="app/components/search/searchCtrl.js"></script>
+  <script type="text/javascript" src="app/components/login/loginCtrl.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<div class="navbar navbar-default navbar-static-top" ng-controller="NavbarCtrl">
+  <div class="container">
+    <ul class="nav navbar-nav">
+      <a href="/" class="navbar-brand">
+          <i class="ion-nuclear"></i> Dockstore
+      </a>
+    </ul>
+    <ul class="nav navbar-nav">
+      <li><a href="#/search">Search</a></li>
+      <li><a ng-show="isAuthenticated()" href="#/console">Console</a></li>
+      <li><a href="#/docs">Documentation</a></li>
+    </ul>
+    <ul class="nav navbar-nav pull-right">
+      <li><a href="#/login" ng-hide="isAuthenticated()">Log in</a></li>
+      <li><a href="#/register" ng-hide="isAuthenticated()">Register</a></li>
+      <li ng-show="isAuthenticated()" dropdown>
+        <a href dropdown-toggle>[collab-username] <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#/accounts">Accounts</a></li>
+          <li><a href="#/tokens">Tokens</a></li>
+          <li><a href="#/settings">Settings</a></li>
+          <li class="divider" role="separator"></li>
+          <li><a href ng-click="logout()">Log out</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
