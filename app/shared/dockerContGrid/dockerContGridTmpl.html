@@ -10,10 +10,14 @@
   <tbody>
     <!-- Placeholder data until API is modified to return this info. -->
     <tr ng-repeat="cont in dockerContainerList">
-      <td>{{cont.name}}</td>
-      <td>{{cont.last_modified}}</td>
+      <td>
+        <a href="#/search/:{{cont.id}}">{{cont.name}}</a>
+        <span class="glyphicon glypthicon-search"
+              ng-show="!cont.is_public"></span>
+      </td>
+      <td>{{cont.tags.version}}</td>
       <td>{{cont.is_starred}}</td>
-      <td>{{cont.description}}</td>
+      <td>docker pull {{cont.namespace}}/{{cont.name}</td>
     </tr>
   </tbody>
 </table>

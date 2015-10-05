@@ -1,9 +1,11 @@
 angular.module('dockstore.ui')
-  .controller('NavbarCtrl', ['$scope', '$auth', '$location',
-      function($scope, $auth, $location) {
+  .controller('NavbarCtrl', ['$scope', '$auth', '$location', 'NtfnService',
+      function($scope, $auth, $location, NtfnService) {
+
     $scope.isAuthenticated = function() {
       return $auth.isAuthenticated();
     };
+
     $scope.logout = function() {
       if (!$auth.isAuthenticated()) {
         $location.path('#/login');
@@ -11,8 +13,9 @@ angular.module('dockstore.ui')
       }
       $auth.logout()
         .then(function() {
-          console.info('Logout successful.');
+          NtfnService.popSuccess('Logout', 'Logout successful.');
           $location.path('#/search');
         });
     };
+
   }]);

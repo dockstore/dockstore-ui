@@ -7,6 +7,7 @@
   <title>Dockstore &ndash; Cancer Collaboratory</title>
 
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="assets/libs/angularjs-toaster/toaster.min.css" />
   <link rel="stylesheet" type="text/css" href="assets/libs/datatables/datatables.min.css" />
   <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" />
   <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
@@ -15,11 +16,16 @@
   <script type="text/javascript" src="assets/libs/jquery/jquery-2.1.4.min.js"></script>
   <script type="text/javascript" src="assets/libs/angularjs/angular.min.js"></script>
   <script type="text/javascript" src="assets/libs/angularjs/angular-route.min.js"></script>
-  <script type="text/javascript" src="assets/libs/ui-bootstrap/ui-bootstrap-0.13.4.min.js"></script>
+  <script type="text/javascript" src="assets/libs/angularjs/angular-animate.min.js"></script>
+  <script type="text/javascript" src="assets/libs/ui-bootstrap/ui-bootstrap-tpls-0.13.4.min.js"></script>
+  <script type="text/javascript" src="assets/libs/angularjs-toaster/toaster.min.js"></script>
   <script type="text/javascript" src="assets/libs/satellizer/satellizer-ds.js"></script>
   <script type="text/javascript" src="assets/libs/datatables/datatables.min.js"></script>
 </head>
 <body>
+  <!-- Toastr Notifications -->
+  <toaster-container></toaster-container>
+
   <!-- Header -->
   <div navbar></div>
 
@@ -31,11 +37,14 @@
   <!-- dockstore-ui Application -->
   <script type="text/javascript" src="app/app.module.js"></script>
   <script type="text/javascript" src="app/app.routes.js"></script>
+  <script type="text/javascript" src="app/shared/notifications/notificationSrvc.js"></script>
   <script type="text/javascript" src="app/shared/dockerRepo/dockerRepoSrvc.js"></script>
   <script type="text/javascript" src="app/shared/navbar/navbarCtrl.js"></script>
   <script type="text/javascript" src="app/shared/navbar/navbarDrtv.js"></script>
   <script type="text/javascript" src="app/shared/dockerContGrid/dockerContGridDrtv.js"></script>
   <script type="text/javascript" src="app/components/search/searchCtrl.js"></script>
   <script type="text/javascript" src="app/components/login/loginCtrl.js"></script>
+  <script type="text/javascript" src="app/components/console/consoleCtrl.js"></script>
+  <script type="text/javascript" src="app/components/docs/docsCtrl.js"></script>
 </body>
 </html>

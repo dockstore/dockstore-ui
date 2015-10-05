@@ -1,8 +1,11 @@
 angular.module('dockstore.ui')
-  .controller('LoginCtrl', ['$scope', '$auth', '$location',
-      function($scope, $auth, $location) {
+  .controller('LoginCtrl', ['$scope', '$auth', '$location', 'NtfnService',
+      function($scope, $auth, $location, NtfnService) {
 
     $scope.login = function() {
+      NtfnService.popError('Authentication Error',
+          'Dockstore authentication by console login is currently disabled.');
+      /* Disabled, no API Endpoint Available
       $auth.login($scope.user)
         .then(function() {
           console.info("Login successful for user: ", $scope.user);
@@ -11,16 +14,22 @@ angular.module('dockstore.ui')
         .catch(function(response) {
           console.error("Error logging in: ", response.data.message);
         });
+      */
     };
 
     $scope.authenticate = function(provider) {
+      NtfnService.popInfo('Authentication Info',
+        'Staring authentication via ' + provider + '.');
       $auth.authenticate(provider)
         .then(function() {
-          console.info("Login successful via provider: ", provider);
+          NtfnService.popSuccess('Authentication Success',
+            'Login successful via ' + provider + '.');
           $location.path('#/console');
         })
         .catch(function(response) {
-          console.error("Error logging in: ", response.data.message);
+          var message = (typeof response != 'undefined') ?
+            response.data.message : 'Unknown Error.';
+          NtfnService.popError('Authentication Error', message);
         });
     };
 
