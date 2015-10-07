@@ -1,7 +1,7 @@
 angular.module('dockstore.ui')
   .directive('navbar', function() {
     return {
-      restrict: 'A',
+      restrict: 'AE',
       controller: 'NavbarCtrl',
       templateUrl: 'app/shared/navbar/navbarTmpl.html'
     };

@@ -1,0 +1,123 @@
+<div class="row">
+  <div class="col-md-4">
+    <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-heading">My Containers</div>
+        <div class="panel-body">
+          <ul class="list-group" ng-repeat="cont in registeredContainers">
+            <li class="list-group-item">{{cont.name}}</li>
+          </ul>
+          <button class="btn btn-success btn-sm pull-right">
+            Add Container
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-heading">Other Containers</div>
+        <div class="panel-body">
+          <!-- Non-responsive List -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <tabset>
+      <tab>
+        <tab-heading>INFO View</tab-heading>
+        
+      </tab>
+      <tab>
+        <tab-heading>JSON View</tab-heading>
+        <pre class="pre-scrollable">
+{
+  "maintainer": {
+    "name": "Liliana Valdez",
+    "email": "lilianavaldez@dogspa.com"
+  },
+  "tools": {
+    "name": "HelloWorldTool",
+    "version": "1.0.1-SNAPSHOT",
+    "description": "Markdown description text here",
+    "command": "echo '$message' > $output_file",
+    "prerequisite_containers": [
+      {
+        "_comment": "this describes a container that is necessary for this container to function",
+        "name": "sint/qui"
+      }
+    ],
+    "inputs": [
+      {
+        "_comment": "this describes an input file that should be provided before execution",
+        "name": "aliqua",
+        "source": "/datastore/47914648-3765-4b14-bdb0-a45268332d0a.txt",
+        "type": "string",
+        "format": "text",
+        "label": "input file"
+      }
+    ],
+    "outputs": [
+      {
+        "_comment": "this describes an output file that should be saved after execution",
+        "name": "dolor",
+        "source": "/datastore/03567dbd-c3d1-4a66-917a-35f0bd62d94c.txt",
+        "type": "data",
+        "format": "text",
+        "label": "an output text file"
+      },
+      {
+        "_comment": "this describes an output file that should be saved after execution",
+        "name": "labore",
+        "source": "/datastore/a275eb59-6083-4273-9362-b5c95630922e.txt",
+        "type": "data",
+        "format": "text",
+        "label": "an output text file"
+      }
+    ],
+    "requirements": {
+      "cores": 8,
+      "ram_mb": 8092,
+      "storage_gb": 512,
+      "_comment": "these parameters are used to locate a VM with appropriate resources"
+    },
+    "tests": [
+      "echo 'test1' > /tmp/test1.txt",
+      "echo 'test2' > /tmp/test2.txt"
+    ],
+    "data": [
+      {
+        "_comment": "this describes a large reference file that do not change between runs",
+        "source": "s3://f2240e81-304e-4776-95a9-cbe1435a0553/foo.txt",
+        "destination": "/datastore/85b82ffa-bc9e-4147-98ae-dabf270274c7.txt"
+      }
+    ]
+  }
+}
+        </pre>
+      </tab>
+      <tab>
+        <tab-heading>Sharing Options</tab-heading>
+        <h5>Groups</h5>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"> All Users
+          </label>
+          <label>
+            <input type="checkbox"> ICGC Users
+          </label>
+          <label>
+            <input type="checkbox"> Collaboratory Users
+          </label>
+        </div>
+        <h5>Individual Users</h5>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"> Bob
+          </label>
+        </div>
+        <button class="btn btn-primary btn-sm pull-right">Save changes</button>
+      </tab>
+    </tabset>
+  </div>
+</div>

@@ -3,7 +3,6 @@
     <tr>
       <th>Name</th>
       <th>Version</th>
-      <th>Stars</th>
       <th>Docker Pull</th>
     </tr>
   </thead>
@@ -11,13 +10,16 @@
     <!-- Placeholder data until API is modified to return this info. -->
     <tr ng-repeat="cont in dockerContainerList">
       <td>
-        <a href="#/search/:{{cont.id}}">{{cont.name}}</a>
-        <span class="glyphicon glypthicon-search"
+        <a href="#/search/{{cont.userId}}/{{cont.namespace}}/{{cont.name}}">{{cont.name}}</a>
+        <span class="glyphicon glyphicon-lock"
               ng-show="!cont.is_public"></span>
       </td>
-      <td>{{cont.tags.version}}</td>
-      <td>{{cont.is_starred}}</td>
-      <td>docker pull {{cont.namespace}}/{{cont.name}</td>
+      <td>
+        {{ (cont.tags.indexOf('version') > -1) ? cont.tags.version : 'n/a' }}
+      </td>
+      <td>
+        <copy-text value="docker pull {{cont.path}}"></copy-text>
+      </td>
     </tr>
   </tbody>
 </table>

@@ -27,8 +27,8 @@ angular.module('dockstore.ui')
           $location.path('#/console');
         })
         .catch(function(response) {
-          var message = (typeof response != 'undefined') ?
-            response.data.message : 'Unknown Error.';
+          var message = (typeof response.statusText != 'undefined') ?
+            response.statusText : 'Unknown Error.';
           NtfnService.popError('Authentication Error', message);
         });
     };

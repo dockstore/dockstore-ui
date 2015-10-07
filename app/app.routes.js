@@ -5,17 +5,21 @@ angular.module('dockstore.ui')
         templateUrl: 'app/components/search/searchView.html',
         controller: 'SearchCtrl'
       })
-      // .when('/search/:contId', {
-      //   templateUrl: 'app/components/search/contView.html',
-      //   controller: 'ContCtrl'
-      // })
-      .when('/console', {
-        templateUrl: 'app/components/console/consoleView.html',
-        controller: 'ConsoleCtrl'
+      .when('/search/:userId/:reposNamespace/:reposName', {
+        templateUrl: 'app/components/search/searchContainerView.html',
+        controller: 'SearchContainerCtrl'
+      })
+      .when('/containers', {
+        templateUrl: 'app/components/containers/containersView.html',
+        controller: 'ContainersCtrl'
+      })
+      .when('/containers/add', {
+        templateUrl: 'app/components/containers/addContainerView.html',
+        controller: 'AddContainerCtrl'
       })
       .when('/docs', {
         templateUrl: 'app/components/docs/docsView.html',
-        controller: 'DocsCtrl'
+        controller: 'DocumentationCtrl'
       })
       // .when('/accounts', {
       //   templateUrl: 'app/components/docs/accountsView.html',

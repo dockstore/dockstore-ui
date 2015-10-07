@@ -1,5 +1,5 @@
 angular.module('dockstore.ui')
-  .controller('ConsoleCtrl', ['$scope', '$auth', '$location',
+  .controller('ContainersCtrl', ['$scope', '$auth', '$location',
       function($scope, $auth, $location) {
 
     $scope.isAuthenticated = function() {
