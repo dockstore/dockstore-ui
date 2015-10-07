@@ -6,7 +6,7 @@ angular.module('dockstore.ui')
       scope: {
         copyText: '@value'
       },
-      templateUrl: 'app/shared/ui-widgets/copyText/copyTextTmpl.html',
+      templateUrl: 'app/shared/ui-widgets/copy-text/copyTextTmpl.html',
       link: function(scope, element, attrs) {
         $(element).find('input').on('click', function() {
           this.select();

@@ -6,7 +6,7 @@ angular.module('dockstore.ui')
       return $http({
         method: 'GET',
         url: WebService.DEBUG_MODE ?
-              WebService.API_URL_DEBUG + '/docker.repo.json' :
+              WebService.API_URL_DEBUG + '/docker.repo.json?' + Math.random() :
               WebService.API_URL + '/docker.repo'
       });
     };
@@ -26,7 +26,7 @@ angular.module('dockstore.ui')
         url: //WebService.DEBUG_MODE ?
               //WebService.API_URL_DEBUG + '/docker.repo/searchContainers.json' :
               //WebService.API_URL + '/docker.repo/getUserRegisteredContainers?user_id=' + user_id
-              WebService.API_URL_DEBUG + '/docker.repo.json'
+              WebService.API_URL_DEBUG + '/docker.repo.json?' + Math.random()
       });
     };
 
@@ -34,7 +34,7 @@ angular.module('dockstore.ui')
       return $http({
         method: 'GET',
         url: WebService.DEBUG_MODE ?
-              WebService.API_URL_DEBUG + '/docker.repo/searchContainers.json' :
+              WebService.API_URL_DEBUG + '/docker.repo/searchContainers.json?' + Math.random() :
               WebService.API_URL + '/docker.repo/searchContainers',
         params: {
           pattern: query_string

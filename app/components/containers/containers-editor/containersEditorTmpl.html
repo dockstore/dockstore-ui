@@ -5,7 +5,13 @@
         <div class="panel-heading">My Containers</div>
         <div class="panel-body">
           <ul class="list-group" ng-repeat="cont in registeredContainers">
-            <li class="list-group-item">{{cont.name}}</li>
+            <li class="list-group-item">
+              {{cont.name}}
+              <button type="button" class="btn btn-primary btn-xs pull-right"
+                      data-toggle="button">
+                Share
+              </button>
+            </li>
           </ul>
           <button class="btn btn-success btn-sm pull-right">
             Add Container

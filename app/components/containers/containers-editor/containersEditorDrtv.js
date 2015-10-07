@@ -3,7 +3,7 @@ angular.module('dockstore.ui')
     return {
       restrict: 'AE',
       controller: 'ContainersEditorCtrl',
-      templateUrl: 'app/components/containers/containersEditorTmpl.html?+Math.random()'/*,
+      templateUrl: 'app/components/containers/container-editor/containerEditorTmpl.html'/*,
       link: function(scope, element, attrs) {
         
       }*/
