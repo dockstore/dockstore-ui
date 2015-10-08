@@ -4,9 +4,9 @@ angular.module('dockstore.ui')
 
     NtfnService.popInfo('List Docker Containers', 'Loading container lists...');
     DockerRepoService.getDockerContainerList()
-      .then(function(response) {
+      .then(function(containers) {
         NtfnService.clearAll();
-        $scope.dockerContainerList = response.data;
+        $scope.dockerContainerList = containers;
       })
       .catch(function(response) {
         var message = (typeof response.statusText != 'undefined') ?

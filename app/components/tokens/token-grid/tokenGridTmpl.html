@@ -1,0 +1,31 @@
+<table class="display" cellspacing="0" width="100%">
+  <thead>
+    <tr>
+      <th>Token ID</th>
+      <th>Token Source</th>
+      <th>Token Value</th>
+      <th>Operations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="token in userTokens">
+      <td>
+        {{token.id}}
+      </td>
+      <td>
+        {{token.tokenSource}}
+      </td>
+      <td>
+        <copy-text value="SECRETsecretSECRETsecretSECRETsecretSECRETsecret"></copy-text>
+      </td>
+      <td>
+        <a href ng-click="switchTokens(token.content)">
+          <span class="glyphicon glyphicon-log-in"></span> Switch
+        </a>
+        <a href data-token-id="{{token.id}}">
+          <span class="glyphicon glyphicon-trash"></span> Delete
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>

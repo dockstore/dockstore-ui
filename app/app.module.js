@@ -2,7 +2,7 @@ angular.module('dockstore.ui',
     ['ngRoute', 'ngAnimate', 'LocalStorageModule', 'satellizer', 'ui.bootstrap', 'toaster'])
   .constant('WebService', {
     API_URL: 'http://localhost:8080',
-    API_URL_DEBUG: 'http://localhost:10000',
+    API_URL_DEBUG: 'http://localhost:8090/tests/dummy-data',
     DEBUG_MODE: true
   })
   .config(['$authProvider', function($authProvider) {

@@ -1,0 +1,15 @@
+{
+    "id": 2,
+    "userId": 2,
+    "name": "base-environment-clean",
+    "namespace": "oicr_vchung_org",
+    "registry": "quay.io",
+    "description": "Unmodified Ubuntu 14.04.3 LTS release.",
+    "gitUrl": null,
+    "tags": [],
+    "path": "quay.io/oicr_vchung_org/base-environment-clean",
+    "is_starred": false,
+    "is_public": false,
+    "last_modified": 789879879,
+    "is_registered": true
+}

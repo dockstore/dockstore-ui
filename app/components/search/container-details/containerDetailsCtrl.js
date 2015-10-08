@@ -7,9 +7,9 @@ angular.module('dockstore.ui')
       'Retrieving ' +  $routeParams.reposName + ' container metadata.');
     DockerRepoService.getDockerRepos($routeParams.userId,
         $routeParams.reposNamespace + '%2F' + $routeParams.reposName)
-      .then(function(response) {
+      .then(function(repos) {
         NtfnService.clearAll();
-        $scope.dockerContainer = response.data;
+        $scope.dockerContainer = repos;
       })
       .catch(function(response) {
         var message = (typeof response.statusText != 'undefined') ?

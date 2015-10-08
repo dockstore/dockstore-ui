@@ -1,5 +1,6 @@
 angular.module('dockstore.ui')
-  .service('UserService', ['$rootScope', '$q', '$http', 'WebService', 'localStorageService',
+  .service('UserService',
+      ['$rootScope', '$q', '$http', 'WebService', 'localStorageService',
       function($rootScope, $q, $http, WebService, localStorageService) {
 
     this.getUserById = function(user_id) {

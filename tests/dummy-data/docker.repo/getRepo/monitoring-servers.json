@@ -1,0 +1,15 @@
+{
+    "id": 3,
+    "userId": 2,
+    "name": "monitoring-servers",
+    "namespace": "oicr_vchung_org",
+    "registry": "quay.io",
+    "description": "Client and server infrastructure for monitoring cloud fleets.",
+    "gitUrl": null,
+    "tags": [],
+    "path": "quay.io/oicr_vchung_org/monitoring-servers",
+    "is_starred": false,
+    "is_public": true,
+    "last_modified": 4564576,
+    "is_registered": false
+}

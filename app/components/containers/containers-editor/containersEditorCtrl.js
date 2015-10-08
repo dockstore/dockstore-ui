@@ -1,15 +1,14 @@
 angular.module('dockstore.ui')
   .controller('ContainersEditorCtrl',
-      ['$scope', 'DockerRepoService', 'NtfnService',
-      function($scope, DockerRepoService, NtfnService) {
+      ['$scope', 'DockerRepoService', 'UserService', 'NtfnService',
+      function($scope, DockerRepoService, UserService, NtfnService) {
 
     NtfnService.popInfo('List Account Containers', 'Loading container list...');
-    DockerRepoService.getRegisteredContainers(2/*$routeParams.userId*/)
-      .then(function(response) {
+    DockerRepoService.getUserRegisteredContainers(UserService.getUserObj().id)
+      .then(function(containers) {console.log('Containers:', containers);
         NtfnService.clearAll();
-        $scope.registeredContainers = response.data;
-      })
-      .catch(function(response) {
+        $scope.registeredContainers = containers;
+      }, function(response) {
         var message = (typeof response.statusText != 'undefined') ?
           response.statusText : 'Unknown Error.';
         NtfnService.popError('Account Containers', message);
