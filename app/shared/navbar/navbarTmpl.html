@@ -14,7 +14,7 @@
       <li><a href="#/login" ng-hide="isAuthenticated()">Log in</a></li>
       <li><a href="#/register" ng-hide="isAuthenticated()">Register</a></li>
       <li ng-show="isAuthenticated()" dropdown>
-        <a href dropdown-toggle>[collab-username] <span class="caret"></span></a>
+        <a href dropdown-toggle>{{username}} <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li><a href="#/accounts">Accounts</a></li>
           <li><a href="#/tokens">Tokens</a></li>

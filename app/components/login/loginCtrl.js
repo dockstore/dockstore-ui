@@ -1,6 +1,7 @@
 angular.module('dockstore.ui')
-  .controller('LoginCtrl', ['$scope', '$auth', '$location', 'NtfnService',
-      function($scope, $auth, $location, NtfnService) {
+  .controller('LoginCtrl',
+      ['$scope', '$auth', '$location', 'UserService', 'NtfnService',
+      function($scope, $auth, $location, UserService, NtfnService) {
 
     $scope.login = function() {
       NtfnService.popError('Authentication Error',
@@ -21,10 +22,18 @@ angular.module('dockstore.ui')
       NtfnService.popInfo('Authentication Info',
         'Staring authentication via ' + provider + '.');
       $auth.authenticate(provider)
-        .then(function() {
+        .then(function(response) {
+          user_id = response.data.userId;
+          UserService.getUserById(user_id)
+            .then(function(response) {
+              UserService.setUserObj(response);
+            }, function(response) {
+              NtfnService.popError('Authentication Error', message);
+              $auth.logout();
+            });
           NtfnService.popSuccess('Authentication Success',
             'Login successful via ' + provider + '.');
-          $location.path('#/console');
+          $location.path('#/search');
         })
         .catch(function(response) {
           var message = (typeof response.statusText != 'undefined') ?

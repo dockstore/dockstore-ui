@@ -25,10 +25,10 @@ angular.module('dockstore.ui')
       //   templateUrl: 'app/components/docs/accountsView.html',
       //   controller: 'AccountsCtrl'
       // })
-      // .when('/tokens', {
-      //   templateUrl: 'app/components/docs/tokensView.html',
-      //   controller: 'TokensCtrl'
-      // })
+      .when('/tokens', {
+        templateUrl: 'app/components/tokens/tokensView.html',
+        controller: 'TokensCtrl'
+      })
       // .when('/settings', {
       //   templateUrl: 'app/components/settings/settingsView.html',
       //   controller: 'SettingsCtrl'

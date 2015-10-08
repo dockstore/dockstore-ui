@@ -1,6 +1,10 @@
 angular.module('dockstore.ui')
-  .controller('NavbarCtrl', ['$scope', '$auth', '$location', 'NtfnService',
-      function($scope, $auth, $location, NtfnService) {
+  .controller('NavbarCtrl',
+      ['$scope', '$auth', '$location', 'UserService', 'NtfnService',
+      function($scope, $auth, $location, UserService, NtfnService) {
+
+    var userObj = UserService.getUserObj();
+    $scope.username = userObj ? userObj.username : '';
 
     $scope.isAuthenticated = function() {
       return $auth.isAuthenticated();
@@ -13,6 +17,7 @@ angular.module('dockstore.ui')
       }
       $auth.logout()
         .then(function() {
+          UserService.setUserObj(null);
           NtfnService.popSuccess('Logout', 'Logout successful.');
           $location.path('#/search');
         });

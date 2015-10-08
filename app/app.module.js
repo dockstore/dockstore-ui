@@ -1,5 +1,5 @@
 angular.module('dockstore.ui',
-    ['ngRoute', 'ngAnimate', 'satellizer', 'ui.bootstrap', 'toaster'])
+    ['ngRoute', 'ngAnimate', 'LocalStorageModule', 'satellizer', 'ui.bootstrap', 'toaster'])
   .constant('WebService', {
     API_URL: 'http://localhost:8080',
     API_URL_DEBUG: 'http://localhost:10000',
@@ -12,6 +12,10 @@ angular.module('dockstore.ui',
       $authProvider.github({
         clientId: 'a70739297a7d67f915de'
       });
+  }])
+  .config(['localStorageServiceProvider',
+      function(localStorageServiceProvider) {
+    localStorageServiceProvider.setPrefix('dks-ui');
   }])
   .run(['$rootScope', '$auth', '$location',
     function($rootScope, $auth, $location) {

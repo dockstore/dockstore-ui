@@ -3,7 +3,7 @@ angular.module('dockstore.ui')
     return {
       restrict: 'AE',
       controller: 'ContainersEditorCtrl',
-      templateUrl: 'app/components/containers/container-editor/containerEditorTmpl.html'/*,
+      templateUrl: 'app/components/containers/containers-editor/containersEditorTmpl.html'/*,
       link: function(scope, element, attrs) {
         
       }*/
