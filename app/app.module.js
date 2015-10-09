@@ -1,5 +1,6 @@
 angular.module('dockstore.ui',
-    ['ngRoute', 'ngAnimate', 'LocalStorageModule', 'satellizer', 'ui.bootstrap', 'toaster'])
+    ['ngRoute', 'ngAnimate', 'LocalStorageModule', 'satellizer',
+      'ui.bootstrap', 'toaster'])
   .constant('WebService', {
     API_URL: 'http://localhost:8080',
     API_URL_DEBUG: 'http://localhost:8090/tests/dummy-data',
@@ -18,11 +19,16 @@ angular.module('dockstore.ui',
     localStorageServiceProvider.setPrefix('dks-ui');
   }])
   .run(['$rootScope', '$auth', '$location',
-    function($rootScope, $auth, $location) {
+      function($rootScope, $auth, $location) {
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
       var public_views = ['/search', '/docs', '/login', '/register'];
-      if (!$auth.isAuthenticated() &&
-          public_views.indexOf($location.url()) === -1) {
+      var isViewPublic = function(path) {
+        for (var i = 0; i < public_views.length; i++) {
+          if (path.indexOf(public_views[i]) !== -1) return true;
+        }
+        return false;
+      };
+      if (!$auth.isAuthenticated() && !isViewPublic($location.url())) {
         $location.path('/login');
       }
     });
