@@ -5,7 +5,7 @@ angular.module('dockstore.ui')
 
     NtfnService.popInfo('List Account Containers', 'Loading container list...');
     DockerRepoService.getUserRegisteredContainers(UserService.getUserObj().id)
-      .then(function(containers) {console.log('Containers:', containers);
+      .then(function(containers) {
         NtfnService.clearAll();
         $scope.registeredContainers = containers;
       }, function(response) {

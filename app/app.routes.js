@@ -6,7 +6,8 @@ angular.module('dockstore.ui')
         controller: 'SearchCtrl'
       })
       .when('/search/:userId/:reposNamespace/:reposName', {
-        templateUrl: 'app/components/search/container-details/containerDetailsView.html',
+        templateUrl: 'app/components/search/container-details/' +
+                      'containerDetailsView.html',
         controller: 'SearchContainerCtrl'
       })
       .when('/containers', {
@@ -21,18 +22,18 @@ angular.module('dockstore.ui')
         templateUrl: 'app/components/docs/docsView.html',
         controller: 'DocumentationCtrl'
       })
-      // .when('/accounts', {
-      //   templateUrl: 'app/components/docs/accountsView.html',
-      //   controller: 'AccountsCtrl'
-      // })
+      .when('/accounts', {
+        templateUrl: 'app/components/accounts/accountsView.html',
+        controller: 'AccountsCtrl'
+      })
       .when('/tokens', {
         templateUrl: 'app/components/tokens/tokensView.html',
         controller: 'TokensCtrl'
       })
-      // .when('/settings', {
-      //   templateUrl: 'app/components/settings/settingsView.html',
-      //   controller: 'SettingsCtrl'
-      // })
+      .when('/settings', {
+        templateUrl: 'app/components/settings/settingsView.html',
+        controller: 'SettingsCtrl'
+      })
       .when('/login', {
         templateUrl: 'app/components/login/loginView.html',
         controller: 'LoginCtrl'

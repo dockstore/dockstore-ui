@@ -16,11 +16,29 @@
       <li ng-show="isAuthenticated()" dropdown>
         <a href dropdown-toggle>{{username}} <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="#/accounts">Accounts</a></li>
-          <li><a href="#/tokens">Tokens</a></li>
-          <li><a href="#/settings">Settings</a></li>
+          <li>
+            <a href="#/accounts">
+              <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Accounts
+            </a>
+          </li>
+          <li>
+            <a href="#/tokens">
+              <span class="glyphicon glyphicon-link"></span>&nbsp;&nbsp;Tokens
+            </a>
+          </li>
+          <li>
+            <a href="#/settings">
+              <span class="glyphicon glyphicon-wrench"></span>
+              &nbsp;&nbsp;Settings
+            </a>
+          </li>
           <li class="divider" role="separator"></li>
-          <li><a href ng-click="logout()">Log out</a></li>
+          <li>
+            <a href ng-click="logout()">
+              <span class="glyphicon glyphicon-log-out"></span>
+              &nbsp;&nbsp;Log out
+            </a>
+          </li>
         </ul>
       </li>
     </ul>
