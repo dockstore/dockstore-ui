@@ -2,7 +2,7 @@ angular.module('dockstore.ui')
   .directive('dockerContainerGrid', function() {
     return {
       restrict: 'AE',
-      templateUrl: 'app/components/search/container-grid/containerGridTmpl.html',
+      templateUrl: 'app/components/search/container-grid/containerGridTmpl.html?'+Math.random(),
       link: function(scope, element, attrs) {
         scope.$watch('dockerContainerList', function(newVal, oldVal) {
           if (newVal) {

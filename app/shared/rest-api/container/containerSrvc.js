@@ -28,13 +28,13 @@ angular.module('dockstore.ui')
           case 2:
             resUrl = WebService.API_URL_DEBUG + '/docker.repo/getRepo/base-environment-clean.json';
             break;
-          case 3:
+          case '3':
             resUrl = WebService.API_URL_DEBUG + '/docker.repo/getRepo/monitoring-servers.json';
             break;
-          case 54:
+          case '54':
             resUrl = WebService.API_URL_DEBUG + '/docker.repo/getRepo/sequencing-workflows.json';
             break;
-          case 'oicr_icgc_org%2Fstore-and-forward':
+          case '32':
             resUrl = WebService.API_URL_DEBUG + '/docker.repo/getRepo/store-and-forward.json';
             break;
           default:

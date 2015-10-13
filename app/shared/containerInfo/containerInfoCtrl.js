@@ -11,6 +11,8 @@ angular.module('dockstore.ui')
         .then(function(contObj) {
           NtfnService.clearAll();
           $scope.contObj = contObj;
+          $scope.contName = contObj.name;
+          $scope.contNamespace = contObj.namespace;
         })
         .catch(function(response) {
           var message = (typeof response.statusText != 'undefined') ?

@@ -5,7 +5,7 @@ angular.module('dockstore.ui')
         templateUrl: 'app/components/search/searchView.html',
         controller: 'SearchCtrl'
       })
-      .when('/search/:userId/:reposNamespace/:reposName', {
+      .when('/search/:contId', {
         templateUrl: 'app/components/search/container-details/' +
                       'containerDetailsView.html',
         controller: 'SearchContainerCtrl'

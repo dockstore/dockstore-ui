@@ -3,46 +3,16 @@
     <div class="col-md-10 col-md-offset-1">
       <h3>
         Search Docker Containers
-        <small ng-show="dockerContainer">
-          {{dockerContainer.namespace}}/{{dockerContainer.name}}
+        <small ng-show="selContName.length > 0">
+          {{selContNamespace}}/{{selContName}}
         </small>
       </h3>
       <hr />
-      <div class="row">
-        <div class="col-md-2"><strong>Container Name:</strong></div>
-        <div class="col-md-4">{{dockerContainer.name}}</div>
-        <div class="col-md-2 col-md-offset-1" ng-show="dockerContainer">
-          <div ng-show="dockerContainer.is_public">
-            <h5><span class="label label-primary">Public Repository</span></h5>
-          </div>
-          <div ng-show="!dockerContainer.is_public">
-            <h5>
-              <span class="label label-danger">
-                <span class="glyphicon glyphicon-lock"></span>
-                Private Repository
-              </span>
-            </h5>
-            <button class="btn btn-sm btn-primary"
-                    onclick="window.location.href='mailto:user@organization.tld'">
-              Request Access
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-2"><strong>Container Versions:</strong></div>
-        <div class="col-md-4">
-          {{ (cont.tags.indexOf('version') > -1) ? cont.tags.version : 'n/a' }}
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-2"><strong>Description:</strong></div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <textarea class="form-control" rows="3">
-{{dockerContainer.description}}</textarea>
-        </div>
+      <div container-info
+            cont-id="selContId"
+            req-access="true"
+            cont-name="selContName"
+            cont-namespace="selContNamespace">
       </div>
     </div>
   </div>

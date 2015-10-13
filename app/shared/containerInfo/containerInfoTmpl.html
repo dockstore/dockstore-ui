@@ -1,21 +1,41 @@
-<div ng-if="contObj">
-  <ul class="list-unstyled">
-    <li>
-      <strong>Container Name</strong>: {{contObj.name}}
-    </li>
-    <li>
-      <strong>Container Versions</strong>:
-      <ul>
-        <li ng-repeat="vers in getVersionTags(contObj)">
-          {{vers}}
-        </li>
-      </ul>
-    </li>
-    <li>
-      <strong>Description</strong>:
-      <textarea class="form-control" rows="3">
+<div class="row" ng-if="contObj">
+  <div class="col-md-6">
+    <ul class="list-unstyled">
+      <li>
+        <strong>Container Name</strong>: {{contObj.name}}
+      </li>
+      <li>
+        <strong>Container Versions</strong>:
+        <ul>
+          <li ng-repeat="vers in getVersionTags(contObj)">
+            {{vers}}
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>Description</strong>:
+        <textarea class="form-control" rows="3">
 {{contObj.description}}</textarea>
-    </li>
-  </ul>
-
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-2 col-md-offset-2" ng-show="reqAccess">
+    <div ng-show="contObj.is_public">
+      <h5>
+        <span class="label label-primary">Public Repository</span>
+      </h5>
+    </div>
+    <div ng-show="!contObj.is_public">
+      <h5>
+        <span class="label label-danger">
+          <span class="glyphicon glyphicon-lock"></span>
+          Private Repository
+        </span>
+      </h5>
+      <button class="btn btn-sm btn-primary"
+              onclick="window.location.href='mailto:user@organization.tld'">
+        Request Access
+      </button>
+    </div>
+  </div>
 </div>
