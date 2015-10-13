@@ -1,11 +1,17 @@
 angular.module('dockstore.ui')
-  .directive('containersInfo', function() {
+  .directive('containerInfo', function() {
     return {
       restrict: 'AE',
       controller: 'ContainersInfoCtrl',
-      templateUrl: 'app/shared/containerInfo/containerInfoDrtv.js?'+Math.random()/*,
+      scope: {
+        contId: '=',
+        reqAccess: '='
+      },
+      templateUrl: 'app/shared/containerInfo/containerInfoTmpl.html?'+Math.random(),
       link: function(scope, element, attrs) {
-        
-      }*/
+        scope.$watch('contId', function(newVal, oldVal) {
+          if (newVal) scope.loadContainerDetails(newVal);
+        });
+      }
     };
   });

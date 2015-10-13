@@ -1,0 +1,63 @@
+{
+  "maintainer": {
+    "name": "Liliana Valdez",
+    "email": "lilianavaldez@dogspa.com"
+  },
+  "tools": {
+    "name": "HelloWorldTool",
+    "version": "1.0.1-SNAPSHOT",
+    "description": "Markdown description text here",
+    "command": "echo '$message' > $output_file",
+    "prerequisite_containers": [
+      {
+        "_comment": "this describes a container that is necessary for this container to function",
+        "name": "sint/qui"
+      }
+    ],
+    "inputs": [
+      {
+        "_comment": "this describes an input file that should be provided before execution",
+        "name": "aliqua",
+        "source": "/datastore/47914648-3765-4b14-bdb0-a45268332d0a.txt",
+        "type": "string",
+        "format": "text",
+        "label": "input file"
+      }
+    ],
+    "outputs": [
+      {
+        "_comment": "this describes an output file that should be saved after execution",
+        "name": "dolor",
+        "source": "/datastore/03567dbd-c3d1-4a66-917a-35f0bd62d94c.txt",
+        "type": "data",
+        "format": "text",
+        "label": "an output text file"
+      },
+      {
+        "_comment": "this describes an output file that should be saved after execution",
+        "name": "labore",
+        "source": "/datastore/a275eb59-6083-4273-9362-b5c95630922e.txt",
+        "type": "data",
+        "format": "text",
+        "label": "an output text file"
+      }
+    ],
+    "requirements": {
+      "cores": 8,
+      "ram_mb": 8092,
+      "storage_gb": 512,
+      "_comment": "these parameters are used to locate a VM with appropriate resources"
+    },
+    "tests": [
+      "echo 'test1' > /tmp/test1.txt",
+      "echo 'test2' > /tmp/test2.txt"
+    ],
+    "data": [
+      {
+        "_comment": "this describes a large reference file that do not change between runs",
+        "source": "s3://f2240e81-304e-4776-95a9-cbe1435a0553/foo.txt",
+        "destination": "/datastore/85b82ffa-bc9e-4147-98ae-dabf270274c7.txt"
+      }
+    ]
+  }
+}

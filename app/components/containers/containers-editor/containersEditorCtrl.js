@@ -1,9 +1,9 @@
 angular.module('dockstore.ui')
   .controller('ContainersEditorCtrl',
-      ['$scope', 'DockerRepoService', 'UserService', 'NtfnService',
-      function($scope, DockerRepoService, UserService, NtfnService) {
+      ['$scope', 'ContainerService', 'UserService', 'NtfnService',
+      function($scope, ContainerService, UserService, NtfnService) {
 
-    var collectNSContainers = function(containers) {
+    var collectContObjsByNS = function(conts) {
       var ns_cont = [];
       var getIndexByNS = function(namespace) {
         for (var i = 0; i < ns_cont.length; i++) {
@@ -11,14 +11,14 @@ angular.module('dockstore.ui')
         }
         return -1;
       }
-      for (var i = 0; i < containers.length; i++) {
-        var ns_ind = getIndexByNS(containers[i].namespace);
+      for (var i = 0; i < conts.length; i++) {
+        var ns_ind = getIndexByNS(conts[i].namespace);
         if (ns_ind > -1) {
-          ns_cont[ns_ind].containers.push(containers[i]);
+          ns_cont[ns_ind].conts.push(conts[i]);
         } else {
           ns_cont.push({
-            namespace: containers[i].namespace,
-            containers: [containers[i]]
+            namespace: conts[i].namespace,
+            conts: [conts[i]]
           });
         }
       }
@@ -26,18 +26,35 @@ angular.module('dockstore.ui')
     };
 
     NtfnService.popInfo('List Account Containers', 'Loading container list...');
-    DockerRepoService.getUserRegisteredContainers(UserService.getUserObj().id)
-      .then(function(containers) {
+    ContainerService.getUserRegisteredContainers(UserService.getUserObj().id)
+      .then(function(conts) {
         NtfnService.clearAll();
-        $scope.nsObjContainers = collectNSContainers(containers);
+        $scope.nsContObjs = collectContObjsByNS(conts);
       }, function(response) {
         var message = (typeof response.statusText != 'undefined') ?
           response.statusText : 'Unknown Error.';
         NtfnService.popError('Account Containers', message);
       });
 
-    $scope.selectContainer = function(cont_id) {
-      console.log('Container:', cont_id, ' Selected for modification.');
+    $scope.loadCollabJSON = function(cont_path) {
+      if (!cont_path) return;
+      NtfnService.popInfo('Docker Container Details',
+        'Retrieving collab.json file...');
+      ContainerService.getCollabJSON(cont_path)
+        .then(function(collab) {
+          NtfnService.clearAll();
+          console.log('collab:', collab);
+          $scope.collab_json_text = collab;
+        }, function(response) {
+          var message = (typeof response.statusText != 'undefined') ?
+            response.statusText : 'Unknown Error.';
+          NtfnService.popError('Docker Container Details', message);
+        });
+    };
+
+    $scope.selectContainer = function(cont_id, cont_path) {
+      $scope.selContId = cont_id;
+      $scope.selContPath = cont_path;
     };
 
   }]);

@@ -1,22 +1,33 @@
 angular.module('dockstore.ui')
   .controller('ContainersInfoCtrl',
-      ['$scope', 'DockerRepoService', 'UserService', 'NtfnService',
-      function($scope, DockerRepoService, UserService, NtfnService) {
+      ['$scope', 'ContainerService', 'UserService', 'NtfnService',
+      function($scope, ContainerService, UserService, NtfnService) {
 
-    $scope.loadContainerDetails = function(user_id, cont_ns, cont_name) {
+    /* Being Changed */
+    $scope.loadContainerDetails = function(contId) {
       NtfnService.popInfo('Docker Container Details',
-      'Retrieving ' +  cont_name + ' container metadata.');
-      DockerRepoService.getDockerRepos($routeParams.userId,
-          $routeParams.reposNamespace + '%2F' + $routeParams.reposName)
-        .then(function(repos) {
+        'Retrieving container metadata.');
+      ContainerService.getDockerContainer(contId)
+        .then(function(contObj) {
           NtfnService.clearAll();
-          $scope.dockerContainer = repos;
+          $scope.contObj = contObj;
         })
         .catch(function(response) {
           var message = (typeof response.statusText != 'undefined') ?
             response.statusText : 'Unknown Error.';
           NtfnService.popError('Docker Container Details', message);
         });
+    };
+
+    $scope.getVersionTags = function(contObj) {
+      var version_tags = [];
+      if (contObj.hasOwnProperty('tags')) {
+        for (var i = 0; i < contObj.tags.length; i++) {
+          version_tags.push(contObj.tags[i].version);
+        }
+      }
+      if (version_tags.length == 0) version_tags.push('n/a');
+      return version_tags;
     };
 
   }]);

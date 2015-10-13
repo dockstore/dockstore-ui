@@ -1,9 +1,9 @@
 angular.module('dockstore.ui')
-  .controller('SearchCtrl', ['$scope', 'DockerRepoService', 'NtfnService',
-      function($scope, DockerRepoService, NtfnService) {
+  .controller('SearchCtrl', ['$scope', 'ContainerService', 'NtfnService',
+      function($scope, ContainerService, NtfnService) {
 
     NtfnService.popInfo('List Docker Containers', 'Loading container lists...');
-    DockerRepoService.getDockerContainerList()
+    ContainerService.getDockerContainerList()
       .then(function(containers) {
         NtfnService.clearAll();
         $scope.dockerContainerList = containers;

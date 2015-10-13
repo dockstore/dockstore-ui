@@ -1,0 +1,21 @@
+<div ng-if="contObj">
+  <ul class="list-unstyled">
+    <li>
+      <strong>Container Name</strong>: {{contObj.name}}
+    </li>
+    <li>
+      <strong>Container Versions</strong>:
+      <ul>
+        <li ng-repeat="vers in getVersionTags(contObj)">
+          {{vers}}
+        </li>
+      </ul>
+    </li>
+    <li>
+      <strong>Description</strong>:
+      <textarea class="form-control" rows="3">
+{{contObj.description}}</textarea>
+    </li>
+  </ul>
+
+</div>
