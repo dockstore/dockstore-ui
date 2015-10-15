@@ -1,7 +1,7 @@
 angular.module('dockstore.ui')
   .controller('AccountsCtrl',
-      ['$scope', '$auth', '$location', '$window', 'UserService', 'TokenService', 'NtfnService', 'WebService',
-      function($scope, $auth, $location, $window, UserService, TokenService, NtfnService, WebService) {
+      ['$scope', '$q', '$auth', '$location', '$window', 'UserService', 'TokenService', 'NtfnService', 'WebService',
+      function($scope, $q, $auth, $location, $window, UserService, TokenService, NtfnService, WebService) {
 
     $scope.user = UserService.getUserObj();
 
@@ -28,9 +28,8 @@ angular.module('dockstore.ui')
     $scope.loadExternalAccounts = function() {
       NtfnService.popInfo('User External Accounts',
         'Retrieving list of external accounts...');
-      TokenService.getUserTokens()
+      return TokenService.getUserTokens()
         .then(function(tokens) {
-          NtfnService.clearAll();
           $scope.githubAccount = false;
           $scope.quayioAccount = false;
           for (var i = 0; i < tokens.length; i++){
@@ -47,30 +46,33 @@ angular.module('dockstore.ui')
           var message = (typeof response.statusText != 'undefined') ?
             response.statusText : 'Unknown Error.';
           NtfnService.popError('User External Accounts', message);
+          return $q.reject(response);
         });
     };
 
     $scope.registerQuayioToken = function(userId, accessToken) {
       NtfnService.popInfo('User External Accounts',
         'Registering Quay.io access token...');
-      TokenService.getUserTokens()
-        .then(function(tokens) {
+      return TokenService.registerQuayioAccessToken(userId, accessToken)
+        .then(function(token) {
           NtfnService.popSuccess('User External Accounts',
             'Quay.io token registered successfully.');
         }, function(response) {
           var message = (typeof response.statusText != 'undefined') ?
             response.statusText : 'Unknown Error.';
           NtfnService.popError('User External Accounts', message);
+          return $q.reject(response);
         });
     }
+
+    $scope.loadExternalAccounts()
+      .then(function() { NtfnService.clearAll(); });
 
     $scope.quaioAccTknRegexp = /access_token=([a-zA-Z0-9]*)/;
     if ($scope.quaioAccTknRegexp.test($location.url())) {
       var quayioAccTkn = $location.url().match($scope.quaioAccTknRegexp)[1];
-      $scope.registerQuayioToken(UserService.getUserObj().id, quayioAccTkn);
-      $window.location.href = '/accounts';
-    } else {
-      $scope.loadExternalAccounts();
+      $scope.registerQuayioToken(UserService.getUserObj().id, quayioAccTkn)
+        .then(function() { $window.location.href = '/accounts'; });
     }
 
   }]);

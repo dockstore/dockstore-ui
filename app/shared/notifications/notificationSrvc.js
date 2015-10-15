@@ -1,6 +1,6 @@
 angular.module('dockstore.ui')
-  .service('NtfnService', ['toaster',
-      function(toaster) {
+  .service('NtfnService', ['toaster', '$timeout',
+      function(toaster, $timeout) {
 
     this.popInfo = function(title, message) {
       toaster.pop('info', title, message);
@@ -20,7 +20,7 @@ angular.module('dockstore.ui')
 
     this.clearAll = function(sel) {
       sel = (typeof sel !== 'undefined') ? sel : '*';
-      toaster.clear(sel);
+      $timeout(function() { toaster.clear(sel); }, 1000);
     };
 
   }]);

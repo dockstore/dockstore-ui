@@ -33,13 +33,15 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.registerQuayAccessToken = function(userId, accessToken) {
-      var resUrl = WebService.API_URL + '/token/' + userId;
+    this.registerQuayioAccessToken = function(userId, accessToken) {
+      var resUrl = WebService.API_URL + '/token/quay.io/' + userId;
       return $q(function(resolve, reject) {
         $http({
           method: 'POST',
           url: resUrl,
-          params: accessToken
+          params: {
+            access_token: accessToken
+          }
         }).then(function(response) {
           resolve(response.data);
         }, function(response) {
