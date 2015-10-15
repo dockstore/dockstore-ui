@@ -3,9 +3,9 @@ angular.module('dockstore.ui')
       function($q, $http, WebService) {
 
     this.getDockerContainerList = function() {
-      var resUrl = WebService.DEBUG_MODE ?
-        WebService.API_URL_DEBUG + '/docker.repo/docker.repo.json' :
-        WebService.API_URL + '/docker.repo';
+      var resUrl = //WebService.DEBUG_MODE ?
+        //WebService.API_URL_DEBUG + '/docker.repo/docker.repo.json' :
+        WebService.API_URL + '/container';
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
@@ -19,28 +19,9 @@ angular.module('dockstore.ui')
     };
 
     this.getDockerContainer = function(cont_id) {
-      var resUrl = WebService.DEBUG_MODE ?
-        WebService.API_URL_DEBUG + '/docker.repo/docker.repo.json' :
+      var resUrl = //WebService.DEBUG_MODE ?
+        //WebService.API_URL_DEBUG + '/docker.repo/docker.repo.json' :
         WebService.API_URL + '/container/' + cont_id;
-      /* This is for the demo */
-      if (WebService.DEBUG_MODE) {
-        switch(cont_id) {
-          case 2:
-            resUrl = WebService.API_URL_DEBUG + '/docker.repo/getRepo/base-environment-clean.json';
-            break;
-          case '3':
-            resUrl = WebService.API_URL_DEBUG + '/docker.repo/getRepo/monitoring-servers.json';
-            break;
-          case '54':
-            resUrl = WebService.API_URL_DEBUG + '/docker.repo/getRepo/sequencing-workflows.json';
-            break;
-          case '32':
-            resUrl = WebService.API_URL_DEBUG + '/docker.repo/getRepo/store-and-forward.json';
-            break;
-          default:
-            resUrl = WebService.API_URL_DEBUG + '/docker.repo/getRepo/whalesay-repos-test.json';
-        }
-      }
       /* This is for the demo */
       return $q(function(resolve, reject) {
         $http({

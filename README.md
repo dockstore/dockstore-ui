@@ -5,7 +5,7 @@ AngularJS UI for the Dockstore Web Service.
 
 1. The Dockstore web service and database should be running, and the API accessible on `http://localhost:8080`.
 
-2. Run the library Python HTTP server on `http://localhost:8090` from the root directory of the project: `python3 -m http.server 8090`.
+2. Run the library Python HTTP server on `http://localhost:8090` from the root directory of the project: `python rw-server.py 8090`.
 
 3. The GitHub application `Authorization callback URL` should be set to: `http://localhost:8090/#/login`.
 

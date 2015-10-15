@@ -4,6 +4,10 @@
       <h3>Accounts <small>Current User</small></h3>
       <hr />
 
+      <div class="alert alert-warning alert-dismissable" role="alert">
+        <span class="glyphicon glyphicon-warning-sign"></span> A required API function must be implemented, normally, only a label or a button is shown.
+      </div>
+
       <h4>Collaboratory Account</h4>
       
       <ul class="list-unstyled">
@@ -27,7 +31,7 @@
           <span class="glyphicon glyphicon-link"></span> Linked 
         </span>
       </div>
-      <div ng-show="!githubAccount">
+      <div ng-show="githubAccount">
         <button class="btn btn-primary btn-xs" ng-click="linkGitHubAccount()">
           <span class="glyphicon glyphicon-link"></span> Link Account
         </button>
@@ -39,7 +43,7 @@
           <span class="glyphicon glyphicon-link"></span> Linked
         </span>
       </div>
-      <div ng-show="!quayioAccount">
+      <div ng-show="quayioAccount">
         <button class="btn btn-primary btn-xs" ng-click="linkQuayioAccount()">
           <span class="glyphicon glyphicon-link"></span> Link Account
         </button>
