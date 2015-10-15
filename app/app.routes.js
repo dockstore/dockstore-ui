@@ -1,5 +1,6 @@
 angular.module('dockstore.ui')
-  .config(['$routeProvider', function($routeProvider) {
+  .config(['$routeProvider', '$locationProvider',
+      function($routeProvider, $locationProvider) {
     $routeProvider
       .when('/search', {
         templateUrl: 'app/components/search/searchView.html',
@@ -45,4 +46,6 @@ angular.module('dockstore.ui')
       .otherwise({
         redirectTo: '/search'
       });
+
+      $locationProvider.html5Mode(true);
   }]);

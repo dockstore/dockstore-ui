@@ -1,9 +1,50 @@
 <div class="container">
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
-      <h3>Accounts</h3>
+      <h3>Accounts <small>Current User</small></h3>
       <hr />
-      <!-- Content -->
+
+      <h4>Collaboratory Account</h4>
+      
+      <ul class="list-unstyled">
+        <li><strong>Username</strong>: {{user.username}}</li>
+        <li>
+          <strong>Administrator</strong>: {{ user.isAdmin ? 'Yes' : 'No' }}
+        </li>
+        <li><strong>Groups</strong>:
+          <span ng-show="user.groups.length <= 0">None</span>
+          <ul ng-show="user.groups.length > 0">
+            <li ng-repeat="group in user.groups">{{group.name}}</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h4>External Accounts</h4>
+
+      <h5>GitHub Account</h5>
+      <div ng-show="githubAccount">
+        <span class="label label-success">
+          <span class="glyphicon glyphicon-link"></span> Linked 
+        </span>
+      </div>
+      <div ng-show="!githubAccount">
+        <button class="btn btn-primary btn-xs" ng-click="linkGitHubAccount()">
+          <span class="glyphicon glyphicon-link"></span> Link Account
+        </button>
+      </div>
+      
+      <h5>Quay.io Account</h5>
+      <div ng-show="quayioAccount">
+        <span class="label label-success">
+          <span class="glyphicon glyphicon-link"></span> Linked
+        </span>
+      </div>
+      <div ng-show="!quayioAccount">
+        <button class="btn btn-primary btn-xs" ng-click="linkQuayioAccount()">
+          <span class="glyphicon glyphicon-link"></span> Link Account
+        </button>
+      </div>
     </div>
+
   </div>
 </div>
