@@ -39,6 +39,10 @@ angular.module('dockstore.ui')
         templateUrl: 'app/components/login/loginView.html',
         controller: 'LoginCtrl'
       })
+      .when('/onboarding', {
+        templateUrl: 'app/components/onboarding/onboardingView.html',
+        controller: 'OnboardingCtrl'
+      })
       // .when('/register', {
       //   templateUrl: 'app/components/register/registerView.html',
       //   controller: 'RegisterCtrl'
