@@ -13,7 +13,7 @@ AngularJS UI for the Dockstore Web Service.
 
 1. Navigate to `http://localhost:8090` in a web browser.
 
-1. It may be necessary to start Google Chrome from the command line w/ the option: `--disable-web-security` to suppress CORS/cross-domain security policies when running the application on a local environment. All open Chrome windows and processes must be exited before starting with this argument. On Mac OS X, use: `open -a Google\ Chrome --args --disable-web-security`.
+1. It may be necessary to start Google Chrome from the command line w/ the option: `--disable-web-security` to suppress CORS/cross-domain security policies when running the application on a local environment. All open Chrome windows and processes must be exited before starting with this argument. On Mac OS X, use: `open -a Google\ Chrome --args --disable-web-security`.  You can also use the [Allow-Control-Allow-Origin: *](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi) Google Chrome extension to toggle this.
 
 ### Compiling JavaScript Sources and Stylesheets
 `TODO`
