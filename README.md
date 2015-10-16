@@ -9,7 +9,7 @@ AngularJS UI for the Dockstore Web Service.
 
 3. The GitHub application `Authorization callback URL` should be set to: `http://localhost:8090/login`.
 
-4. The Quay.io application `Redirect/Callback URL Prefix` should be set to: `http://localhost:8090/accounts`;
+4. The Quay.io application `Redirect/Callback URL Prefix` should be set to: `http://localhost:8090/accounts`.
 
 5. Navigate to `http://localhost:8090` in a web browser.
 
