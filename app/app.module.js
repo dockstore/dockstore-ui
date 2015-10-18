@@ -6,11 +6,11 @@ angular.module('dockstore.ui',
     API_URL_DEBUG: 'http://localhost:8090/tests/dummy-data',
     DEBUG_MODE: true,
     GITHUB_AUTH_URL: 'https://github.com/login/oauth/authorize',
-    GITHUB_CLIENT_ID: 'a70739297a7d67f915de',
-    GITHUB_REDIRECT_URI: '',
+    GITHUB_CLIENT_ID: '8835e744db0ed77dd3b0',
+    GITHUB_REDIRECT_URI: 'http://localhost:8090/login',
     GITHUB_SCOPE: 'read:org',
     QUAYIO_AUTH_URL: 'https://quay.io/oauth/authorize',
-    QUAYIO_CLIENT_ID: 'RWCBI3Y6QUNXDPYKNLMC',
+    QUAYIO_CLIENT_ID: 'XWGF22T0VWWL579SFAAD',
     QUAYIO_REDIRECT_URI: 'http://localhost:8090/accounts',
     QUAYIO_SCOPE: 'repo:read,user:read'
   })
@@ -20,6 +20,7 @@ angular.module('dockstore.ui',
     $authProvider.baseUrl = 'http://localhost:8080/';
       $authProvider.github({
         clientId: WebService.GITHUB_CLIENT_ID,
+        redirectUri: WebService.GITHUB_REDIRECT_URI,
         scope: [WebService.GITHUB_SCOPE]
       });
   }])
