@@ -18,8 +18,8 @@ angular.module('dockstore.ui')
       /* Probabably want to do this with an explicit user_id */
       this.getUserTokens = function() {
         var resUrl = WebService.DEBUG_MODE ?
-          WebService.API_URL_DEBUG + '/token/listOwned.json' :
-          WebService.API_URL + '/token/listOwned';
+          WebService.API_URI_DEBUG + '/token/listOwned.json' :
+          WebService.API_URI + '/token/listOwned';
         return $q(function(resolve, reject) {
           $http({
             method: 'GET',
@@ -33,7 +33,7 @@ angular.module('dockstore.ui')
       };
 
       this.deleteToken = function(token_id) {
-        var resUrl = WebService.API_URL + '/token/' + token_id;
+        var resUrl = WebService.API_URI + '/token/' + token_id;
         return $q(function(resolve, reject) {
           $http({
             method: 'DELETE',
@@ -47,7 +47,7 @@ angular.module('dockstore.ui')
       };
 
       this.registerQuayioAccessToken = function(userId, accessToken) {
-        var resUrl = WebService.API_URL + '/token/quay.io/' + userId;
+        var resUrl = WebService.API_URI + '/token/quay.io/' + userId;
         return $q(function(resolve, reject) {
           $http({
             method: 'POST',

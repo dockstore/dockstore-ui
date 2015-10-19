@@ -8,10 +8,25 @@
  * Controller of the dockstore.ui
  */
 angular.module('dockstore.ui')
-  .controller('SearchCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+  .controller('SearchCtrl', [
+    '$scope',
+    'ContainerService',
+    'NotificationService',
+    function ($scope, ContainerService, NtfnService) {
+
+      var listContainers = function() {
+        NtfnService.popInfo('List Docker Containers', 'Loading container lists...');
+        ContainerService.getDockerContainerList()
+          .then(function(containers) {
+            NtfnService.clearAll();
+            $scope.containerList = containers;
+          })
+          .catch(function(response) {
+            var message = (typeof response.statusText !== 'undefined') ?
+              response.statusText : 'Unknown Error.';
+            NtfnService.popError('List Docker Containers', message);
+          });
+      };
+
+      listContainers();
+  }]);

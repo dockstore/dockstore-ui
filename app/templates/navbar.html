@@ -13,21 +13,21 @@
     <ul class="nav navbar-nav pull-right">
       <li><a href="#/login" ng-hide="isAuthenticated()">Log in</a></li>
       <li><a href="#/register" ng-hide="isAuthenticated()">Register</a></li>
-      <li ng-show="isAuthenticated()" dropdown>
-        <a href dropdown-toggle>{{username}} <span class="caret"></span></a>
+      <li ng-show="isAuthenticated()" uib-dropdown>
+        <a href uib-dropdown-toggle>{{username}} <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li>
-            <a href="/accounts">
+            <a href="#/accounts">
               <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Accounts
             </a>
           </li>
           <li>
-            <a href="/tokens">
+            <a href="#/tokens">
               <span class="glyphicon glyphicon-link"></span>&nbsp;&nbsp;Tokens
             </a>
           </li>
           <li>
-            <a href="/settings">
+            <a href="#/settings">
               <span class="glyphicon glyphicon-wrench"></span>
               &nbsp;&nbsp;Settings
             </a>

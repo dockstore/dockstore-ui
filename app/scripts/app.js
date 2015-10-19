@@ -18,6 +18,7 @@ angular
     'ngTouch',
     'satellizer',
     'LocalStorageModule',
+    'ui.bootstrap',
     'toaster'
   ])
   .config(['$authProvider', 'WebService',
@@ -37,16 +38,6 @@ angular
   .config(['$routeProvider', '$locationProvider',
     function ($routeProvider, $locationProvider) {
       $routeProvider
-        .when('/', {
-          templateUrl: 'views/main.html',
-          controller: 'MainCtrl',
-          controllerAs: 'main'
-        })
-        .when('/about', {
-          templateUrl: 'views/about.html',
-          controller: 'AboutCtrl',
-          controllerAs: 'about'
-        })
         .when('/login', {
           templateUrl: 'views/login.html',
           controller: 'LoginCtrl',
@@ -56,6 +47,31 @@ angular
           templateUrl: 'views/search.html',
           controller: 'SearchCtrl',
           controllerAs: 'Search'
+        })
+        .when('/containers', {
+          templateUrl: 'views/containers.html',
+          controller: 'ContainersCtrl',
+          controllerAs: 'Containers'
+        })
+        .when('/docs', {
+          templateUrl: 'views/documentation.html',
+          controller: 'DocumentationCtrl',
+          controllerAs: 'Documentation'
+        })
+        .when('/settings', {
+          templateUrl: 'views/settings.html',
+          controller: 'SettingsCtrl',
+          controllerAs: 'Settings'
+        })
+        .when('/tokens', {
+          templateUrl: 'views/tokens.html',
+          controller: 'TokensCtrl',
+          controllerAs: 'Tokens'
+        })
+        .when('/accounts', {
+          templateUrl: 'views/accounts.html',
+          controller: 'AccountsCtrl',
+          controllerAs: 'Accounts'
         })
         .otherwise({
           redirectTo: '/search'

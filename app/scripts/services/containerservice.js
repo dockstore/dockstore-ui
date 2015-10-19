@@ -15,13 +15,10 @@ angular.module('dockstore.ui')
       function ($q, $http, WebService) {
     
     this.getDockerContainerList = function() {
-      var resUrl = WebService.DEBUG_MODE ?
-        WebService.API_URL_DEBUG + '/docker.repo/docker.repo.json' :
-        WebService.API_URL + '/docker.repo';
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: resUrl
+          url: WebService.API_URI + '/container'
         }).then(function(response) {
           resolve(response.data);
         }, function(response) {
@@ -34,7 +31,7 @@ angular.module('dockstore.ui')
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URL + '/container/' + cont_id
+          url: WebService.API_URI + '/container/' + cont_id
         }).then(function(response) {
           resolve(response.data);
         }, function(response) {
@@ -47,7 +44,7 @@ angular.module('dockstore.ui')
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URL + '/container/collab?repository=' + cont_path
+          url: WebService.API_URI + '/container/collab?repository=' + cont_path
         }).then(function(response) {
           resolve(response.data);
         }, function(response) {
@@ -60,7 +57,7 @@ angular.module('dockstore.ui')
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URL +
+          url: WebService.API_URI +
             '/docker.repo/getUserRegisteredContainers?user_id=' + user_id
         }).then(function(response) {
           resolve(response.data);
@@ -74,7 +71,7 @@ angular.module('dockstore.ui')
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URL + '/docker.repo/searchContainers',
+          url: WebService.API_URI + '/docker.repo/searchContainers',
           params: {
             pattern: query_string
           }

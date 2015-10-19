@@ -16,6 +16,9 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
+
+    <!-- TODO: Refactor -->
+    <link rel="stylesheet" type="text/css" href="scripts/libs/datatables/datatables.min.css" />
   </head>
   <body ng-app="dockstore.ui">
     <!--[if lte IE 8]>
@@ -25,11 +28,17 @@
     <!-- Add your site or application content here -->
     <!--div class="header"-->
       <div navbar></div>
+      <div toaster-container></div>
     <!--/div-->
 
-    <!--div class="container"-->
-    <div ng-view=""></div>
-    <!--/div-->
+    <!-- Page Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <div ng-view></div>
+        </div>
+      </div>
+    </div>
 
     <!--div class="footer">
       <div class="container">
@@ -50,16 +59,18 @@
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
     <script src="bower_components/AngularJS-Toaster/toaster.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- Satellizer Modified for Dockstore -->
     <script src="scripts/libs/satellizer/satellizer-ds.js"></script>
 
+    <!-- TODO: Refactor -->
+    <script type="text/javascript" src="scripts/libs/datatables/datatables.min.js"></script>
+
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/main.js"></script>
-    <script src="scripts/controllers/about.js"></script>
     <script src="scripts/services/webservice.js"></script>
     <script src="scripts/controllers/login.js"></script>
     <script src="scripts/services/notificationservice.js"></script>
@@ -69,6 +80,15 @@
     <script src="scripts/directives/navbar.js"></script>
     <script src="scripts/controllers/navbar.js"></script>
     <script src="scripts/controllers/search.js"></script>
+    <script src="scripts/controllers/containers.js"></script>
+    <script src="scripts/controllers/documentation.js"></script>
+    <script src="scripts/controllers/settings.js"></script>
+    <script src="scripts/controllers/tokens.js"></script>
+    <script src="scripts/controllers/accounts.js"></script>
+    <script src="scripts/directives/tokensgrid.js"></script>
+    <script src="scripts/directives/containersgrid.js"></script>
+    <script src="scripts/directives/copytext.js"></script>
+    <script src="scripts/controllers/copytext.js"></script>
     <!-- endbuild -->
 </body>
 </html>
