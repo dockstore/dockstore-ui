@@ -1,5 +1,5 @@
 {
-  "name": "dockstoreui",
+  "name": "dockstore.ui",
   "private": true,
   "devDependencies": {
     "grunt": "^0.4.5",

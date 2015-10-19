@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name dockstoreuiApp.controller:AboutCtrl
+ * @name dockstore.ui.controller:AboutCtrl
  * @description
  * # AboutCtrl
- * Controller of the dockstoreuiApp
+ * Controller of the dockstore.ui
  */
-angular.module('dockstoreuiApp')
+angular.module('dockstore.ui')
   .controller('AboutCtrl', function () {
     this.awesomeThings = [
       'HTML5 Boilerplate',
