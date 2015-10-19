@@ -6,13 +6,13 @@
       </a>
     </ul>
     <ul class="nav navbar-nav">
-      <li><a href="/search">Search</a></li>
-      <li><a ng-show="isAuthenticated()" href="/containers">Containers</a></li>
-      <li><a href="/docs">Documentation</a></li>
+      <li><a href="#/search">Search</a></li>
+      <li><a ng-show="isAuthenticated()" href="#/containers">Containers</a></li>
+      <li><a href="#/docs">Documentation</a></li>
     </ul>
     <ul class="nav navbar-nav pull-right">
-      <li><a href="/login" ng-hide="isAuthenticated()">Log in</a></li>
-      <li><a href="/register" ng-hide="isAuthenticated()">Register</a></li>
+      <li><a href="#/login" ng-hide="isAuthenticated()">Log in</a></li>
+      <li><a href="#/register" ng-hide="isAuthenticated()">Register</a></li>
       <li ng-show="isAuthenticated()" dropdown>
         <a href dropdown-toggle>{{username}} <span class="caret"></span></a>
         <ul class="dropdown-menu">

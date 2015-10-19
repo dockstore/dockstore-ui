@@ -522,7 +522,7 @@
             // var exchangeForTokenUrl = config.baseUrl ? utils.joinUrl(config.baseUrl, defaults.url) : defaults.url;
             var exchangeForTokenUrl = config.baseUrl + 'token/github.com?code=' + data.code;
 
-            return $http.post(exchangeForTokenUrl, data, { withCredentials: config.withCredentials });
+            return $http.get(exchangeForTokenUrl, data, { withCredentials: config.withCredentials });
           };
 
           Oauth2.buildQueryString = function() {
