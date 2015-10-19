@@ -1,0 +1,10 @@
+/node_modules
+/dist
+/.tmp
+/.sass-cache
+/bower_components
+
+# What millennium do we live in again?
+.DS_Store
+Thumbs.db
+
