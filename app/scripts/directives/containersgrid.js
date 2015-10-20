@@ -16,24 +16,14 @@ angular.module('dockstore.ui')
           if (newVal) {
             $(element).find('table').DataTable({
               columns: [
-                { width: '40%', type: 'html'},
+                { width: '40%' },
                 { width: '20%' },
-                { width: '40%', searchable: false }
+                { width: '40%' }
               ],
-              searchCols: [
-                {
-                  search: '',
-                  escapeRegex: false
-                },
-                {
-                  search: '',
-                  escapeRegex: false
-                },
-                {
-                  search: '',
-                  escapeRegex: false
-                }
-              ]
+              search: {
+                smart: true,
+                caseInsensitive: true
+              }
             });
           }
         }, true);
