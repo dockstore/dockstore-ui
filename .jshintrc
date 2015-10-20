@@ -9,8 +9,9 @@
   "node": true,
   "strict": true,
   "undef": true,
-  "unused": true,
+  "unused": false,
   "globals": {
-    "angular": false
+    "angular": false,
+    "$": false
   }
 }
