@@ -65,13 +65,39 @@ angular.module('dockstore.ui')
         $scope.numPages =
           Math.ceil($scope.containers.length / parseInt($scope.numContsPage));
         $scope.pageNumList = $scope.getPageNumList();
+        
+      };
+
+      $scope.startCont = 0;
+      $scope.endCont = 0;
+
+      $scope.updateContRange = function() {
+        $scope.startCont = $scope.numContsPage * ($scope.currPage - 1);
+        $scope.endCont = ($scope.numContsPage) * $scope.currPage - 1;
       };
 
       $scope.getPaginRangeObj = function() {
-        var rangeObj = {};
-        rangeObj.start = $scope.numContsPage * ($scope.currPage - 1);
-        rangeObj.end = ($scope.numContsPage) * $scope.currPage - 1;
-        return rangeObj;
+        $scope.updateContRange();
+        return {
+          start: $scope.startCont,
+          end: $scope.endCont
+        };
+      };
+
+      $scope.getRangeString = function() {
+        var start = ($scope.startCont + 1).toString();
+        var end = ($scope.endCont + 1).toString();
+
+        var numLength = Math.max(start.length, end.length);
+
+        for (var i = start.length; i < numLength; i++) {
+          start = '0' + start;
+        }
+        for (var i = end.length; i < numLength; i++) {
+          end = '0' + end;
+        }
+
+        return start + ' to ' + end;
       };
 
       $scope.changePage = function(pageNum) {
