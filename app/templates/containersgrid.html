@@ -1,25 +1,100 @@
-<table class="display" cellspacing="0" width="100%">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Version</th>
-      <th>Docker Pull</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- Placeholder data until API is modified to return this info. -->
-    <tr ng-repeat="cont in containerList">
-      <td>
-        <a href="#/search/{{cont.id}}">{{cont.name}}</a>
-        <span class="glyphicon glyphicon-lock"
-              ng-show="!cont.is_public"></span>
-      </td>
-      <td>
-        {{ (cont.tags.indexOf('version') > -1) ? cont.tags.version : 'n/a' }}
-      </td>
-      <td>
-        <copy-text value="docker pull {{cont.path}}"></copy-text>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="row containers-grid">
+  <div class="col-md-12">
+    <form class="form-inline">
+      <div class="form-group form-group-sm pull-left">
+        <label for="num-page-select">Show: </label>
+        <div class="input-group">
+          <select id="num-page-select" class="form-control" ng-model="numContsPage">
+            <option value="2">2 rows</option>
+            <option value="10">10 rows</option>
+            <option value="20">20 rows</option>
+            <option value="40">40 rows</option>
+            <option value="80">80 rows</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group form-group-sm pull-right">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <span class="glyphicon glyphicon-search"></span>
+          </div>
+          <input type="text"
+                  class="form-control"
+                  ng-model="searchContainers"
+                  placeholder="Search Containers" />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row containers-grid">
+  <div class="col-md-12">
+    <table class="table table-bordered table-condensed table-striped">
+      <thead>
+        <tr>
+          <th class="col-md-3">
+            Name
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('name')"
+                  ng-click="clickSortColumn('name')">
+            </span>
+          </th>
+          <th class="col-md-2">
+            Author
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('author')"
+                  ng-click="clickSortColumn('author')">
+            </span>
+          </th>
+          <th class="col-md-2">
+            Version
+          </th>
+          <th class="col-md-5">
+            Docker Pull
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- need a to write a 'smart search' filter -->
+        <tr ng-repeat="cont in containers | orderBy:sortColumn:sortReverse | PaginationFilter:getPaginRangeObj() | filter: searchContainers">
+          <td>
+            <a href="#/search/{{cont.id}}">{{cont.name}}</a>
+          </td>
+          <td>
+            {{ cont.author ? cont.author : 'n/a' }}
+          </td>
+          <td>
+            {{ getLatestVersion(cont.tags) }}
+          </td>
+          <td>
+            <copy-text value="docker pull {{cont.path}}"></copy-text>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row containers-grid">
+  <div class="col-md-12">
+    <nav class="pull-right">
+      <ul class="pagination pagination-sm">
+        <li ng-class="{ disabled: currPage === 1 }">
+          <a  href ng-click="changePage(1)">First</a>
+        </li>
+        <li ng-class="{ disabled: currPage === 1 }">
+          <a href ng-click="changePage(-1)">Previous</a>
+        </li>
+        <li ng-repeat="pageNum in pageNumList"
+            ng-class="{ active: pageNum === currPage }">
+          <a href ng-click="changePage(pageNum)">{{pageNum}}</a>
+        </li>
+        <li ng-class="{ disabled: currPage === numPages }">
+          <a href ng-click="changePage(-2)">Next</a>
+        </li>
+        <li ng-class="{ disabled: currPage === numPages }">
+          <a href ng-click="changePage(numPages)">Last</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

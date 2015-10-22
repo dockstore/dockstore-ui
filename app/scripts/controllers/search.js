@@ -19,7 +19,7 @@ angular.module('dockstore.ui')
         ContainerService.getDockerContainerList()
           .then(function(containers) {
             NtfnService.clearAll();
-            $scope.containerList = containers;
+            $scope.containers = containers;
           })
           .catch(function(response) {
             var message = (typeof response.statusText !== 'undefined') ?

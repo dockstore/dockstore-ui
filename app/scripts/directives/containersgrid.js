@@ -10,21 +10,15 @@ angular.module('dockstore.ui')
   .directive('containersGrid', function () {
     return {
       restrict: 'AE',
+      controller: 'ContainersGridCtrl',
+      scope: {
+        containers: '='
+      },
       templateUrl: 'templates/containersgrid.html',
       link: function postLink(scope, element, attrs) {
-        scope.$watch('containerList', function(newVal, oldVal) {
+        scope.$watch('containers', function(newVal, oldVal) {
           if (newVal) {
-            $(element).find('table').DataTable({
-              columns: [
-                { width: '40%' },
-                { width: '20%' },
-                { width: '40%' }
-              ],
-              search: {
-                smart: true,
-                caseInsensitive: true
-              }
-            });
+            scope.refreshPagination();
           }
         }, true);
       }

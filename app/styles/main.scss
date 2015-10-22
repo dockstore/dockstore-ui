@@ -91,6 +91,13 @@ body {
 }
 
 /* Begin Temporary Styles - Need to Refactor Later */
+.row.containers-grid {
+  margin-bottom: 8px;
+}
+.row.containers-grid:last-child {
+  margin-bottom: 0;
+}
+
 /* Login Page */
 .login-panel {
   width: 300px;
