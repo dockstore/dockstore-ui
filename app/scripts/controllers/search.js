@@ -14,7 +14,7 @@ angular.module('dockstore.ui')
     'NotificationService',
     function ($scope, ContainerService, NtfnService) {
 
-      var listContainers = function() {
+      $scope.listContainers = function() {
         NtfnService.popInfo('List Docker Containers',
           'Loading container lists...');
         ContainerService.getDockerContainerList()
@@ -29,5 +29,6 @@ angular.module('dockstore.ui')
           });
       };
 
-      listContainers();
+      $scope.listContainers();
+      
   }]);

@@ -13,15 +13,15 @@ angular.module('dockstore.ui')
     '$auth',
     '$location',
     'TokenService',
-    'NotificationService',
-    function ($scope, $auth, $location, TokenService, NtfnService) {
+    'NotificationService', '$timeout',
+    function ($scope, $auth, $location, TokenService, NtfnService, $timeout) {
 
       $scope.listTokens = function() {
         NtfnService.popInfo('List Tokens', 'Retrieving list of tokens...');
         TokenService.getUserTokens()
           .then(function(tokens) {
             NtfnService.clearAll();
-            $scope.userTokens = tokens;
+            $scope.tokens = tokens;
           }, function(response) {
             var message = (typeof response.statusText !== 'undefined') ?
               response.statusText : 'Unknown Error.';
@@ -29,16 +29,11 @@ angular.module('dockstore.ui')
           });
       };
 
-      $scope.switchTokens = function(token) {
-        $auth.setToken(token);
-        NtfnService.popSuccess('Switch Tokens Success');
-      };
-
-      $scope.deleteToken = function(token_id) {
-        return TokenService.deleteToken(token_id)
+      $scope.deleteToken = function(tokenId) {
+        return TokenService.deleteToken(tokenId)
           .then(function(response) {
             NtfnService.popSuccess('Delete Token Success',
-                                    'Token ID: ' + token_id);
+                                    'Token ID: ' + tokenId);
           }, function(response) {
             var message = (typeof response.statusText !== 'undefined') ?
               response.statusText : 'Unknown Error.';
@@ -47,4 +42,5 @@ angular.module('dockstore.ui')
       };
 
       $scope.listTokens();
+
   }]);

@@ -17,7 +17,7 @@ describe('Controller: SearchCtrl', function () {
     });
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(SearchCtrl.awesomeThings.length).toBe(3);
-  });
+  // it('should attach a list of awesomeThings to the scope', function () {
+  //   expect(SearchCtrl.awesomeThings.length).toBe(3);
+  // });
 });

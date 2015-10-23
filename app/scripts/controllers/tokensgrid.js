@@ -2,24 +2,24 @@
 
 /**
  * @ngdoc function
- * @name dockstore.ui.controller:ContainersGridCtrl
+ * @name dockstore.ui.controller:TokensGridCtrl
  * @description
- * # ContainersGridCtrl
+ * # TokensGridCtrl
  * Controller of the dockstore.ui
  */
 angular.module('dockstore.ui')
-  .controller('ContainersGridCtrl', [
+  .controller('TokensGridCtrl', [
     '$scope',
     function ($scope) {
-
-      $scope.containers = [];
+    
+      $scope.tokens = [];
       $scope.sortColumn = 'name';
       $scope.sortReverse = false;
-      $scope.numContsPage = "10";
+      $scope.numTknsPage = "10";
       $scope.numNavPages = 5; // Must be an odd number
       $scope.currPage = 1;
-      $scope.startCont = 0;
-      $scope.endCont = 0;
+      $scope.startTkn = 0;
+      $scope.endTkn = 0;
 
       $scope.getLatestVersionNumber = function(tags) {
         if (!tags || tags.length === 0) return 'n/a';
@@ -34,7 +34,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.getPageNumList = function() {
-        if ($scope.filteredContainers.length === 0) return [1];
+        if ($scope.filteredTokens.length === 0) return [1];
 
         var pageNumList = [];
         var numPrevRadiable = Math.min($scope.currPage - 1,
@@ -71,21 +71,20 @@ angular.module('dockstore.ui')
       $scope.refreshPagination = function() {
         $scope.currPage = 1;
         $scope.numPages =
-          Math.ceil($scope.filteredContainers.length /
-                      parseInt($scope.numContsPage));
+          Math.ceil($scope.filteredTokens.length / parseInt($scope.numTknsPage));
         $scope.pageNumList = $scope.getPageNumList();
       };
 
       $scope.updateContRange = function() {
-        $scope.startCont = $scope.numContsPage * ($scope.currPage - 1);
-        $scope.endCont = ($scope.numContsPage) * $scope.currPage - 1;
+        $scope.startTkn = $scope.numTknsPage * ($scope.currPage - 1);
+        $scope.endTkn = ($scope.numTknsPage) * $scope.currPage - 1;
       };
 
       $scope.getPaginRangeObj = function() {
         $scope.updateContRange();
         return {
-          start: $scope.startCont,
-          end: $scope.endCont
+          start: $scope.startTkn,
+          end: $scope.endTkn
         };
       };
 
@@ -121,10 +120,10 @@ angular.module('dockstore.ui')
       };
 
       $scope.getRangeString = function() {
-        var start = Math.min($scope.startCont + 1,
-                              $scope.filteredContainers.length).toString();
-        var end = Math.min($scope.endCont + 1,
-                              $scope.filteredContainers.length).toString();
+        var start = Math.min($scope.startTkn + 1,
+                              $scope.filteredTokens.length).toString();
+        var end = Math.min($scope.endTkn + 1,
+                              $scope.filteredTokens.length).toString();
 
         var numLength = Math.max(start.length, end.length);
 
@@ -135,7 +134,7 @@ angular.module('dockstore.ui')
           end = '0' + end;
         }
 
-        return start + ' to ' + end + ' of ' + $scope.filteredContainers.length;
+        return start + ' to ' + end + ' of ' + $scope.filteredTokens.length;
       };
-      
+
   }]);

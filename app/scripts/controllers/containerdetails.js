@@ -23,7 +23,7 @@ angular.module('dockstore.ui')
             $scope.containerObj = containerObj;
           })
           .catch(function(response) {
-            var message = (typeof response.statusText != 'undefined') ?
+            var message = (typeof response.statusText !== 'undefined') ?
               response.statusText : 'Unknown Error.';
             NtfnService.popError('Docker Container Details', message);
           });

@@ -12,9 +12,9 @@ describe('Directive: containersGrid', function () {
     scope = $rootScope.$new();
   }));
 
-  it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<containers-grid></containers-grid>');
-    element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the containersGrid directive');
-  }));
+  // it('should make hidden element visible', inject(function ($compile) {
+  //   element = angular.element('<containers-grid></containers-grid>');
+  //   element = $compile(element)(scope);
+  //   expect(element.text()).toBe('this is the containersGrid directive');
+  // }));
 });
