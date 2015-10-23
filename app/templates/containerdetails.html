@@ -1,0 +1,31 @@
+<ul class="list-unstyled">
+  <li>
+    <strong>Container Name</strong>:
+    {{containerObj.name}}
+  </li>
+  <li>
+    <strong>Author</strong>:
+    {{ containerObj.author ? containerObj.author : 'n/a' }}
+  </li>
+  <li>
+    <strong>Versions</strong>:
+    <ul>
+      <li ng-repeat="version in getVersionTags(containerObj)">
+        {{version}}
+      </li>
+    </ul>
+  </li>
+  <li>
+    <strong>Last Build</strong>:
+    {{getDateTimeString(containerObj.lastBuild)}}
+  </li>
+  <li>
+    <strong>Last Update</strong>:
+    {{getDateTimeString(containerObj.lastUpdated)}}
+  </li>
+  <li>
+    <strong>Description</strong>:
+    <textarea class="form-control" rows="8">
+{{containerObj.description}}</textarea>
+  </li>
+</ul>

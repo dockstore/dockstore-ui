@@ -1,11 +1,10 @@
-<div class="row containers-grid">
+<div class="row">
   <div class="col-md-12">
     <form class="form-inline">
       <div class="form-group form-group-sm pull-left">
         <label for="num-page-select">Show: </label>
         <div class="input-group">
           <select id="num-page-select" class="form-control" ng-model="numContsPage">
-            <option value="2">2 rows</option>
             <option value="10">10 rows</option>
             <option value="20">20 rows</option>
             <option value="40">40 rows</option>
@@ -27,7 +26,7 @@
     </form>
   </div>
 </div>
-<div class="row containers-grid">
+<div class="row vert-offset-8">
   <div class="col-md-12">
     <table class="table table-bordered table-condensed table-striped">
       <thead>
@@ -56,7 +55,7 @@
       </thead>
       <tbody>
         <!-- need a to write a 'smart search' filter -->
-        <tr ng-repeat="cont in containers | orderBy:sortColumn:sortReverse | PaginationFilter:getPaginRangeObj() | filter: searchContainers">
+        <tr ng-repeat="cont in ((filteredContainers = (containers | filter: searchContainers)) | orderBy:sortColumn:sortReverse | PaginationFilter:getPaginRangeObj())">
           <td>
             <a href="#/search/{{cont.id}}">{{cont.name}}</a>
           </td>
@@ -64,7 +63,7 @@
             {{ cont.author ? cont.author : 'n/a' }}
           </td>
           <td>
-            {{ getLatestVersion(cont.tags) }}
+            {{ getLatestVersionNumber(cont.tags) }}
           </td>
           <td>
             <copy-text value="docker pull {{cont.path}}"></copy-text>
@@ -74,7 +73,7 @@
     </table>
   </div>
 </div>
-<div class="row containers-grid">
+<div class="row ds-grid-footer">
   <div class="col-md-12">
     <div class="pull-left">
       Results {{getRangeString()}}

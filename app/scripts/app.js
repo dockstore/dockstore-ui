@@ -48,6 +48,11 @@ angular
           controller: 'SearchCtrl',
           controllerAs: 'Search'
         })
+        .when('/search/:containerId', {
+          templateUrl: 'views/searchcontainerdetails.html',
+          controller: 'SearchContainerDetailsCtrl',
+          controllerAs: 'SearchContainerDetails'
+        })
         .when('/containers', {
           templateUrl: 'views/containers.html',
           controller: 'ContainersCtrl',

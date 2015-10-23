@@ -91,11 +91,16 @@ body {
 }
 
 /* Begin Temporary Styles - Need to Refactor Later */
-.row.containers-grid {
-  margin-bottom: 8px;
+.vert-offset-4 { margin-top: 4px; }
+.vert-offset-8 { margin-top: 8px; }
+.vert-offset-12 { margin-top: 12px; }
+
+/* Dockstore Grid */
+.row.ds-grid-footer > div {
+  margin-top: -6px;
 }
-.row.containers-grid:last-child {
-  margin-bottom: 0;
+.row.ds-grid-footer nav {
+  margin-top: -25px;
 }
 
 /* Login Page */

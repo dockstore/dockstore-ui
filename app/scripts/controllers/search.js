@@ -15,7 +15,8 @@ angular.module('dockstore.ui')
     function ($scope, ContainerService, NtfnService) {
 
       var listContainers = function() {
-        NtfnService.popInfo('List Docker Containers', 'Loading container lists...');
+        NtfnService.popInfo('List Docker Containers',
+          'Loading container lists...');
         ContainerService.getDockerContainerList()
           .then(function(containers) {
             NtfnService.clearAll();

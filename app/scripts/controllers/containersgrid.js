@@ -11,16 +11,25 @@ angular.module('dockstore.ui')
   .controller('ContainersGridCtrl', [
     '$scope',
     function ($scope) {
-      
-      $scope.getLatestVersion = function(tags) {
+
+      $scope.containers = [];
+      $scope.sortColumn = 'name';
+      $scope.sortReverse = false;
+      $scope.numContsPage = "10";
+      $scope.numNavPages = 5; // Must be an odd number
+      $scope.currPage = 1;
+      $scope.startCont = 0;
+      $scope.endCont = 0;
+
+      $scope.getLatestVersionNumber = function(tags) {
         if (!tags || tags.length === 0) return 'n/a';
-        var desc_tags = tags.sort(function(a, b) {
+        var descTags = tags.sort(function(a, b) {
           return b.version.localeCompare(a.version);
         });
-        if (desc_tags.length >= 2 && desc_tags[0].version === 'latest') {
-          return desc_tags[1].version;
+        if (descTags.length >= 2 && descTags[0].version === 'latest') {
+          return descTags[1].version;
         } else {
-          return desc_tags[0].version;
+          return descTags[0].version;
         }
       };
 
@@ -28,12 +37,10 @@ angular.module('dockstore.ui')
         if ($scope.containers.length === 0) return [1];
 
         var pageNumList = [];
-
         var numPrevRadiable = Math.min($scope.currPage - 1,
                                         $scope.numNavPages - 1);
         var numNextRadiable = Math.min($scope.numPages - $scope.currPage,
                                         $scope.numNavPages - 1);
-
         var numNext = 0;
         var numPrev = 0;
 
@@ -43,7 +50,6 @@ angular.module('dockstore.ui')
           numPrev = Math.min(($scope.numNavPages - 1) / 2,
                               $scope.currPage - 1);
         }
-
         if (numPrevRadiable < ($scope.numNavPages - 1) / 2) {
           numNext = numNextRadiable - numPrevRadiable;
         } else {
@@ -51,9 +57,10 @@ angular.module('dockstore.ui')
                               $scope.numPages - $scope.currPage);
         }
 
-        for (var i = numPrev; i >= 0; i--) {
+        for (var i = numPrev; i > 0; i--) {
           pageNumList.push($scope.currPage - i);
         }
+        pageNumList.push($scope.currPage);
         for (var i = 1; i <= numNext; i++) {
           pageNumList.push($scope.currPage + i);
         }
@@ -62,14 +69,11 @@ angular.module('dockstore.ui')
       };
 
       $scope.refreshPagination = function() {
+        $scope.currPage = 1;
         $scope.numPages =
-          Math.ceil($scope.containers.length / parseInt($scope.numContsPage));
+          Math.ceil($scope.filteredContainers.length / parseInt($scope.numContsPage));
         $scope.pageNumList = $scope.getPageNumList();
-        
       };
-
-      $scope.startCont = 0;
-      $scope.endCont = 0;
 
       $scope.updateContRange = function() {
         $scope.startCont = $scope.numContsPage * ($scope.currPage - 1);
@@ -82,22 +86,6 @@ angular.module('dockstore.ui')
           start: $scope.startCont,
           end: $scope.endCont
         };
-      };
-
-      $scope.getRangeString = function() {
-        var start = ($scope.startCont + 1).toString();
-        var end = ($scope.endCont + 1).toString();
-
-        var numLength = Math.max(start.length, end.length);
-
-        for (var i = start.length; i < numLength; i++) {
-          start = '0' + start;
-        }
-        for (var i = end.length; i < numLength; i++) {
-          end = '0' + end;
-        }
-
-        return start + ' to ' + end;
       };
 
       $scope.changePage = function(pageNum) {
@@ -131,14 +119,26 @@ angular.module('dockstore.ui')
         }
       };
 
-      (function init() {
-        $scope.containers = [];
-        $scope.numContsPage = "2";
-        $scope.currPage = 1;
-        $scope.numNavPages = 5;
-        $scope.sortColumn = 'name';
-        $scope.sortReverse = false;
-      })();
+      $scope.getRangeString = function() {
+        var start = Math.min($scope.startCont + 1,
+                              $scope.filteredContainers.length).toString();
+        var end = Math.min($scope.endCont + 1,
+                              $scope.filteredContainers.length).toString();
 
+        var numLength = Math.max(start.length, end.length);
+
+        for (var i = start.length; i < numLength; i++) {
+          start = '0' + start;
+        }
+        for (var i = end.length; i < numLength; i++) {
+          end = '0' + end;
+        }
+
+        return start + ' to ' + end + ' of ' + $scope.filteredContainers.length;
+      };
+
+      (function init() {
+        
+      })();
       
   }]);

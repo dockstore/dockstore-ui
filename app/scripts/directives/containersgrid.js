@@ -16,11 +16,18 @@ angular.module('dockstore.ui')
       },
       templateUrl: 'templates/containersgrid.html',
       link: function postLink(scope, element, attrs) {
-        scope.$watch('containers', function(newVal, oldVal) {
-          if (newVal) {
-            scope.refreshPagination();
-          }
-        }, true);
+        scope.$watchCollection('filteredContainers',
+          function(newVal, oldVal, scope) {
+            if (newVal) {
+              scope.refreshPagination();
+            }
+        });
+        scope.$watch('numContsPage',
+          function(newVal, oldVal, scope) {
+            if (newVal) {
+              scope.refreshPagination();
+            }
+        });
       }
     };
   });
