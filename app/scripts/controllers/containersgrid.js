@@ -90,6 +90,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.changePage = function(pageNum) {
+        if ($scope.numPages === 0 ) return;
         switch (pageNum) {
           case -1:
             if ($scope.currPage !== 1) $scope.currPage--;

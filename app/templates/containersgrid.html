@@ -91,10 +91,10 @@
             ng-class="{ active: pageNum === currPage }">
           <a href ng-click="changePage(pageNum)">{{pageNum}}</a>
         </li>
-        <li ng-class="{ disabled: currPage === numPages }">
+        <li ng-class="{ disabled: (currPage === numPages) || (numPages === 0) }">
           <a href ng-click="changePage(-2)">Next</a>
         </li>
-        <li ng-class="{ disabled: currPage === numPages }">
+        <li ng-class="{ disabled: (currPage === numPages) || (numPages === 0) }">
           <a href ng-click="changePage(numPages)">Last</a>
         </li>
       </ul>
