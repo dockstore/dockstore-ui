@@ -91,10 +91,10 @@ angular.module('dockstore.ui')
       $scope.changePage = function(pageNum) {
         switch (pageNum) {
           case -1:
-            $scope.currPage--;
+            if ($scope.currPage !== 1) $scope.currPage--;
             break;
           case -2:
-            $scope.currPage++;
+            if ($scope.currPage !== $scope.numPages) $scope.currPage++;
             break;
           default:
             $scope.currPage = pageNum;

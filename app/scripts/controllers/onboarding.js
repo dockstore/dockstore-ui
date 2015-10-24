@@ -1,0 +1,124 @@
+'use strict';
+
+/**
+ * @ngdoc function
+ * @name dockstore.ui.controller:OnboardingCtrl
+ * @description
+ * # OnboardingCtrl
+ * Controller of the dockstore.ui
+ */
+angular.module('dockstore.ui')
+  .controller('OnboardingCtrl', [
+    '$scope',
+    '$q',
+    '$auth',
+    '$location',
+    '$window',
+    'UserService',
+    'TokenService',
+    'ContainerService',
+    'NotificationService',
+    'WebService',
+    function ($scope, $q, $auth, $location, $window,
+        UserService, TokenService, ContainerService, NtfnService, WebService) {
+
+      $scope.user = UserService.getUserObj();
+
+      $scope.owStep = 1;
+      $scope.advanceStep = function() {
+        switch ($scope.owStep) {
+          case 1:
+            /* Check that both GitHub and Quay.io Accounts are linked */
+            $scope.owStep++;
+            break;
+          case 2:
+            $scope.owStep++;
+            break;
+          case 3:
+            $location.path('#/search');
+            /* Remove User from new-users Group */
+            break;
+          default:
+            $scope.owStep = 1;
+        }
+      };
+
+      $scope.linkGitHubAccount = function() {
+        $auth.logout()
+          .then(function() {
+            UserService.setUserObj(null);
+            NtfnService.popSuccess('Logout', 'Logout successful.');
+            NtfnService.popInfo('Link GitHub Account',
+              'Please select the option, "Sign in with GitHub" to continue.');
+            $location.path('#/login');
+          });
+      };
+
+      $scope.linkQuayioAccount = function() {
+        $window.location.href = WebService.QUAYIO_AUTH_URL +
+          '?client_id=' + WebService.QUAYIO_CLIENT_ID +
+          '&redirect_uri=' + WebService.QUAYIO_REDIRECT_URI +
+          '&response_type=token' +
+          '&realm=realm' +
+          '&scope=' + WebService.QUAYIO_SCOPE;
+      };
+
+      $scope.loadExternalAccounts = function() {
+        NtfnService.popInfo('User External Accounts',
+          'Retrieving list of external accounts...');
+        return TokenService.getUserTokens($scope.user.id)
+          .then(function(tokens) {
+            $scope.githubAccount = false;
+            $scope.quayioAccount = false;
+            for (var i = 0; i < tokens.length; i++){
+              switch (tokens[i].tokenSource) {
+                case 'github.com':
+                  $scope.githubAccount = true;
+                  break;
+                case 'quay.io':
+                  $scope.quayioAccount = true;
+                  break;
+              }
+            }
+          }, function(response) {
+            var message = (typeof response.statusText != 'undefined') ?
+              response.statusText : 'Unknown Error.';
+            NtfnService.popError('User External Accounts', message);
+            return $q.reject(response);
+          });
+      };
+
+      $scope.registerQuayioToken = function(userId, accessToken) {
+        NtfnService.popInfo('User External Accounts',
+          'Registering Quay.io access token...');
+        return TokenService.registerQuayioAccessToken(userId, accessToken)
+          .then(function(token) {
+            NtfnService.popSuccess('User External Accounts',
+              'Quay.io token registered successfully.');
+          }, function(response) {
+            var message = (typeof response.statusText != 'undefined') ?
+              response.statusText : 'Unknown Error.';
+            NtfnService.popError('User External Accounts', message);
+            return $q.reject(response);
+          });
+      }
+
+      $scope.loadExternalAccounts()
+        .then(function() { NtfnService.clearAll(); });
+
+      $scope.quaioAccTknRegexp = /access_token=([a-zA-Z0-9]*)/;
+      if ($scope.quaioAccTknRegexp.test($location.url())) {
+        var quayioAccTkn = $location.url().match($scope.quaioAccTknRegexp)[1];
+        $scope.registerQuayioToken(UserService.getUserObj().id, quayioAccTkn)
+          .then(function() {
+            ContainerService.refreshContainers($scope.user.id)
+              .then(function(containers) {
+                console.log('success!', containers);
+              }, function(response) {
+                console.log('failure:', response);
+              });
+            $window.location.href = '#/onboarding';
+          });
+      }
+
+  }]);

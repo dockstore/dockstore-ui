@@ -14,19 +14,19 @@ angular.module('dockstore.ui')
   	function (toaster, $timeout) {
     
       this.popInfo = function(title, message) {
-        toaster.pop('info', title, message);console.log(message);
+        toaster.pop('info', title, message);
       };
 
       this.popSuccess = function(title, message) {
-        toaster.pop('success', title, message);console.log(message);
+        toaster.pop('success', title, message);
       };
 
       this.popWarning = function(title, message) {
-        toaster.pop('warning', title, message);console.log(message);
+        toaster.pop('warning', title, message);
       };
 
       this.popError = function(title, message) {
-        toaster.pop('error', title, message);console.log(message);
+        toaster.pop('error', title, message);
       };
 
       this.clearAll = function(sel) {

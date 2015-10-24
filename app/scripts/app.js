@@ -63,20 +63,25 @@ angular
           controller: 'DocumentationCtrl',
           controllerAs: 'Documentation'
         })
-        .when('/settings', {
-          templateUrl: 'views/settings.html',
-          controller: 'SettingsCtrl',
-          controllerAs: 'Settings'
+        .when('/onboarding', {
+          templateUrl: 'views/onboarding.html',
+          controller: 'OnboardingCtrl',
+          controllerAs: 'Onboarding'
+        })
+        .when('/accounts', {
+          templateUrl: 'views/accounts.html',
+          controller: 'AccountsCtrl',
+          controllerAs: 'Accounts'
         })
         .when('/tokens', {
           templateUrl: 'views/tokens.html',
           controller: 'TokensCtrl',
           controllerAs: 'Tokens'
         })
-        .when('/accounts', {
-          templateUrl: 'views/accounts.html',
-          controller: 'AccountsCtrl',
-          controllerAs: 'Accounts'
+        .when('/settings', {
+          templateUrl: 'views/settings.html',
+          controller: 'SettingsCtrl',
+          controllerAs: 'Settings'
         })
         .otherwise({
           redirectTo: '/search'

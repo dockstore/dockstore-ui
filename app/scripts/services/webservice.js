@@ -19,6 +19,6 @@ angular.module('dockstore.ui')
     
     QUAYIO_AUTH_URL: 'https://quay.io/oauth/authorize',
     QUAYIO_CLIENT_ID: 'RWCBI3Y6QUNXDPYKNLMC',
-    QUAYIO_REDIRECT_URI: 'http://localhost:9000/%23/accounts',
+    QUAYIO_REDIRECT_URI: 'http://localhost:9000/%23/onboarding',
     QUAYIO_SCOPE: 'repo:read,user:read'
   });
