@@ -17,7 +17,7 @@ describe('Controller: OnboardingCtrl', function () {
     });
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(OnboardingCtrl.awesomeThings.length).toBe(3);
-  });
+  // it('should attach a list of awesomeThings to the scope', function () {
+  //   expect(OnboardingCtrl.awesomeThings.length).toBe(3);
+  // });
 });

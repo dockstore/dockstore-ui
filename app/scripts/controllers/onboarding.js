@@ -81,7 +81,7 @@ angular.module('dockstore.ui')
               }
             }
           }, function(response) {
-            var message = (typeof response.statusText != 'undefined') ?
+            var message = (typeof response.statusText !== 'undefined') ?
               response.statusText : 'Unknown Error.';
             NtfnService.popError('User External Accounts', message);
             return $q.reject(response);
@@ -96,12 +96,12 @@ angular.module('dockstore.ui')
             NtfnService.popSuccess('User External Accounts',
               'Quay.io token registered successfully.');
           }, function(response) {
-            var message = (typeof response.statusText != 'undefined') ?
+            var message = (typeof response.statusText !== 'undefined') ?
               response.statusText : 'Unknown Error.';
             NtfnService.popError('User External Accounts', message);
             return $q.reject(response);
           });
-      }
+      };
 
       $scope.loadExternalAccounts()
         .then(function() { NtfnService.clearAll(); });
