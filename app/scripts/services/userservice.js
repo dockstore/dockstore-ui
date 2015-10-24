@@ -20,7 +20,7 @@ angular.module('dockstore.ui')
         return $q(function(resolve, reject) {
           $http({
             method: 'GET',
-            url: WebService.API_URI + '/user/' + user_id
+            url: WebService.API_URI + '/users/' + user_id
           }).then(function(response) {
             resolve(response.data);
           }, function(response) {
@@ -33,7 +33,7 @@ angular.module('dockstore.ui')
         return $q(function(resolve, reject) {
           $http({
             method: 'GET',
-            url: WebService.API_URI + '/user/username/' + username
+            url: WebService.API_URI + '/users/username/' + username
           }).then(function(response) {
             resolve(response.data);
           }, function(response) {

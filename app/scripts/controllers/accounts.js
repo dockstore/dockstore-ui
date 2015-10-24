@@ -16,10 +16,11 @@ angular.module('dockstore.ui')
     '$window',
     'UserService',
     'TokenService',
+    'ContainerService',
     'WebService',
     'NotificationService',
     function ($scope, $q, $auth, $location, $window,
-        UserService, TokenService, WebService, NtfnService) {
+        UserService, TokenService, ContainerService, WebService, NtfnService) {
       
       $scope.user = UserService.getUserObj();
 
@@ -30,7 +31,7 @@ angular.module('dockstore.ui')
             NtfnService.popSuccess('Logout', 'Logout successful.');
             NtfnService.popInfo('Link GitHub Account',
               'Please select the option, "Sign in with GitHub" to continue.');
-            $location.path('/login');
+            $location.path('#/login');
           });
       };
 
@@ -46,7 +47,7 @@ angular.module('dockstore.ui')
       $scope.loadExternalAccounts = function() {
         NtfnService.popInfo('User External Accounts',
           'Retrieving list of external accounts...');
-        return TokenService.getUserTokens()
+        return TokenService.getUserTokens($scope.user.id)
           .then(function(tokens) {
             $scope.githubAccount = false;
             $scope.quayioAccount = false;
@@ -90,7 +91,17 @@ angular.module('dockstore.ui')
       if ($scope.quaioAccTknRegexp.test($location.url())) {
         var quayioAccTkn = $location.url().match($scope.quaioAccTknRegexp)[1];
         $scope.registerQuayioToken(UserService.getUserObj().id, quayioAccTkn)
-          .then(function() { $window.location.href = '#/accounts'; });
+          .then(function() {
+            NtfnService.popInfo('List Docker Containers',
+              'Retrieving Quay.io containers.');
+            ContainerService.refreshContainers($scope.user.id)
+              .then(function(containers) {
+                console.log('success!', containers);
+              }, function(response) {
+                console.log('failure:', response);
+              });
+            $window.location.href = '#/accounts';
+          });
       }
 
   }]);

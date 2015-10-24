@@ -12,13 +12,15 @@ angular.module('dockstore.ui')
     '$scope',
     '$auth',
     '$location',
+    'UserService',
     'TokenService',
-    'NotificationService', '$timeout',
-    function ($scope, $auth, $location, TokenService, NtfnService, $timeout) {
+    'NotificationService',
+    function ($scope, $auth, $location,
+        UserService, TokenService, NtfnService) {
 
       $scope.listTokens = function() {
         NtfnService.popInfo('List Tokens', 'Retrieving list of tokens...');
-        TokenService.getUserTokens()
+        TokenService.getUserTokens(UserService.getUserObj().id)
           .then(function(tokens) {
             NtfnService.clearAll();
             $scope.tokens = tokens;
@@ -34,6 +36,7 @@ angular.module('dockstore.ui')
           .then(function(response) {
             NtfnService.popSuccess('Delete Token Success',
                                     'Token ID: ' + tokenId);
+            $location.path('#/tokens');
           }, function(response) {
             var message = (typeof response.statusText !== 'undefined') ?
               response.statusText : 'Unknown Error.';

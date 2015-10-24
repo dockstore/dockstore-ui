@@ -520,7 +520,7 @@
 
             /* Dockstore Compatibility Modification */
             // var exchangeForTokenUrl = config.baseUrl ? utils.joinUrl(config.baseUrl, defaults.url) : defaults.url;
-            var exchangeForTokenUrl = config.baseUrl + 'token/github.com?code=' + data.code;
+            var exchangeForTokenUrl = config.baseUrl + 'auth/tokens/github.com?code=' + data.code;
 
             return $http.get(exchangeForTokenUrl, data, { withCredentials: config.withCredentials });
           };

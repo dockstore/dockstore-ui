@@ -18,7 +18,7 @@ angular.module('dockstore.ui')
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/container'
+          url: WebService.API_URI + '/containers/allRegistered'
         }).then(function(response) {
           resolve(response.data);
         }, function(response) {
@@ -31,7 +31,26 @@ angular.module('dockstore.ui')
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/container/' + cont_id
+          url: WebService.API_URI + '/containers/' + cont_id
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.refreshContainers = function(userId) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'PUT',
+          url: WebService.API_URI + '/containers/refresh',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: {
+            id: userId
+          }
         }).then(function(response) {
           resolve(response.data);
         }, function(response) {
