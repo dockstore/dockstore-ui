@@ -14,7 +14,7 @@ angular.module('dockstore.ui')
 
     GITHUB_AUTH_URL: 'https://github.com/login/oauth/authorize',
     GITHUB_CLIENT_ID: 'a70739297a7d67f915de',
-    GITHUB_REDIRECT_URI: '',
+    GITHUB_REDIRECT_URI: 'http://localhost:9000/%23/login',
     GITHUB_SCOPE: 'read:org',
     
     QUAYIO_AUTH_URL: 'https://quay.io/oauth/authorize',
