@@ -35,21 +35,21 @@ Dockstore currently integrates with GitHub and Quay.io, in the following steps, 
 ### Setting Up the Build Environment
 1. Install Node.js and NPM on your workstation, specific instructions will vary depending on the operating system distribution. The use of [nvm](https://github.com/creationix/nvm) is encouraged in supported environments.
 2. Install the principal build dependencies globally:
-```
-npm install -g grunt-cli bower yo generator-karma generator-angular
-```
+  ```
+  npm install -g grunt-cli bower yo generator-karma generator-angular
+  ```
 
 3. Install Compass, on Ubuntu 14.04 LTS run:
-```
-sudo apt-get install -y ruby ruby-dev
-sudo gem install compass
+  ```
+  sudo apt-get install -y ruby ruby-dev
+  sudo gem install compass
 ```
 
 4. Update NPM and Bower packages:
-```
-npm update
-bower update
-```
+  ```
+  npm update
+  bower update
+  ```
 
 5. Attempt to build the project by running: `grunt` from the root directory of the dockstore-ui repository. Use NPM to install any missing dependencies indicated by the output until the build succeeds (it may be necessary to install some packages locally). 
 
