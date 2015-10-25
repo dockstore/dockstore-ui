@@ -15,7 +15,7 @@ angular.module('dockstore.ui')
       $scope.containers = [];
       $scope.sortColumn = 'name';
       $scope.sortReverse = false;
-      $scope.numContsPage = "10";
+      $scope.numContsPage = "20";
       $scope.numNavPages = 5; // Must be an odd number
       $scope.currPage = 1;
       $scope.startCont = 0;
