@@ -94,12 +94,7 @@ angular.module('dockstore.ui')
           .then(function() {
             NtfnService.popInfo('List Docker Containers',
               'Retrieving Quay.io containers.');
-            ContainerService.refreshContainers($scope.user.id)
-              .then(function(containers) {
-                console.log('success!', containers);
-              }, function(response) {
-                console.log('failure:', response);
-              });
+            ContainerService.refreshContainers($scope.user.id);
             $window.location.href = '#/accounts';
           });
       }

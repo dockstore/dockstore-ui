@@ -28,6 +28,7 @@
 
   <button
       class="btn btn-primary pull-right"
+      ng-disabled="!(githubAccount && quayioAccount)"
       ng-click="advanceStep()">
     Next
   </button>

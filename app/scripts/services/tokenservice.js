@@ -30,6 +30,26 @@ angular.module('dockstore.ui')
         });
       };
 
+      /* This will be refactored to be more robust and consistent later... */
+      this.hasGitHubQuayIOTokens = function(userId) {
+        return this.getUserTokens(userId)
+          .then(function(tokens) {
+            var hasGithubAccount = false;
+            var hasQuayIOAccount = false;
+            for (var i = 0; i < tokens.length; i++){
+              switch (tokens[i].tokenSource) {
+                case 'github.com':
+                  hasGithubAccount = true;
+                  break;
+                case 'quay.io':
+                  hasQuayIOAccount = true;
+                  break;
+              }
+            }
+            return hasGithubAccount && hasQuayIOAccount;
+          });
+      };
+
       this.deleteToken = function(tokenId) {
         var resUrl = WebService.API_URI + '/auth/tokens/' + tokenId;
         return $q(function(resolve, reject) {

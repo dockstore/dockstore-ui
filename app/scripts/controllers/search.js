@@ -10,9 +10,18 @@
 angular.module('dockstore.ui')
   .controller('SearchCtrl', [
     '$scope',
+    '$window',
+    '$auth',
     'ContainerService',
+    'UserService',
+    'TokenService',
     'NotificationService',
-    function ($scope, ContainerService, NtfnService) {
+    function ($scope, $window, $auth, ContainerService,
+        UserService, TokenService, NtfnService) {
+
+      $scope.isAuthenticated = function() {
+        return $auth.isAuthenticated();
+      };
 
       $scope.listContainers = function() {
         NtfnService.popInfo('List Docker Containers',
@@ -28,6 +37,13 @@ angular.module('dockstore.ui')
             NtfnService.popError('List Docker Containers', message);
           });
       };
+
+      if ($scope.isAuthenticated()) {
+        TokenService.hasGitHubQuayIOTokens(UserService.getUserObj().id)
+          .then(function(hasBothTokens) {
+            if (!hasBothTokens) $window.location.href = '#/onboarding';
+          });
+      }
 
       $scope.listContainers();
       
