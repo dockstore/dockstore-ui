@@ -103,6 +103,22 @@ angular.module('dockstore.ui')
           });
       };
 
+      $scope.refreshUserContainers = function(userId) {
+        NtfnService.popInfo('Docker Containers',
+          'Refreshing Docker container cache...');
+        ContainerService.refreshContainers(userId)
+          .then(function(containers) {
+            NtfnService.popInfo('Docker Containers',
+              'Docker container cache refresh successful...');
+            $window.location.href = '#/onboarding';
+          }, function(response) {
+            var message = (typeof response.statusText !== 'undefined') ?
+              response.statusText : 'Unknown Error.';
+            NtfnService.popError('User External Accounts', message);
+            return $q.reject(response);
+          });
+      };
+
       $scope.loadExternalAccounts()
         .then(function() { NtfnService.clearAll(); });
 
@@ -111,13 +127,7 @@ angular.module('dockstore.ui')
         var quayioAccTkn = $location.url().match($scope.quaioAccTknRegexp)[1];
         $scope.registerQuayioToken(UserService.getUserObj().id, quayioAccTkn)
           .then(function() {
-            ContainerService.refreshContainers($scope.user.id)
-              .then(function(containers) {
-                console.log('success!', containers);
-                $window.location.href = '#/onboarding';
-              }, function(response) {
-                console.log('failure:', response);
-              });
+            $scope.refreshUserContainers($scope.user.id);
           });
       }
 
