@@ -36,14 +36,14 @@ Dockstore currently integrates with GitHub and Quay.io, in the following steps, 
 1. Install Node.js and NPM on your workstation, specific instructions will vary depending on the operating system distribution. The use of [nvm](https://github.com/creationix/nvm) is encouraged in supported environments.
 2. Install the principal build dependencies globally:
   ```
-  npm install -g grunt-cli bower yo generator-karma generator-angular
+  npm install --global grunt-cli bower yo generator-karma generator-angular
   ```
 
-3. Install Compass, on Ubuntu 14.04 LTS run:
+3. Install Compass, on Ubuntu 14.04 LTS run (use brew on Mac OS X):
   ```
   sudo apt-get install -y ruby ruby-dev
   sudo gem install compass
-```
+  ```
 
 4. Update NPM and Bower packages:
   ```
@@ -51,7 +51,7 @@ Dockstore currently integrates with GitHub and Quay.io, in the following steps, 
   bower update
   ```
 
-5. Attempt to build the project by running: `grunt` from the root directory of the dockstore-ui repository. Use NPM to install any missing dependencies indicated by the output until the build succeeds (it may be necessary to install some packages locally). 
+5. Attempt to build the project by running: `grunt` from the root directory of the dockstore-ui repository. On Mac OS X, use NPM to install any missing dependencies indicated by the output of the build tool until it succeeds (it may be necessary to install some packages locally).
 
 ### Running the Dockstore UI (Development)
 1. The Dockstore web service and database should be running, and the API accessible on `http://localhost:8080`.
@@ -65,3 +65,7 @@ Dockstore currently integrates with GitHub and Quay.io, in the following steps, 
 3. In the dockstore-ui repository root directory, run `grunt` to build the project, this will execute unit tests, compile all the HTML templates and JavaScript source files, and copy over all the required dependencies.
 4. Copy the contents of the `dockstore-ui/dist` folder to the root directory of your web server (e.g. NGINX, Apache, AWS S3, ...).
 5. Navigate to `https://www.dockstore.org/` in your web browser.
+
+### Resources
++ [Getting Started with Grunt](http://blog.teamtreehouse.com/getting-started-with-grunt)
+

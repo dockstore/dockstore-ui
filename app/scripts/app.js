@@ -25,11 +25,11 @@ angular
     function($authProvider, WebService) {
       /* This is a work-around to get Satellizer to work w/
             non-standard web service tokens. */
-      $authProvider.baseUrl = 'http://localhost:8080/';
-        $authProvider.github({
-          clientId: WebService.GITHUB_CLIENT_ID,
-          scope: [WebService.GITHUB_SCOPE]
-        });
+      $authProvider.baseUrl = WebService.API_URL + '/';
+      $authProvider.github({
+        clientId: WebService.GITHUB_CLIENT_ID,
+        scope: [WebService.GITHUB_SCOPE]
+      });
   }])
   .config(['localStorageServiceProvider',
     function(localStorageServiceProvider) {
