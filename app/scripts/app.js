@@ -25,7 +25,7 @@ angular
     function($authProvider, WebService) {
       /* This is a work-around to get Satellizer to work w/
             non-standard web service tokens. */
-      $authProvider.baseUrl = WebService.API_URL + '/';
+      $authProvider.baseUrl = WebService.API_URI + '/';
       $authProvider.github({
         clientId: WebService.GITHUB_CLIENT_ID,
         scope: [WebService.GITHUB_SCOPE]

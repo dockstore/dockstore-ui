@@ -114,10 +114,10 @@ angular.module('dockstore.ui')
             ContainerService.refreshContainers($scope.user.id)
               .then(function(containers) {
                 console.log('success!', containers);
+                $window.location.href = '#/onboarding';
               }, function(response) {
                 console.log('failure:', response);
               });
-            $window.location.href = '#/onboarding';
           });
       }
 

@@ -40,13 +40,13 @@ angular.module('dockstore.ui')
             UserService.getUserById(user_id)
               .then(function(response) {
                 UserService.setUserObj(response);
+                NtfnService.popSuccess('Authentication Success',
+                  'Login successful via ' + provider + '.');
+                $location.path('#/search');
               }, function(response) {
                 NtfnService.popError('Authentication Error', response);
                 $auth.logout();
               });
-            NtfnService.popSuccess('Authentication Success',
-              'Login successful via ' + provider + '.');
-            $location.path('#/search');
           })
           .catch(function(response) {
             var message = (typeof response.statusText !== 'undefined') ?
