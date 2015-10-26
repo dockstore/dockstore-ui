@@ -43,32 +43,7 @@
       <span class="glyphicon glyphicon-warning-sign"></span>
       This is a static document, the required endpoints do not exist yet.
     </div>
-    <div hljs>
-#############################################################
-# Dockerfile to build a helloworld SeqWare workflow container
-# Based on SeqWare that knows how to read/write to S3
-#############################################################
-
-# Set the base image to SeqWare
-FROM seqware/seqware_whitestar:1.1.1
-
-# File Author / Maintainer
-MAINTAINER Brian O'Connor <briandoconnor@gmail.com>
-
-# Setup packages
-USER root
-RUN apt-get -m update && apt-get install -y apt-utils tar git curl nano wget dialog net-tools build-essential time
-
-# LEFT OFF WITH: need to install the s3 command line tools
-
-# Build the workflow
-COPY workflow-HelloWorld /home/seqware/workflow-HelloWorld
-RUN chown -R seqware /home/seqware/workflow-HelloWorld
-USER seqware
-WORKDIR /home/seqware/workflow-HelloWorld/
-RUN mvn clean install
-CMD ["/bin/bash"]
-    </div>
+    <div hljs include='"static/container-details/Dockerfile"'></div>
   </uib-tab>
   <uib-tab>
     <uib-tab-heading>CWL Descriptor</uib-tab-heading>
@@ -76,59 +51,6 @@ CMD ["/bin/bash"]
       <span class="glyphicon glyphicon-warning-sign"></span>
       This is a static document, the required endpoints do not exist yet.
     </div>
-    <div hljs>
-#!/usr/bin/env cwl-runner
-
-class: CommandLineTool
-description: "Markdown description text here"
-id: "HelloWorld"
-label: "HelloWorld Tool"
-
-dct:creator:
-  "@id": "http://orcid.org/0000-0003-3566-7705"
-  foaf:name: Peter Amstutz
-  foaf:mbox: "mailto:peter.amstutz@curoverse.com"
-
-requirements:
-  - class: DockerRequirement
-    dockerPull: "quay.io/collaboratory/workflow-helloworld:1.0.0"
-  - { import: node-engine.cwl }
-
-hints:
-  - class: ResourceRequirement
-    coresMin: 8
-    ramMin: 8092
-    outdirMin: 512000
-    description: "these parameters are used to locate a VM with appropriate resources"
-
-inputs:
-  - id: "#ref_file_1"
-    type: File
-    description: "this describes a large reference file that does not change between runs"
-
-  - id: "#ref_file_2"
-    type: File
-    description: "this describes a large reference file that does not change between runs"
-
-  - id: "#hello_input"
-    type: File
-    description: "this describes an input file that should be provided before execution"
-
-outputs:
-  - id: "#hello_output"
-    type: File
-    outputBinding:
-      glob: hello-output.txt
-    description: "this describes an output file that should be saved after execution"
-
-baseCommand: ["bash", "-c"]
-arguments:
-  - valueFrom:
-      engine: node-engine.cwl
-      script: |
-        "cat " + $job.hello_input.path + " > hello-output.txt &&"
-            + " ls " + $job.ref_file_1.path + " >> hello-output.txt && "
-            + " head -20 " + $job.ref_file_2.path + " >> hello-output.txt"
-    </div>
+    <div hljs include='"static/container-details/collab.cwl"'></div>
   </uib-tab>
 </uib-tabset>
