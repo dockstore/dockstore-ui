@@ -1,31 +1,48 @@
-<ul class="list-unstyled">
-  <li>
-    <strong>Container Name</strong>:
-    {{containerObj.name}}
-  </li>
-  <li>
-    <strong>Author</strong>:
-    {{ containerObj.author ? containerObj.author : 'n/a' }}
-  </li>
-  <li>
-    <strong>Versions</strong>:
-    <ul>
-      <li ng-repeat="version in getVersionTags(containerObj)">
-        {{version}}
+<uib-tabset>
+  <uib-tab>
+    <uib-tab-heading>Container Info</uib-tab-heading>
+    <ul class="list-unstyled">
+      <li>
+        <strong>Container Name</strong>:
+        {{containerObj.name}}
+      </li>
+      <li>
+        <strong>Author</strong>:
+        {{ containerObj.author ? containerObj.author : 'n/a' }}
+      </li>
+      <li>
+        <strong>Versions</strong>:
+        <ul>
+          <li ng-repeat="version in getVersionTags(containerObj)">
+            {{version}}
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>Last Build</strong>:
+        {{getDateTimeString(containerObj.lastBuild)}}
+      </li>
+      <li>
+        <strong>Last Update</strong>:
+        {{getDateTimeString(containerObj.lastUpdated)}}
+      </li>
+      <li>
+        <strong>Description</strong>:
+        <textarea class="form-control" rows="8">
+{{containerObj.description}}</textarea>
       </li>
     </ul>
-  </li>
-  <li>
-    <strong>Last Build</strong>:
-    {{getDateTimeString(containerObj.lastBuild)}}
-  </li>
-  <li>
-    <strong>Last Update</strong>:
-    {{getDateTimeString(containerObj.lastUpdated)}}
-  </li>
-  <li>
-    <strong>Description</strong>:
-    <textarea class="form-control" rows="8">
-{{containerObj.description}}</textarea>
-  </li>
-</ul>
+  </uib-tab>
+  <uib-tab>
+    <uib-tab-heading>Version Tags</uib-tab-heading>
+    <div versions-grid container-obj="containerObj"></div>
+  </uib-tab>
+  <uib-tab>
+    <uib-tab-heading>Dockerfile</uib-tab-heading>
+    <!-- tab content -->
+  </uib-tab>
+  <uib-tab>
+    <uib-tab-heading>CWL Descriptor</uib-tab-heading>
+    <!-- tab content -->
+  </uib-tab>
+</uib-tabset>

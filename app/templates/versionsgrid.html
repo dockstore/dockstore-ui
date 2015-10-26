@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-bordered table-condensed table-striped">
+      <thead>
+        <tr>
+          <th class="col-md-2">
+            Version
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('name')"
+                  ng-click="clickSortColumn('name')">
+            </span>
+          </th>
+          <th class="col-md-2">
+            Size
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('author')"
+                  ng-click="clickSortColumn('author')">
+            </span>
+          </th>
+          <th class="col-md-2">
+            Date Modified
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('date')"
+                  ng-click="clickSortColumn('date')">
+            </span>
+          </th>
+          <th class="col-md-6">
+            Docker Pull
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="versionTag in (filteredVersionTags = (versionTags | orderBy:sortColumn:sortReverse))">
+          <td>
+            {{versionTag.version}}
+          </td>
+          <td>
+            n/a
+          </td>
+          <td>
+            n/a
+          </td>
+          <td>
+            <copy-text value="docker pull {{containerObj.path}}:{{versionTag.version}}">
+            </copy-text>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
