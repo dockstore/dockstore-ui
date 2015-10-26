@@ -19,7 +19,8 @@ angular
     'satellizer',
     'LocalStorageModule',
     'ui.bootstrap',
-    'toaster'
+    'toaster',
+    'hljs'
   ])
   .config(['$authProvider', 'WebService',
     function($authProvider, WebService) {
@@ -34,6 +35,12 @@ angular
   .config(['localStorageServiceProvider',
     function(localStorageServiceProvider) {
       localStorageServiceProvider.setPrefix('dockstore.ui');
+  }])
+  .config(['hljsServiceProvider',
+    function(hljsServiceProvider) {
+      hljsServiceProvider.setOptions({
+        tabReplace: '    '
+      });
   }])
   .config(['$routeProvider', '$locationProvider',
     function ($routeProvider, $locationProvider) {
