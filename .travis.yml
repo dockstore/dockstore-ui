@@ -1,9 +1,9 @@
-sudo: false
+sudo: true
 language: node_js
 node_js:
   - 'stable'
   - '4.2.1'
-install_script:
+install:
   - 'npm install --global grunt-cli bower yo generator-karma generator-angular'
   - 'sudo apt-get install -y ruby ruby-dev make'
   - 'sudo gem install compass'
