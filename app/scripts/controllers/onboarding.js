@@ -35,7 +35,7 @@ angular.module('dockstore.ui')
             $scope.owStep++;
             break;
           case 3:
-            $location.path('#/search');
+            $location.path('/search');
             /* Remove User from new-users Group */
             break;
           default:
@@ -50,7 +50,7 @@ angular.module('dockstore.ui')
             NtfnService.popSuccess('Logout', 'Logout successful.');
             NtfnService.popInfo('Link GitHub Account',
               'Please select the option, "Sign in with GitHub" to continue.');
-            $location.path('#/login');
+            $location.path('/login');
           });
       };
 

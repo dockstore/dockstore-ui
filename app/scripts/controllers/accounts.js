@@ -31,7 +31,7 @@ angular.module('dockstore.ui')
             NtfnService.popSuccess('Logout', 'Logout successful.');
             NtfnService.popInfo('Link GitHub Account',
               'Please select the option, "Sign in with GitHub" to continue.');
-            $location.path('#/login');
+            $location.path('/login');
           });
       };
 
