@@ -4,7 +4,7 @@
 AngularJS UI for the Dockstore Web Service.
 
 ### Configuration Parameters
-All configuration for the Dockstore UI is done in the `scripts/services/webservice.js` file.
+All configuration for the Dockstore UI is done in the `app/scripts/services/webservice.js` file.
 
 1. For development, the server name should be `http://localhost:9000`, on a production environment, replace this URI with a fully-qualified domain name (and https://).
   ```
