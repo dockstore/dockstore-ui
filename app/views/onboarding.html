@@ -40,12 +40,24 @@
 
   <div class="row">
     <div class="col-md-2">
-      <button class="btn btn-default pull-left">Download CLI</button>
+      <a
+          class="btn btn-default pull-left"
+          ng-href="{{dscliReleaseURL}}">
+        Download CLI
+      </a>
     </div>
 
-    <div class="col-md-6">
-      <p>You can also run the following command:</p>
-      <copy-text value="wget http://docstore.io/blah.sh | sh"></copy-text>
+    <div class="col-md-8">
+      <p>
+        You can also run the following commands to install the client in your
+        home directory:
+      </p>
+      <pre class="pre-scrollable">
+mkdir "$HOME/bin" && \
+wget -O "$HOME/bin/dockstore" '{{dscliReleaseURL}}' && \
+chmod +x "$HOME/bin/dockstore" && \
+export PATH="$PATH:$HOME/bin" && \
+dockstore;</pre>
     </div>
   </div>
 

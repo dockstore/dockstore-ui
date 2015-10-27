@@ -23,6 +23,7 @@ angular.module('dockstore.ui')
         UserService, TokenService, ContainerService, NtfnService, WebService) {
 
       $scope.user = UserService.getUserObj();
+      $scope.dscliReleaseURL = WebService.DSCLI_RELEASE_URL;
 
       $scope.owStep = 1;
       $scope.advanceStep = function() {
