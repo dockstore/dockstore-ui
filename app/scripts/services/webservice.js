@@ -20,5 +20,7 @@ angular.module('dockstore.ui')
     QUAYIO_AUTH_URL: 'https://quay.io/oauth/authorize',
     QUAYIO_CLIENT_ID: 'X5HST9M57O6A57GZFX6T',
     QUAYIO_REDIRECT_URI: 'http://www.dockstore.org/%23/onboarding',
-    QUAYIO_SCOPE: 'repo:read,user:read'
+    QUAYIO_SCOPE: 'repo:read,user:read',
+
+    DSCLI_RELEASE_URL: 'https://github.com/CancerCollaboratory/dockstore/releases/download/0.0.4/dockstore'
   });
