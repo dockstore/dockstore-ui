@@ -44,7 +44,7 @@ Dockstore currently integrates with GitHub and Quay.io, in the following steps, 
 3. Install Compass, on Ubuntu 14.04 LTS run (use brew on Mac OS X):
   ```
   sudo apt-get install -y ruby ruby-dev
-  sudo gem install compass
+  gem install compass
   ```
 
 4. Update NPM and Bower packages:
