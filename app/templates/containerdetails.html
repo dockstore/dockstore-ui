@@ -3,20 +3,23 @@
     <uib-tab-heading>Container Info</uib-tab-heading>
     <ul class="list-unstyled">
       <li>
-        <strong>Container Name</strong>:
+        <strong>Name</strong>:
         {{containerObj.name}}
+      </li>
+      <li>
+        <strong>Path</strong>:
+        {{containerObj.path}}
       </li>
       <li>
         <strong>Author</strong>:
         {{ containerObj.author ? containerObj.author : 'n/a' }}
       </li>
       <li>
-        <strong>Versions</strong>:
-        <ul>
-          <li ng-repeat="version in getVersionTags(containerObj)">
-            {{version}}
-          </li>
-        </ul>
+        <strong>GitHub</strong>:
+        <span ng-if="containerObj.gitUrl">
+          <a ng-href="{{containerObj.gitUrl}}">{{containerObj.gitUrl}}</a>
+        </span>
+        <span ng-if="!containerObj.gitUrl">n/a</span>
       </li>
       <li>
         <strong>Last Build</strong>:
@@ -45,12 +48,16 @@
     </div>
     <div hljs include='"static/container-details/Dockerfile"'></div>
   </uib-tab>
-  <uib-tab>
+  <uib-tab select="loadCollabFile()">
     <uib-tab-heading>CWL Descriptor</uib-tab-heading>
-    <div class="alert alert-warning" role="alert">
-      <span class="glyphicon glyphicon-warning-sign"></span>
-      This is a static document, the required endpoints do not exist yet.
+    <div class="alert alert-warning" role="alert"
+          ng-show="collabFileLoaded && !collabFileString">
+      <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
+      A collab.cwl descriptor associated with this Docker container could not be found.
     </div>
-    <div hljs include='"static/container-details/collab.cwl"'></div>
+    <div hljs
+          source="collabFileString"
+          ng-show="collabFileLoaded && collabFileString">
+    </div>
   </uib-tab>
 </uib-tabset>

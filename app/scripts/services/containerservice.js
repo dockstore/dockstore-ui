@@ -59,13 +59,16 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.getCollabJSON = function(cont_path) {
+    this.getCollabFile = function(reposPath) {
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/container/collab?repository=' + cont_path
+          url: WebService.API_URI + '/containers/collab',
+          params: {
+            repository: reposPath
+          }
         }).then(function(response) {
-          resolve(response.data);
+          resolve(response.data.content);
         }, function(response) {
           reject(response);
         });
