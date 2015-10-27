@@ -20,6 +20,7 @@ angular
     'LocalStorageModule',
     'ui.bootstrap',
     'toaster',
+    'hc.marked',
     'hljs'
   ])
   .config(['$authProvider', 'WebService',
@@ -69,6 +70,11 @@ angular
           templateUrl: 'views/documentation.html',
           controller: 'DocumentationCtrl',
           controllerAs: 'Documentation'
+        })
+        .when('/docs/:urlSlug', {
+          templateUrl: 'views/document.html',
+          controller: 'DocumentCtrl',
+          controllerAs: 'Document'
         })
         .when('/onboarding', {
           templateUrl: 'views/onboarding.html',

@@ -8,10 +8,11 @@
  * Controller of the dockstore.ui
  */
 angular.module('dockstore.ui')
-  .controller('DocumentationCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+  .controller('DocumentationCtrl', [
+    '$scope',
+    'DocumentationService',
+    function ($scope, DocumentationService) {
+
+      $scope.docObjs = DocumentationService.getDocumentObjs();
+
+  }]);
