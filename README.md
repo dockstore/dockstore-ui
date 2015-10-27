@@ -68,6 +68,16 @@ Dockstore currently integrates with GitHub and Quay.io, in the following steps, 
 4. Copy the contents of the `dockstore-ui/dist` folder to the root directory of your web server (e.g. NGINX, Apache, AWS S3, ...).
 5. Navigate to `https://www.dockstore.org/` in your web browser.
 
+### Adding Documentation
+Documents written in Markdown should be placed in the `app/docs/` directory, they will be visible from the Documentation page in UI after adding an object like this to the `docObjs` array in `app/scripts/services/documentationservice.js`:
+```
+{
+  slug: 'getting-started',
+  name: 'Getting Started',
+  path: 'docs/getting-started.md'
+}
+```
+
 ### Resources
 + [Getting Started with Grunt](http://blog.teamtreehouse.com/getting-started-with-grunt)
 
