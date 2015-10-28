@@ -40,14 +40,20 @@
     <uib-tab-heading>Version Tags</uib-tab-heading>
     <div versions-grid container-obj="containerObj"></div>
   </uib-tab>
-  <uib-tab>
+
+  <uib-tab select="loadDockerFile()">
     <uib-tab-heading>Dockerfile</uib-tab-heading>
-    <div class="alert alert-warning" role="alert">
-      <span class="glyphicon glyphicon-warning-sign"></span>
-      This is a static document, the required endpoints do not exist yet.
+    <div class="alert alert-warning" role="alert"
+          ng-show="dockerFileLoaded && !dockerFileString">
+      <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
+      A Dockerfile associated with this Docker container could not be found.
     </div>
-    <div hljs include='"static/container-details/Dockerfile"'></div>
+    <div hljs
+          source="dockerFileString"
+          ng-show="dockerFileLoaded && dockerFileString">
+    </div>
   </uib-tab>
+
   <uib-tab select="loadCollabFile()">
     <uib-tab-heading>CWL Descriptor</uib-tab-heading>
     <div class="alert alert-warning" role="alert"

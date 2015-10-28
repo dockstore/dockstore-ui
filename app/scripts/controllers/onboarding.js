@@ -24,6 +24,7 @@ angular.module('dockstore.ui')
 
       $scope.user = UserService.getUserObj();
       $scope.dscliReleaseURL = WebService.DSCLI_RELEASE_URL;
+      $scope.testToken = TokenService.getUserTokens(UserService.getUserObj().id);
 
       $scope.owStep = 1;
       $scope.advanceStep = function() {
@@ -131,5 +132,27 @@ angular.module('dockstore.ui')
             $scope.refreshUserContainers($scope.user.id);
           });
       }
+
+      $scope.listTokens = function() {
+        TokenService.getUserTokens(UserService.getUserObj().id)
+          .then(function(tokens) {
+            for (var i = 0; i < tokens.length; i++){
+              switch (tokens[i].tokenSource) {
+                case 'github.com':
+                  $scope.githubAccountToken = tokens[i].content;
+                  break;
+                case 'quay.io':
+                  $scope.quayioAccountToken = tokens[i].content;
+                  break;
+                case 'dockstore':
+                  $scope.dockstoreToken = tokens[i].content;
+                  return($scope.dockstoreToken);
+                  break;
+              }
+            }
+          })
+      };
+
+      $scope.listTokens();
 
   }]);
