@@ -1,3 +1,3 @@
-# Document
+# Getting Started
 
-Vincent, is this a good place for markdown docs?
+This is the getting started guide.

@@ -13,7 +13,7 @@ angular.module('dockstore.ui')
       '$http',
       'WebService',
       function ($q, $http, WebService) {
-    
+
     this.getDockerContainerList = function() {
       return $q(function(resolve, reject) {
         $http({
@@ -53,6 +53,23 @@ angular.module('dockstore.ui')
           }
         }).then(function(response) {
           resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+
+    this.getDockerFile = function(reposPath) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: WebService.API_URI + '/containers/dockerfile',
+          params: {
+            repository: reposPath
+          }
+        }).then(function(response) {
+          resolve(response.data.content);
         }, function(response) {
           reject(response);
         });

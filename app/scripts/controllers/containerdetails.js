@@ -13,7 +13,7 @@ angular.module('dockstore.ui')
     'ContainerService',
     'NotificationService',
     function ($scope, ContainerService, NtfnService) {
-      
+
       $scope.loadContainerDetails = function(containerId) {
         NtfnService.popInfo('Docker Container Details',
           'Retrieving container metadata.');
@@ -45,6 +45,22 @@ angular.module('dockstore.ui')
           });
       };
 
+      $scope.getDockerFile = function(reposPath) {
+         NtfnService.popInfo('Docker Container Details',
+          'Retrieving Dockerfile...');
+        ContainerService.getDockerFile(reposPath)
+          .then(function(dockerFile) {
+            NtfnService.clearAll();
+            $scope.dockerFileString = dockerFile;
+            $scope.dockerFileLoaded = true;
+          })
+          .catch(function(response) {
+            var message = (typeof response.statusText !== 'undefined') ?
+              response.statusText : 'Unknown Error.';
+            NtfnService.popError('Docker Container Details', message);
+          });
+      };
+
       $scope.getVersionTags = function(containerObj) {
         var tags = containerObj ? containerObj.tags : null;
         if (!tags || tags.length === 0) return ['n/a'];
@@ -67,7 +83,13 @@ angular.module('dockstore.ui')
           $scope.getCollabFile($scope.containerObj.path);
         }
       };
-      
+
+      $scope.loadDockerFile = function() {
+        if (!$scope.dockerFileLoaded) {
+          $scope.getDockerFile($scope.containerObj.path);
+        }
+      }
+
       $scope.loadContainerDetails($scope.containerId);
-      
+
   }]);

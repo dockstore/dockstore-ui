@@ -5,7 +5,7 @@
   <h4>GitHub Account</h4>
   <div ng-show="githubAccount">
     <span class="label label-success">
-      <span class="glyphicon glyphicon-link"></span> Linked 
+      <span class="glyphicon glyphicon-link"></span> Linked
     </span>
   </div>
   <div ng-show="!githubAccount">
@@ -13,7 +13,7 @@
       <span class="glyphicon glyphicon-link"></span> Link Account
     </button>
   </div>
-  
+
   <h4>Quay.io Account</h4>
   <div ng-show="quayioAccount">
     <span class="label label-success">
@@ -39,16 +39,26 @@
   <hr />
 
   <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-8">
+      <p>
+         <b>First Step</b>, download the CLI bash script (works on Linux and Mac). Make it executable and ensure it is in your path.
+      </p>
       <a
           class="btn btn-default pull-left"
           ng-href="{{dscliReleaseURL}}">
         Download CLI
       </a>
     </div>
-
     <div class="col-md-8">
       <p>
+        <b>Second Step</b>, put these settings in a the file ~/.dockstore/config
+      </p>
+      <pre class="pre-scrollable">
+username: {{user.username}}
+token: {{dockstoreToken}}
+server-url: http://www.dockstore.org:8080
+      </pre>
+      <!--p>
         You can also run the following commands to install the client in your
         home directory:
       </p>
@@ -57,7 +67,7 @@ mkdir "$HOME/bin" && \
 wget -O "$HOME/bin/dockstore" '{{dscliReleaseURL}}' && \
 chmod +x "$HOME/bin/dockstore" && \
 export PATH="$PATH:$HOME/bin" && \
-dockstore;</pre>
+dockstore;</pre!-->
     </div>
   </div>
 
