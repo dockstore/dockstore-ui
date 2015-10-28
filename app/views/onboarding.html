@@ -21,7 +21,10 @@
     </span>
   </div>
   <div ng-show="!tokenStatusSet.quayio">
-    <button class="btn btn-primary btn-xs" ng-click="linkQuayIOAccount()">
+    <button
+        class="btn btn-primary btn-xs"
+        ng-click="linkQuayIOAccount()"
+        ng-disabled="quayIOHold">
       <span class="glyphicon glyphicon-link"></span> Link Account
     </button>
   </div>

@@ -93,10 +93,12 @@ angular.module('dockstore.ui')
         var quayIOTokenRegExp = /access_token=([a-zA-Z0-9]*)/;
         if (quayIOTokenRegExp.test($location.url())) {
           var quayIOToken = $location.url().match(quayIOTokenRegExp)[1];
+          $scope.quayIOHold = true;
           $scope.registerQuayIOToken($scope.userObj.id, quayIOToken)
             .then(
               function() {
                 $scope.refreshUserContainers($scope.userObj.id);
+                $scope.quayIOHold = false;
                 $window.location.href = '#/onboarding';
               }
             );
