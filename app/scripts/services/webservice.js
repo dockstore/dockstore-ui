@@ -13,14 +13,15 @@ angular.module('dockstore.ui')
     API_URI_DEBUG: 'http://localhost:9000/tests/dummy-data',
 
     GITHUB_AUTH_URL: 'https://github.com/login/oauth/authorize',
-    GITHUB_CLIENT_ID: '41b685026f5effa17069',
+    GITHUB_CLIENT_ID: 'a70739297a7d67f915de',
     GITHUB_REDIRECT_URI: 'http://localhost:9000/%23/login',
     GITHUB_SCOPE: 'read:org',
     
     QUAYIO_AUTH_URL: 'https://quay.io/oauth/authorize',
-    QUAYIO_CLIENT_ID: 'XWGF22T0VWWL579SFAAD',
+    QUAYIO_CLIENT_ID: 'RWCBI3Y6QUNXDPYKNLMC',
     QUAYIO_REDIRECT_URI: 'http://localhost:9000/%23/onboarding',
     QUAYIO_SCOPE: 'repo:read,user:read',
 
-    DSCLI_RELEASE_URL: 'https://github.com/CancerCollaboratory/dockstore/releases/download/0.0.4/dockstore'
+    DSCLI_RELEASE_URL: 'https://github.com/CancerCollaboratory/dockstore/' +
+                        'releases/download/0.0.4/dockstore'
   });

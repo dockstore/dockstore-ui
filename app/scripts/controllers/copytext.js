@@ -21,4 +21,18 @@ angular.module('dockstore.ui')
         NtfnService.popFailure('Copy Failure', message);
       };
 
+      switch ($scope.length) {
+        case 'short':
+          $scope.lengthClass = 'col-md-4';
+          break;
+        case 'normal':
+          $scope.lengthClass = 'col-md-6';
+          break;
+        case 'long':
+          $scope.lengthClass = 'col-md-8';
+          break;
+        default:
+          $scope.lengthClass = 'col-md-12';
+      }
+
   }]);

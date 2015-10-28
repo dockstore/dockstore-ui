@@ -17,31 +17,29 @@ angular.module('dockstore.ui')
     'UserService',
     'TokenService',
     'ContainerService',
-    'NotificationService',
     'WebService',
+    'NotificationService',
     function ($scope, $q, $auth, $location, $window,
-        UserService, TokenService, ContainerService, NtfnService, WebService) {
+        UserService, TokenService, ContainerService, WebService, NtfnService) {
 
-      $scope.user = UserService.getUserObj();
+      $scope.userObj = UserService.getUserObj();
       $scope.dscliReleaseURL = WebService.DSCLI_RELEASE_URL;
-      $scope.testToken = TokenService.getUserTokens(UserService.getUserObj().id);
+      $scope.dsServerURI = WebService.API_URI;
+      $scope.dsToken = $auth.getToken();
 
       $scope.owStep = 1;
-      $scope.advanceStep = function() {
+      $scope.prevStep = function() {
+        $scope.owStep--;
+      };
+      $scope.nextStep = function() {
+        if (!$scope.tokenSetComplete) return;
         switch ($scope.owStep) {
           case 1:
-            /* Check that both GitHub and Quay.io Accounts are linked */
-            $scope.owStep++;
-            break;
           case 2:
             $scope.owStep++;
             break;
-          case 3:
-            $location.path('/search');
-            /* Remove User from new-users Group */
-            break;
           default:
-            $scope.owStep = 1;
+            $location.path('/search');
         }
       };
 
@@ -56,7 +54,7 @@ angular.module('dockstore.ui')
           });
       };
 
-      $scope.linkQuayioAccount = function() {
+      $scope.linkQuayIOAccount = function() {
         $window.location.href = WebService.QUAYIO_AUTH_URL +
           '?client_id=' + WebService.QUAYIO_CLIENT_ID +
           '&redirect_uri=' + WebService.QUAYIO_REDIRECT_URI +
@@ -65,94 +63,57 @@ angular.module('dockstore.ui')
           '&scope=' + WebService.QUAYIO_SCOPE;
       };
 
-      $scope.loadExternalAccounts = function() {
-        NtfnService.popInfo('User External Accounts',
-          'Retrieving list of external accounts...');
-        return TokenService.getUserTokens($scope.user.id)
-          .then(function(tokens) {
-            $scope.githubAccount = false;
-            $scope.quayioAccount = false;
-            for (var i = 0; i < tokens.length; i++){
-              switch (tokens[i].tokenSource) {
-                case 'github.com':
-                  $scope.githubAccount = true;
-                  break;
-                case 'quay.io':
-                  $scope.quayioAccount = true;
-                  break;
-              }
+      $scope.registerQuayIOToken = function(userId, accessToken) {
+        return TokenService.registerQuayIOToken(userId, accessToken)
+          .then(
+            function(token) {},
+            function(response) {
+              var message = '[' + response.status + '] ' + response.statusText;
+              NtfnService.popError('User Accounts', message);
+              return $q.reject(response);
             }
-          }, function(response) {
-            var message = (typeof response.statusText !== 'undefined') ?
-              response.statusText : 'Unknown Error.';
-            NtfnService.popError('User External Accounts', message);
-            return $q.reject(response);
-          });
-      };
-
-      $scope.registerQuayioToken = function(userId, accessToken) {
-        NtfnService.popInfo('User External Accounts',
-          'Registering Quay.io access token...');
-        return TokenService.registerQuayioAccessToken(userId, accessToken)
-          .then(function(token) {
-            NtfnService.popSuccess('User External Accounts',
-              'Quay.io token registered successfully.');
-          }, function(response) {
-            var message = (typeof response.statusText !== 'undefined') ?
-              response.statusText : 'Unknown Error.';
-            NtfnService.popError('User External Accounts', message);
-            return $q.reject(response);
-          });
+          );
       };
 
       $scope.refreshUserContainers = function(userId) {
-        NtfnService.popInfo('Docker Containers',
-          'Refreshing Docker container cache...');
-        ContainerService.refreshContainers(userId)
-          .then(function(containers) {
-            NtfnService.popInfo('Docker Containers',
-              'Docker container cache refresh successful...');
-            $window.location.href = '#/onboarding';
-          }, function(response) {
-            var message = (typeof response.statusText !== 'undefined') ?
-              response.statusText : 'Unknown Error.';
-            NtfnService.popError('User External Accounts', message);
-            return $q.reject(response);
-          });
-      };
-
-      $scope.loadExternalAccounts()
-        .then(function() { NtfnService.clearAll(); });
-
-      $scope.quaioAccTknRegexp = /access_token=([a-zA-Z0-9]*)/;
-      if ($scope.quaioAccTknRegexp.test($location.url())) {
-        var quayioAccTkn = $location.url().match($scope.quaioAccTknRegexp)[1];
-        $scope.registerQuayioToken(UserService.getUserObj().id, quayioAccTkn)
-          .then(function() {
-            $scope.refreshUserContainers($scope.user.id);
-          });
-      }
-
-      $scope.listTokens = function() {
-        TokenService.getUserTokens(UserService.getUserObj().id)
-          .then(function(tokens) {
-            for (var i = 0; i < tokens.length; i++){
-              switch (tokens[i].tokenSource) {
-                case 'github.com':
-                  $scope.githubAccountToken = tokens[i].content;
-                  break;
-                case 'quay.io':
-                  $scope.quayioAccountToken = tokens[i].content;
-                  break;
-                case 'dockstore':
-                  $scope.dockstoreToken = tokens[i].content;
-                  return($scope.dockstoreToken);
-                  break;
-              }
+        return ContainerService.refreshUserContainers(userId)
+          .then(
+            function(containers) {
+              // ...
+            },
+            function(response) {
+              var message = '[' + response.status + '] ' + response.statusText;
+              NtfnService.popError('Refresh User Containers', message);
+              return $q.reject(response);
             }
-          })
+          );
       };
 
-      $scope.listTokens();
+      $scope.redirectQuayIOTokenRegister = function() {
+        var quayIOTokenRegExp = /access_token=([a-zA-Z0-9]*)/;
+        if (quayIOTokenRegExp.test($location.url())) {
+          var quayIOToken = $location.url().match(quayIOTokenRegExp)[1];
+          $scope.quayIOHold = true;
+          $scope.registerQuayIOToken($scope.userObj.id, quayIOToken)
+            .then(
+              function() {
+                $scope.refreshUserContainers($scope.userObj.id);
+                $scope.quayIOHold = false;
+                $window.location.href = '#/onboarding';
+              }
+            );
+        }
+      };
+
+      $scope.redirectQuayIOTokenRegister();
+
+      TokenService.getUserTokenStatusSet($scope.userObj.id)
+        .then(
+          function(tokenStatusSet) {
+            $scope.tokenStatusSet = tokenStatusSet;
+            $scope.tokenSetComplete = 
+              (tokenStatusSet.github && tokenStatusSet.quayio);
+          }
+        );
 
   }]);

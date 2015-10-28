@@ -10,55 +10,56 @@
 angular.module('dockstore.ui')
   .controller('ContainerDetailsCtrl', [
     '$scope',
+    '$q',
     'ContainerService',
     'NotificationService',
-    function ($scope, ContainerService, NtfnService) {
+    function ($scope, $q, ContainerService, NtfnService) {
 
       $scope.loadContainerDetails = function(containerId) {
-        NtfnService.popInfo('Docker Container Details',
-          'Retrieving container metadata.');
-        ContainerService.getDockerContainer(containerId)
-          .then(function(containerObj) {
-            NtfnService.clearAll();
-            $scope.containerObj = containerObj;
-          })
-          .catch(function(response) {
-            var message = (typeof response.statusText !== 'undefined') ?
-              response.statusText : 'Unknown Error.';
-            NtfnService.popError('Docker Container Details', message);
-          });
+        return ContainerService.getRegisteredContainer(containerId)
+          .then(
+            function(containerObj) {
+              $scope.containerObj = containerObj;
+            },
+            function(response) {
+              var message = '[' + response.status + '] ' + response.statusText;
+              NtfnService.popError('Docker Container Details', message);
+              return $q.reject(response);
+            }
+          );
       };
 
-      $scope.getCollabFile = function(reposPath) {
-         NtfnService.popInfo('Docker Container Details',
-          'Retrieving CWL Decriptor...');
-        ContainerService.getCollabFile(reposPath)
-          .then(function(collabFile) {
-            NtfnService.clearAll();
-            $scope.collabFileString = collabFile;
-            $scope.collabFileLoaded = true;
-          })
-          .catch(function(response) {
-            var message = (typeof response.statusText !== 'undefined') ?
-              response.statusText : 'Unknown Error.';
-            NtfnService.popError('Docker Container Details', message);
-          });
+      $scope.getDockerFile = function(containerId) {
+        return ContainerService.getDockerFile(containerId)
+          .then(
+            function(dockerFile) {
+              $scope.dockerFileString = dockerFile;
+            },
+            function(response) {
+              var message = '[' + response.status + '] ' + response.statusText;
+              NtfnService.popError('Docker Container Details', message);
+              return $q.reject(response);
+            }
+          )
+          .finally(
+            function() { $scope.dockerFileLoaded = true; }
+          );
       };
 
-      $scope.getDockerFile = function(reposPath) {
-         NtfnService.popInfo('Docker Container Details',
-          'Retrieving Dockerfile...');
-        ContainerService.getDockerFile(reposPath)
-          .then(function(dockerFile) {
-            NtfnService.clearAll();
-            $scope.dockerFileString = dockerFile;
-            $scope.dockerFileLoaded = true;
-          })
-          .catch(function(response) {
-            var message = (typeof response.statusText !== 'undefined') ?
-              response.statusText : 'Unknown Error.';
-            NtfnService.popError('Docker Container Details', message);
-          });
+      $scope.getWFDescriptorFile = function(containerId) {
+        return ContainerService.getWFDescriptorFile(containerId)
+          .then(
+            function(wfDescriptorFile) {
+              $scope.wfDescriptorFileString = wfDescriptorFile;
+            },
+            function(response) {
+              var message = '[' + response.status + '] ' + response.statusText;
+              NtfnService.popError('Docker Container Details', message);
+              return $q.reject(response);
+            }
+          ).finally(
+            function() { $scope.wfDescriptorFileLoaded = true; }
+          );
       };
 
       $scope.getVersionTags = function(containerObj) {
@@ -75,20 +76,27 @@ angular.module('dockstore.ui')
       };
 
       $scope.getDateTimeString = function(timestamp) {
-        return new Date(timestamp).toUTCString();
-      };
-
-      $scope.loadCollabFile = function() {
-        if (!$scope.collabFileLoaded) {
-          $scope.getCollabFile($scope.containerObj.path);
-        }
+        var moy = ['Jan.', 'Feb.', 'Mar.', 'Apr.',
+                    'May', 'Jun.', 'Jul.', 'Aug.',
+                    'Sept.', 'Oct.', 'Nov.', 'Dec.'];
+        var dateObj = new Date(timestamp);
+        return moy[dateObj.getMonth()] + ' ' +
+                dateObj.getDate() + ', ' +
+                dateObj.getFullYear() + ' at ' +
+                dateObj.toLocaleTimeString();
       };
 
       $scope.loadDockerFile = function() {
         if (!$scope.dockerFileLoaded) {
-          $scope.getDockerFile($scope.containerObj.path);
+          $scope.getDockerFile($scope.containerObj.id);
         }
-      }
+      };
+
+      $scope.loadWFDescriptorFile = function() {
+        if (!$scope.wfDescriptorFileLoaded) {
+          $scope.getWFDescriptorFile($scope.containerObj.id);
+        }
+      };
 
       $scope.loadContainerDetails($scope.containerId);
 

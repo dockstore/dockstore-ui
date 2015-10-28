@@ -10,41 +10,44 @@
 angular.module('dockstore.ui')
   .controller('SearchCtrl', [
     '$scope',
+    '$q',
     '$window',
     '$auth',
     'ContainerService',
     'UserService',
     'TokenService',
     'NotificationService',
-    function ($scope, $window, $auth, ContainerService,
-        UserService, TokenService, NtfnService) {
+    function ($scope, $q, $window, $auth,
+        ContainerService, UserService, TokenService, NtfnService) {
 
-      $scope.isAuthenticated = function() {
-        return $auth.isAuthenticated();
+      $scope.userObj = UserService.getUserObj();
+
+      $scope.listRegisteredContainers = function() {
+        return ContainerService.getRegisteredContainerList()
+          .then(
+            function(containers) {
+              $scope.containers = containers;
+            },
+            function(response) {
+              var message = '[' + response.status + '] ' + response.statusText;
+              NtfnService.popError('List Registered Containers', message);
+              return $q.reject(response);
+            }
+          );
       };
 
-      $scope.listContainers = function() {
-        NtfnService.popInfo('List Docker Containers',
-          'Loading container lists...');
-        ContainerService.getDockerContainerList()
-          .then(function(containers) {
-            NtfnService.clearAll();
-            $scope.containers = containers;
-          })
-          .catch(function(response) {
-            var message = (typeof response.statusText !== 'undefined') ?
-              response.statusText : 'Unknown Error.';
-            NtfnService.popError('List Docker Containers', message);
-          });
-      };
-
-      if ($scope.isAuthenticated()) {
-        TokenService.hasGitHubQuayIOTokens(UserService.getUserObj().id)
-          .then(function(hasBothTokens) {
-            if (!hasBothTokens) $window.location.href = '#/onboarding';
-          });
+      if ($auth.isAuthenticated()) {
+        TokenService.getUserTokenStatusSet($scope.userObj.id)
+          .then(
+            function(tokenStatusSet) {
+              $scope.tokenStatusSet = tokenStatusSet;
+              if (!(tokenStatusSet.github && tokenStatusSet.quayio)) {
+                $window.location.href = '#/onboarding';
+              }
+            }
+          );
       }
 
-      $scope.listContainers();
+      $scope.listRegisteredContainers();
       
   }]);

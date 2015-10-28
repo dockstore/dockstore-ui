@@ -14,11 +14,11 @@ angular.module('dockstore.ui')
       'WebService',
       function ($q, $http, WebService) {
 
-    this.getDockerContainerList = function() {
+    this.getRegisteredContainerList = function() {
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/containers/allRegistered'
+          url: WebService.API_URI + '/containers/registered'
         }).then(function(response) {
           resolve(response.data);
         }, function(response) {
@@ -27,11 +27,11 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.getDockerContainer = function(cont_id) {
+    this.getRegisteredContainer = function(containerId) {
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/containers/' + cont_id
+          url: WebService.API_URI + '/containers/registered/' + containerId
         }).then(function(response) {
           resolve(response.data);
         }, function(response) {
@@ -40,17 +40,11 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.refreshContainers = function(userId) {
+    this.refreshUserContainers = function(userId) {
       return $q(function(resolve, reject) {
         $http({
-          method: 'PUT',
-          url: WebService.API_URI + '/containers/refresh',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          data: {
-            id: userId
-          }
+          method: 'GET',
+          url: WebService.API_URI + '/users/' + userId + '/containers/refresh',
         }).then(function(response) {
           resolve(response.data);
         }, function(response) {
@@ -59,15 +53,11 @@ angular.module('dockstore.ui')
       });
     };
 
-
-    this.getDockerFile = function(reposPath) {
+    this.getDockerFile = function(containerId) {
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/containers/dockerfile',
-          params: {
-            repository: reposPath
-          }
+          url: WebService.API_URI + '/containers/' + containerId + '/dockerfile'
         }).then(function(response) {
           resolve(response.data.content);
         }, function(response) {
@@ -76,46 +66,13 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.getCollabFile = function(reposPath) {
+    this.getWFDescriptorFile = function(containerId) {
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/containers/collab',
-          params: {
-            repository: reposPath
-          }
+          url: WebService.API_URI + '/containers/' + containerId + '/cwl'
         }).then(function(response) {
           resolve(response.data.content);
-        }, function(response) {
-          reject(response);
-        });
-      });
-    };
-
-    this.getUserRegisteredContainers = function(user_id) {
-      return $q(function(resolve, reject) {
-        $http({
-          method: 'GET',
-          url: WebService.API_URI +
-            '/docker.repo/getUserRegisteredContainers?user_id=' + user_id
-        }).then(function(response) {
-          resolve(response.data);
-        }, function(response) {
-          reject(response);
-        });
-      });
-    };
-
-    this.searchDockerContainers = function(query_string) {
-      return $q(function(resolve, reject) {
-        $http({
-          method: 'GET',
-          url: WebService.API_URI + '/docker.repo/searchContainers',
-          params: {
-            pattern: query_string
-          }
-        }).then(function(response) {
-          resolve(response.data);
         }, function(response) {
           reject(response);
         });

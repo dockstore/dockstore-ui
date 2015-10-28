@@ -31,8 +31,16 @@
       </li>
       <li>
         <strong>Description</strong>:
-        <textarea class="form-control" rows="8">
-{{containerObj.description}}</textarea>
+        <div class="well well-sm">
+          <div
+              ng-show="containerObj.description.length > 0"
+              marked="containerObj.description">
+          </div>
+          <span ng-show="containerObj.description.length <= 0">
+            No description associated with this container.
+          </span>
+        </div>
+        
       </li>
     </ul>
   </uib-tab>
@@ -45,8 +53,10 @@
     <uib-tab-heading>Dockerfile</uib-tab-heading>
     <div class="alert alert-warning" role="alert"
           ng-show="dockerFileLoaded && !dockerFileString">
-      <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
-      A Dockerfile associated with this Docker container could not be found.
+      <p>
+        <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
+        A Dockerfile associated with this Docker container could not be found.
+      </p>
     </div>
     <div hljs
           source="dockerFileString"
@@ -54,16 +64,19 @@
     </div>
   </uib-tab>
 
-  <uib-tab select="loadCollabFile()">
+  <uib-tab select="loadWFDescriptorFile()">
     <uib-tab-heading>CWL Descriptor</uib-tab-heading>
     <div class="alert alert-warning" role="alert"
-          ng-show="collabFileLoaded && !collabFileString">
-      <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
-      A collab.cwl descriptor associated with this Docker container could not be found.
+          ng-show="wfDescriptorFileLoaded && !wfDescriptorFileString">
+      <p>
+        <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
+        A collab.cwl descriptor associated with this Docker container could not
+        be found.
+      </p>
     </div>
     <div hljs
-          source="collabFileString"
-          ng-show="collabFileLoaded && collabFileString">
+          source="wfDescriptorFileString"
+          ng-show="wfDescriptorFileLoaded && wfDescriptorFileString">
     </div>
   </uib-tab>
 </uib-tabset>
