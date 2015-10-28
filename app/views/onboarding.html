@@ -28,6 +28,7 @@
       <span class="glyphicon glyphicon-link"></span> Link Account
     </button>
   </div>
+
 </div>
 
 <div ng-show="owStep === 2">
@@ -46,6 +47,12 @@
       Run the script, and follow the interactive prompts.
     </li>
   </ol>
+  <a
+      class="btn btn-default"
+      ng-href="{{dscliReleaseURL}}">
+    Download CLI
+  </a>
+
   <h4>Second Part</h4>
   <p>Put these settings in the file <code>~/.dockstore/config</code>:</p>
   <ul class="list-unstyled hori-offset-12">
@@ -62,6 +69,7 @@
       <copy-text value="{{dsServerURI}}/" length="normal"></copy-text>
     </li>
   </ul>
+
   <!--p>
     You can also run the following commands to install the client in your
     home directory:
@@ -72,6 +80,7 @@ wget -O "$HOME/bin/dockstore" '{{dscliReleaseURL}}' && \
 chmod +x "$HOME/bin/dockstore" && \
 export PATH="$PATH:$HOME/bin" && \
 dockstore;</pre!-->
+
 </div>
 
 <div ng-show="owStep === 3">
