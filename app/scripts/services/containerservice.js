@@ -53,14 +53,11 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.getDockerfile = function(reposPath) {
+    this.getDockerFile = function(containerId) {
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/containers/dockerfile',
-          params: {
-            repository: reposPath
-          }
+          url: WebService.API_URI + '/containers/' + containerId + '/dockerfile'
         }).then(function(response) {
           resolve(response.data.content);
         }, function(response) {
@@ -69,14 +66,11 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.getWFDescriptorFile = function(reposPath) {
+    this.getWFDescriptorFile = function(containerId) {
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/containers/collab',
-          params: {
-            repository: reposPath
-          }
+          url: WebService.API_URI + '/containers/' + containerId + '/cwl'
         }).then(function(response) {
           resolve(response.data.content);
         }, function(response) {

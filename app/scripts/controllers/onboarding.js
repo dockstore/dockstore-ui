@@ -38,7 +38,6 @@ angular.module('dockstore.ui')
           case 2:
             $scope.owStep++;
             break;
-          case 3:
           default:
             $location.path('/search');
         }

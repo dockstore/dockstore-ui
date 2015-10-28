@@ -15,7 +15,7 @@ angular.module('dockstore.ui')
     'WebService',
     'NotificationService',
     function ($rootScope, $q, $http,
-              WebService, NotificationService) {
+              WebService, NtfnService) {
     
       this.getUserTokens = function(userId) {
         return $q(function(resolve, reject) {
