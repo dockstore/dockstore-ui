@@ -10,12 +10,13 @@
 angular.module('dockstore.ui')
   .controller('TokensCtrl', [
     '$scope',
+    '$q',
     '$auth',
     '$route',
     'UserService',
     'TokenService',
     'NotificationService',
-    function ($scope, $auth, $route,
+    function ($scope, $q, $auth, $route,
         UserService, TokenService, NtfnService) {
 
       $scope.userObj = UserService.getUserObj();
