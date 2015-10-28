@@ -76,7 +76,14 @@ angular.module('dockstore.ui')
       };
 
       $scope.getDateTimeString = function(timestamp) {
-        return new Date(timestamp).toUTCString();
+        var moy = ['Jan.', 'Feb.', 'Mar.', 'Apr.',
+                    'May', 'Jun.', 'Jul.', 'Aug.',
+                    'Sept.', 'Oct.', 'Nov.', 'Dec.'];
+        var dateObj = new Date(timestamp);
+        return moy[dateObj.getMonth()] + ' ' +
+                dateObj.getDate() + ', ' +
+                dateObj.getFullYear() + ' at ' +
+                dateObj.toLocaleTimeString();
       };
 
       $scope.loadDockerFile = function() {
