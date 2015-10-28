@@ -4,14 +4,16 @@
 <h4>Collaboratory Account</h4>
 
 <ul class="list-unstyled">
-  <li><strong>Username</strong>: {{user.username}}</li>
+  <li><strong>Username</strong>: {{userObj.username}}</li>
   <li>
-    <strong>Administrator</strong>: {{ user.isAdmin ? 'Yes' : 'No' }}
+    <strong>Administrator</strong>: {{ userObj.isAdmin ? 'Yes' : 'No' }}
   </li>
   <li><strong>Groups</strong>:
-    <span ng-show="user.groups.length <= 0">None</span>
-    <ul ng-show="user.groups.length > 0">
-      <li ng-repeat="group in user.groups">{{group.name}}</li>
+    <span ng-show="!userObj.groups || userObj.groups.length <= 0">
+      None
+    </span>
+    <ul ng-show="userObj.groups.length > 0">
+      <li ng-repeat="group in userObj.groups">{{group.name}}</li>
     </ul>
   </li>
 </ul>
