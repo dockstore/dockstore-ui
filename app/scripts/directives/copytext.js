@@ -12,7 +12,8 @@ angular.module('dockstore.ui')
       restrict: 'AE',
       controller: 'CopyTextCtrl',
       scope: {
-        copyText: '@value'
+        copyText: '@value',
+        length: '@'
       },
       templateUrl: 'templates/copytext.html',
       link: function postLink(scope, element, attrs) {

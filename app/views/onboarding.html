@@ -3,79 +3,72 @@
   <hr />
 
   <h4>GitHub Account</h4>
-  <div ng-show="githubAccount">
+  <div ng-show="tokenStatusSet.github">
     <span class="label label-success">
       <span class="glyphicon glyphicon-link"></span> Linked
     </span>
   </div>
-  <div ng-show="!githubAccount">
+  <div ng-show="!tokenStatusSet.github">
     <button class="btn btn-primary btn-xs" ng-click="linkGitHubAccount()">
       <span class="glyphicon glyphicon-link"></span> Link Account
     </button>
   </div>
 
   <h4>Quay.io Account</h4>
-  <div ng-show="quayioAccount">
+  <div ng-show="tokenStatusSet.quayio">
     <span class="label label-success">
       <span class="glyphicon glyphicon-link"></span> Linked
     </span>
   </div>
-  <div ng-show="!quayioAccount">
-    <button class="btn btn-primary btn-xs" ng-click="linkQuayioAccount()">
+  <div ng-show="!tokenStatusSet.quayio">
+    <button class="btn btn-primary btn-xs" ng-click="linkQuayIOAccount()">
       <span class="glyphicon glyphicon-link"></span> Link Account
     </button>
   </div>
-
-  <button
-      class="btn btn-primary pull-right"
-      ng-disabled="!(githubAccount && quayioAccount)"
-      ng-click="advanceStep()">
-    Next
-  </button>
 </div>
 
 <div ng-show="owStep === 2">
   <h3>Onboarding Wizard <small>Step 2: Download CLI Client</small></h3>
   <hr />
 
-  <div class="row">
-    <div class="col-md-8">
-      <p>
-         <b>First Step</b>, download the CLI bash script (works on Linux and Mac). Make it executable and ensure it is in your path.
-      </p>
-      <a
-          class="btn btn-default pull-left"
-          ng-href="{{dscliReleaseURL}}">
-        Download CLI
-      </a>
-    </div>
-    <div class="col-md-8">
-      <p>
-        <b>Second Step</b>, put these settings in the file ~/.dockstore/config
-      </p>
-      <pre class="pre-scrollable">
-username: {{user.username}}
-token: {{dockstoreToken}}
-server-url: http://www.dockstore.org:8080
-      </pre>
-      <!--p>
-        You can also run the following commands to install the client in your
-        home directory:
-      </p>
-      <pre class="pre-scrollable">
+  <h4>First Part</h4>
+  <ol>
+    <li>
+      Download the CLI bash script (works on Linux and Mac OS X).
+    </li>
+    <li>
+      Make it executable and ensure that it is in your <code>$PATH</code>.
+    </li>
+    <li>
+      Run the script, and follow the interactive prompts.
+    </li>
+  </ol>
+  <h4>Second Part</h4>
+  <p>Put these settings in the file <code>~/.dockstore/config</code>:</p>
+  <ul class="list-unstyled hori-offset-12">
+    <li>
+      <strong>Username</strong>:
+      <copy-text value="{{userObj.username}}" length="normal"></copy-text>
+    </li>
+    <li>
+      <strong>Token</strong>:
+      <copy-text value="{{dsToken}}" length="normal"></copy-text>
+    </li>
+    <li>
+      <strong>Server URL</strong>:
+      <copy-text value="{{dsServerURI}}/" length="normal"></copy-text>
+    </li>
+  </ul>
+  <!--p>
+    You can also run the following commands to install the client in your
+    home directory:
+  </p>
+  <pre class="pre-scrollable">
 mkdir "$HOME/bin" && \
 wget -O "$HOME/bin/dockstore" '{{dscliReleaseURL}}' && \
 chmod +x "$HOME/bin/dockstore" && \
 export PATH="$PATH:$HOME/bin" && \
 dockstore;</pre!-->
-    </div>
-  </div>
-
-  <button
-      class="btn btn-primary pull-right"
-      ng-click="advanceStep()">
-    Next
-  </button>
 </div>
 
 <div ng-show="owStep === 3">
@@ -83,10 +76,16 @@ dockstore;</pre!-->
   <hr />
 
   <p>Getting started...</p>
-
-  <button
-      class="btn btn-primary pull-right"
-      ng-click="advanceStep()">
-    Finish
-  </button>
 </div>
+
+<nav class="pull-right">
+  <ul class="pager">
+    <li ng-show="owStep > 1">
+      <a href ng-click="prevStep()">Previous</a>
+    </li>
+    <li ng-class="{ disabled: !tokenSetComplete }">
+      <a href ng-show="owStep < 3" ng-click="nextStep()">Next</a>
+      <a href ng-show="owStep >= 3" ng-click="nextStep()">Finish</a>
+    </li>
+  </ul>
+</nav>

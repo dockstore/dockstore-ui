@@ -13,15 +13,15 @@ angular.module('dockstore.ui')
     '$q',
     '$http',
     'WebService',
-    function ($rootScope, $q, $http, WebService) {
+    'NotificationService',
+    function ($rootScope, $q, $http,
+              WebService, NotificationService) {
     
-      /* Probabably want to do this with an explicit user_id */
       this.getUserTokens = function(userId) {
-        var resUrl = WebService.API_URI + '/users/' + userId + '/tokens';
         return $q(function(resolve, reject) {
           $http({
             method: 'GET',
-            url: resUrl
+            url: WebService.API_URI + '/users/' + userId + '/tokens'
           }).then(function(response) {
             resolve(response.data);
           }, function(response) {
@@ -30,46 +30,11 @@ angular.module('dockstore.ui')
         });
       };
 
-      /* This will be refactored to be more robust and consistent later... */
-      this.hasGitHubQuayIOTokens = function(userId) {
-        return this.getUserTokens(userId)
-          .then(function(tokens) {
-            var hasGithubAccount = false;
-            var hasQuayIOAccount = false;
-            for (var i = 0; i < tokens.length; i++){
-              switch (tokens[i].tokenSource) {
-                case 'github.com':
-                  hasGithubAccount = true;
-                  break;
-                case 'quay.io':
-                  hasQuayIOAccount = true;
-                  break;
-              }
-            }
-            return hasGithubAccount && hasQuayIOAccount;
-          });
-      };
-
-      this.deleteToken = function(tokenId) {
-        var resUrl = WebService.API_URI + '/auth/tokens/' + tokenId;
-        return $q(function(resolve, reject) {
-          $http({
-            method: 'DELETE',
-            url: resUrl
-          }).then(function(response) {
-            resolve(response.data);
-          }, function(response) {
-            reject(response);
-          });
-        });
-      };
-
-      this.registerQuayioAccessToken = function(userId, accessToken) {
-        var resUrl = WebService.API_URI + '/auth/tokens/quay.io/';
+      this.registerQuayIOToken = function(userId, accessToken) {
         return $q(function(resolve, reject) {
           $http({
             method: 'GET',
-            url: resUrl,
+            url: WebService.API_URI + '/auth/tokens/quay.io/',
             params: {
               access_token: accessToken
             }
@@ -79,6 +44,51 @@ angular.module('dockstore.ui')
             reject(response);
           });
         });
+      };
+
+      this.deleteToken = function(tokenId) {
+        return $q(function(resolve, reject) {
+          $http({
+            method: 'DELETE',
+            url: WebService.API_URI + '/auth/tokens/' + tokenId
+          }).then(function(response) {
+            resolve(response.data);
+          }, function(response) {
+            reject(response);
+          });
+        });
+      };
+
+      this.getUserTokenStatusSet = function(userId) {
+        return this.getUserTokens(userId)
+          .then(
+            function(tokens) {
+              var tokenStatusSet = {
+                dockstore: false,
+                github: false,
+                quayio: false
+              };
+              for (var i = 0; i < tokens.length; i++) {
+                switch (tokens[i].tokenSource) {
+                  case 'dockstore':
+                    tokenStatusSet.dockstore = true;
+                    break;
+                  case 'github.com':
+                    tokenStatusSet.github = true;
+                    break;
+                  case 'quay.io':
+                    tokenStatusSet.quayio = true;
+                    break;
+                }
+              }
+              return tokenStatusSet;
+            },
+            function(response) {
+              var message = '[' + response.status + '] ' + response.statusText;
+              NtfnService.popError('User Accounts', message);
+              return $q.reject(response);
+            }
+          );
       };
 
   }]);
