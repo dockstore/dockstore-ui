@@ -56,20 +56,9 @@
 
   <h4>Second Part</h4>
   <p>Put these settings in the file <code>~/.dockstore/config</code>:</p>
-  <ul class="list-unstyled hori-offset-12">
-    <li>
-      <strong>Username</strong>:
-      <copy-text value="{{userObj.username}}" length="normal"></copy-text>
-    </li>
-    <li>
-      <strong>Dockstore Token</strong>:
-      <copy-text value="{{dsToken}}" length="normal"></copy-text>
-    </li>
-    <li>
-      <strong>Server URL</strong>:
-      <copy-text value="{{dsServerURI}}/" length="normal"></copy-text>
-    </li>
-  </ul>
+<div copy-text type="textarea" length="very-long">token: {{dsToken}}
+server-url: {{dsServerURI}}
+</div>
 
   <!--p>
     You can also run the following commands to install the client in your

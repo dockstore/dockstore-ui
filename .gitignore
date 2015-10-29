@@ -4,7 +4,10 @@
 /.sass-cache
 /bower_components
 
-# What millennium do we live in again?
+# Configuration
+/app/scripts/services/webservice.js
+
+# System Metadata
 .DS_Store
 Thumbs.db
 

@@ -68,7 +68,7 @@
             {{token.tokenSource}}
           </td>
           <td>
-            <copy-text value="{{token.content}}"></copy-text>
+            <div copy-text>{{token.content}}</div>
           </td>
           <td>
             <a href ng-click="deleteToken({tokenId: token.id})">

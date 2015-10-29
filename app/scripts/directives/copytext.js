@@ -11,20 +11,17 @@ angular.module('dockstore.ui')
     return {
       restrict: 'AE',
       controller: 'CopyTextCtrl',
+      transclude: true,
       scope: {
-        copyText: '@value',
+        type: '@',
         length: '@'
       },
       templateUrl: 'templates/copytext.html',
       link: function postLink(scope, element, attrs) {
-        $(element).find('input').on('click', function() {
-          this.select();
-        });
-        $(element).find('button').on('click', function() {
-          $(element).find('input').select();
+        var copySelection = function() {
           try {
             if (document.execCommand('copy')) {
-              scope.ntfyCopySuccess('Docker command copied to clipboard.');
+              scope.ntfyCopySuccess();
             } else {
               scope.ntfyCopyFailure('Clipboard copy was unsuccessul, please ' +
                 'retry using the OS copy command.');
@@ -32,7 +29,36 @@ angular.module('dockstore.ui')
           } catch (error) {
             scope.ntfyCopyFailure(error);
           }
-        });
+        };
+
+        var intervalId = setInterval(function() {
+          var text = $(element).find('[ng-transclude] > span').html();
+          if (text && text.length > 0) {
+            window.clearInterval(intervalId);
+          } else {
+            return;
+          }
+
+          if (scope.type === 'textarea') {
+            $(element).find('textarea').val(text);
+            $(element).find('textarea').on('focus', function() {
+              this.select();
+            });
+            $(element).find('span.btn').on('click', function() {
+              $(element).find('textarea').select();
+              copySelection();
+            });
+          } else {
+            $(element).find('input').val(text);
+            $(element).find('input').on('focus', function() {
+              this.select();
+            });
+            $(element).find('span.btn').on('click', function() {
+              $(element).find('input').select();
+              copySelection();
+            });
+          }
+        }, 10);
       }
     };
   });

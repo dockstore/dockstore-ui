@@ -1,8 +1,15 @@
-<div class="input-group" ng-class="lengthClass">
-	<input type="text" class="form-control input-sm" value="{{copyText}}" />
-	<span class="input-group-btn">
-		<button class="btn btn-sm btn-default" type="button">
-			<span class="glyphicon glyphicon-copy"></span>
-		</button>
-	</span>
+<div ng-switch="type" class="input-group" ng-class="lengthClass">
+  <div ng-transclude ng-hide="true"></div>
+  <textarea
+      ng-switch-when="textarea"
+      class="form-control"
+      rows="3">
+  </textarea>
+  <input
+      ng-switch-default
+      type="text"
+      class="form-control input-sm" />
+  <span class="input-group-addon btn btn-sm btn-default">
+    <span class="glyphicon glyphicon-copy"></span>
+  </span>
 </div>

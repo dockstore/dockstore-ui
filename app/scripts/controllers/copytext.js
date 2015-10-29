@@ -22,6 +22,9 @@ angular.module('dockstore.ui')
       };
 
       switch ($scope.length) {
+        case 'very-short':
+          $scope.lengthClass = 'col-md-2';
+          break;
         case 'short':
           $scope.lengthClass = 'col-md-4';
           break;
@@ -30,6 +33,9 @@ angular.module('dockstore.ui')
           break;
         case 'long':
           $scope.lengthClass = 'col-md-8';
+          break;
+        case 'very-long':
+          $scope.lengthClass = 'col-md-10';
           break;
         default:
           $scope.lengthClass = 'col-md-12';
