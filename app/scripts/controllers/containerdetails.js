@@ -62,6 +62,19 @@ angular.module('dockstore.ui')
           );
       };
 
+      $scope.getQuayIOURL = function() {
+        var quayIOPathRegexp = /^quay\.io\/(.*)\/(.*)$/i;
+        var matchRes = quayIOPathRegexp.exec($scope.containerObj.path);
+        return 'https://quay.io/repository/' + matchRes[1] + '/' + matchRes[2];
+      };
+
+      $scope.getGitHubURL = function() {
+        if ($scope.containerObj.gitUrl.length <= 0) return;
+        var gitHubURLRegexp = /^git@github.com:(.*)\/(.*).git$/i;
+        var matchRes = gitHubURLRegexp.exec($scope.containerObj.gitUrl);
+        return 'https://github.com/' + matchRes[1] + '/' + matchRes[2];
+      };
+
       $scope.getVersionTags = function(containerObj) {
         var tags = containerObj ? containerObj.tags : null;
         if (!tags || tags.length === 0) return ['n/a'];
@@ -98,6 +111,10 @@ angular.module('dockstore.ui')
         }
       };
 
-      $scope.loadContainerDetails($scope.containerId);
+      $scope.loadContainerDetails($scope.containerId)
+        .then(function(containerObj) {
+          $scope.quayIOURL = $scope.getQuayIOURL();
+          $scope.gitHubURL = $scope.getGitHubURL();
+        });
 
   }]);

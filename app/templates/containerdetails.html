@@ -16,10 +16,17 @@
       </li>
       <li>
         <strong>GitHub</strong>:
-        <span ng-if="containerObj.gitUrl">
-          <a ng-href="{{containerObj.gitUrl}}">{{containerObj.gitUrl}}</a>
+        <span ng-if="gitHubURL">
+          <a ng-href="{{gitHubURL}}" target="_blank">{{gitHubURL}}</a>
         </span>
-        <span ng-if="!containerObj.gitUrl">n/a</span>
+        <span ng-if="!gitHubURL">n/a</span>
+      </li>
+      <li>
+        <strong>Quay.io</strong>:
+        <span ng-if="quayIOURL">
+          <a ng-href="{{quayIOURL}}" target="_blank">{{quayIOURL}}</a>
+        </span>
+        <span ng-if="!quayIOURL">n/a</span>
       </li>
       <li>
         <strong>Last Build</strong>:
