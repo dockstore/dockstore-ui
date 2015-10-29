@@ -51,7 +51,7 @@ angular.module('dockstore.ui')
         localStorageService.set('userObj', userObj);
       };
 
-      this.getUserObj = function() {console.log('logging :', localStorageService.get('userObj'))
+      this.getUserObj = function() {
         return localStorageService.get('userObj');
       };
 
