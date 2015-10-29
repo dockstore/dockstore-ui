@@ -1,12 +1,14 @@
 # dockstore-ui
 [![Build Status](https://travis-ci.org/CancerCollaboratory/dockstore-ui.svg?branch=develop)](https://travis-ci.org/CancerCollaboratory/dockstore-ui)
 
+^ Ignore this, it is lying...
+
 AngularJS UI for the Dockstore Web Service.
 
 ### Configuration Parameters
 All configuration for the Dockstore UI is done in the `app/scripts/services/webservice.js` file.
 
-1. For development, the server name should be `http://localhost:9000`, on a production environment, replace this URI with a fully-qualified domain name (and https://).
+1. For development, the server name should be `http://localhost:9000`, on a production environment, replace this URI with a fully-qualified domain name (e.g. `https://www.dockstore.org:8443`).
   ```
   API_URI: 'http://localhost:8080',
   API_URI_DEBUG: 'http://localhost:8090/tests/dummy-data',
