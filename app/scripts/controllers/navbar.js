@@ -24,16 +24,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.logout = function() {
-        if (!$auth.isAuthenticated()) {
-          $location.path('/login');
-          return;
-        }
-        $auth.logout()
-          .then(function() {
-            UserService.setUserObj(null);
-            NtfnService.popSuccess('Logout', 'Logout successful.');
-            $location.path('/search');
-          });
+        UserService.logout();
       };
 
   }]);
