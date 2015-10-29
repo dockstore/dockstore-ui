@@ -335,8 +335,8 @@ module.exports = function (grunt) {
     htmlmin: {
       dist: {
         options: {
-          collapseWhitespace: true,
-          conservativeCollapse: true,
+          collapseWhitespace: false,
+          //conservativeCollapse: true,
           collapseBooleanAttributes: true,
           removeCommentsFromCDATA: true
         },
