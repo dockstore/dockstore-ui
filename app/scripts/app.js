@@ -100,8 +100,37 @@ angular
           redirectTo: '/search'
         });
       //$locationProvider.html5Mode(true);
-  }]).run(['$rootScope', '$auth', '$location',
-    function($rootScope, $auth, $location) {
+  }])
+  .factory('authHttpResponseInterceptor', [
+      '$q',
+      '$rootScope',
+      function($q, $rootScope) {
+        return {
+          response: function(response) {
+            if (response.status === 401) {
+              $rootScope.$emit('auth401Refused');
+            }
+            return response || $q.when(response);
+          },
+          responseError: function(rejection) {
+            if (rejection.status === 401) {
+              $rootScope.$emit('auth401Refused');
+            }
+            return $q.reject(rejection);
+          }
+        };
+  }])
+  .config(['$httpProvider', function($httpProvider) {
+    $httpProvider.interceptors.push('authHttpResponseInterceptor');
+  }])
+  .run(['$rootScope', '$auth', '$location', 'UserService',
+    function($rootScope, $auth, $location, UserService) {
+      $rootScope.$on('auth401Refused', function(event) {
+        UserService.logout({
+          title: 'Dockstore Web Service',
+          content: 'Invalid token or authorization denied, please sign in again.'
+        });
+      });
       $rootScope.$on('$routeChangeStart', function(event, next, current) {
         if ($location.url() === '') return;
         var public_views = ['/search', '/docs', '/login', '/register'];

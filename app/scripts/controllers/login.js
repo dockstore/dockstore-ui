@@ -33,11 +33,11 @@ angular.module('dockstore.ui')
 
       $scope.authenticate = function(provider) {
         NtfnService.popInfo('Authentication Info',
-          'Staring authentication via ' + provider + '.');
+          'Starting authentication via ' + provider + '.');
         $auth.authenticate(provider)
           .then(function(response) {
-            var user_id = response.data.userId;
-            UserService.getUserById(user_id)
+            var userId = response.data.userId;
+            UserService.getUserById(userId)
               .then(function(response) {
                 UserService.setUserObj(response);
                 NtfnService.popSuccess('Authentication Success',

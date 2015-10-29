@@ -24,14 +24,11 @@ angular.module('dockstore.ui')
       $scope.userObj = UserService.getUserObj();
 
       $scope.linkGitHubAccount = function() {
-        $auth.logout()
-          .then(function() {
-            UserService.setUserObj(null);
-            NtfnService.popSuccess('Logout', 'Logout successful.');
-            NtfnService.popInfo('Link GitHub Account',
-              'Please select the option, "Sign in with GitHub" to continue.');
-            $location.path('/login');
-          });
+        UserService.logout({
+          title: 'Link GitHub Account',
+          content: 'Please select the option, ' +
+                    '"Sign in with GitHub" to continue.'
+        });
       };
 
       $scope.linkQuayIOAccount = function() {
