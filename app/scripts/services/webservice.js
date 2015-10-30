@@ -23,5 +23,5 @@ angular.module('dockstore.ui')
     QUAYIO_SCOPE: 'repo:read,user:read',
 
     DSCLI_RELEASE_URL: 'https://github.com/CancerCollaboratory/dockstore/' +
-                        'releases/download/0.0.4/dockstore'
+                        'releases/download/0.0.6/dockstore'
   });
