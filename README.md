@@ -1,8 +1,6 @@
 # dockstore-ui
 [![Build Status](https://travis-ci.org/CancerCollaboratory/dockstore-ui.svg?branch=develop)](https://travis-ci.org/CancerCollaboratory/dockstore-ui)
 
-^ Ignore this, it is lying...
-
 AngularJS UI for the Dockstore Web Service.
 
 ### Configuration Parameters
