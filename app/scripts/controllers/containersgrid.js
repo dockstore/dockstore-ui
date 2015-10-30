@@ -21,16 +21,18 @@ angular.module('dockstore.ui')
       $scope.startCont = 0;
       $scope.endCont = 0;
 
-      $scope.getLatestVersionNumber = function(tags) {
-        if (!tags || tags.length === 0) return 'n/a';
-        var descTags = tags.sort(function(a, b) {
-          return b.version.localeCompare(a.version);
-        });
-        if (descTags.length >= 2 && descTags[0].version === 'latest') {
-          return descTags[1].version;
-        } else {
-          return descTags[0].version;
-        }
+      $scope.getGitHubURL = function(containerGitUrl) {
+        if (containerGitUrl.length <= 0) return;
+        var gitHubURLRegexp = /^git@github.com:(.*)\/(.*).git$/i;
+        var matchRes = gitHubURLRegexp.exec(containerGitUrl);
+        return 'https://github.com/' + matchRes[1] + '/' + matchRes[2];
+      };
+
+      $scope.getQuayIOURL = function(containerPath) {
+        if (containerPath.length <= 0) return;
+        var quayIOPathRegexp = /^quay\.io\/(.*)\/(.*)$/i;
+        var matchRes = quayIOPathRegexp.exec(containerPath);
+        return 'https://quay.io/repository/' + matchRes[1] + '/' + matchRes[2];
       };
 
       $scope.getPageNumList = function() {
