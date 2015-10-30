@@ -13,7 +13,7 @@ angular.module('dockstore.ui')
     function ($scope) {
       
       $scope.containers = [];
-      $scope.sortColumn = 'name';
+      $scope.sortColumn = 'version';
       $scope.sortReverse = false;
 
       $scope.clickSortColumn = function(columnName) {

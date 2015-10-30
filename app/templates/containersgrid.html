@@ -46,7 +46,7 @@
             </span>
           </th>
           <th class="col-md-2">
-            Version
+            Project Links
           </th>
           <th class="col-md-5">
             Docker Pull
@@ -68,7 +68,16 @@
             {{ cont.author ? cont.author : 'n/a' }}
           </td>
           <td>
-            {{ getLatestVersionNumber(cont.tags) }}
+            <span ng-if="getGitHubURL(cont.gitUrl)">
+              <a ng-href="{{getGitHubURL(cont.gitUrl)}}" target="_blank">GitHub</a>
+            </span>
+            <span ng-if="getQuayIOURL(cont.path)">
+              <a ng-href="{{getQuayIOURL(cont.path)}}" target="_blank">Quay.io</a>
+            </span>
+            <span
+                ng-if="!(getGitHubURL(cont.gitUrl) || getQuayIOURL(cont.path))">
+              n/a
+            </span>
           </td>
           <td>
             <div copy-text>docker pull {{cont.path}}</div>
