@@ -1,46 +1,100 @@
-<div class="navbar navbar-default navbar-static-top">
+<div id="header1">
   <div class="container">
-    <ul class="nav navbar-nav">
-      <a href="#/search" class="navbar-brand">
-          <i class="ion-nuclear"></i> Dockstore
-      </a>
-    </ul>
-    <ul class="nav navbar-nav">
-      <li><a href="#/search">Containers</a></li>
-      <!--li><a ng-show="isAuthenticated()" href="#/containers">Containers</a></li-->
-      <li><a href="#/docs">Documentation</a></li>
-    </ul>
-    <ul class="nav navbar-nav pull-right">
-      <li><a href="#/login" ng-hide="isAuthenticated()">Log in</a></li>
-      <!--li><a href="#/register" ng-hide="isAuthenticated()">Register</a></li-->
-      <li ng-show="isAuthenticated()" uib-dropdown>
-        <a href uib-dropdown-toggle>{{username}} <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li>
-            <a href="#/accounts">
-              <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Accounts
-            </a>
-          </li>
-          <li>
-            <a href="#/tokens">
-              <span class="glyphicon glyphicon-link"></span>&nbsp;&nbsp;Tokens
-            </a>
-          </li>
-          <!--li>
-            <a href="#/settings">
-              <span class="glyphicon glyphicon-wrench"></span>
-              &nbsp;&nbsp;Settings
-            </a>
-          </li-->
-          <li class="divider" role="separator"></li>
-          <li>
-            <a href ng-click="logout()">
-              <span class="glyphicon glyphicon-log-out"></span>
-              &nbsp;&nbsp;Log out
-            </a>
-          </li>
-        </ul>
-      </li>
-    </ul>
+    <!-- Navigation Bar -->
+    <div class="row" id="navigation">
+      <ul class="nav">
+        <li>
+          <a href="/"><img src="images/logo.png"></a>
+        </li>
+        <li>
+          <a href="#/search">Containers</a>
+        </li>
+        <li>
+          <a href="#/docs">Documentation</a>
+        </li>
+        <li>
+          <a href="#">About</a>
+        </li>
+        <li>
+          <a href="#/register" ng-hide="isAuthenticated()">Sign Up</a>
+        </li>
+        <li>
+          <span class="left rounded">
+            <input type="text"
+                    class="search left rounded"
+                    placeholder="Search Containers" />
+          </span>
+          <div class="button login">
+            <p><a href="#/login" ng-hide="isAuthenticated()">Login</a></p>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- Splash -->
+    <div class="row header1">
+      <div class="col-md-6">
+        <h1 class="title">Create, Share, Use</h1>
+        <h2 class="title caption">Docker Containers for the BioSciences</h2>
+      </div>
+      <div class="col-md-3">
+        <img id="ship" src="images/ship.png">
+      </div>
+      <div class="col-md-3">
+        <img id="truck" src="images/truck.png">
+      </div>
+    </div>
   </div>
 </div>
+<div id="header2">
+  <div class="container">
+    <img class="blue-rectangle" src="images/rectangle.png">
+    <div class="row header2">
+      <div class="col-md-6">
+        <h4 class="title caption">BioDockStore is an open platform for sharing tools supporting the GA4GH common workflow language.</h4>
+      </div>
+      <div class="col-md-3 row-center">
+        <div class="button">
+          <p><a href="#">Sign up to Contribute &raquo;</a></p>
+        </div>
+      </div>
+        <div class="col-md-3 row-center">
+          <div class="button">
+            <p><a href="#">About BioDockStore &raquo;</a></p>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<!-- User Menu
+
+<li ng-show="isAuthenticated()" uib-dropdown>
+    <a href uib-dropdown-toggle>{{username}} <span class="caret"></span></a>
+    <ul class="dropdown-menu">
+      <li>
+        <a href="#/accounts">
+          <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Accounts
+        </a>
+      </li>
+      <li>
+        <a href="#/tokens">
+          <span class="glyphicon glyphicon-link"></span>&nbsp;&nbsp;Tokens
+        </a>
+      </li>
+      <li>
+        <a href="#/settings">
+          <span class="glyphicon glyphicon-wrench"></span>
+          &nbsp;&nbsp;Settings
+        </a>
+      </li>
+      <li class="divider" role="separator"></li>
+      <li>
+        <a href ng-click="logout()">
+          <span class="glyphicon glyphicon-log-out"></span>
+          &nbsp;&nbsp;Log out
+        </a>
+      </li>
+    </ul>
+  </li>
+
+  -->

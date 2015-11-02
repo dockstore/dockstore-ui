@@ -96,8 +96,13 @@ angular
           controller: 'SettingsCtrl',
           controllerAs: 'Settings'
         })
+        .when('/', {
+          templateUrl: 'views/home.html',
+          controller: 'HomeCtrl',
+          controllerAs: 'Home'
+        })
         .otherwise({
-          redirectTo: '/search'
+          redirectTo: '/'
         });
       //$locationProvider.html5Mode(true);
   }])
@@ -133,7 +138,7 @@ angular
       });
       $rootScope.$on('$routeChangeStart', function(event, next, current) {
         if ($location.url() === '') return;
-        var public_views = ['/search', '/docs', '/login', '/register'];
+        var public_views = ['/', '/search', '/docs', '/login', '/register'];
         var isViewPublic = function(path) {
           for (var i = 0; i < public_views.length; i++) {
             if (path.indexOf(public_views[i]) !== -1) { return true; }
