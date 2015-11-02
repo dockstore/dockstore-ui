@@ -7,6 +7,12 @@
  * # WebService
  * Constant in the dockstore.ui.
  */
+
+/*
+ * >>>> DO NOT COMMIT THIS FILE <<<<, use locally:
+ * git update-index --assume-unchanged app/scripts/services/webservice.js
+ */
+
 angular.module('dockstore.ui')
   .constant('WebService', {
     API_URI: 'http://localhost:8080',
@@ -23,5 +29,5 @@ angular.module('dockstore.ui')
     QUAYIO_SCOPE: 'repo:read,user:read',
 
     DSCLI_RELEASE_URL: 'https://github.com/CancerCollaboratory/dockstore/' +
-                        'releases/download/0.0.6/dockstore'
+                        'releases/download/0.0.7/dockstore'
   });

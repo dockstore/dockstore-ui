@@ -4,9 +4,6 @@
 /.sass-cache
 /bower_components
 
-# Configuration
-/app/scripts/services/webservice.js
-
 # System Metadata
 .DS_Store
 Thumbs.db
