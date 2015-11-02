@@ -1,5 +1,43 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
-@import "ds-bootstrap/bootstrap.min.css";
+// bower:scss
+@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+// endbower
+
+/* CSS Overrides + Other Dirty Tricks */
+.nav > li > a {
+  position: initial;
+  display: initial;
+  padding: initial;
+}
+
+.header1 div.splash {
+  height: 300px;
+}
+
+table.homepage-container {
+  th:nth-child(1) {
+    width: 20%;
+  }
+  th:nth-child(2) {
+    width: 20%;
+  }
+  th:nth-child(3) {
+    width: 20%;
+  }
+  th:nth-child(4) {
+    width: 40%;
+  }
+}
+
+/*@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600);*/
+/* #487980 GREEN */
+/* #21335B DARK BLUE */
+/* #313131 GREY */
+/* #cfd1d7 LIGHT GREY */
+/* #f4f4f4 LIGHTEST GREY */
+/* #2a3e6b MEDIUM BLUE */
+/* #a0adcc LIGHT BLUE */
+/* #dad4d4 BEIGE */
 
 @font-face {
 font-family: Gotham;
@@ -7,15 +45,15 @@ src: url("fonts/Gotham-Book.otf") format("opentype");
 }
 
 @font-face {
-  font-family: Gotham;
-  font-weight: bold;
-  src: url("fonts/Gotham-Bold.otf") format("opentype");
+font-family: Gotham;
+font-weight: bold;
+src: url("fonts/Gotham-Bold.otf") format("opentype");
 }
 
 @font-face {
-  font-family: Gotham;
-  font-style: italic;
-  src: url("fonts/Gotham-BookItalic.otf") format("opentype");
+font-family: Gotham;
+font-style: italic;
+src: url("fonts/Gotham-BookItalic.otf") format("opentype");
 }
 
 body {
@@ -442,8 +480,6 @@ ul.our-sponsors li img {
   margin-right: 10px;
 }
 
-
-
 pre {
     color: #487980;
     font-size: 86.66%;
@@ -608,7 +644,6 @@ div.tabs > div:target > div, :target #info > div, #info > div {
 .starRating:not(old) > label:hover ~ label:before,
 .starRating:not(:hover) > :checked ~ label:before{
   opacity : 1;
-/*<?xml version="1.0" encoding="UTF-8"?>*/
 }
 
 /* Begin Temporary Styles - Need to Refactor Later */

@@ -16,8 +16,7 @@ angular.module('dockstore.ui')
     'NotificationService',
     function ($scope, $auth, $location, UserService, NtfnService) {
     
-      var userObj = UserService.getUserObj();
-      $scope.username = userObj ? userObj.username : '';
+      $scope.userObj = UserService.getUserObj();
 
       $scope.isAuthenticated = function() {
         return $auth.isAuthenticated();
@@ -26,5 +25,7 @@ angular.module('dockstore.ui')
       $scope.logout = function() {
         UserService.logout();
       };
+
+      $scope.isHomePage = ($location.url() === '/');
 
   }]);

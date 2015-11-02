@@ -12,20 +12,15 @@ angular.module('dockstore.ui')
       restrict: 'AE',
       controller: 'ContainersGridCtrl',
       scope: {
-        containers: '='
+        containers: '=',
+        searchQuery: '='
       },
       templateUrl: 'templates/containersgrid.html',
       link: function postLink(scope, element, attrs) {
         scope.$watchCollection('filteredContainers',
           function(newVal, oldVal, scope) {
             if (newVal) {
-              scope.refreshPagination();
-            }
-        });
-        scope.$watch('numContsPage',
-          function(newVal, oldVal, scope) {
-            if (newVal) {
-              scope.refreshPagination();
+              scope.currPage = 1;
             }
         });
       }

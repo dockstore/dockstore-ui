@@ -15,11 +15,8 @@ angular.module('dockstore.ui')
       $scope.containers = [];
       $scope.sortColumn = 'name';
       $scope.sortReverse = false;
-      $scope.numContsPage = "20";
-      $scope.numNavPages = 5; // Must be an odd number
+      $scope.numContsPage = 10;
       $scope.currPage = 1;
-      $scope.startCont = 0;
-      $scope.endCont = 0;
 
       $scope.getGitHubURL = function(containerGitUrl) {
         if (containerGitUrl.length <= 0) return;
@@ -35,76 +32,7 @@ angular.module('dockstore.ui')
         return 'https://quay.io/repository/' + matchRes[1] + '/' + matchRes[2];
       };
 
-      $scope.getPageNumList = function() {
-        if ($scope.filteredContainers.length === 0) return [1];
-
-        var pageNumList = [];
-        var numPrevRadiable = Math.min($scope.currPage - 1,
-                                        $scope.numNavPages - 1);
-        var numNextRadiable = Math.min($scope.numPages - $scope.currPage,
-                                        $scope.numNavPages - 1);
-        var numNext = 0;
-        var numPrev = 0;
-
-        if (numNextRadiable < ($scope.numNavPages - 1) / 2) {
-          numPrev = numPrevRadiable - numNextRadiable;
-        } else {
-          numPrev = Math.min(($scope.numNavPages - 1) / 2,
-                              $scope.currPage - 1);
-        }
-        if (numPrevRadiable < ($scope.numNavPages - 1) / 2) {
-          numNext = numNextRadiable - numPrevRadiable;
-        } else {
-          numNext = Math.min(($scope.numNavPages - 1) / 2,
-                              $scope.numPages - $scope.currPage);
-        }
-
-        for (var i = numPrev; i > 0; i--) {
-          pageNumList.push($scope.currPage - i);
-        }
-        pageNumList.push($scope.currPage);
-        for (var j = 1; j <= numNext; j++) {
-          pageNumList.push($scope.currPage + j);
-        }
-
-        return pageNumList;
-      };
-
-      $scope.refreshPagination = function() {
-        $scope.currPage = 1;
-        $scope.numPages =
-          Math.ceil($scope.filteredContainers.length /
-                      parseInt($scope.numContsPage));
-        $scope.pageNumList = $scope.getPageNumList();
-      };
-
-      $scope.updateContRange = function() {
-        $scope.startCont = $scope.numContsPage * ($scope.currPage - 1);
-        $scope.endCont = ($scope.numContsPage) * $scope.currPage - 1;
-      };
-
-      $scope.getPaginRangeObj = function() {
-        $scope.updateContRange();
-        return {
-          start: $scope.startCont,
-          end: $scope.endCont
-        };
-      };
-
-      $scope.changePage = function(pageNum) {
-        if ($scope.numPages === 0 ) return;
-        switch (pageNum) {
-          case -1:
-            if ($scope.currPage !== 1) $scope.currPage--;
-            break;
-          case -2:
-            if ($scope.currPage !== $scope.numPages) $scope.currPage++;
-            break;
-          default:
-            $scope.currPage = pageNum;
-        }
-      };
-
+      /* Column Sorting */
       $scope.clickSortColumn = function(columnName) {
         if ($scope.sortColumn === columnName) {
           $scope.sortReverse = !$scope.sortReverse;
@@ -123,18 +51,48 @@ angular.module('dockstore.ui')
         }
       };
 
-      $scope.getRangeString = function() {
-        var start = Math.min($scope.startCont + 1,
+      /* Pagination */
+      $scope.getFirstPage = function() {
+        return 1;
+      };
+
+      $scope.getLastPage = function() {
+        return Math.ceil($scope.filteredContainers.length / $scope.numContsPage);
+      };
+
+      $scope.changePage = function(nextPage) {
+        if (nextPage) {
+          /* Next Page*/
+          if ($scope.currPage === $scope.getLastPage) return;
+          $scope.currPage++;
+        } else {
+          /* Previous Page*/
+          if ($scope.currPage === $scope.getFirstPage) return;
+          $scope.currPage--;
+        }
+      };
+
+      $scope.getListRange = function() {
+        return {
+          start: Math.min($scope.numContsPage * ($scope.currPage - 1),
+                          $scope.filteredContainers.length),
+          end: Math.min($scope.numContsPage * $scope.currPage - 1,
+                        $scope.filteredContainers.length)
+        };
+      };
+
+      $scope.getListRangeString = function() {
+        var start = Math.min($scope.numContsPage * ($scope.currPage - 1) + 1,
                               $scope.filteredContainers.length).toString();
-        var end = Math.min($scope.endCont + 1,
+        var end = Math.min($scope.numContsPage * $scope.currPage,
                               $scope.filteredContainers.length).toString();
 
-        var numLength = Math.max(start.length, end.length);
+        var padLength = Math.max(start.length, end.length);
 
-        for (var i = start.length; i < numLength; i++) {
+        for (var i = start.length; i < padLength; i++) {
           start = '0' + start;
         }
-        for (var j = end.length; j < numLength; j++) {
+        for (var j = end.length; j < padLength; j++) {
           end = '0' + end;
         }
 

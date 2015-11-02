@@ -1,6 +1,5 @@
 <div id="header1">
   <div class="container">
-    <!-- Navigation Bar -->
     <div class="row" id="navigation">
       <ul class="nav">
         <li>
@@ -30,9 +29,9 @@
         </li>
       </ul>
     </div>
-    <!-- Splash -->
-    <div class="row header1">
-      <div class="col-md-6">
+
+    <div class="row header1" ng-show="isHomePage">
+      <div class="col-md-6 splash">
         <h1 class="title">Create, Share, Use</h1>
         <h2 class="title caption">Docker Containers for the BioSciences</h2>
       </div>
@@ -45,7 +44,7 @@
     </div>
   </div>
 </div>
-<div id="header2">
+<div id="header2" ng-show="isHomePage">
   <div class="container">
     <img class="blue-rectangle" src="images/rectangle.png">
     <div class="row header2">
