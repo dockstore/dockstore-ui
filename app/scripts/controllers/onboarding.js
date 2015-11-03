@@ -96,7 +96,7 @@ angular.module('dockstore.ui')
               function() {
                 $scope.refreshUserContainers($scope.userObj.id);
                 $scope.quayIOHold = false;
-                $window.location.href = '#/onboarding';
+                $window.location.href = '/onboarding';
               }
             );
         }

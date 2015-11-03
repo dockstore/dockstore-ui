@@ -23,7 +23,7 @@ angular.module('dockstore.ui')
         $auth.login($scope.user)
           .then(function() {
             console.info("Login successful for user: ", $scope.user);
-            $location.path('#/console');
+            $location.path('/console');
           })
           .catch(function(response) {
             console.error("Error logging in: ", response.data.message);
@@ -42,7 +42,7 @@ angular.module('dockstore.ui')
                 UserService.setUserObj(response);
                 NtfnService.popSuccess('Authentication Success',
                   'Login successful via ' + provider + '.');
-                $location.path('#/search');
+                $location.path('/search');
               }, function(response) {
                 NtfnService.popError('Authentication Error', response);
                 $auth.logout();

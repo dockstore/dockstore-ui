@@ -6,16 +6,16 @@
           <a href="/"><img src="images/logo.png"></a>
         </li>
         <li>
-          <a href="#/search">Containers</a>
+          <a href="/search">Containers</a>
         </li>
         <li>
-          <a href="#/docs">Documentation</a>
+          <a href="/docs">Documentation</a>
         </li>
         <li>
           <a href="#">About</a>
         </li>
         <li  ng-show="!isAuthenticated()">
-          <a href="#/register">Sign Up</a>
+          <a href="/register">Sign Up</a>
         </li>
         <li ng-class="{'ds-nav-search-pr': isAuthenticated()}">
           <span class="left rounded">
@@ -25,26 +25,26 @@
                     ng-model="searchQuery" />
           </span>
           <div class="button login" ng-show="!isAuthenticated()">
-            <p><a href="#/login">Login</a></p>
+            <p><a href="/login">Login</a></p>
           </div>
         </li>
         <li uib-dropdown ng-show="isAuthenticated()">
           <a href uib-dropdown-toggle>{{userObj.username}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li>
-              <a href="#/accounts">
+              <a href="/accounts">
                 <span class="glyphicon glyphicon-user"></span>&nbsp;
                 <span class="item-label">Accounts</span>
               </a>
             </li>
             <li>
-              <a href="#/tokens">
+              <a href="/tokens">
                 <span class="glyphicon glyphicon-link"></span>&nbsp;
                 <span class="item-label">Tokens</span>
               </a>
             </li>
             <!--li>
-              <a href="#/settings">
+              <a href="/settings">
                 <span class="glyphicon glyphicon-wrench"></span>&nbsp;&nbsp;
                 <span class="item-label">Settings</span>
               </a>

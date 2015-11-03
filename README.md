@@ -16,7 +16,7 @@ All configuration for the Dockstore UI is done in the `app/scripts/services/webs
   ```
   GITHUB_AUTH_URL: 'https://github.com/login/oauth/authorize',
   GITHUB_CLIENT_ID: 'a70739297a7d67f915de',
-  GITHUB_REDIRECT_URI: 'http://localhost:9000/%23/login',
+  GITHUB_REDIRECT_URI: 'http://localhost:9000/login',
   GITHUB_SCOPE: 'read:org',
   ```
 
@@ -24,15 +24,15 @@ All configuration for the Dockstore UI is done in the `app/scripts/services/webs
   ```
   QUAYIO_AUTH_URL: 'https://quay.io/oauth/authorize',
   QUAYIO_CLIENT_ID: 'RWCBI3Y6QUNXDPYKNLMC',
-  QUAYIO_REDIRECT_URI: 'http://localhost:9000/%23/onboarding',
+  QUAYIO_REDIRECT_URI: 'http://localhost:9000/onboarding',
   QUAYIO_SCOPE: 'repo:read,user:read'
   ```
 
 ### Third-Party API Integration
 Dockstore currently integrates with GitHub and Quay.io, in the following steps, replace `http://localhost:9000` with a fully-qualified domain name on a production environment.
 
-1. On GitHub, create an application and enter the following for `Authorization callback URL`: `http://localhost:9000/#/login`.
-2. On Quay.io, create an application and enter the following for `Redirect/Callback URL Prefix`: `http://localhost:9000/#/onboarding`.
+1. On GitHub, create an application and enter the following for `Authorization callback URL`: `http://localhost:9000/login`.
+2. On Quay.io, create an application and enter the following for `Redirect/Callback URL Prefix`: `http://localhost:9000/onboarding`.
 
 ### Setting Up the Build Environment
 1. Install Node.js and NPM on your workstation, specific instructions will vary depending on the operating system distribution. The use of [nvm](https://github.com/creationix/nvm) is encouraged in supported environments.
