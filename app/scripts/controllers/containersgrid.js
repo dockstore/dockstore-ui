@@ -10,7 +10,8 @@
 angular.module('dockstore.ui')
   .controller('ContainersGridCtrl', [
     '$scope',
-    function ($scope) {
+    '$rootScope',
+    function ($scope, $rootScope) {
 
       $scope.containers = [];
       $scope.sortColumn = 'name';
@@ -98,5 +99,9 @@ angular.module('dockstore.ui')
 
         return start + ' to ' + end + ' of ' + $scope.filteredContainers.length;
       };
+
+      $rootScope.$on('searchQueryChange', function(event, searchQuery) {
+        $scope.searchQuery = searchQuery;
+      });
       
   }]);

@@ -1,0 +1,56 @@
+/**
+ * CSS Style Fixes - Dockstore-Bootstrap Integration
+ */
+
+.nav > li > a {
+  position: initial;
+  display: initial;
+  padding: initial;
+}
+
+.header1 div.splash {
+  height: 300px;
+}
+
+table.homepage-container {
+  th:nth-child(1) {
+    width: 20%;
+  }
+  th:nth-child(2) {
+    width: 20%;
+  }
+  th:nth-child(3) {
+    width: 20%;
+  }
+  th:nth-child(4) {
+    width: 40%;
+  }
+}
+
+.input-group-addon {
+  padding: 5px 10px;
+}
+
+#navigation ul.nav {
+  li.ds-nav-search-pr {
+    margin-left: 100px;
+    margin-right: 0;
+  }
+  li > a:hover, li > a:focus {
+    background-color: initial;
+  }
+  li > ul.dropdown-menu {
+    background-color: rgb(72, 121, 128);
+    li {
+      margin: 2px 0;
+      display: list-item;
+      a:hover {
+        background-color: initial;
+        text-decoration: none;
+        span.item-label {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

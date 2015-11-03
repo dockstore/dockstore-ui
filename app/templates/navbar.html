@@ -14,18 +14,49 @@
         <li>
           <a href="#">About</a>
         </li>
-        <li>
-          <a href="#/register" ng-hide="isAuthenticated()">Sign Up</a>
+        <li  ng-show="!isAuthenticated()">
+          <a href="#/register">Sign Up</a>
         </li>
-        <li>
+        <li ng-class="{'ds-nav-search-pr': isAuthenticated()}">
           <span class="left rounded">
             <input type="text"
                     class="search left rounded"
-                    placeholder="Search Containers" />
+                    placeholder="Search Containers"
+                    ng-model="searchQuery" />
           </span>
-          <div class="button login">
-            <p><a href="#/login" ng-hide="isAuthenticated()">Login</a></p>
+          <div class="button login" ng-show="!isAuthenticated()">
+            <p><a href="#/login">Login</a></p>
           </div>
+        </li>
+        <li uib-dropdown ng-show="isAuthenticated()">
+          <a href uib-dropdown-toggle>{{userObj.username}} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="#/accounts">
+                <span class="glyphicon glyphicon-user"></span>&nbsp;
+                <span class="item-label">Accounts</span>
+              </a>
+            </li>
+            <li>
+              <a href="#/tokens">
+                <span class="glyphicon glyphicon-link"></span>&nbsp;
+                <span class="item-label">Tokens</span>
+              </a>
+            </li>
+            <!--li>
+              <a href="#/settings">
+                <span class="glyphicon glyphicon-wrench"></span>&nbsp;&nbsp;
+                <span class="item-label">Settings</span>
+              </a>
+            </li-->
+            <li class="divider" role="separator"></li>
+            <li>
+              <a href ng-click="logout()">
+                <span class="glyphicon glyphicon-log-out"></span>&nbsp;
+                <span class="item-label">Log out</span>
+              </a>
+            </li>
+          </ul>
         </li>
       </ul>
     </div>
@@ -67,33 +98,6 @@
 
 <!-- User Menu
 
-<li ng-show="isAuthenticated()" uib-dropdown>
-    <a href uib-dropdown-toggle>{{username}} <span class="caret"></span></a>
-    <ul class="dropdown-menu">
-      <li>
-        <a href="#/accounts">
-          <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Accounts
-        </a>
-      </li>
-      <li>
-        <a href="#/tokens">
-          <span class="glyphicon glyphicon-link"></span>&nbsp;&nbsp;Tokens
-        </a>
-      </li>
-      <li>
-        <a href="#/settings">
-          <span class="glyphicon glyphicon-wrench"></span>
-          &nbsp;&nbsp;Settings
-        </a>
-      </li>
-      <li class="divider" role="separator"></li>
-      <li>
-        <a href ng-click="logout()">
-          <span class="glyphicon glyphicon-log-out"></span>
-          &nbsp;&nbsp;Log out
-        </a>
-      </li>
-    </ul>
-  </li>
+
 
   -->

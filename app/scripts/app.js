@@ -136,6 +136,9 @@ angular
           content: 'Invalid token or authorization denied, please sign in again.'
         });
       });
+      $rootScope.$on('searchQueryChange', function(event, searchQuery) {
+        if ($location.url() !== 'search') $location.path('/search');
+      });
       $rootScope.$on('$routeChangeStart', function(event, next, current) {
         if ($location.url() === '') return;
         var public_views = ['/', '/search', '/docs', '/login', '/register'];

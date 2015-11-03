@@ -12,9 +12,11 @@ angular.module('dockstore.ui')
     '$scope',
     '$auth',
     '$location',
+    '$rootScope',
     'UserService',
     'NotificationService',
-    function ($scope, $auth, $location, UserService, NtfnService) {
+    function ($scope, $auth, $location, $rootScope,
+                UserService, NtfnService) {
     
       $scope.userObj = UserService.getUserObj();
 
@@ -26,6 +28,12 @@ angular.module('dockstore.ui')
         UserService.logout();
       };
 
-      $scope.isHomePage = ($location.url() === '/');
+      $scope.$watch('searchQuery', function(newValue, oldValue) {
+        $rootScope.$broadcast('searchQueryChange', newValue);
+      });
+
+      $rootScope.$on('$routeChangeStart', function(event, next, current) {
+        $scope.isHomePage = ($location.url() === '/');
+      });
 
   }]);

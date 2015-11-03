@@ -2,32 +2,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
-
-/* CSS Overrides + Other Dirty Tricks */
-.nav > li > a {
-  position: initial;
-  display: initial;
-  padding: initial;
-}
-
-.header1 div.splash {
-  height: 300px;
-}
-
-table.homepage-container {
-  th:nth-child(1) {
-    width: 20%;
-  }
-  th:nth-child(2) {
-    width: 20%;
-  }
-  th:nth-child(3) {
-    width: 20%;
-  }
-  th:nth-child(4) {
-    width: 40%;
-  }
-}
+@import "ds-style-fix.scss";
 
 /*@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600);*/
 /* #487980 GREEN */
