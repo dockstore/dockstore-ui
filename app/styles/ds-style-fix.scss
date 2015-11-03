@@ -12,7 +12,7 @@
   height: 300px;
 }
 
-table.homepage-container {
+table.containers-grid {
   th:nth-child(1) {
     width: 20%;
   }
@@ -27,14 +27,29 @@ table.homepage-container {
   }
 }
 
+table.tokens-grid {
+  th:nth-child(1) {
+    width: 20%;
+  }
+  th:nth-child(2) {
+    width: 20%;
+  }
+  th:nth-child(3) {
+    width: 40%;
+  }
+  th:nth-child(4) {
+    width: 20%;
+  }
+}
+
 .input-group-addon {
   padding: 5px 10px;
 }
 
 #navigation ul.nav {
   li.ds-nav-search-pr {
-    margin-left: 100px;
-    margin-right: 0;
+    margin-left: 80px;
+    margin-right: 20px;
   }
   li > a:hover, li > a:focus {
     background-color: initial;

@@ -14,17 +14,19 @@
         <li>
           <a href="#">About</a>
         </li>
-        <li  ng-show="!isAuthenticated()">
+        <!--li ng-show="!isAuthenticated()">
           <a href="/register">Sign Up</a>
-        </li>
-        <li ng-class="{'ds-nav-search-pr': isAuthenticated()}">
+        </li-->
+        <li class="ds-nav-search-pr">
           <span class="left rounded">
             <input type="text"
                     class="search left rounded"
                     placeholder="Search Containers"
                     ng-model="searchQuery" />
           </span>
-          <div class="button login" ng-show="!isAuthenticated()">
+        </li>
+        <li ng-show="!isAuthenticated()">
+          <div class="button login">
             <p><a href="/login">Login</a></p>
           </div>
         </li>

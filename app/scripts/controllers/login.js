@@ -12,9 +12,11 @@ angular.module('dockstore.ui')
     '$scope',
     '$auth',
     '$location',
+    '$window',
     'UserService',
     'NotificationService',
-    function ($scope, $auth, $location, UserService, NtfnService) {
+    function ($scope, $auth, $location, $window,
+        UserService, NtfnService) {
 
       $scope.login = function() {
         NtfnService.popError('Authentication Error',
@@ -42,7 +44,7 @@ angular.module('dockstore.ui')
                 UserService.setUserObj(response);
                 NtfnService.popSuccess('Authentication Success',
                   'Login successful via ' + provider + '.');
-                $location.path('/search');
+                $window.location.href = '/search';
               }, function(response) {
                 NtfnService.popError('Authentication Error', response);
                 $auth.logout();
