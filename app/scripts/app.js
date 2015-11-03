@@ -30,6 +30,7 @@ angular
       $authProvider.baseUrl = WebService.API_URI + '/';
       $authProvider.github({
         clientId: WebService.GITHUB_CLIENT_ID,
+        redirectUri: WebService.GITHUB_REDIRECT_URI,
         scope: [WebService.GITHUB_SCOPE]
       });
   }])
@@ -137,7 +138,9 @@ angular
         });
       });
       $rootScope.$on('searchQueryChange', function(event, searchQuery) {
-        if ($location.url() !== 'search') $location.path('/search');
+        if ($location.url() !== 'search' && searchQuery) {
+          $location.path('/search');
+        }
       });
       $rootScope.$on('$routeChangeStart', function(event, next, current) {
         if ($location.url() === '') return;

@@ -20,13 +20,7 @@ angular.module('dockstore.ui')
         scope.$watchCollection('filteredTokens',
           function(newVal, oldVal, scope) {
             if (newVal) {
-              scope.refreshPagination();
-            }
-        });
-        scope.$watch('numTknsPage',
-          function(newVal, oldVal, scope) {
-            if (newVal) {
-              scope.refreshPagination();
+              scope.currPage = 1;
             }
         });
       }

@@ -1,10 +1,24 @@
-<h3>
-  Documentation
-</h3>
-<hr />
-<h5>Table of Contents</h5>
-<ol>
-  <li ng-repeat="docObj in docObjs">
-    <a ng-href="/docs/{{docObj.slug}}">{{docObj.name}}</a>
-  </li>
-</ol>
+<div id="container-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h3 class="available-containers">
+          Documentation
+        </h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Table of Contents</h3>
+      <ol>
+        <li ng-repeat="docObj in docObjs">
+          <a ng-href="/docs/{{docObj.slug}}">{{docObj.name}}</a>
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>

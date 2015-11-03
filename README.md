@@ -12,7 +12,7 @@ All configuration for the Dockstore UI is done in the `app/scripts/services/webs
   API_URI_DEBUG: 'http://localhost:8090/tests/dummy-data',
   ```
 
-2. Replace `GITHUB_CLIENT_ID` with the client id for your GitHub Dockstore application. It is not necessary to specify the `GITHUB_REDIRECT_URI`, but fill it in for consistency.
+2. Replace `GITHUB_CLIENT_ID` with the client id for your GitHub Dockstore application.
   ```
   GITHUB_AUTH_URL: 'https://github.com/login/oauth/authorize',
   GITHUB_CLIENT_ID: 'a70739297a7d67f915de',

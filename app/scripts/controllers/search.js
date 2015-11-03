@@ -22,8 +22,6 @@ angular.module('dockstore.ui')
 
       $scope.userObj = UserService.getUserObj();
 
-      $scope.searchQuery = '';
-
       $scope.listRegisteredContainers = function() {
         return ContainerService.getRegisteredContainerList()
           .then(
