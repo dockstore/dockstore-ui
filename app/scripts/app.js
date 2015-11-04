@@ -151,8 +151,10 @@ angular
           }
           return false;
         };
-        if (!$auth.isAuthenticated() && !isViewPublic($location.url())) {
-          $location.path('/login');
+        if ($auth.isAuthenticated()) {
+          if ($location.url() === '/login') $location.path('/');
+        } else {
+          if (!isViewPublic($location.url())) $location.path('/login');
         }
       });
   }]);
