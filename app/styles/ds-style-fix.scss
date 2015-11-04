@@ -16,7 +16,6 @@ div.view-content {
   min-height: 400px;
 }
 
-
 div.ds-login-panel {
   margin-top: 80px;
   border-color: #21335b;
@@ -54,6 +53,10 @@ table.tokens-grid {
   th:nth-child(4) {
     width: 20%;
   }
+}
+
+.side-block table {
+  margin-bottom: 2em;
 }
 
 .input-group-addon {

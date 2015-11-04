@@ -9,8 +9,9 @@
  * Filter in the dockstore.ui.
  */
 angular.module('dockstore.ui')
-  .filter('PaginationFilter', function () {
+  .filter('PaginationFilter', [function () {
     return function (containers, rangeObj) {
-      return containers.slice(rangeObj.start, rangeObj.end + 1);
+      return rangeObj ?
+        containers.slice(rangeObj.start, rangeObj.end + 1) : containers;
     };
-  });
+  }]);
