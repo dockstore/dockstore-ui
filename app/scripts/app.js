@@ -30,6 +30,7 @@ angular
       $authProvider.baseUrl = WebService.API_URI + '/';
       $authProvider.github({
         clientId: WebService.GITHUB_CLIENT_ID,
+        redirectUri: WebService.GITHUB_REDIRECT_URI,
         scope: [WebService.GITHUB_SCOPE]
       });
   }])
@@ -96,10 +97,15 @@ angular
           controller: 'SettingsCtrl',
           controllerAs: 'Settings'
         })
+        .when('/', {
+          templateUrl: 'views/home.html',
+          controller: 'HomeCtrl',
+          controllerAs: 'Home'
+        })
         .otherwise({
-          redirectTo: '/search'
+          redirectTo: '/'
         });
-      //$locationProvider.html5Mode(true);
+      $locationProvider.html5Mode(true);
   }])
   .factory('authHttpResponseInterceptor', [
       '$q',
@@ -131,9 +137,14 @@ angular
           content: 'Invalid token or authorization denied, please sign in again.'
         });
       });
+      $rootScope.$on('searchQueryChange', function(event, searchQuery) {
+        if ($location.url() !== 'search' && searchQuery) {
+          $location.path('/search');
+        }
+      });
       $rootScope.$on('$routeChangeStart', function(event, next, current) {
         if ($location.url() === '') return;
-        var public_views = ['/search', '/docs', '/login', '/register'];
+        var public_views = ['/', '/search', '/docs', '/login', '/register'];
         var isViewPublic = function(path) {
           for (var i = 0; i < public_views.length; i++) {
             if (path.indexOf(public_views[i]) !== -1) { return true; }

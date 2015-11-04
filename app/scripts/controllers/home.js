@@ -2,26 +2,19 @@
 
 /**
  * @ngdoc function
- * @name dockstore.ui.controller:SearchCtrl
+ * @name dockstore.ui.controller:HomeCtrl
  * @description
- * # SearchCtrl
+ * # HomeCtrl
  * Controller of the dockstore.ui
  */
 angular.module('dockstore.ui')
-  .controller('SearchCtrl', [
+  .controller('HomeCtrl', [
     '$scope',
     '$q',
-    '$window',
-    '$auth',
     'ContainerService',
-    'UserService',
-    'TokenService',
     'NotificationService',
-    function ($scope, $q, $window, $auth,
-        ContainerService, UserService, TokenService, NtfnService) {
-
-      $scope.userObj = UserService.getUserObj();
-
+    function ($scope, $q, ContainerService, NtfnService) {
+    
       $scope.listRegisteredContainers = function() {
         return ContainerService.getRegisteredContainerList()
           .then(
@@ -36,18 +29,6 @@ angular.module('dockstore.ui')
           );
       };
 
-      if ($auth.isAuthenticated()) {
-        TokenService.getUserTokenStatusSet($scope.userObj.id)
-          .then(
-            function(tokenStatusSet) {
-              $scope.tokenStatusSet = tokenStatusSet;
-              if (!(tokenStatusSet.github && tokenStatusSet.quayio)) {
-                $window.location.href = '/onboarding';
-              }
-            }
-          );
-      }
-
       $scope.listRegisteredContainers();
-      
+
   }]);

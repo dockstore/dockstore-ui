@@ -1,89 +1,155 @@
-<uib-tabset>
-  <uib-tab>
-    <uib-tab-heading>Container Info</uib-tab-heading>
-    <ul class="list-unstyled">
-      <li>
-        <strong>Name</strong>:
-        {{containerObj.name}}
-      </li>
-      <li>
-        <strong>Path</strong>:
-        {{containerObj.path}}
-      </li>
-      <li>
-        <strong>Author</strong>:
-        {{ containerObj.author ? containerObj.author : 'n/a' }}
-      </li>
-      <li>
-        <strong>GitHub</strong>:
-        <span ng-if="gitHubURL">
-          <a ng-href="{{gitHubURL}}" target="_blank">{{gitHubURL}}</a>
-        </span>
-        <span ng-if="!gitHubURL">n/a</span>
-      </li>
-      <li>
-        <strong>Quay.io</strong>:
-        <span ng-if="quayIOURL">
-          <a ng-href="{{quayIOURL}}" target="_blank">{{quayIOURL}}</a>
-        </span>
-        <span ng-if="!quayIOURL">n/a</span>
-      </li>
-      <li>
-        <strong>Last Build</strong>:
-        {{getDateTimeString(containerObj.lastBuild)}}
-      </li>
-      <li>
-        <strong>Last Update</strong>:
-        {{getDateTimeString(containerObj.lastUpdated)}}
-      </li>
-      <li>
-        <strong>Description</strong>:
-        <div class="well well-sm">
-          <div
-              ng-show="containerObj.description.length > 0"
-              marked="containerObj.description">
-          </div>
-          <span ng-show="containerObj.description.length <= 0">
-            No description associated with this container.
-          </span>
+<div class="row">
+  <div class="col-md-6">
+    <h3>{{containerObj.namespace}}/{{containerObj.name}}</h3>
+    <p class="update">
+      Last build: {{getDaysAgo(containerObj.lastBuild)}} days ago
+    </p>
+  </div>
+  <!--div class="col-md-6">
+    <span class="starRating">
+      <input id="rating5" type="radio" name="rating" value="5">
+      <label for="rating5">5</label>
+      <input id="rating4" type="radio" name="rating" value="4">
+      <label for="rating4">4</label>
+      <input id="rating3" type="radio" name="rating" value="3" checked>
+      <label for="rating3">3</label>
+      <input id="rating2" type="radio" name="rating" value="2">
+      <label for="rating2">2</label>
+      <input id="rating1" type="radio" name="rating" value="1">
+      <label for="rating1">1</label>
+    </span>
+  </div-->
+</div>
+<div class="row">
+  <div class="ds-tabs col-md-9">
+    <uib-tabset>
+      <uib-tab>
+        <uib-tab-heading>Info</uib-tab-heading>
+        <ul class="list-unstyled">
+          <li>
+            <strong>Name</strong>:
+            {{containerObj.name}}
+          </li>
+          <li>
+            <strong>Path</strong>:
+            {{containerObj.path}}
+          </li>
+          <li>
+            <strong>Author</strong>:
+            {{ containerObj.author ? containerObj.author : 'n/a' }}
+          </li>
+          <li>
+            <strong>GitHub</strong>:
+            <span ng-if="gitHubURL">
+              <a ng-href="{{gitHubURL}}" target="_blank">{{gitHubURL}}</a>
+            </span>
+            <span ng-if="!gitHubURL">n/a</span>
+          </li>
+          <li>
+            <strong>Quay.io</strong>:
+            <span ng-if="quayIOURL">
+              <a ng-href="{{quayIOURL}}" target="_blank">{{quayIOURL}}</a>
+            </span>
+            <span ng-if="!quayIOURL">n/a</span>
+          </li>
+          <li>
+            <strong>Last Build</strong>:
+            {{getDateTimeString(containerObj.lastBuild)}}
+          </li>
+          <li>
+            <strong>Last Update</strong>:
+            {{getDateTimeString(containerObj.lastUpdated)}}
+          </li>
+          <li>
+            <strong>Description</strong>:
+            <div class="well well-sm">
+              <div
+                  ng-show="containerObj.description.length > 0"
+                  marked="containerObj.description">
+              </div>
+              <span ng-show="containerObj.description.length <= 0">
+                No description associated with this container.
+              </span>
+            </div>
+            
+          </li>
+        </ul>
+      </uib-tab>
+      <uib-tab>
+        <uib-tab-heading>Versions</uib-tab-heading>
+        <div versions-grid container-obj="containerObj"></div>
+      </uib-tab>
+
+      <uib-tab select="loadDockerFile()">
+        <uib-tab-heading>Dockerfile</uib-tab-heading>
+        <div class="alert alert-warning" role="alert"
+              ng-show="dockerFileLoaded && !dockerFileString">
+          <p>
+            <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
+            A Dockerfile associated with this Docker container could not be found.
+          </p>
         </div>
-        
-      </li>
-    </ul>
-  </uib-tab>
-  <uib-tab>
-    <uib-tab-heading>Version Tags</uib-tab-heading>
-    <div versions-grid container-obj="containerObj"></div>
-  </uib-tab>
+        <div hljs
+              source="dockerFileString"
+              ng-show="dockerFileLoaded && dockerFileString">
+        </div>
+      </uib-tab>
 
-  <uib-tab select="loadDockerFile()">
-    <uib-tab-heading>Dockerfile</uib-tab-heading>
-    <div class="alert alert-warning" role="alert"
-          ng-show="dockerFileLoaded && !dockerFileString">
-      <p>
-        <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
-        A Dockerfile associated with this Docker container could not be found.
-      </p>
-    </div>
-    <div hljs
-          source="dockerFileString"
-          ng-show="dockerFileLoaded && dockerFileString">
-    </div>
-  </uib-tab>
-
-  <uib-tab select="loadWFDescriptorFile()">
-    <uib-tab-heading>CWL Descriptor</uib-tab-heading>
-    <div class="alert alert-warning" role="alert"
-          ng-show="wfDescriptorFileLoaded && !wfDescriptorFileString">
-      <p>
-        <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
-        A collab.cwl descriptor associated with this Docker container could not
-        be found.
-      </p>
-    </div>
-    <div hljs
-          source="wfDescriptorFileString"
-          ng-show="wfDescriptorFileLoaded && wfDescriptorFileString">
-    </div>
-  </uib-tab>
-</uib-tabset>
+      <uib-tab select="loadWFDescriptorFile()">
+        <uib-tab-heading>Descriptor</uib-tab-heading>
+        <div class="alert alert-warning" role="alert"
+              ng-show="wfDescriptorFileLoaded && !wfDescriptorFileString">
+          <p>
+            <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
+            A collab.cwl descriptor associated with this Docker container could not
+            be found.
+          </p>
+        </div>
+        <div hljs
+              source="wfDescriptorFileString"
+              ng-show="wfDescriptorFileLoaded && wfDescriptorFileString">
+        </div>
+      </uib-tab>
+    </uib-tabset>
+  </div>
+  <div class="side-block col-md-3">
+    <table>
+      <thead>
+        <th>
+          <h3>Docker Pull Command</h3>
+        </th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div copy-text>docker pull {{containerObj.path}}</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>    
+    <br />
+    <table>
+      <thead>
+        <th>
+          <h3>Source Repositories</h3>
+        </th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <p>
+              <span ng-if="gitHubURL">
+                <a ng-href="{{gitHubURL}}" target="_blank">GitHub</a>
+              </span>
+            </p>
+            <p>
+              <span ng-if="quayIOURL">
+                <a ng-href="{{quayIOURL}}" target="_blank">Quay.io</a>
+              </span>
+            </p>
+          </td>
+        </tr>
+      </tbody>
+    </table>    
+  </div>
+</div>

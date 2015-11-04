@@ -29,6 +29,11 @@ angular.module('dockstore.ui')
           );
       };
 
+      $scope.getDaysAgo = function(timestamp) {
+        var timeDiff = (new Date()).getTime() - timestamp;
+        return Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+      };
+
       $scope.getDockerFile = function(containerId) {
         return ContainerService.getDockerFile(containerId)
           .then(
