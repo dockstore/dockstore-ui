@@ -73,3 +73,42 @@ table.tokens-grid {
 .label {
   padding-top: .3em;
 }
+
+/* Bootstrap Tabs */
+div.details-container {
+  margin-bottom: 14px;
+}
+div.ds-tabs > div {
+  border: solid 1px #cfd1d7;
+  max-width: 802px;
+}
+
+ul.nav-tabs {
+  background-color: #ffffff;
+  li {
+    border-right: solid 1px #cfd1d7;
+    min-width: 150px;
+    padding: 12px 0;
+    text-align: center;
+    line-height: 1;
+    a {
+      color: #487980;
+      font-weight: bold;
+    }
+  }
+  li.active, li:not(active):hover {
+    background-color: #7987aa;
+    a, a:hover, a:focus {
+      color: #ffffff;
+      background-color: #7987aa;
+      border: none;
+    }
+  }
+}
+
+div.tab-content {
+  background-color: #ffffff;
+  padding: 8px;
+  min-height: 320px;
+}
+

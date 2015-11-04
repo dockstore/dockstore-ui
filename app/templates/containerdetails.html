@@ -1,7 +1,9 @@
 <div class="row">
   <div class="col-md-6">
     <h3>{{containerObj.namespace}}/{{containerObj.name}}</h3>
-    <p class="update">Last update: 12 days ago</p>
+    <p class="update">
+      Last build: {{getDaysAgo(containerObj.lastBuild)}} days ago
+    </p>
   </div>
   <!--div class="col-md-6">
     <span class="starRating">
@@ -19,10 +21,10 @@
   </div-->
 </div>
 <div class="row">
-  <div class="col-md-9">
+  <div class="ds-tabs col-md-9">
     <uib-tabset>
       <uib-tab>
-        <uib-tab-heading>Container Info</uib-tab-heading>
+        <uib-tab-heading>Info</uib-tab-heading>
         <ul class="list-unstyled">
           <li>
             <strong>Name</strong>:
@@ -74,7 +76,7 @@
         </ul>
       </uib-tab>
       <uib-tab>
-        <uib-tab-heading>Version Tags</uib-tab-heading>
+        <uib-tab-heading>Versions</uib-tab-heading>
         <div versions-grid container-obj="containerObj"></div>
       </uib-tab>
 
@@ -87,14 +89,14 @@
             A Dockerfile associated with this Docker container could not be found.
           </p>
         </div>
-        <!--div hljs
+        <div hljs
               source="dockerFileString"
               ng-show="dockerFileLoaded && dockerFileString">
-        </div-->
+        </div>
       </uib-tab>
 
       <uib-tab select="loadWFDescriptorFile()">
-        <uib-tab-heading>CWL Descriptor</uib-tab-heading>
+        <uib-tab-heading>Descriptor</uib-tab-heading>
         <div class="alert alert-warning" role="alert"
               ng-show="wfDescriptorFileLoaded && !wfDescriptorFileString">
           <p>
@@ -103,11 +105,51 @@
             be found.
           </p>
         </div>
-        <!--div hljs
+        <div hljs
               source="wfDescriptorFileString"
               ng-show="wfDescriptorFileLoaded && wfDescriptorFileString">
-        </div-->
+        </div>
       </uib-tab>
     </uib-tabset>
+  </div>
+  <div class="side-block col-md-3">
+    <table>
+      <thead>
+        <th>
+          <h3>Docker Pull Command</h3>
+        </th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div copy-text>docker pull {{containerObj.path}}</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>    
+    <br />
+    <table>
+      <thead>
+        <th>
+          <h3>Source Repositories</h3>
+        </th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <p>
+              <span ng-if="gitHubURL">
+                <a ng-href="{{gitHubURL}}" target="_blank">GitHub</a>
+              </span>
+            </p>
+            <p>
+              <span ng-if="quayIOURL">
+                <a ng-href="{{quayIOURL}}" target="_blank">Quay.io</a>
+              </span>
+            </p>
+          </td>
+        </tr>
+      </tbody>
+    </table>    
   </div>
 </div>

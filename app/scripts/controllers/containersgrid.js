@@ -18,6 +18,7 @@ angular.module('dockstore.ui')
       $scope.sortReverse = false;
       $scope.numContsPage = 10;
       $scope.currPage = 1;
+      $scope.contLimit = $scope.previewMode ? 5 : undefined;
 
       $scope.getGitHubURL = function(containerGitUrl) {
         if (containerGitUrl.length <= 0) return;

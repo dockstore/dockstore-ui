@@ -34,7 +34,7 @@
               </td>
             </tr>
             <!-- need a to write a 'smart search' filter -->
-            <tr ng-repeat="container in ((filteredContainers = (containers | filter: searchQuery)) | orderBy:sortColumn:sortReverse | PaginationFilter:getListRange())">
+            <tr ng-repeat="container in ((filteredContainers = (containers | limitTo: contLimit | filter: searchQuery)) | orderBy:sortColumn:sortReverse | PaginationFilter:getListRange())">
               <td>
                 <a href="/search/{{container.id}}">{{container.name}}</a>
               </td>
@@ -53,6 +53,13 @@
                 <div copy-text>docker pull {{container.path}}</div>
               </td>
             </tr>
+            <tr ng-show="previewMode">
+              <td colspan="4" class="browse-all">
+                <div class="button">
+                  <p><a href="/search">Browse All Containers &raquo;</a></p>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -60,7 +67,7 @@
   </div>
 </div>
 
-<div id="container-pagination">
+<div id="container-pagination" ng-show="!previewMode">
   <div class="container">
     <div class="row-center">
         <ul class="pagination">

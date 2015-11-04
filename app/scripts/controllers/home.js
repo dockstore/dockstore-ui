@@ -8,10 +8,27 @@
  * Controller of the dockstore.ui
  */
 angular.module('dockstore.ui')
-  .controller('HomeCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+  .controller('HomeCtrl', [
+    '$scope',
+    '$q',
+    'ContainerService',
+    'NotificationService',
+    function ($scope, $q, ContainerService, NtfnService) {
+    
+      $scope.listRegisteredContainers = function() {
+        return ContainerService.getRegisteredContainerList()
+          .then(
+            function(containers) {
+              $scope.containers = containers;
+            },
+            function(response) {
+              var message = '[' + response.status + '] ' + response.statusText;
+              NtfnService.popError('List Registered Containers', message);
+              return $q.reject(response);
+            }
+          );
+      };
+
+      $scope.listRegisteredContainers();
+
+  }]);
