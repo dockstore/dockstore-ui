@@ -13,8 +13,8 @@ angular.module('dockstore.ui')
     return function (containers, contLimit) {
       if (!contLimit) return containers;
       var sortedByBuildTime = containers.sort(function(a, b) {
-      	if (!a) a = Number.MAX_VALUE;
-      	if (!b) b = Number.MAX_VALUE;
+      	if (!a.lastBuild) a.lastBuild.lastBuild = Number.MAX_VALUE;
+      	if (!b.lastBuild) b.lastBuild = Number.MAX_VALUE;
         return a.lastBuild - b.lastBuild;
       });
       return sortedByBuildTime.slice(0, contLimit - 1);
