@@ -34,6 +34,10 @@ angular.module('dockstore.ui')
         return 'https://quay.io/repository/' + matchRes[1] + '/' + matchRes[2];
       };
 
+      $scope.sortByBuildDate = function() {
+
+      };
+
       /* Column Sorting */
       $scope.clickSortColumn = function(columnName) {
         if ($scope.sortColumn === columnName) {

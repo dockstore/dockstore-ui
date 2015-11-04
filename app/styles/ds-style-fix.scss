@@ -12,15 +12,28 @@
   height: 300px;
 }
 
+div.view-content {
+  min-height: 500px;
+}
+
+div.ds-login-panel {
+  margin-top: 100px;
+  border-color: #21335b;
+  .panel-heading {
+    border-color: #21335b;
+    background-color: #21335b;
+  }
+}
+
 table.containers-grid {
   th:nth-child(1) {
-    width: 20%;
+    width: 25%;
   }
   th:nth-child(2) {
     width: 20%;
   }
   th:nth-child(3) {
-    width: 20%;
+    width: 15%;
   }
   th:nth-child(4) {
     width: 40%;
@@ -29,17 +42,21 @@ table.containers-grid {
 
 table.tokens-grid {
   th:nth-child(1) {
-    width: 20%;
+    width: 15%;
   }
   th:nth-child(2) {
     width: 20%;
   }
   th:nth-child(3) {
-    width: 40%;
+    width: 45%;
   }
   th:nth-child(4) {
     width: 20%;
   }
+}
+
+.side-block table {
+  margin-bottom: 2em;
 }
 
 .input-group-addon {

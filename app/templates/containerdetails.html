@@ -71,7 +71,6 @@
                 No description associated with this container.
               </span>
             </div>
-            
           </li>
         </ul>
       </uib-tab>
@@ -113,7 +112,7 @@
     </uib-tabset>
   </div>
   <div class="side-block col-md-3">
-    <table>
+    <table ng-if="containerObj">
       <thead>
         <th>
           <h3>Docker Pull Command</h3>
@@ -126,8 +125,7 @@
           </td>
         </tr>
       </tbody>
-    </table>    
-    <br />
+    </table>
     <table>
       <thead>
         <th>
@@ -139,12 +137,18 @@
           <td>
             <p>
               <span ng-if="gitHubURL">
-                <a ng-href="{{gitHubURL}}" target="_blank">GitHub</a>
+                <a ng-href="{{gitHubURL}}" target="_blank">
+                  GitHub
+                  <span class="glyphicon glyphicon-new-window"></span>
+                </a>
               </span>
             </p>
             <p>
               <span ng-if="quayIOURL">
-                <a ng-href="{{quayIOURL}}" target="_blank">Quay.io</a>
+                <a ng-href="{{quayIOURL}}" target="_blank">
+                  Quay.io
+                  <span class="glyphicon glyphicon-new-window"></span>
+                </a>
               </span>
             </p>
           </td>
