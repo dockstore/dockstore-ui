@@ -24,16 +24,16 @@ angular.module('dockstore.ui')
         return $auth.isAuthenticated();
       };
 
+      $scope.isHomePage = function() {
+        return ($location.url() === '/');
+      };
+
       $scope.logout = function() {
         UserService.logout();
       };
 
       $scope.$watch('searchQuery', function(newValue, oldValue) {
         $rootScope.$broadcast('searchQueryChange', newValue);
-      });
-
-      $rootScope.$on('$routeChangeStart', function(event, next, current) {
-        $scope.isHomePage = ($location.url() === '/');
       });
 
   }]);

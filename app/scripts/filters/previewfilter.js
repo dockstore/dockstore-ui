@@ -15,9 +15,6 @@ angular.module('dockstore.ui')
       var sortedByBuildTime = containers.sort(function(a, b) {
         return a.lastBuild - b.lastBuild;
       });
-      for (var i = 0; i < sortedByBuildTime.length; i++) {
-        console.log(sortedByBuildTime[i].lastBuild, sortedByBuildTime[i].name);
-      }
       return sortedByBuildTime.slice(0, contLimit - 1);
     };
   }]);
