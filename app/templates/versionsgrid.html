@@ -37,16 +37,16 @@
         </tr>
         <tr ng-repeat="versionTag in (filteredVersionTags = (versionTags | orderBy:sortColumn:sortReverse))">
           <td>
-            {{versionTag.version}}
+            {{versionTag.name}}
           </td>
           <td>
-            {{getHRSize()}}
+            {{getHRSize(versionTag.size)}}
           </td>
           <td>
-            {{getDateModified()}}
+            {{getDateModified(versionTag.last_modified)}}
           </td>
           <td>
-            <div copy-text>docker pull {{containerObj.path}}:{{versionTag.version}}</div>
+            <div copy-text>docker pull {{containerObj.path}}:{{versionTag.name}}</div>
           </td>
         </tr>
       </tbody>
