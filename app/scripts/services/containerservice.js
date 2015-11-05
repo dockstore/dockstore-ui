@@ -40,6 +40,19 @@ angular.module('dockstore.ui')
       });
     };
 
+    this.getUserContainerList = function(userId) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: WebService.API_URI + '/users/' + userId + '/containers'
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
     this.refreshUserContainers = function(userId) {
       return $q(function(resolve, reject) {
         $http({

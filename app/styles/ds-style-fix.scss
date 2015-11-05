@@ -129,3 +129,25 @@ div.tab-content {
   min-height: 320px;
 }
 
+.ns-containers-accordion {
+  margin-top: 12px;
+  div.panel-group {
+    margin-bottom: 14px;
+  }
+  div.panel {
+    border-radius: 0;
+    border-color: #ddd;
+  }
+  div.panel-heading {
+    border-radius: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #ffffff;
+    color: #487980;
+    span {
+      font-size: 14px;
+    }
+  }
+
+}
+
