@@ -61,7 +61,7 @@ angular.module('dockstore.ui')
             if (nsContainers[i].namespace === namespace) return i;
           }
           return -1;
-        } 
+        };
         for (var i = 0; i < containers.length; i++) {
           var pos = getNSIndex(containers[i].namespace);
           if (pos < 0) {
@@ -74,7 +74,14 @@ angular.module('dockstore.ui')
           nsContainers[pos].containers.push(containers[i]);
         }
         // sort containers and container namespaces
-        return nsContainers;
+        for (var j = 0; i < nsContainers.length; j++) {
+          nsContainers.containers.sort(function(a, b) {
+            return a.name - b.name;
+          });
+        }
+        return nsContainers.sort(function(a, b) {
+          return a.namespace - b.namespace;
+        });
       };
 
       $scope.selectContainer = function(containerId) {
