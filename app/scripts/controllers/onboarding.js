@@ -73,13 +73,9 @@ angular.module('dockstore.ui')
       };
 
       $scope.refreshUserContainers = function(userId) {
-        NtfnService.popInfo('Refresh User Containers',
-          'Refreshing Quay.io containers...');
         return ContainerService.refreshUserContainers(userId)
           .then(
             function(containers) {
-              NtfnService.popSuccess('Refresh User Containers',
-                'Successfully refreshed the Dockstore container cache.');
               return containers;
             },
             function(response) {
@@ -94,13 +90,13 @@ angular.module('dockstore.ui')
         var quayIOTokenRegExp = /access_token=([a-zA-Z0-9]*)/;
         if (quayIOTokenRegExp.test($location.url())) {
           var quayIOToken = $location.url().match(quayIOTokenRegExp)[1];
-          $scope.quayIOHold = true;
+          $scope.refreshingContainers = true;
           $scope.registerQuayIOToken($scope.userObj.id, quayIOToken)
             .then(
               function() {
                 $scope.refreshUserContainers($scope.userObj.id)
                   .then(function(containers) {
-                    $scope.quayIOHold = false;
+                    $scope.refreshingContainers = false;
                     $window.location.href = '/onboarding';
                   });
               }
