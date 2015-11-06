@@ -37,6 +37,25 @@ angular.module('dockstore.ui')
           );
       };
 
+      $scope.refreshUserContainers = function(userId) {
+        NtfnService.popInfo('Refresh User Containers',
+          'Refreshing Quay.io containers...');
+        return ContainerService.refreshUserContainers(userId)
+          .then(
+            function(containers) {
+              NtfnService.popSuccess('Refresh User Containers',
+                'Successfully refreshed the Dockstore container cache.');
+              $window.location.href = '/containers';
+              return containers;
+            },
+            function(response) {
+              var message = '[' + response.status + '] ' + response.statusText;
+              NtfnService.popError('Refresh User Containers', message);
+              return $q.reject(response);
+            }
+          );
+      };
+
       $scope.sortNSContainers = function(containers) {
         var nsContainers = [];
         var getNSIndex = function(namespace) {

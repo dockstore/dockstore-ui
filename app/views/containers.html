@@ -1,10 +1,20 @@
 <div id="container-header">
   <div class="container">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-9">
         <h3 class="available-containers">
           My Containers
         </h3>
+      </div>
+      <div class="col-md-3">
+        &nbsp; &nbsp;
+        <div class="button back-to-containers">
+          <p>
+            <a href ng-click="refreshUserContainers(userObj.id)">
+              Refresh Containers
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -23,6 +33,11 @@
               <a href ng-click="selectContainer(containerObj.id)">
                 {{containerObj.name}}
               </a>
+              <div class="pull-right">
+                <span class="label" ng-class="containerObj.is_registered ? 'label-primary' : 'label-warning'">
+                  {{ containerObj.is_registered ? 'REG' : 'UNREG' }}
+                </span>
+              </div>
             </div>
           </uib-accordion-group>
         </uib-accordion>
@@ -32,7 +47,8 @@
       <div container-details
           container-id="selContainerObj.id"
           container-obj="selContainerObj"
-          edit-mode="true">
+          edit-mode="true"
+          ng-if="selContainerObj">
     </div>
   </div>
 </div>
