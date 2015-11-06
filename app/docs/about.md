@@ -34,7 +34,7 @@ are more helpful for extending and building new workflows with.  That being said
 "fat" Docker containers, which include multiple tools and even full workflows
 with frameworks like [SeqWare](http://seqware.io) or [Galaxy](https://galaxyproject.org/),
 can have their place as well.  Projects like the ICGC
-[PanCancer Analysis of Whole Genomes](https://dcc.icgc.org/pcawg) made use of "fat"
+[PanCancer Analysis of Whole Genomes](https://dcc.icgc.org/pcawg) (PCAWG) made use of "fat"
 Docker containers that had complex workflows that fully encapsulated alignment and
 variant calling.  The self-contained nature of these Docker containers allowed
 for mobility between a wide variety of environments and greatly simplified
@@ -45,8 +45,27 @@ for most things).
 
 ## Promoting Standards
 
+We hope Dockstore provides a reference implementation for Container sharing
+in the sciences.  The Dockstore is essentially a proof of concept designed
+as a starting point for two activities that we hope can results in community
+standards within the GA4GH:
 
+* a best practices guide for describing tools in Docker containers with CWL
+* a minimal web service standard for registering, searching and describing CWL-annotated Docker containers that can be federated and indexed by multiple websites similar to [Maven Central](http://search.maven.org/)
 
 ## Building a Community
 
+Several large projects in the Biosciences, specifically cancer sequencing projects
+such as PCWAG, have expressed interest in registering tools and workflows in the Dockstore
+system.  We hope this work can spawn the registration of a large number of high-quality
+tools in the system.
+
 ## Future
+
+We plan on expanding the Dockstore in several ways over the coming months:
+
+* allow users to register CWL and Docker image tar files with simple URLs
+* support DockerHub as a location for hosting Dockstore images
+* support BitBucket and other Git repositories for Dockerfiles and Dockstore.yml
+* work to promote a standardized web service API through the GA4GH
+* publish Dockstore images for tools from PCAWG and other projects
