@@ -17,6 +17,12 @@
         <h3>Step 1: Link External Accounts</h3>
         <hr />
 
+        <div class="alert alert-info" role="alert" ng-if="refreshingContainers">
+          <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
+          </span>
+          Please wait, retrieving Quay.io containers...
+        </div>
+
         <h4>GitHub Account</h4>
         <div ng-show="tokenStatusSet.github">
           <span class="label label-success">
@@ -39,7 +45,7 @@
           <button
               class="btn btn-primary btn-xs"
               ng-click="linkQuayIOAccount()"
-              ng-disabled="quayIOHold">
+              ng-disabled="refreshingContainers">
             <span class="glyphicon glyphicon-link"></span> Link Account
           </button>
         </div>
