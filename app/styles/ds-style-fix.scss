@@ -129,14 +129,30 @@ div.tab-content {
   min-height: 320px;
 }
 
+div.view-content.ns-containers {
+  margin-top: 10px;
+}
+
 .ns-containers-accordion {
-  margin-top: 12px;
   div.panel-group {
     margin-bottom: 14px;
   }
   div.panel {
     border-radius: 0;
     border-color: #ddd;
+    div.container-label {
+      background-color: #ffffff;
+      padding: 0 10px;
+      a {
+        color: #487980;
+      }
+    }
+    div.container-label:hover, div.container-label.selected {
+      background-color: #7987a5;
+      a {
+        color: #ffffff;
+      }
+    }
   }
   div.panel-heading {
     border-radius: 0;
@@ -147,6 +163,9 @@ div.tab-content {
     span {
       font-size: 14px;
     }
+  }
+  div.panel-body {
+    padding: 15px 0;
   }
 
 }

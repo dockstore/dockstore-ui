@@ -10,14 +10,19 @@
   </div>
 </div>
 
-<div class="container view-content" style="margin-top: 12px;">
+<div class="container view-content ns-containers" style="margin-top: 12px;">
   <div class="row">
     <div class="col-md-3">
       <div class="ns-containers-accordion" ng-if="nsContainers">
         <uib-accordion ng-repeat="nsObj in nsContainers" close-others="true">
-          <uib-accordion-group heading="{{nsObj.namespace}}">
-            <div ng-repeat="containerObj in nsObj.containers">
-              {{containerObj.name}}
+          <uib-accordion-group heading="{{nsObj.namespace}}" is-open="$first">
+            <div
+                class="container-label"
+                ng-class="{selected: selContainerObj.id === containerObj.id}"
+                ng-repeat="containerObj in nsObj.containers">
+              <a href ng-click="selectContainer(containerObj.id)">
+                {{containerObj.name}}
+              </a>
             </div>
           </uib-accordion-group>
         </uib-accordion>

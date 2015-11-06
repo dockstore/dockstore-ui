@@ -60,6 +60,15 @@ angular.module('dockstore.ui')
         return nsContainers;
       };
 
+      $scope.selectContainer = function(containerId) {
+        for (var i = 0; i < $scope.containers.length; i++) {
+          if ($scope.containers[i].id === containerId) {
+            $scope.selContainerObj = $scope.containers[i];
+            break;
+          }
+        }
+      };
+
       if ($auth.isAuthenticated()) {
         TokenService.getUserTokenStatusSet($scope.userObj.id)
           .then(
@@ -76,6 +85,9 @@ angular.module('dockstore.ui')
         .then(
           function(containers) {
             $scope.nsContainers = $scope.sortNSContainers(containers);
+            if ($scope.nsContainers.length > 0) {
+              $scope.selectContainer($scope.nsContainers[0].containers[0].id);
+            }
           },
           function(response) {
             var message = '[' + response.status + '] ' + response.statusText;
