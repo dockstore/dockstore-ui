@@ -142,13 +142,23 @@ div.view-content.ns-containers {
     border-color: #ddd;
     div.container-label {
       background-color: #ffffff;
+      color: #487980;
       padding: 0 10px;
+      clear: both;
+      overflow: hidden;
+      div.container-name-oflw {
+        width: 170px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
       a {
         color: #487980;
       }
     }
     div.container-label:hover, div.container-label.selected {
       background-color: #7987a5;
+      color: #ffffff;
       a {
         color: #ffffff;
       }
@@ -166,15 +176,20 @@ div.view-content.ns-containers {
   }
   div.panel-body {
     padding: 15px 0;
+    font-size: 12px;
   }
-
 }
 
 .glyphicon-refresh-animate {
     animation: spin .7s infinite linear;
+    transform-origin: 48% 50%;
 }
 
 @keyframes spin {
     from { transform: scale(1) rotate(0deg);}
     to { transform: scale(1) rotate(360deg);}
+}
+
+span.reg-label {
+  padding-bottom: 0.2em;
 }

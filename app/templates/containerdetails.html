@@ -1,8 +1,9 @@
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-8">
     <h3>
+      <span class="glyphicon glyphicon-lock" ng-if="!containerObj.is_public"></span>
       {{containerObj.namespace}}/{{containerObj.name}}
-      <span class="label" ng-class="containerObj.is_registered ? 'label-primary' : 'label-warning'">
+      <span class="label reg-label" ng-class="containerObj.is_registered ? 'label-primary' : 'label-warning'" ng-if="editMode && containerObj">
         {{ containerObj.is_registered ? 'REG' : 'UNREG' }}
       </span>
     </h3>
@@ -11,7 +12,7 @@
       {{ containerObj.lastBuild ? getDaysAgo(containerObj.lastBuild) + ' days ago' : 'n/a' }} 
     </p>
   </div>
-  <!--div class="col-md-6">
+  <!--div class="col-md-4">
     <span class="starRating">
       <input id="rating5" type="radio" name="rating" value="5">
       <label for="rating5">5</label>
@@ -120,8 +121,19 @@
 
       <uib-tab ng-if="editMode">
         <uib-tab-heading>Sharing</uib-tab-heading>
-        Configure Sharing!
-          
+        <strong>Container Registration:</strong>
+        <button class="btn btn-primary">
+          <a href
+              ng-if="!containerObj.is_registered"
+              ng-click="setContainerRegistration(containerObj.id, true)">
+            Register
+          </a>
+          <a href
+              ng-if="containerObj.is_registered"
+              ng-click="setContainerRegistration(containerObj.id, false)">
+            Unregister
+          </a>
+        </button>
       </uib-tab>
 
     </uib-tabset>

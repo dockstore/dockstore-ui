@@ -66,6 +66,25 @@ angular.module('dockstore.ui')
       });
     };
 
+    this.setContainerRegistration = function(containerId, isRegistered) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'POST',
+          url: WebService.API_URI + '/containers/' + containerId + '/register',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: {
+            register: isRegistered
+          }
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
     this.getDockerFile = function(containerId) {
       return $q(function(resolve, reject) {
         $http({

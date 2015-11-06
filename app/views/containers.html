@@ -21,6 +21,15 @@
 </div>
 
 <div class="container view-content ns-containers" style="margin-top: 12px;">
+  <div class="row" ng-if="refreshingContainers">
+    <div class="col-md-12">
+      <div class="alert alert-info" role="alert">
+        <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
+        </span>
+        Please wait, retrieving Quay.io containers...
+      </div>
+    </div>
+  </div>
   <div class="row">
     <div class="col-md-3">
       <div class="ns-containers-accordion" ng-if="nsContainers">
@@ -30,9 +39,11 @@
                 class="container-label"
                 ng-class="{selected: selContainerObj.id === containerObj.id}"
                 ng-repeat="containerObj in nsObj.containers">
-              <a href ng-click="selectContainer(containerObj.id)">
-                {{containerObj.name}}
-              </a>
+              <div class="container-name-oflw pull-left">
+                <a href ng-click="selectContainer(containerObj.id)">
+                  {{containerObj.name}}
+                </a>
+              </div>
               <div class="pull-right">
                 <span class="label" ng-class="containerObj.is_registered ? 'label-primary' : 'label-warning'">
                   {{ containerObj.is_registered ? 'REG' : 'UNREG' }}

@@ -38,13 +38,11 @@ angular.module('dockstore.ui')
       };
 
       $scope.refreshUserContainers = function(userId) {
-        NtfnService.popInfo('Refresh User Containers',
-          'Refreshing Quay.io containers...');
+        $scope.refreshingContainers = true;
         return ContainerService.refreshUserContainers(userId)
           .then(
             function(containers) {
-              NtfnService.popSuccess('Refresh User Containers',
-                'Successfully refreshed the Dockstore container cache.');
+              $scope.refreshingContainers = false;
               $window.location.href = '/containers';
               return containers;
             },
