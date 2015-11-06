@@ -20,6 +20,8 @@ of tools using a YAML-formated file.  Together, these resources provide the
 necessary tools to share analytical tools in a highly portable way, a key
 concern for the scientific community.
 
+![Overview](dockstore_logos.png)
+
 # Best Practices
 
 
