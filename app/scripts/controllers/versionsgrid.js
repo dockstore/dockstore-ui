@@ -37,7 +37,7 @@ angular.module('dockstore.ui')
         var moy = ['Jan.', 'Feb.', 'Mar.', 'Apr.',
                     'May', 'Jun.', 'Jul.', 'Aug.',
                     'Sept.', 'Oct.', 'Nov.', 'Dec.'];
-        var dateObj = new Date(timestamp * 1000);
+        var dateObj = new Date(timestamp);
         return moy[dateObj.getMonth()] + ' ' +
                 dateObj.getDate() + ', ' +
                 dateObj.getFullYear();
