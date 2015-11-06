@@ -22,7 +22,7 @@
   </div-->
 </div>
 <div class="row">
-  <div class="ds-tabs col-md-9">
+  <div class="ds-tabs" ng-class="editMode ? 'col-md-12' : 'col-md-9'">
     <uib-tabset>
       <uib-tab>
         <uib-tab-heading>Info</uib-tab-heading>
@@ -112,7 +112,7 @@
       </uib-tab>
     </uib-tabset>
   </div>
-  <div class="side-block col-md-3">
+  <div class="side-block col-md-3" ng-if="!editMode">
     <table ng-if="containerObj">
       <thead>
         <th>

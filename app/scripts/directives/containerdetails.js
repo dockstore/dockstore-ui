@@ -13,7 +13,8 @@ angular.module('dockstore.ui')
       controller: 'ContainerDetailsCtrl',
       scope: {
         containerId: '=',
-        containerObj: '='
+        containerObj: '=',
+        editMode: '='
       },
       templateUrl: 'templates/containerdetails.html'
     };
