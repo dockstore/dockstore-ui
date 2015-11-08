@@ -80,3 +80,5 @@ We plan on expanding the Dockstore in several ways over the coming months:
 * support for better browsing of tools on the site, think faceted browser like the [ICGC DCC Portal](https://dcc.icgc.org)
 * examples of how to make workflows in CWL that bring together individual tools, and to scale up analysis using cloud orchestration systems like [Consonance](https://github.com/Consonance/)
 * support for private repositories, groups, sharing settings, etc
+* unique, stable URL for each tool/version that can be used in publications
+* integration the [Launcher](https://github.com/CancerCollaboratory/dockstore-descriptor#dockstore-descriptor) into the Dockstore command line utility

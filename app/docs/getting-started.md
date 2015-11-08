@@ -62,13 +62,34 @@ The wizard will instruct you to setup the `dockstore` command line tool after li
 Now that you have your `Dockerfile` and `Dockstore.cwl` in GitHub, have setup Quay.io to automatically build your Docker image, and have linked your accounts to Dockstore, it is time to register your tool.  
 The `dockstore` command line has several options.  We recommend you first `dockstore refresh` to ensure the latest GitHub and Quay.io information is indexed properly.
 
+![command](cmd1.png)
 
-You can then use `dockstore publish` to see the list of available Docker images you can register with Dockstore.  The key is that they are 
+You can then use `dockstore publish` to see the list of available Docker images you can register with Dockstore.  The key is that Docker images you wish to register have the following 4 qualities:
+
+0. public
+0. built by Quay.io
+0. Quay.io is linked to GitHub for the `Dockerfile`
+0. the same GitHub repository also containers a `Dockstore.cwl`
+
+![command](cmd2.png)
+
+You can see in the above, the tool (identified with `quay.io/briandoconnor/dockstore-tool-bamstats` in Dockstore and Quay.io) was successfully registered and can be seen by anyone on the Dockstore site.
 
 ## Run Tools
 
+Now that you have a tool registered on Dockstore you may want to call it yourself for your own work. We created the [Launcher](https://github.com/CancerCollaboratory/dockstore-descriptor#dockstore-descriptor) to aid in this process.  In the near future this will be rolled into the `dockstore` command line but for now you can use the Launcher to do several useful things:
+
+0. read a JSON file that describes all the inputs and outputs for a given run of the tool
+0. automatically copy inputs from remote URLs if HTTP, FTP, S3 or other remote URLs are specified
+0. call the `cwltool` command line to execute your tool using the CWL from the Dockstore and the JSON for inputs/outputs
+0. if outputs are specified as remote URLs, copy the results to these locations
+
+Alternatively, you have the option of simply working with any tools that understand CWL. The `dockstore` command line has a simple way to download the CWL file for use with other tools.
+
 ## Find Other Tools
+
+You can find tools on the Dockstore website or also through the `dockstore search` command line option.
 
 ## Next Steps
 
-You can follow this basic pattern for
+You can follow this basic pattern for each of your Docker-based tools.  Once registered, you can send links to your tools on Dockstore to colleagues and use it as a public platform for sharing your tools.  You can also use it in your own work by executing tools using the [Launcher](https://github.com/CancerCollaboratory/dockstore-descriptor#dockstore-descriptor) above.  If you want to scale up analysis with these tools you can use cloud orchestration frameworks like [Consonance](https://github.com/Consonance/) to run many tools in parallel in cloud environments.
