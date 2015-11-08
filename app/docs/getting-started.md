@@ -49,13 +49,21 @@ https://www.dockstore.org/login
 
 Your link to GitHub is established on login and you will then be prompted to link your Quay.io account.
 
+![Link accounts](linking1.png)
+
+![Link accounts](linking2.png)
+
 The wizard will instruct you to setup the `dockstore` command line tool after linking your accounts.
 
-![Link accounts](onboarding.png)
+![Link accounts](linking3.png)
 
 ## Register Your Tool in Dockstore
 
-Now that you have your `Dockerfile` and `Dockstore.cwl` in GitHub and have setup Quay.io to automatically build your Docker image it is time to link it to Dockstore.  
+Now that you have your `Dockerfile` and `Dockstore.cwl` in GitHub, have setup Quay.io to automatically build your Docker image, and have linked your accounts to Dockstore, it is time to register your tool.  
+The `dockstore` command line has several options.  We recommend you first `dockstore refresh` to ensure the latest GitHub and Quay.io information is indexed properly.
+
+
+You can then use `dockstore publish` to see the list of available Docker images you can register with Dockstore.  The key is that they are 
 
 ## Run Tools
 

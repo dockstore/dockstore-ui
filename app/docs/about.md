@@ -79,3 +79,4 @@ We plan on expanding the Dockstore in several ways over the coming months:
 * support for community tagging and star ratings for tools
 * support for better browsing of tools on the site, think faceted browser like the [ICGC DCC Portal](https://dcc.icgc.org)
 * examples of how to make workflows in CWL that bring together individual tools, and to scale up analysis using cloud orchestration systems like [Consonance](https://github.com/Consonance/)
+* support for private repositories, groups, sharing settings, etc
