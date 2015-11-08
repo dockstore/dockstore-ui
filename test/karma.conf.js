@@ -24,7 +24,6 @@ module.exports = function(config) {
       // bower:js
       'bower_components/jquery/dist/jquery.js',
       'bower_components/angular/angular.js',
-      'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js',
       'bower_components/angular-animate/angular-animate.js',
       'bower_components/angular-cookies/angular-cookies.js',
       'bower_components/angular-resource/angular-resource.js',
@@ -32,7 +31,6 @@ module.exports = function(config) {
       'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/angular-touch/angular-touch.js',
       'bower_components/angular-local-storage/dist/angular-local-storage.js',
-      'bower_components/AngularJS-Toaster/toaster.js',
       'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/angular-highlightjs/build/angular-highlightjs.js',
       'bower_components/marked/lib/marked.js',

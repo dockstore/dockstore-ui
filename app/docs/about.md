@@ -1,4 +1,4 @@
-# About Dockstore
+# About the Dockstore
 
 The Dockstore concept is simple, provide a place where users can share tools
 encapsulated in Docker and described with the [GA4GH](http://genomicsandhealth.org/)
@@ -9,7 +9,7 @@ on serving researchers in the biosciences the combination of Docker + CWL can be
 by anyone to describe the tools and services in their Docker images in a standardized,
 machine readable way.
 
-## Built with Quay.io and Github
+## Built with Quay.io and GitHub
 
 Docker repositories, like
 [DockerHub](https://hub.docker.com/) and [Quay.io](https://quay.io/), and

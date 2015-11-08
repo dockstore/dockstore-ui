@@ -38,7 +38,7 @@ Dockstore currently integrates with GitHub and Quay.io, in the following steps, 
 1. Install Node.js and NPM on your workstation, specific instructions will vary depending on the operating system distribution. The use of [nvm](https://github.com/creationix/nvm) is encouraged in supported environments.
 2. Install the principal build dependencies globally:
   ```
-  npm install --global grunt-cli bower yo generator-karma generator-angular
+  npm install --global grunt-cli bower yo generator-karma generator-angular toaster
   ```
 
 3. Install Compass, on Ubuntu 14.04 LTS run (use brew on Mac OS X):
@@ -80,4 +80,3 @@ Documents written in Markdown should be placed in the `app/docs/` directory, the
 
 ### Resources
 + [Getting Started with Grunt](http://blog.teamtreehouse.com/getting-started-with-grunt)
-
