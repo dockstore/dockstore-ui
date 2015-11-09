@@ -1,8 +1,8 @@
 # Getting Started
 
-**The goal for the Dockstore is to bring together tools in Docker containers with a standardized, programmatic method of describing how to call them.**  Coupled with registration at http://dockstore.org, this process makes it much easier to use Docker-based tools to build larger analytical systems.  A typical use case for the sciences is to create complex workflows with multiple tools to process large datasets.  Future tutorials will examine how to scale up using CWL workflows and the [Consonance](https://github.com/Consonance/) cloud orchestration system.
+**The goal for the Dockstore is to bring together tools in Docker containers with a standardized, programmatic method of describing how to call them.**  Coupled with registration at https://www.dockstore.org, this process makes it much easier to use Docker-based tools to build larger analytical systems.  A typical use case for the sciences is to create complex workflows with multiple tools to process large datasets.  Future tutorials will examine how to scale up using CWL workflows and the [Consonance](https://github.com/Consonance/) cloud orchestration system.
 
-In this guide we will start with creating a simple Docker-based tool, sharing it through the Dockstore, and calling the container yourself to process some sample data.  
+In this guide we will start with creating a simple Docker-based tool, sharing it through the Dockstore, and calling the container yourself to process some sample data.
 
 For more background information on the Dockstore project please see the [About](/docs/about) page.
 
@@ -25,7 +25,7 @@ Docker is a fantastic tool for creating light-weight containers to run your tool
 
 For an example, see the [dockstore-tool-bamstats](https://github.com/briandoconnor/dockstore-tool-bamstats) repository on GitHub which we created as an example.  The [README](https://github.com/briandoconnor/dockstore-tool-bamstats/blob/develop/README.md) has more information which you may find helpful.  Here is the Dockerfile for this tool:
 
-![Dockerfile](dockerfile.png)
+![Dockerfile](docs/dockerfile.png)
 
 Read more on the development process at [http://docs.docker.com...](https://docs.docker.com/). For information on building your Docker image on Quay.io we recommend their [tutorial](https://quay.io/tutorial/).
 
@@ -35,7 +35,7 @@ Now that you have a git repository that includes a `Dockerfile`, you have tested
 
 Again, we provide an example from the [dockstore-tool-bamstats](https://github.com/briandoconnor/dockstore-tool-bamstats) repository:
 
-![Dockstore.cwl](cwl.png)
+![Dockstore.cwl](docs/cwl.png)
 
 You can see this tool takes two inputs, a parameter to control memory usage and a BAM file (binary sequence alignment file).  It produces one output, a zip file, that contains various HTML reports that BamStats creates.
 
@@ -49,20 +49,20 @@ https://www.dockstore.org/login
 
 Your link to GitHub is established on login and you will then be prompted to link your Quay.io account.
 
-![Link accounts](linking1.png)
+![Link accounts](docs/linking1.png)
 
-![Link accounts](linking2.png)
+![Link accounts](docs/linking2.png)
 
 The wizard will instruct you to setup the `dockstore` command line tool after linking your accounts.
 
-![Link accounts](linking3.png)
+![Link accounts](docs/linking3.png)
 
 ## Register Your Tool in Dockstore
 
-Now that you have your `Dockerfile` and `Dockstore.cwl` in GitHub, have setup Quay.io to automatically build your Docker image, and have linked your accounts to Dockstore, it is time to register your tool.  
+Now that you have your `Dockerfile` and `Dockstore.cwl` in GitHub, have setup Quay.io to automatically build your Docker image, and have linked your accounts to Dockstore, it is time to register your tool.
 The `dockstore` command line has several options.  We recommend you first `dockstore refresh` to ensure the latest GitHub and Quay.io information is indexed properly.
 
-![command](cmd1.png)
+![command](docs/cmd1.png)
 
 You can then use `dockstore publish` to see the list of available Docker images you can register with Dockstore.  The key is that Docker images you wish to register have the following 4 qualities:
 
@@ -71,7 +71,7 @@ You can then use `dockstore publish` to see the list of available Docker images 
 0. Quay.io is linked to GitHub for the `Dockerfile`
 0. the same GitHub repository also containers a `Dockstore.cwl`
 
-![command](cmd2.png)
+![command](docs/cmd2.png)
 
 You can see in the above, the tool (identified with `quay.io/briandoconnor/dockstore-tool-bamstats` in Dockstore and Quay.io) was successfully registered and can be seen by anyone on the Dockstore site.
 
