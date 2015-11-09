@@ -1,6 +1,6 @@
 # Getting Started
 
-**The goal for the Dockstore is to bring together tools in Docker containers with a standardized, programmatic method of describing how to call them.**  Coupled with registration at https://www.dockstore.org, this process makes it much easier to use Docker-based tools to build larger analytical systems.  A typical use case for the sciences is to create complex workflows with multiple tools to process large datasets.  Future tutorials will examine how to scale up using CWL workflows and the [Consonance](https://github.com/Consonance/) cloud orchestration system.
+**The goal for the Dockstore is to bring together tools in Docker containers with a standardized, programmatic method of describing how to call them.**  Coupled with registration at https://www.dockstore.org/, this process makes it much easier to use Docker-based tools to build larger analytical systems.  A typical use case for the sciences is to create complex workflows with multiple tools to process large datasets.  Future tutorials will examine how to scale up using CWL workflows and the [Consonance](https://github.com/Consonance/) cloud orchestration system.
 
 In this guide we will start with creating a simple Docker-based tool, sharing it through the Dockstore, and calling the container yourself to process some sample data.
 
