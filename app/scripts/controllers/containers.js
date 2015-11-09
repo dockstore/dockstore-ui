@@ -93,6 +93,17 @@ angular.module('dockstore.ui')
         }
       };
 
+      $scope.updateNSContainersRegistered = function(containerObj) {
+        for (var i = 0; i < $scope.nsContainers.length; i++) {
+          for (var j = 0; j < $scope.nsContainers[i].containers.length; j++) {
+            if ($scope.nsContainers[i].containers[j].id === containerObj.id) {
+              $scope.nsContainers[i].containers[j].is_registered = containerObj.is_registered;
+              return;
+            }
+          }
+        }
+      };
+
       if ($auth.isAuthenticated()) {
         TokenService.getUserTokenStatusSet($scope.userObj.id)
           .then(
@@ -119,5 +130,10 @@ angular.module('dockstore.ui')
             return $q.reject(response);
           }
         );
+
+      $scope.updateContainerObj = function() {
+        $scope.updateNSContainersRegistered($scope.containerObj);
+        console.log('!!!"')
+      };
 
   }]);

@@ -14,7 +14,8 @@ angular.module('dockstore.ui')
       scope: {
         containerId: '=',
         containerObj: '=',
-        editMode: '='
+        editMode: '=',
+        updateContainerObj: '&'
       },
       templateUrl: 'templates/containerdetails.html'
     };

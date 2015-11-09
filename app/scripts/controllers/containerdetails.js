@@ -33,6 +33,8 @@ angular.module('dockstore.ui')
         return ContainerService.setContainerRegistration(containerId, isRegistered)
           .then(
             function(containerObj) {
+              $scope.containerObj = containerObj;
+              $scope.updateContainerObj();
               return containerObj;
             },
             function(response) {
