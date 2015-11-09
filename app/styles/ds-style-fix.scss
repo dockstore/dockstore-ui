@@ -131,6 +131,9 @@ div.tab-content {
   background-color: #ffffff;
   padding: 8px;
   min-height: 320px;
+  .btn-primary > a, .btn-warning > a {
+    color: #ffffff;
+  }
   pre {
     margin: 0 0;
   }

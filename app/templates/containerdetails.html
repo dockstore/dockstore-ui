@@ -122,7 +122,8 @@
       <uib-tab ng-if="editMode">
         <uib-tab-heading>Sharing</uib-tab-heading>
         <strong>Container Registration:</strong>
-        <button class="btn btn-primary">
+        <button class="btn btn-sm"
+            ng-class="!containerObj.is_registered ? 'btn-primary' : 'btn-warning' ">
           <a href
               ng-if="!containerObj.is_registered"
               ng-click="setContainerRegistration(containerObj.id, true)">

@@ -132,8 +132,9 @@ angular.module('dockstore.ui')
         );
 
       $scope.updateContainerObj = function() {
-        $scope.updateNSContainersRegistered($scope.containerObj);
-        console.log('!!!"')
+        console.log('!!!1"');
+        $scope.updateNSContainersRegistered($scope.selContainerObj);
+        console.log('!!!2"');
       };
 
   }]);
