@@ -30,7 +30,7 @@ concern for the scientific community.
 First and foremost, the Dockstore has no requirements for what you register provided:
 
 0. you can host the Docker image on Quay.io (and others in the future) which is linked to [GitHub](http://github.com) for automated building
-0. you have a corresponding `Dockstore.yml` in CWL format that describes how to call the tools inside your Docker image
+0. you have a corresponding `Dockstore.cwl` in CWL format that describes how to call the tools inside your Docker image
 
 Over time, we find "skinny" Docker, those with single tools installed in them,
 are more helpful for extending and building new workflows with.  That being said,
@@ -69,7 +69,7 @@ We plan on expanding the Dockstore in several ways over the coming months:
 
 * allow users to register CWL and Docker image tar files with simple URLs in addition to the current Quay.io-based system
 * support DockerHub as a location for hosting Dockstore images
-* support BitBucket and other Git repositories for Dockerfiles and Dockstore.yml
+* support BitBucket and other Git repositories for Dockerfiles and Dockstore.cwl
 * work to promote a standardized web service API for sharing Docker-based tools through the GA4GH so other sites can register Docker images described with CWL and we can cross index, think [MavenCentral](http://search.maven.org/)
 * publish Dockstore images for tools from the [PCAWG](https://dcc.igcg.org/pcawg) and other projects to help seed the Dockstore
 * look at linking to tools defined by other standards such as [Galaxy Toolshed](https://toolshed.g2.bx.psu.edu/) and [Elixir](https://elixir-registry.cbs.dtu.dk/)
