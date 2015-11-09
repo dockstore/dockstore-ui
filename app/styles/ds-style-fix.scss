@@ -16,6 +16,10 @@ div.view-content {
   min-height: 500px;
 }
 
+div.ds-page-mh {
+  min-height: 435px;
+}
+
 div.ds-login-panel {
   margin-top: 100px;
   border-color: #21335b;
@@ -127,6 +131,9 @@ div.tab-content {
   background-color: #ffffff;
   padding: 8px;
   min-height: 320px;
+  pre {
+    margin: 0 0;
+  }
 }
 
 div.view-content.ns-containers {
@@ -190,6 +197,10 @@ div.view-content.ns-containers {
     to { transform: scale(1) rotate(360deg);}
 }
 
+
 span.reg-label {
   padding-bottom: 0.2em;
 }
+
+div.document img { max-width: 1000px; }
+

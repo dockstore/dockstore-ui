@@ -1,5 +1,5 @@
 <div id="container-table">
-  <div class="container">
+  <div class="container" ng-class="{'ds-page-mh' : !previewMode}">
     <div class="row">
       <div class="col-md-12">
         <table class="homepage-container containers-grid">
@@ -73,10 +73,10 @@
         <ul class="pagination">
           <li>{{getListRangeString()}}</li>
           <li>
-            <div class="button" ng-hide="currPage === getFirstPage()">
+            <div class="button" ng-hide="currPage <= getFirstPage()">
               <p><a href ng-click="changePage(false)">&laquo; Previous</a></p>
             </div>
-            <div class="button" ng-hide="currPage === getLastPage()">
+            <div class="button" ng-hide="currPage >= getLastPage()">
               <p><a href ng-click="changePage(true)">Next &raquo;</a></p>
             </div>
           </li>
