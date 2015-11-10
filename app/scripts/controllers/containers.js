@@ -54,7 +54,7 @@ angular.module('dockstore.ui')
           );
       };
 
-      $scope.sortNSContainers = function(containers) {
+      $scope.sortNSContainers = function(containers, username) {
         var nsContainers = [];
         var getNSIndex = function(namespace) {
           for (var i = 0; i < nsContainers.length; i++) {
@@ -73,15 +73,26 @@ angular.module('dockstore.ui')
           }
           nsContainers[pos].containers.push(containers[i]);
         }
-        // sort containers and container namespaces
         for (var j = 0; i < nsContainers.length; j++) {
           nsContainers.containers.sort(function(a, b) {
             return a.name - b.name;
           });
         }
-        return nsContainers.sort(function(a, b) {
-          return a.namespace - b.namespace;
-        });
+        return (function(nsContainers, username) {
+          var sortedNSContainers = [];
+          for (var i = 0; i < nsContainers.length; i++) {
+            if (nsContainers[i].namespace === username) {
+              sortedNSContainers.push(nsContainers[i]);
+              nsContainers.splice(i, 1);
+              break;
+            }
+          }
+          return sortedNSContainers.concat(
+            nsContainers.sort(function(a, b) {
+              return a.namespace - b.namespace;
+            })
+          );
+        })(nsContainers, username);
       };
 
       $scope.selectContainer = function(containerId) {
@@ -119,10 +130,13 @@ angular.module('dockstore.ui')
       $scope.listUserContainers($scope.userObj.id)
         .then(
           function(containers) {
-            $scope.nsContainers = $scope.sortNSContainers(containers);
-            if ($scope.nsContainers.length > 0) {
-              $scope.selectContainer($scope.nsContainers[0].containers[0].id);
-            }
+            TokenService.getUserToken($scope.userObj.id, 'quay.io')
+              .then(function(tokenObj) {
+                $scope.nsContainers = $scope.sortNSContainers(containers, tokenObj.username);
+                if ($scope.nsContainers.length > 0) {
+                  $scope.selectContainer($scope.nsContainers[0].containers[0].id);
+                }
+              });
           },
           function(response) {
             var message = '[' + response.status + '] ' + response.statusText;
@@ -132,9 +146,7 @@ angular.module('dockstore.ui')
         );
 
       $scope.updateContainerObj = function() {
-        console.log('!!!1"');
         $scope.updateNSContainersRegistered($scope.selContainerObj);
-        console.log('!!!2"');
       };
 
   }]);

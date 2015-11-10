@@ -59,6 +59,23 @@ angular.module('dockstore.ui')
         });
       };
 
+      this.getUserToken = function(userId, source) {
+        return this.getUserTokens(userId)
+          .then(
+            function(tokens) {
+              for (var i = 0; i < tokens.length; i++) {
+                if (tokens[i].tokenSource === source) return tokens[i];
+              }
+              return $q.reject(response);
+            },
+            function(response) {
+              var message = '[' + response.status + '] ' + response.statusText;
+              NtfnService.popError('User Accounts', message);
+              return $q.reject(response);
+            }
+          );
+      };
+
       this.getUserTokenStatusSet = function(userId) {
         return this.getUserTokens(userId)
           .then(
