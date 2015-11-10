@@ -33,6 +33,15 @@ Read more on the development process at [http://docs.docker.com...](https://docs
 
 Now that you have a git repository that includes a `Dockerfile`, you have tested it, and are satisfied your tool works in Docker, the next step is to create a [CWL tool definition file](http://common-workflow-language.github.io/). This YAML file describes the inputs, outputs, and Docker image dependencies for your tool.
 
+It is recommended that you have the following minimum fields:
+
+    description: <description>
+    id: <id>
+    label: <label>
+    
+    dct:creator:
+      foaf:name: <name>
+
 Again, we provide an example from the [dockstore-tool-bamstats](https://github.com/briandoconnor/dockstore-tool-bamstats) repository:
 
 ![Dockstore.cwl](docs/cwl.png)
