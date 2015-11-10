@@ -11,7 +11,7 @@ For more background information on the Dockstore project please see the [About](
 Dockstore is powered by [Quay.io](http://quay.io), for storing Docker images, and [GitHub](http://github.com) for storing the build file (`Dockerfile`) and metadata descriptor file (`Dockstore.cwl`) that are used by this site.  Since the Dockstore does not store your Docker images, your Dockerfile, or your Dockstore.cwl metadata file, you are free to use all the excellent features of Quay.io and GitHub.  If you are already using these services then you will appreciate the fact that registering your Docker images on Dockstore is extremely easy and requires very little interruption to the way you work already.  For those of you that use [DockerHub](https://hub.docker.com/), an extremely popular Docker registry, we are planning on adding support in the near future.  For now, we recommend users of Dockstore sign up for both Quay.io and GitHub accounts to host their Docker images and build/metadata files respectively.  If you are already building your Docker images on DockerHub automatically it takes just minutes to setup a comparable build on Quay.io.
 
 * [Sign up for an account on GitHub...](https://github.com)
-* [Sign up for an account on Quay.io...](https://quay.io)
+* [Sign up for an account on Quay.io... (signing in with GitHub is sufficient)](https://quay.io)
 
 ## Create Your Tool
 
