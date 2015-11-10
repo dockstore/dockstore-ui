@@ -7,7 +7,7 @@ This enables scientists, for example, to share analytical tools in a way that ma
 machine readable and runnable in a variety of environments.  While the Dockstore is focused
 on serving researchers in the biosciences the combination of Docker + CWL can be used
 by anyone to describe the tools and services in their Docker images in a standardized,
-machine readable way.
+machine-readable way.
 
 ## Built with Quay.io and GitHub
 
@@ -16,8 +16,8 @@ Docker repositories, like
 source control repositories like [GitHub](http://github.com) and
 [BitBucket](https://bitbucket.org/), provide
 much of the infrastructure we need.  They allow users build, publish,
-and share both public and private Docker images.  However, the services lack a standardized ways of
-describing how to invoke tools contained within the Docker containers.  The CWL
+and share both public and private Docker images.  However, the services lack standardized ways of
+describing how to invoke tools contained within Docker containers.  The CWL
 standard has defined a way to define the inputs, parameterizations, and outputs
 of tools using a YAML-formated file.  Together, these resources provide the
 necessary tools to share analytical tools in a highly portable way, a key
@@ -81,4 +81,4 @@ We plan on expanding the Dockstore in several ways over the coming months:
 * examples of how to make workflows in CWL that bring together individual tools, and to scale up analysis using cloud orchestration systems like [Consonance](https://github.com/Consonance/)
 * support for private repositories, groups, sharing settings, etc
 * unique, stable URL for each tool/version that can be used in publications
-* integration the [Launcher](https://github.com/CancerCollaboratory/dockstore-descriptor#dockstore-descriptor) into the Dockstore command line utility
+* integrate the [Launcher](https://github.com/CancerCollaboratory/dockstore-descriptor#dockstore-descriptor) into the Dockstore command line utility
