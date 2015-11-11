@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8" />
+  <title>Dockstore</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <base href="/">
+
+  <!-- build:css(.) styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- endbuild -->
+</head>
+<body ng-app="dockstore.ui">
+
+  <!-- Navigation - Main Menu -->
+  <div navbar></div>
+  <div toaster-container></div>
+
+  <!-- Page Content - ngView -->
+  <div ng-view></div>
+
+  <!-- Footer -->
+  <div id="footer">
+    <div class="container">
+      <div class="footer">
+        Can't find what you're looking for? <a href="https://gitter.im/common-workflow-language/common-workflow-language">Chat With Us on Gitter&raquo;</a>
+        <span class="social">
+          <img src="images/github.png"><a href="https://github.com/CancerCollaboratory">Github Repository</a>
+          <img src="images/twitter.png"><a href="https://twitter.com/DockstoreOrg">Follow Us</a>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+
+  <!-- build:js(.) scripts/vendor.js -->
+  <!-- bower:js -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="bower_components/angular-touch/angular-touch.js"></script>
+  <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+  <script src="bower_components/AngularJS-Toaster/toaster.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/angular-highlightjs/build/angular-highlightjs.js"></script>
+  <script src="bower_components/marked/lib/marked.js"></script>
+  <script src="bower_components/angular-marked/angular-marked.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
+
+  <!-- Satellizer - Modified for Dockstore -->
+  <script src="scripts/libs/satellizer/satellizer-ds.js"></script>
+
+  <!-- build:js({.tmp,app}) scripts/scripts.js -->
+  <script src="scripts/app.js"></script>
+  <script src="scripts/services/webservice.js"></script>
+  <script src="scripts/controllers/login.js"></script>
+  <script src="scripts/services/notificationservice.js"></script>
+  <script src="scripts/services/userservice.js"></script>
+  <script src="scripts/services/tokenservice.js"></script>
+  <script src="scripts/services/containerservice.js"></script>
+  <script src="scripts/directives/navbar.js"></script>
+  <script src="scripts/controllers/navbar.js"></script>
+  <script src="scripts/controllers/search.js"></script>
+  <script src="scripts/controllers/containers.js"></script>
+  <script src="scripts/controllers/documentation.js"></script>
+  <script src="scripts/controllers/settings.js"></script>
+  <script src="scripts/controllers/tokens.js"></script>
+  <script src="scripts/controllers/accounts.js"></script>
+  <script src="scripts/directives/tokensgrid.js"></script>
+  <script src="scripts/directives/containersgrid.js"></script>
+  <script src="scripts/directives/copytext.js"></script>
+  <script src="scripts/controllers/copytext.js"></script>
+  <script src="scripts/controllers/containersgrid.js"></script>
+  <script src="scripts/filters/paginationfilter.js"></script>
+  <script src="scripts/directives/containerdetails.js"></script>
+  <script src="scripts/controllers/searchcontainerdetails.js"></script>
+  <script src="scripts/controllers/containerdetails.js"></script>
+  <script src="scripts/controllers/tokensgrid.js"></script>
+  <script src="scripts/controllers/onboarding.js"></script>
+  <script src="scripts/directives/versionsgrid.js"></script>
+  <script src="scripts/controllers/versionsgrid.js"></script>
+  <script src="scripts/controllers/document.js"></script>
+  <script src="scripts/services/documentationservice.js"></script>
+  <script src="scripts/controllers/home.js"></script>
+  <script src="scripts/filters/previewfilter.js"></script>
+  <!-- endbuild -->
+</body>
+</html>

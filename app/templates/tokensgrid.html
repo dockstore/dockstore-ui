@@ -1,0 +1,76 @@
+<div id="container-table">
+  <div class="container ds-page-mh">
+    <div class="row">
+      <div class="col-md-12">
+        <table class="homepage-container tokens-grid">
+          <thead>
+            <tr>
+              <th>
+                Token ID
+                <span class="glyphicon"
+                      ng-class="getIconClass('tokenId')"
+                      ng-click="clickSortColumn('tokenId')">
+                </span>
+              </th>
+              <th>
+                Token Source
+                <span class="glyphicon"
+                      ng-class="getIconClass('source')"
+                      ng-click="clickSortColumn('source')">
+                </span>
+              </th>
+              <th>
+                Token Value
+              </th>
+              <th>
+                Operations
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-show="filteredContainers.length === 0">
+              <td colspan="4">
+                <div class="text-center">No Records Found</div>
+              </td>
+            </tr>
+            <!-- need a to write a 'smart search' filter -->
+            <tr ng-repeat="token in ((filteredTokens = tokens) | orderBy:sortColumn:sortReverse | PaginationFilter:getListRange())">
+              <td>
+                {{token.id}}
+              </td>
+              <td>
+                {{token.tokenSource}}
+              </td>
+              <td>
+                <div copy-text>{{token.content}}</div>
+              </td>
+              <td>
+                <a href ng-click="deleteToken({tokenId: token.id})">
+                  <span class="glyphicon glyphicon-trash"></span> Delete
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="container-pagination">
+  <div class="container">
+    <div class="row-center">
+        <ul class="pagination">
+          <li>{{getListRangeString()}}</li>
+          <li>
+            <div class="button" ng-hide="currPage <= getFirstPage()">
+              <p><a href ng-click="changePage(false)">&laquo; Previous</a></p>
+            </div>
+            <div class="button" ng-hide="currPage >= getLastPage()">
+              <p><a href ng-click="changePage(true)">Next &raquo;</a></p>
+            </div>
+          </li>
+        </ul>
+    </div>
+  </div>
+</div>

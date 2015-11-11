@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-bordered table-condensed table-striped">
+      <thead>
+        <tr>
+          <th class="col-md-2">
+            Version Tag
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('name')"
+                  ng-click="clickSortColumn('name')">
+            </span>
+          </th>
+          <th class="col-md-2">
+            Size
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('size')"
+                  ng-click="clickSortColumn('size')">
+            </span>
+          </th>
+          <th class="col-md-2">
+            Date Modified
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('last_modified')"
+                  ng-click="clickSortColumn('last_modified')">
+            </span>
+          </th>
+          <th class="col-md-6">
+            Docker Pull
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-show="filteredVersionTags.length === 0">
+          <td colspan="4">
+            <div class="text-center">No Records Found</div>
+          </td>
+        </tr>
+        <tr ng-repeat="versionTag in (filteredVersionTags = (versionTags | orderBy:sortColumn:sortReverse))">
+          <td>
+            {{versionTag.name}}
+          </td>
+          <td>
+            {{getHRSize(versionTag.size)}}
+          </td>
+          <td>
+            {{getDateModified(versionTag.last_modified)}}
+          </td>
+          <td>
+            <div copy-text>docker pull {{containerObj.path}}:{{versionTag.name}}</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

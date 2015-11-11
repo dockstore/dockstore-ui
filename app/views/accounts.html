@@ -1,0 +1,79 @@
+<div id="container-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h3 class="available-containers">
+          Accounts
+          <span class="public-lists">Current User</span>
+        </h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container view-content">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Collaboratory Account</h3>
+
+      <ul class="list-unstyled">
+        <li><strong>Username</strong>: {{userObj.username}}</li>
+        <li>
+          <strong>Administrator</strong>: {{ userObj.isAdmin ? 'Yes' : 'No' }}
+        </li>
+        <li><strong>Groups</strong>:
+          <span ng-show="!userObj.groups || userObj.groups.length <= 0">
+            None
+          </span>
+          <ul ng-show="userObj.groups.length > 0">
+            <li ng-repeat="group in userObj.groups">{{group.name}}</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h3>External Accounts</h3>
+
+      <h4>GitHub Account</h4>
+      <div ng-show="tokenStatusSet.github">
+        <span class="label label-success">
+          <span class="glyphicon glyphicon-link"></span> Linked
+        </span>
+      </div>
+      <div ng-show="!tokenStatusSet.github">
+        <button class="btn btn-primary btn-xs" ng-click="linkGitHubAccount()">
+          <span class="glyphicon glyphicon-link"></span> Link Account
+        </button>
+      </div>
+
+      <h4>Quay.io Account</h4>
+      <div ng-show="tokenStatusSet.quayio">
+        <span class="label label-success">
+          <span class="glyphicon glyphicon-link"></span> Linked
+        </span>
+      </div>
+      <div ng-show="!tokenStatusSet.quayio">
+        <button
+            class="btn btn-primary btn-xs"
+            ng-click="linkQuayIOAccount()"
+            ng-disabled="quayIOHold">
+          <span class="glyphicon glyphicon-link"></span> Link Account
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="our-sponsors">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="our-sponsors">
+          <li>Our Sponsors:</li>
+          <li><img src="images/collaboratory.png"></li>
+          <li><img src="images/oicr.png"></li>
+          <li><img src="images/ga4gh.png"></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

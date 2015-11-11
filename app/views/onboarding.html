@@ -1,0 +1,132 @@
+<div id="container-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h3 class="available-containers">
+          Onboarding Wizard
+        </h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container view-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div ng-show="owStep === 1">
+        <h3>Step 1: Link External Accounts</h3>
+        <hr />
+
+        <div class="alert alert-info" role="alert" ng-if="refreshingContainers">
+          <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
+          </span>
+          Please wait, retrieving Quay.io containers...
+        </div>
+
+        <h4>GitHub Account</h4>
+        <div ng-show="tokenStatusSet.github">
+          <span class="label label-success">
+            <span class="glyphicon glyphicon-link"></span> Linked
+          </span>
+        </div>
+        <div ng-show="!tokenStatusSet.github">
+          <button class="btn btn-primary btn-xs" ng-click="linkGitHubAccount()">
+            <span class="glyphicon glyphicon-link"></span> Link Account
+          </button>
+        </div>
+
+        <h4>Quay.io Account</h4>
+        <div ng-show="tokenStatusSet.quayio">
+          <span class="label label-success">
+            <span class="glyphicon glyphicon-link"></span> Linked
+          </span>
+        </div>
+        <div ng-show="!tokenStatusSet.quayio">
+          <button
+              class="btn btn-primary btn-xs"
+              ng-click="linkQuayIOAccount()"
+              ng-disabled="refreshingContainers">
+            <span class="glyphicon glyphicon-link"></span> Link Account
+          </button>
+        </div>
+
+      </div>
+
+      <div ng-show="owStep === 2">
+        <h3>Step 2: Download CLI Client</h3>
+        <hr />
+
+        <h4>First Part</h4>
+        <ol>
+          <li>
+            Download the CLI bash script (works on Linux and Mac OS X).
+          </li>
+          <li>
+            Make it executable and ensure that it is in your <code>$PATH</code>.
+          </li>
+          <li>
+            Run the script, and follow the interactive prompts.
+          </li>
+        </ol>
+        <a
+            class="btn btn-default hori-offset-12"
+            ng-href="{{dscliReleaseURL}}">
+          <span class="glyphicon glyphicon-download"></span>
+          Download CLI
+        </a>
+
+        <h4>Second Part</h4>
+        <p>Put these settings in the file <code>~/.dockstore/config</code>:</p>
+<div copy-text type="textarea" length="very-long">token: {{dsToken}}
+server-url: {{dsServerURI}}
+</div>
+
+        <!--p>
+          You can also run the following commands to install the client in your
+          home directory:
+        </p>
+        <pre class="pre-scrollable">
+      mkdir "$HOME/bin" && \
+      wget -O "$HOME/bin/dockstore" '{{dscliReleaseURL}}' && \
+      chmod +x "$HOME/bin/dockstore" && \
+      export PATH="$PATH:$HOME/bin" && \
+      dockstore;</pre!-->
+
+      </div>
+
+      <div class="document" ng-show="owStep === 3">
+        <h3>Step 3: Setup Complete</h3>
+        <hr />
+
+        <marked src="'docs/getting-started.md'"></marked>
+      </div>
+
+      <nav class="pull-right">
+        <ul class="pager">
+          <li ng-show="owStep > 1">
+            <a href ng-click="prevStep()">Previous</a>
+          </li>
+          <li ng-class="{ disabled: !tokenSetComplete }">
+            <a href ng-show="owStep < 3" ng-click="nextStep()">Next</a>
+            <a href ng-show="owStep >= 3" ng-click="nextStep()">Finish</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<div id="our-sponsors">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="our-sponsors">
+          <li>Our Sponsors:</li>
+          <li><img src="images/collaboratory.png"></li>
+          <li><img src="images/oicr.png"></li>
+          <li><img src="images/ga4gh.png"></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

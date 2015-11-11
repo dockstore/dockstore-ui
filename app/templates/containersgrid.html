@@ -1,0 +1,86 @@
+<div id="container-table">
+  <div class="container" ng-class="{'ds-page-mh' : !previewMode}">
+    <div class="row">
+      <div class="col-md-12">
+        <table class="homepage-container containers-grid">
+          <thead>
+            <tr>
+              <th>
+                Name
+                <span class="glyphicon"
+                      ng-class="getIconClass('name')"
+                      ng-click="clickSortColumn('name')">
+                </span>
+              </th>
+              <th>
+                Author
+                <span class="glyphicon"
+                      ng-class="getIconClass('author')"
+                      ng-click="clickSortColumn('author')">
+                </span>
+              </th>
+              <th>
+                Project Links
+              </th>
+              <th>
+                Docker Pull
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-show="filteredContainers.length === 0">
+              <td colspan="4">
+                <div class="text-center">No Records Found</div>
+              </td>
+            </tr>
+            <!-- need a to write a 'smart search' filter -->
+            <tr ng-repeat="container in ((filteredContainers = (containers | PreviewFilter:contLimit | filter: searchQuery)) | orderBy:sortColumn:sortReverse | PaginationFilter:getListRange())">
+              <td>
+                <a href="/search/{{container.id}}">{{container.name}}</a>
+              </td>
+              <td>
+                {{ container.author ? container.author : 'n/a' }}
+              </td>
+              <td>
+                <span ng-if="getGitHubURL(container.gitUrl)">
+                  <a ng-href="{{getGitHubURL(container.gitUrl)}}" target="_blank">GitHub</a>
+                </span>
+                <span ng-if="getQuayIOURL(container.path)">
+                  <a ng-href="{{getQuayIOURL(container.path)}}" target="_blank">Quay.io</a>
+                </span>
+              </td>
+              <td>
+                <div copy-text>docker pull {{container.path}}</div>
+              </td>
+            </tr>
+            <tr ng-show="previewMode && filteredContainers.length !== 0">
+              <td colspan="4" class="browse-all">
+                <div class="button">
+                  <p><a href="/search">Browse All Containers &raquo;</a></p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="container-pagination" ng-show="!previewMode">
+  <div class="container">
+    <div class="row-center">
+        <ul class="pagination">
+          <li>{{getListRangeString()}}</li>
+          <li>
+            <div class="button" ng-hide="currPage <= getFirstPage()">
+              <p><a href ng-click="changePage(false)">&laquo; Previous</a></p>
+            </div>
+            <div class="button" ng-hide="currPage >= getLastPage()">
+              <p><a href ng-click="changePage(true)">Next &raquo;</a></p>
+            </div>
+          </li>
+        </ul>
+    </div>
+  </div>
+</div> 

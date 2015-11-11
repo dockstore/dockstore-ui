@@ -1,0 +1,148 @@
+/**
+ * CSS Style Fixes - Dockstore-Bootstrap Integration
+ */
+
+.nav > li > a {
+  position: initial;
+  display: initial;
+  padding: initial;
+}
+
+.header1 div.splash {
+  height: 300px;
+}
+
+div.view-content {
+  min-height: 500px;
+}
+
+div.ds-page-mh {
+  min-height: 435px;
+}
+
+div.ds-login-panel {
+  margin-top: 100px;
+  border-color: #21335b;
+  .panel-heading {
+    border-color: #21335b;
+    background-color: #21335b;
+  }
+}
+
+table.containers-grid {
+  th:nth-child(1) {
+    width: 25%;
+  }
+  th:nth-child(2) {
+    width: 20%;
+  }
+  th:nth-child(3) {
+    width: 15%;
+  }
+  th:nth-child(4) {
+    width: 40%;
+  }
+}
+
+table.tokens-grid {
+  th:nth-child(1) {
+    width: 15%;
+  }
+  th:nth-child(2) {
+    width: 20%;
+  }
+  th:nth-child(3) {
+    width: 45%;
+  }
+  th:nth-child(4) {
+    width: 20%;
+  }
+}
+
+.side-block table {
+  margin-bottom: 2em;
+}
+
+.input-group-addon {
+  padding: 5px 10px;
+}
+
+#navigation ul.nav {
+  li.ds-nav-search-pr {
+    margin-left: 80px;
+    margin-right: 20px;
+  }
+  li > a:hover, li > a:focus {
+    background-color: initial;
+  }
+  li > ul.dropdown-menu {
+    background-color: rgb(72, 121, 128);
+    li {
+      margin: 2px 0;
+      display: list-item;
+      a:hover {
+        background-color: initial;
+        text-decoration: none;
+        span.item-label {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+.label {
+  padding-top: .3em;
+}
+
+/* Bootstrap Tabs */
+div.details-container {
+  margin-bottom: 14px;
+}
+div.ds-tabs > div {
+  border: solid 1px #cfd1d7;
+  max-width: 802px;
+}
+
+ul.nav-tabs {
+  background-color: #ffffff;
+  li {
+    border-right: solid 1px #cfd1d7;
+    min-width: 150px;
+    padding: 12px 0;
+    text-align: center;
+    line-height: 1;
+    a {
+      color: #487980;
+      font-weight: bold;
+    }
+  }
+  li.active, li:not(active):hover {
+    background-color: #7987aa;
+    a, a:hover, a:focus {
+      color: #ffffff;
+      background-color: #7987aa;
+      border: none;
+    }
+  }
+}
+
+div.tab-content {
+  background-color: #ffffff;
+  padding: 8px;
+  min-height: 320px;
+  pre {
+    margin: 0 0;
+  }
+}
+
+.glyphicon-refresh-animate {
+    animation: spin .7s infinite linear;
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+
+div.document img { max-width: 1000px; }

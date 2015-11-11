@@ -1,0 +1,15 @@
+sudo: true
+language: node_js
+node_js:
+  - 'stable'
+  - '4.2.1'
+before_install:
+  - 'npm config get registry'
+  - 'npm config set registry http://registry.npmjs.org/'
+install:
+  - 'npm install --global grunt-cli bower yo generator-karma generator-angular'
+  - 'npm install karma jasmine-core phantomjs'
+  - 'sudo apt-get install -y ruby ruby-dev make'
+  - 'gem install compass'
+  - 'npm update'
+  - 'bower update'
