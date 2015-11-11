@@ -40,11 +40,43 @@ angular.module('dockstore.ui')
       });
     };
 
+    this.getUserContainerList = function(userId) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: WebService.API_URI + '/users/' + userId + '/containers'
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
     this.refreshUserContainers = function(userId) {
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
           url: WebService.API_URI + '/users/' + userId + '/containers/refresh',
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.setContainerRegistration = function(containerId, isRegistered) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'POST',
+          url: WebService.API_URI + '/containers/' + containerId + '/register',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: {
+            register: isRegistered
+          }
         }).then(function(response) {
           resolve(response.data);
         }, function(response) {

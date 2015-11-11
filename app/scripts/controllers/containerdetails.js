@@ -29,6 +29,22 @@ angular.module('dockstore.ui')
           );
       };
 
+      $scope.setContainerRegistration = function(containerId, isRegistered) {
+        return ContainerService.setContainerRegistration(containerId, isRegistered)
+          .then(
+            function(containerObj) {
+              $scope.containerObj.is_registered = containerObj.is_registered;
+              $scope.updateContainerObj();
+              return containerObj;
+            },
+            function(response) {
+              var message = '[' + response.status + '] ' + response.statusText;
+              NtfnService.popError('Container Registration', message);
+              return $q.reject(response);
+            }
+          );
+      };
+
       $scope.getDaysAgo = function(timestamp) {
         var timeDiff = (new Date()).getTime() - timestamp;
         return Math.floor(timeDiff / (1000 * 60 * 60 * 24));
@@ -117,10 +133,24 @@ angular.module('dockstore.ui')
         }
       };
 
-      $scope.loadContainerDetails($scope.containerId)
-        .then(function(containerObj) {
-          $scope.gitHubURL = $scope.getGitHubURL($scope.containerObj.gitUrl);
-          $scope.quayIOURL = $scope.getQuayIOURL($scope.containerObj.path);
-        });
+      $scope.$watch('containerId', function(newValue, oldValue) {
+        if (newValue) {
+          $scope.dockerFileLoaded = false;
+          $scope.dockerFileString = false;
+          $scope.wfDescriptorFileLoaded = false;
+          $scope.wfDescriptorFileString = false;
+          if (!$scope.editMode) {
+            $scope.loadContainerDetails($scope.containerId)
+              .then(function(containerObj) {
+                $scope.gitHubURL = $scope.getGitHubURL($scope.containerObj.gitUrl);
+                $scope.quayIOURL = $scope.getQuayIOURL($scope.containerObj.path);
+              });
+          } else {
+            $scope.gitHubURL = $scope.getGitHubURL($scope.containerObj.gitUrl);
+            $scope.quayIOURL = $scope.getQuayIOURL($scope.containerObj.path);
+          }
+        }
+      });
+      
 
   }]);

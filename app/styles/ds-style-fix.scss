@@ -68,6 +68,13 @@ table.tokens-grid {
 }
 
 #navigation ul.nav {
+  &.auth > li {
+    margin-left: 20px;
+    margin-right: 20px
+  }
+  &.auth > li.ds-nav-search-pr {
+    margin-left: 40px;
+  }
   li.ds-nav-search-pr {
     margin-left: 80px;
     margin-right: 20px;
@@ -78,7 +85,7 @@ table.tokens-grid {
   li > ul.dropdown-menu {
     background-color: rgb(72, 121, 128);
     li {
-      margin: 2px 0;
+      margin: 4px 0;
       display: list-item;
       a:hover {
         background-color: initial;
@@ -131,13 +138,68 @@ div.tab-content {
   background-color: #ffffff;
   padding: 8px;
   min-height: 320px;
+  .btn-primary > a, .btn-warning > a {
+    color: #ffffff;
+  }
   pre {
     margin: 0 0;
   }
 }
 
+div.view-content.ns-containers {
+  margin-top: 10px;
+}
+
+.ns-containers-accordion {
+  div.panel-group {
+    margin-bottom: 14px;
+  }
+  div.panel {
+    border-radius: 0;
+    border-color: #ddd;
+    div.container-label {
+      background-color: #ffffff;
+      color: #487980;
+      padding: 0 10px;
+      clear: both;
+      overflow: hidden;
+      div.container-name-oflw {
+        width: 170px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      a {
+        color: #487980;
+      }
+    }
+    div.container-label:hover, div.container-label.selected {
+      background-color: #7987a5;
+      color: #ffffff;
+      a {
+        color: #ffffff;
+      }
+    }
+  }
+  div.panel-heading {
+    border-radius: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #ffffff;
+    color: #487980;
+    span {
+      font-size: 14px;
+    }
+  }
+  div.panel-body {
+    padding: 15px 0;
+    font-size: 12px;
+  }
+}
+
 .glyphicon-refresh-animate {
     animation: spin .7s infinite linear;
+    transform-origin: 48% 50%;
 }
 
 @keyframes spin {
@@ -145,4 +207,10 @@ div.tab-content {
     to { transform: scale(1) rotate(360deg);}
 }
 
+
+span.reg-label {
+  padding-bottom: 0.2em;
+}
+
 div.document img { max-width: 1000px; }
+

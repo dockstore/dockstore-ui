@@ -1,12 +1,18 @@
 <div class="row">
-  <div class="col-md-6">
-    <h3>{{containerObj.namespace}}/{{containerObj.name}}</h3>
+  <div class="col-md-8">
+    <h3>
+      <span class="glyphicon glyphicon-lock" ng-if="!containerObj.is_public"></span>
+      {{containerObj.namespace}}/{{containerObj.name}}
+      <span class="label reg-label" ng-class="containerObj.is_registered ? 'label-primary' : 'label-warning'" ng-if="editMode && containerObj">
+        {{ containerObj.is_registered ? 'REG' : 'UNREG' }}
+      </span>
+    </h3>
     <p class="update">
       Last build:
       {{ containerObj.lastBuild ? getDaysAgo(containerObj.lastBuild) + ' days ago' : 'n/a' }} 
     </p>
   </div>
-  <!--div class="col-md-6">
+  <!--div class="col-md-4">
     <span class="starRating">
       <input id="rating5" type="radio" name="rating" value="5">
       <label for="rating5">5</label>
@@ -22,8 +28,9 @@
   </div-->
 </div>
 <div class="row">
-  <div class="ds-tabs col-md-9">
+  <div class="ds-tabs" ng-class="editMode ? 'col-md-12' : 'col-md-9'">
     <uib-tabset>
+
       <uib-tab>
         <uib-tab-heading>Info</uib-tab-heading>
         <ul class="list-unstyled">
@@ -75,6 +82,7 @@
           </li>
         </ul>
       </uib-tab>
+
       <uib-tab>
         <uib-tab-heading>Versions</uib-tab-heading>
         <div versions-grid container-obj="containerObj"></div>
@@ -110,9 +118,28 @@
               ng-show="wfDescriptorFileLoaded && wfDescriptorFileString">
         </div>
       </uib-tab>
+
+      <uib-tab ng-if="editMode">
+        <uib-tab-heading>Sharing</uib-tab-heading>
+        <h5>Container Registration:</h5>
+        <button class="btn btn-sm"
+            ng-class="!containerObj.is_registered ? 'btn-primary' : 'btn-warning' ">
+          <a href
+              ng-if="!containerObj.is_registered"
+              ng-click="setContainerRegistration(containerObj.id, true)">
+            Register
+          </a>
+          <a href
+              ng-if="containerObj.is_registered"
+              ng-click="setContainerRegistration(containerObj.id, false)">
+            Unregister
+          </a>
+        </button>
+      </uib-tab>
+
     </uib-tabset>
   </div>
-  <div class="side-block col-md-3">
+  <div class="side-block col-md-3" ng-if="!editMode">
     <table ng-if="containerObj">
       <thead>
         <th>
