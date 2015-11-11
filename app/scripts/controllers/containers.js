@@ -56,6 +56,7 @@ angular.module('dockstore.ui')
 
       $scope.sortNSContainers = function(containers, username) {
         var nsContainers = [];
+        /* Group Containers by Common Namespace */
         var getNSIndex = function(namespace) {
           for (var i = 0; i < nsContainers.length; i++) {
             if (nsContainers[i].namespace === namespace) return i;
@@ -73,13 +74,18 @@ angular.module('dockstore.ui')
           }
           nsContainers[pos].containers.push(containers[i]);
         }
-        for (var j = 0; i < nsContainers.length; j++) {
-          nsContainers.containers.sort(function(a, b) {
-            return a.name - b.name;
+        /* Sort Containers in Each Namespace */
+        for (var j = 0; j < nsContainers.length; j++) {
+          nsContainers[j].containers.sort(function(a, b) {
+            if (a.name < b.name) return -1;
+            if (a.name > b.name) return 1;
+            return 0;
           });
         }
+        /* Return Namespaces w/ Nested Containers */
         return (function(nsContainers, username) {
           var sortedNSContainers = [];
+          /* User's Containers Appear in First Section */
           for (var i = 0; i < nsContainers.length; i++) {
             if (nsContainers[i].namespace === username) {
               sortedNSContainers.push(nsContainers[i]);
@@ -89,7 +95,9 @@ angular.module('dockstore.ui')
           }
           return sortedNSContainers.concat(
             nsContainers.sort(function(a, b) {
-              return a.namespace - b.namespace;
+              if (a.namespace < b.namespace) return -1;
+              if (a.namespace > b.namespace) return 1;
+              return 0;
             })
           );
         })(nsContainers, username);
