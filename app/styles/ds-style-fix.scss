@@ -68,6 +68,13 @@ table.tokens-grid {
 }
 
 #navigation ul.nav {
+  &.auth > li {
+    margin-left: 20px;
+    margin-right: 20px
+  }
+  &.auth > li.ds-nav-search-pr {
+    margin-left: 40px;
+  }
   li.ds-nav-search-pr {
     margin-left: 80px;
     margin-right: 20px;
@@ -78,7 +85,7 @@ table.tokens-grid {
   li > ul.dropdown-menu {
     background-color: rgb(72, 121, 128);
     li {
-      margin: 2px 0;
+      margin: 4px 0;
       display: list-item;
       a:hover {
         background-color: initial;

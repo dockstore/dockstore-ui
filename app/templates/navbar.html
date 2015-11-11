@@ -1,12 +1,15 @@
 <div id="header1">
   <div class="container">
     <div class="row" id="navigation">
-      <ul class="nav">
+      <ul class="nav" ng-class="{auth: isAuthenticated()}">
         <li>
           <a href="/"><img src="images/logo.png"></a>
         </li>
         <li>
           <a href="/search">Containers</a>
+        </li>
+        <li ng-show="isAuthenticated()">
+          <a href="/containers">My Containers</a>
         </li>
         <li>
           <a href="/docs/getting-started">Documentation</a>
@@ -43,6 +46,12 @@
               <a href="/tokens">
                 <span class="glyphicon glyphicon-link"></span>&nbsp;
                 <span class="item-label">Tokens</span>
+              </a>
+            </li>
+            <li>
+              <a href="/onboarding">
+                <span class="glyphicon glyphicon-tasks"></span>&nbsp;
+                <span class="item-label">Setup</span>
               </a>
             </li>
             <!--li>
