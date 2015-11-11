@@ -17,6 +17,19 @@ angular.module('dockstore.ui')
         editMode: '=',
         updateContainerObj: '&'
       },
-      templateUrl: 'templates/containerdetails.html'
+      templateUrl: 'templates/containerdetails.html',
+      link: function postLink(scope, element, attrs) {
+        scope.$watch('containerId',
+          function(newVal, oldVal, scope) {
+            if (newVal) {
+              if ($('[select="loadDockerFile()"]').hasClass('active')) {
+                scope.loadDockerFile();
+              }
+              if ($('[select="loadWFDescriptorFile()"]').hasClass('active')) {
+                scope.loadWFDescriptorFile();
+              }
+            }
+        });
+      }
     };
   });

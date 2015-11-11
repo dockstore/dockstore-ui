@@ -66,7 +66,7 @@ angular.module('dockstore.ui')
               for (var i = 0; i < tokens.length; i++) {
                 if (tokens[i].tokenSource === source) return tokens[i];
               }
-              return $q.reject(response);
+              return $q.reject();
             },
             function(response) {
               var message = '[' + response.status + '] ' + response.statusText;

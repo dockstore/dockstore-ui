@@ -135,6 +135,10 @@ angular.module('dockstore.ui')
 
       $scope.$watch('containerId', function(newValue, oldValue) {
         if (newValue) {
+          $scope.dockerFileLoaded = false;
+          $scope.dockerFileString = false;
+          $scope.wfDescriptorFileLoaded = false;
+          $scope.wfDescriptorFileString = false;
           if (!$scope.editMode) {
             $scope.loadContainerDetails($scope.containerId)
               .then(function(containerObj) {
