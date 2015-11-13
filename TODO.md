@@ -19,4 +19,5 @@ This document keeps list of features we want (not yet prioritized).
 * support "official" repositories that are created by the author of the tool
 * support [Disqus](https://disqus.com/) or something similar to include discussion of tools inline with their pages
 * show a sample command from parsing the CWL
+* sharing links, integration with social media
 
