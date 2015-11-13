@@ -15,7 +15,7 @@ This document keeps list of features we want (not yet prioritized).
 * support for better browsing of tools on the site, think faceted browser like the [ICGC DCC Portal](https://dcc.icgc.org), using the tags mentioned in the previous bullet
 * CWL workflow registration in addition to individual tools
 * support for private repositories, groups, sharing settings, etc
-* unique, stable URL for each tool/version that can be used in publications
+* unique, stable URL for each tool/version that can be used in publications (think https://www.dockstore.org/image/quay.io/briandoconnor/dockstore-tool-bamstats not https://www.dockstore.org/search/25)
 * support "official" repositories that are created by the author of the tool
 * support [Disqus](https://disqus.com/) or something similar to include discussion of tools inline with their pages
 * show a sample command from parsing the CWL
