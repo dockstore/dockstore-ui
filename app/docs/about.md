@@ -65,8 +65,5 @@ tools in the system.
 
 ## Future Plans
 
-We plan on expanding the Dockstore in several ways over the coming months.  Please see:
-
-* [dockstore TODO](https://github.com/CancerCollaboratory/dockstore/blob/develop/TODO.md)
-* [dockstore-ui TODO](https://github.com/CancerCollaboratory/dockstore-ui/blob/develop/TODO.md)
+We plan on expanding the Dockstore in several ways over the coming months.  Please see our [https://github.com/CancerCollaboratory/dockstore/issues](issues page).
 
