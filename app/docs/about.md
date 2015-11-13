@@ -65,5 +65,5 @@ tools in the system.
 
 ## Future Plans
 
-We plan on expanding the Dockstore in several ways over the coming months.  Please see our [https://github.com/CancerCollaboratory/dockstore/issues](issues page).
+We plan on expanding the Dockstore in several ways over the coming months.  Please see our [https://github.com/CancerCollaboratory/dockstore/issues](issues page) for details and discussions.
 
