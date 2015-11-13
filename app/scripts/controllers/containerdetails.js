@@ -50,6 +50,12 @@ angular.module('dockstore.ui')
         return Math.floor(timeDiff / (1000 * 60 * 60 * 24));
       };
 
+      $scope.getDaysAgoString = function(timestamp) {
+        var daysAgo = $scope.getDaysAgo(timestamp);
+        return daysAgo.toString() +
+                ((daysAgo === 1) ? ' day ago' : ' days ago');
+      };
+
       $scope.getDockerFile = function(containerId) {
         return ContainerService.getDockerFile(containerId)
           .then(
