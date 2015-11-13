@@ -1,6 +1,6 @@
 # New Features
 
-This document keeps a (relatively) prioritized list of features we want.
+This document keeps list of features we want (not yet prioritized).
 
 ## Documentation
 
@@ -16,3 +16,7 @@ This document keeps a (relatively) prioritized list of features we want.
 * CWL workflow registration in addition to individual tools
 * support for private repositories, groups, sharing settings, etc
 * unique, stable URL for each tool/version that can be used in publications
+* support "official" repositories that are created by the author of the tool
+* support [Disqus](https://disqus.com/) or something similar to include discussion of tools inline with their pages
+* show a sample command from parsing the CWL
+
