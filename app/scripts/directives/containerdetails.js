@@ -12,7 +12,7 @@ angular.module('dockstore.ui')
       restrict: 'AE',
       controller: 'ContainerDetailsCtrl',
       scope: {
-        containerId: '=',
+        containerPath: '=',
         containerObj: '=',
         editMode: '=',
         updateContainerObj: '&'

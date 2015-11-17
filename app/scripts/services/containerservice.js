@@ -27,11 +27,26 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.getRegisteredContainer = function(containerId) {
+    this.getRegisteredContainerById = function(containerId) {
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
           url: WebService.API_URI + '/containers/registered/' + containerId
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.getRegisteredContainerByPath = function(containerPath) {
+      var containerPathEncoded = containerPath.replace(/\//g, '%2F');
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: WebService.API_URI + '/containers/' + containerPathEncoded + 
+                '/registered/'
         }).then(function(response) {
           resolve(response.data);
         }, function(response) {

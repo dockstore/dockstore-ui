@@ -13,7 +13,7 @@ angular.module('dockstore.ui')
     '$routeParams',
     function ($scope, $routeParams) {
       
-      $scope.containerId = $routeParams.containerId;
+      $scope.containerPath = $routeParams.containerPath;
       $scope.containerObj = null;
 
   }]);
