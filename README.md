@@ -3,6 +3,10 @@
 
 AngularJS UI for the Dockstore Web Service.
 
+The Dockstore brings together tools in Docker images with CWL-based descriptors.
+
+For a live demo see https://dockstore.org
+
 ### Configuration Parameters
 All configuration for the Dockstore UI is done in the `app/scripts/services/webservice.js` file.
 
