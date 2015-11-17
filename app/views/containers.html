@@ -28,7 +28,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3 containers-rsb">
       <div class="ns-containers-accordion" ng-if="nsContainers">
         <uib-accordion ng-repeat="nsObj in nsContainers" close-others="true">
           <uib-accordion-group heading="{{nsObj.namespace}}" is-open="$first">
@@ -50,6 +50,9 @@
           </uib-accordion-group>
         </uib-accordion>
       </div>
+      <button class="btn btn-primary btn-sm pull-right">
+        <a href="/containers/register">Add Container</a>
+      </button>
     </div>
     <div class="col-md-9">
       <div container-details

@@ -37,6 +37,7 @@ module.exports = function(config) {
       'bower_components/angular-highlightjs/build/angular-highlightjs.js',
       'bower_components/marked/lib/marked.js',
       'bower_components/angular-marked/angular-marked.js',
+      'bower_components/angular-messages/angular-messages.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

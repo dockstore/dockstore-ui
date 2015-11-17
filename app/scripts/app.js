@@ -16,6 +16,7 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
+    'ngMessages',
     'satellizer',
     'LocalStorageModule',
     'ui.bootstrap',
@@ -66,6 +67,11 @@ angular
           templateUrl: 'views/containers.html',
           controller: 'ContainersCtrl',
           controllerAs: 'Containers'
+        })
+        .when('/containers/register', {
+          templateUrl: 'views/registercontainer.html',
+          controller: 'RegisterContainerCtrl',
+          controllerAs: 'RegisterContainer'
         })
         .when('/docs', {
           templateUrl: 'views/documentation.html',
