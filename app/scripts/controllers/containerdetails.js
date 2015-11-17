@@ -15,8 +15,8 @@ angular.module('dockstore.ui')
     'NotificationService',
     function ($scope, $q, ContainerService, NtfnService) {
 
-      $scope.loadContainerDetails = function(containerId) {
-        return ContainerService.getRegisteredContainer(containerId)
+      $scope.loadContainerDetails = function(containerPath) {
+        return ContainerService.getRegisteredContainerByPath(containerPath)
           .then(
             function(containerObj) {
               $scope.containerObj = containerObj;
@@ -139,14 +139,14 @@ angular.module('dockstore.ui')
         }
       };
 
-      $scope.$watch('containerId', function(newValue, oldValue) {
+      $scope.$watch('containerPath', function(newValue, oldValue) {
         if (newValue) {
           $scope.dockerFileLoaded = false;
           $scope.dockerFileString = false;
           $scope.wfDescriptorFileLoaded = false;
           $scope.wfDescriptorFileString = false;
           if (!$scope.editMode) {
-            $scope.loadContainerDetails($scope.containerId)
+            $scope.loadContainerDetails($scope.containerPath)
               .then(function(containerObj) {
                 $scope.gitHubURL = $scope.getGitHubURL($scope.containerObj.gitUrl);
                 $scope.quayIOURL = $scope.getQuayIOURL($scope.containerObj.path);
@@ -157,6 +157,5 @@ angular.module('dockstore.ui')
           }
         }
       });
-      
 
   }]);

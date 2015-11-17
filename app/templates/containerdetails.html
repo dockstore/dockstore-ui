@@ -33,7 +33,7 @@
 
       <uib-tab>
         <uib-tab-heading>Info</uib-tab-heading>
-        <ul class="list-unstyled">
+        <ul class="list-unstyled container-info">
           <li>
             <strong>Name</strong>:
             {{containerObj.name}}
@@ -79,6 +79,9 @@
                 No description associated with this container.
               </span>
             </div>
+          </li>
+          <li>
+            <div disqus-comments class="comments" ng-if="!editMode"></div>
           </li>
         </ul>
       </uib-tab>
