@@ -245,6 +245,13 @@ div.containers-rsb {
   }
 }
 
+ul.list-unstyled.container-info {
+  margin-bottom: 0;
+  .comments {
+    padding: 0 4px 0 4px;
+  }
+}
+
 /* Media Queries - Lower Resolutions (width < 1200px) */
 @media (max-width: 992px) {
   img.site-logo { width: 50px; }

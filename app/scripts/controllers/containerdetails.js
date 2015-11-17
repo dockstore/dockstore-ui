@@ -157,6 +157,5 @@ angular.module('dockstore.ui')
           }
         }
       });
-      
 
   }]);
