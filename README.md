@@ -1,9 +1,9 @@
 # dockstore-ui
 [![Build Status](https://travis-ci.org/ga4gh/dockstore-ui.svg?branch=develop)](https://travis-ci.org/CancerCollaboratory/dockstore-ui)
 
-AngularJS UI for the Dockstore Web Service.
+This is an AngularJS UI for the Dockstore [Web Service](https://github.com/ga4gh/dockstore).
 
-The Dockstore brings together tools in Docker images with CWL-based descriptors.
+The Dockstore brings together tools in Docker images with CWL-based descriptors.  We hope to use this project as motivation to create a GA4GH API standard for container registries and intend on making Dockstore fully compliant.
 
 For a live demo see https://dockstore.org
 
