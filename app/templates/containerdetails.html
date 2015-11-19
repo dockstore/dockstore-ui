@@ -33,6 +33,14 @@
 
       <uib-tab>
         <uib-tab-heading>Info</uib-tab-heading>
+        <a href class="pull-right" ng-if="editMode" ng-click="toggleInfoEditMode()">
+          <span ng-if="!infoEditMode">
+            <span class="glyphicon glyphicon-edit"></span>Edit
+          </span>
+          <span ng-if="infoEditMode">
+            <span class="glyphicon glyphicon-floppy-save"></span>Save
+          </span>
+        </a>
         <ul class="list-unstyled container-info">
           <li>
             <strong>Name</strong>:

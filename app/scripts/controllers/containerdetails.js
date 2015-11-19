@@ -15,6 +15,8 @@ angular.module('dockstore.ui')
     'NotificationService',
     function ($scope, $q, ContainerService, NtfnService) {
 
+      $scope.infoEditMode = false;
+
       $scope.loadContainerDetails = function(containerPath) {
         return ContainerService.getRegisteredContainerByPath(containerPath)
           .then(
@@ -136,6 +138,10 @@ angular.module('dockstore.ui')
           labelStrings.push(sortedLabels[i].value);
         }
         return labelStrings;
+      };
+
+      $scope.toggleInfoEditMode = function() {
+        $scope.infoEditMode = !$scope.infoEditMode;
       };
 
       $scope.loadDockerFile = function() {
