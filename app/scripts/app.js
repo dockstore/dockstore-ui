@@ -68,12 +68,12 @@ angular
           controller: 'ContainerViewerCtrl',
           controllerAs: 'ContainerViewer'
         })
-        .when('/containers', {
-          templateUrl: 'views/containers.html',
-          controller: 'ContainersCtrl',
-          controllerAs: 'Containers'
+        .when('/my-containers', {
+          templateUrl: 'views/containereditor.html',
+          controller: 'ContainerEditorCtrl',
+          controllerAs: 'ContainerEditor'
         })
-        .when('/containers/register', {
+        .when('/my-containers/register', {
           templateUrl: 'views/registercontainer.html',
           controller: 'RegisterContainerCtrl',
           controllerAs: 'RegisterContainer'
