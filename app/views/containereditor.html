@@ -1,0 +1,82 @@
+<div id="container-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h3 class="available-containers">
+          My Containers
+        </h3>
+        <div class="button back-to-containers pull-right">
+          <p>
+            <a href ng-click="refreshUserContainers(userObj.id)">
+              Refresh Containers
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container view-content ns-containers" style="margin-top: 12px;">
+  <div class="row" ng-if="refreshingContainers">
+    <div class="col-md-12">
+      <div class="alert alert-info" role="alert">
+        <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
+        </span>
+        Please wait, retrieving Quay.io containers...
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 containers-rsb">
+      <div class="ns-containers-accordion" ng-if="nsContainers">
+        <uib-accordion ng-repeat="nsObj in nsContainers" close-others="true">
+          <uib-accordion-group heading="{{nsObj.namespace}}" is-open="$first">
+            <div
+                class="container-label"
+                ng-class="{selected: selContainerObj.id === containerObj.id}"
+                ng-repeat="containerObj in nsObj.containers">
+              <div class="container-name-oflw pull-left">
+                <a href ng-click="selectContainer(containerObj.id)">
+                  {{containerObj.name}}
+                </a>
+              </div>
+              <div class="pull-right">
+                <span class="label" ng-class="containerObj.is_registered ? 'label-primary' : 'label-warning'">
+                  {{ containerObj.is_registered ? 'REG' : 'UNREG' }}
+                </span>
+              </div>
+            </div>
+          </uib-accordion-group>
+        </uib-accordion>
+      </div>
+      <button class="btn btn-primary btn-sm pull-right">
+        <a href="/my-containers/register">Add Container</a>
+      </button>
+    </div>
+    <div class="col-md-9">
+      <div container-details
+          container-id="selContainerObj.id"
+          container-obj="selContainerObj"
+          edit-mode="true"
+          update-container-obj="updateContainerObj()"
+          ng-if="selContainerObj">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="our-sponsors">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="our-sponsors">
+          <li>Our Sponsors:</li>
+          <li><img src="images/collaboratory.png"></li>
+          <li><img src="images/oicr.png"></li>
+          <li><img src="images/ga4gh.png"></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
