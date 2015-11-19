@@ -22,7 +22,8 @@ angular
     'ui.bootstrap',
     'toaster',
     'hc.marked',
-    'hljs'
+    'hljs',
+    'sn.addthis'
   ])
   .config(['$authProvider', 'WebService',
     function($authProvider, WebService) {

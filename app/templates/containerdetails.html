@@ -92,8 +92,10 @@
             </span>
           </li>
         </ul>
-        <hr />
-        <div disqus-comments class="comments" ng-if="!editMode"></div>
+        <div ng-if="!editMode">
+          <hr />
+          <div disqus-comments class="comments" ng-if="!editMode"></div>
+        </div>
       </uib-tab>
 
       <uib-tab>
@@ -227,7 +229,15 @@
       <tbody>
         <tr>
           <td>
-            <div class="container-sharing addthis_sharing_toolbox"></div>
+          <div class="container-sharing">
+              <sn-addthis-toolbox
+                  class="addthis_default_style addthis_32x32_style">
+                <a href class="addthis_button_twitter"></a>
+                <a href class="addthis_button_google_plusone_share"></a>
+                <a href class="addthis_button_evernote"></a>
+                <a href class="addthis_button_email"></a>
+              </sn-addthis-toolbox>
+            </div>
           </td>
         </tr>
       </tbody>
