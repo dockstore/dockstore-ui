@@ -53,7 +53,7 @@ angular
           controller: 'LoginCtrl',
           controllerAs: 'Login'
         })
-        .when('/search', {
+        .when('/search/:searchQuery?', {
           templateUrl: 'views/search.html',
           controller: 'SearchCtrl',
           controllerAs: 'Search'
@@ -148,10 +148,8 @@ angular
           content: 'Invalid token or authorization denied, please sign in again.'
         });
       });
-      $rootScope.$on('searchQueryChange', function(event, searchQuery) {
-        if ($location.url() !== 'search' && searchQuery) {
-          $location.path('/search');
-        }
+      $rootScope.$watch('searchQuery', function(newValue, oldValue) {
+        if (newValue) $location.path('/search');
       });
       $rootScope.$on('$routeChangeStart', function(event, next, current) {
         if ($location.url() === '/') return;

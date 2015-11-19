@@ -80,6 +80,17 @@
               </span>
             </div>
           </li>
+          <li ng-if="containerObj">
+            <strong>Labels:</strong>
+            <span ng-show="containerObj.labels.length === 0">n/a</span>
+            <span class="label label-default container-label"
+
+                  ng-repeat="label in getContainerLabelStrings(containerObj.labels)">
+              <a ng-href="/search/label%3A{{label}}">
+                {{label}}
+              </a>
+            </span>
+          </li>
           <li>
             <div disqus-comments class="comments" ng-if="!editMode"></div>
           </li>
@@ -185,6 +196,25 @@
           </td>
         </tr>
       </tbody>
-    </table>    
+    </table>
+    <table ng-if="containerObj">
+      <thead>
+        <th>
+          <h3>Container Labels</h3>
+        </th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <span class="label label-default container-label"
+                  ng-repeat="label in getContainerLabelStrings(containerObj.labels)">
+              <a ng-href="/search/label%3A{{label}}">
+                {{label}}
+              </a>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table> 
   </div>
 </div>

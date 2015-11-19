@@ -252,6 +252,15 @@ ul.list-unstyled.container-info {
   }
 }
 
+span.label.container-label {
+  margin-right: 4px;
+  display: inline-block;
+  padding-top: 0.4em;
+  a {
+    color: #ffffff;
+  }
+}
+
 /* Media Queries - Lower Resolutions (width < 1200px) */
 @media (max-width: 992px) {
   img.site-logo { width: 50px; }

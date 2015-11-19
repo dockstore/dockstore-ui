@@ -127,6 +127,17 @@ angular.module('dockstore.ui')
                 dateObj.toLocaleTimeString();
       };
 
+      $scope.getContainerLabelStrings = function(labels) {
+        var sortedLabels = labels.sort(function(a, b) {
+          return a.value.localeCompare(b.value); 
+        });
+        var labelStrings = [];
+        for (var i = 0; i < sortedLabels.length; i++) {
+          labelStrings.push(sortedLabels[i].value);
+        }
+        return labelStrings;
+      };
+
       $scope.loadDockerFile = function() {
         if (!$scope.dockerFileLoaded) {
           $scope.getDockerFile($scope.containerObj.id);
