@@ -261,6 +261,18 @@ span.label.container-label {
   }
 }
 
+div.container-source-repos p {
+  margin: 0;
+}
+
+div.container-sharing {
+  width: 144px;
+  margin: 0 auto;
+  div {
+    line-height: 1em;
+  }
+}
+
 /* Media Queries - Lower Resolutions (width < 1200px) */
 @media (max-width: 992px) {
   img.site-logo { width: 50px; }

@@ -177,22 +177,24 @@
       <tbody>
         <tr>
           <td>
-            <p>
-              <span ng-if="gitHubURL">
-                <a ng-href="{{gitHubURL}}" target="_blank">
-                  GitHub
-                  <span class="glyphicon glyphicon-new-window"></span>
-                </a>
-              </span>
-            </p>
-            <p>
-              <span ng-if="quayIOURL">
-                <a ng-href="{{quayIOURL}}" target="_blank">
-                  Quay.io
-                  <span class="glyphicon glyphicon-new-window"></span>
-                </a>
-              </span>
-            </p>
+            <div class="container-source-repos">
+              <p>
+                <span ng-if="gitHubURL">
+                  <a ng-href="{{gitHubURL}}" target="_blank">
+                    GitHub
+                    <span class="glyphicon glyphicon-new-window"></span>
+                  </a>
+                </span>
+              </p>
+              <p>
+                <span ng-if="quayIOURL">
+                  <a ng-href="{{quayIOURL}}" target="_blank">
+                    Quay.io
+                    <span class="glyphicon glyphicon-new-window"></span>
+                  </a>
+                </span>
+              </p>
+            </div>
           </td>
         </tr>
       </tbody>
@@ -206,6 +208,7 @@
       <tbody>
         <tr>
           <td>
+            <span ng-show="containerObj.labels.length === 0">n/a</span>
             <span class="label label-default container-label"
                   ng-repeat="label in getContainerLabelStrings(containerObj.labels)">
               <a ng-href="/search/label%3A{{label}}">
@@ -215,6 +218,20 @@
           </td>
         </tr>
       </tbody>
-    </table> 
+    </table>
+    <table ng-if="containerObj">
+      <thead>
+        <th>
+          <h3>Sharing</h3>
+        </th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="container-sharing addthis_sharing_toolbox"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
