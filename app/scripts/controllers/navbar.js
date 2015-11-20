@@ -10,12 +10,12 @@
 angular.module('dockstore.ui')
   .controller('NavbarCtrl', [
     '$scope',
+    '$rootScope',
     '$auth',
     '$location',
-    '$rootScope',
     'UserService',
     'NotificationService',
-    function ($scope, $auth, $location, $rootScope,
+    function ($scope, $rootScope, $auth, $location,
                 UserService, NtfnService) {
     
       $scope.userObj = UserService.getUserObj();
@@ -33,7 +33,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.$watch('searchQuery', function(newValue, oldValue) {
-        $rootScope.$broadcast('searchQueryChange', newValue);
+        $rootScope.searchQuery = newValue;
       });
 
   }]);

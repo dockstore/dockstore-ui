@@ -13,7 +13,7 @@ angular.module('dockstore.ui')
     function ($scope) {
       
       $scope.containers = [];
-      $scope.sortColumn = 'version';
+      $scope.sortColumn = 'name';
       $scope.sortReverse = false;
 
       $scope.getHRSize = function(size) {

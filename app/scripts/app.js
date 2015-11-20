@@ -22,7 +22,8 @@ angular
     'ui.bootstrap',
     'toaster',
     'hc.marked',
-    'hljs'
+    'hljs',
+    'sn.addthis'
   ])
   .config(['$authProvider', 'WebService',
     function($authProvider, WebService) {
@@ -53,7 +54,7 @@ angular
           controller: 'LoginCtrl',
           controllerAs: 'Login'
         })
-        .when('/search', {
+        .when('/search/:searchQuery?', {
           templateUrl: 'views/search.html',
           controller: 'SearchCtrl',
           controllerAs: 'Search'
@@ -68,12 +69,12 @@ angular
           controller: 'ContainerViewerCtrl',
           controllerAs: 'ContainerViewer'
         })
-        .when('/containers', {
-          templateUrl: 'views/containers.html',
-          controller: 'ContainersCtrl',
-          controllerAs: 'Containers'
+        .when('/my-containers', {
+          templateUrl: 'views/containereditor.html',
+          controller: 'ContainerEditorCtrl',
+          controllerAs: 'ContainerEditor'
         })
-        .when('/containers/register', {
+        .when('/my-containers/register', {
           templateUrl: 'views/registercontainer.html',
           controller: 'RegisterContainerCtrl',
           controllerAs: 'RegisterContainer'
@@ -148,14 +149,14 @@ angular
           content: 'Invalid token or authorization denied, please sign in again.'
         });
       });
-      $rootScope.$on('searchQueryChange', function(event, searchQuery) {
-        if ($location.url() !== 'search' && searchQuery) {
-          $location.path('/search');
-        }
+      $rootScope.$watch('searchQuery', function(newValue, oldValue) {
+        if (newValue) $location.path('/search');
       });
       $rootScope.$on('$routeChangeStart', function(event, next, current) {
         if ($location.url() === '/') return;
-        var public_views = ['/search', '/docs', '/login', '/register'];
+        var public_views = [
+          '/search', '/containers', '/docs', '/login', '/register'
+        ];
         var isViewPublic = function(path) {
           for (var i = 0; i < public_views.length; i++) {
             if (path.indexOf(public_views[i]) !== -1) { return true; }

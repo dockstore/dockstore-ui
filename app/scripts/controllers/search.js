@@ -10,14 +10,16 @@
 angular.module('dockstore.ui')
   .controller('SearchCtrl', [
     '$scope',
+    '$rootScope',
     '$q',
     '$window',
     '$auth',
+    '$routeParams',
     'ContainerService',
     'UserService',
     'TokenService',
     'NotificationService',
-    function ($scope, $q, $window, $auth,
+    function ($scope, $rootScope, $q, $window, $auth, $routeParams,
         ContainerService, UserService, TokenService, NtfnService) {
 
       $scope.userObj = UserService.getUserObj();
@@ -46,6 +48,10 @@ angular.module('dockstore.ui')
               }
             }
           );
+      }
+
+      if ($routeParams.searchQuery) {
+        $rootScope.searchQuery = $routeParams.searchQuery;
       }
 
       $scope.listRegisteredContainers();

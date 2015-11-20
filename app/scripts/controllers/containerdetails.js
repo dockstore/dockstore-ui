@@ -15,6 +15,8 @@ angular.module('dockstore.ui')
     'NotificationService',
     function ($scope, $q, ContainerService, NtfnService) {
 
+      $scope.infoEditMode = false;
+
       $scope.loadContainerDetails = function(containerPath) {
         return ContainerService.getRegisteredContainerByPath(containerPath)
           .then(
@@ -43,6 +45,38 @@ angular.module('dockstore.ui')
               return $q.reject(response);
             }
           );
+      };
+
+      /* Editing entire containers is not possible yet... */
+      $scope.setContainerLabels = function(containerId, labels) {
+        return ContainerService.setContainerLabels(containerId, labels)
+          .then(
+            function(containerObj) {
+              $scope.containerObj.labels = containerObj.labels;
+              $scope.updateContainerObj();
+              return containerObj;
+            },
+            function(response) {
+              var message = '[' + response.status + '] ' + response.statusText;
+              NtfnService.popError('Docker Container Details', message);
+              return $q.reject(response);
+            }
+          );
+      };
+
+      $scope.resetContainerEditData = function(containerObj) {
+        var labels = (function(labelObjArray) {
+          var labelArray = $scope.getContainerLabelStrings(labelObjArray);
+          var labels = '';
+          for (var i = 0; i < labelArray.length; i++) {
+            labels += labelArray[i] + ((i !== labelArray.length - 1) ? ', ' : '');
+          }
+          return labels;
+        })(containerObj.labels);
+
+        $scope.containerEditData = {
+          labels: labels
+        };
       };
 
       $scope.getDaysAgo = function(timestamp) {
@@ -127,6 +161,36 @@ angular.module('dockstore.ui')
                 dateObj.toLocaleTimeString();
       };
 
+      $scope.getContainerLabelStrings = function(labels) {
+        var sortedLabels = labels.sort(function(a, b) {
+          return a.value.localeCompare(b.value); 
+        });
+        var labelStrings = [];
+        for (var i = 0; i < sortedLabels.length; i++) {
+          labelStrings.push(sortedLabels[i].value);
+        }
+        return labelStrings;
+      };
+
+      $scope.toggleInfoEditMode = function() {
+        $scope.infoEditMode = !$scope.infoEditMode;
+      };
+
+      $scope.submitContainerEdits = function() {
+        if (!$scope.infoEditMode) {
+          $scope.infoEditMode = true;
+          return;
+        }
+        // the edit object should be recreated
+        if ($scope.containerEditData.labels !== 'undefined') {
+          $scope.setContainerLabels($scope.containerObj.id,
+              $scope.containerEditData.labels)
+            .then(function(containerObj) {
+              $scope.infoEditMode = false;
+            });
+        }
+      };
+
       $scope.loadDockerFile = function() {
         if (!$scope.dockerFileLoaded) {
           $scope.getDockerFile($scope.containerObj.id);
@@ -141,10 +205,6 @@ angular.module('dockstore.ui')
 
       $scope.$watch('containerPath', function(newValue, oldValue) {
         if (newValue) {
-          $scope.dockerFileLoaded = false;
-          $scope.dockerFileString = false;
-          $scope.wfDescriptorFileLoaded = false;
-          $scope.wfDescriptorFileString = false;
           if (!$scope.editMode) {
             $scope.loadContainerDetails($scope.containerPath)
               .then(function(containerObj) {
@@ -152,6 +212,8 @@ angular.module('dockstore.ui')
                 $scope.quayIOURL = $scope.getQuayIOURL($scope.containerObj.path);
               });
           } else {
+            $scope.infoEditMode = false;
+            $scope.resetContainerEditData($scope.containerObj);
             $scope.gitHubURL = $scope.getGitHubURL($scope.containerObj.gitUrl);
             $scope.quayIOURL = $scope.getQuayIOURL($scope.containerObj.path);
           }

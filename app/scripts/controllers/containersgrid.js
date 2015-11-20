@@ -34,10 +34,6 @@ angular.module('dockstore.ui')
         return 'https://quay.io/repository/' + matchRes[1] + '/' + matchRes[2];
       };
 
-      $scope.sortByBuildDate = function() {
-
-      };
-
       /* Column Sorting */
       $scope.clickSortColumn = function(columnName) {
         if ($scope.sortColumn === columnName) {
@@ -104,9 +100,5 @@ angular.module('dockstore.ui')
 
         return start + ' to ' + end + ' of ' + $scope.filteredContainers.length;
       };
-
-      $rootScope.$on('searchQueryChange', function(event, searchQuery) {
-        $scope.searchQuery = searchQuery;
-      });
       
   }]);

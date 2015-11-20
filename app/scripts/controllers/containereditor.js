@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name dockstore.ui.controller:ContainersCtrl
+ * @name dockstore.ui.controller:ContainerEditorCtrl
  * @description
- * # ContainersCtrl
+ * # ContainerEditorCtrl
  * Controller of the dockstore.ui
  */
 angular.module('dockstore.ui')
-  .controller('ContainersCtrl', [
+  .controller('ContainerEditorCtrl', [
     '$scope',
     '$q',
     '$window',
@@ -43,7 +43,7 @@ angular.module('dockstore.ui')
           .then(
             function(containers) {
               $scope.refreshingContainers = false;
-              $window.location.href = '/containers';
+              $window.location.href = '/my-containers';
               return containers;
             },
             function(response) {

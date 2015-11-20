@@ -18,6 +18,16 @@
 <div class="container view-content ns-containers" style="margin-top: 12px;">
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
+      <div class="alert alert-info" role="alert" ng-if="registeringContainer">
+        <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
+        </span>
+        Please wait, processing container registration...
+      </div>
+      <div class="alert alert-warning" role="alert">
+      <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
+        This page has not been connected to the backend yet, and will not register containers.
+      </div>
+
       <form name="registerContainerForm" ng-submit="registerContainer()" novalidate>
 
         <div class="form-group">
@@ -56,6 +66,25 @@
               ng-messages="registerContainerForm.contVersion.$error"
               ng-if="registerContainerForm.contVersion.$touched">
             <div ng-messages-include="templates/validation/containers/version.html">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Container Labels</label>
+          <input
+              type="text"
+              class="input-sm form-control"
+              name="contLabels"
+              ng-model="containerObj.labels"
+              ng-pattern="/^(|\s*([a-zA-Z0-9]+(-[a-zA-Z0-9]+)*)(\s*,\s*([a-zA-Z0-9]+(-[a-zA-Z0-9]+)*))*\s*)$/i"
+              ng-maxlength="512"
+              placeholder="e.g. dockstore, oicr-icgc, pancancer" />
+          <div
+              class="form-error-messages"
+              ng-messages="registerContainerForm.contLabels.$error"
+              ng-if="registerContainerForm.contLabels.$touched">
+            <div ng-messages-include="templates/validation/containers/labels.html">
             </div>
           </div>
         </div>
@@ -142,7 +171,7 @@
 
         <button type="submit"
             class="btn btn-primary pull-right"
-            ng-disabled="registerContainerForm.$invalid">
+            ng-disabled="registerContainerForm.$invalid || registeringContainer">
           Register
         </button>
       </form>

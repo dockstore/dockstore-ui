@@ -161,6 +161,9 @@ div.tab-content {
   pre {
     margin: 0 0;
   }
+  span.glyphicon-edit, span.glyphicon-floppy-save {
+    margin-right: 4px;
+  }
 }
 
 div.view-content.ns-containers {
@@ -247,8 +250,36 @@ div.containers-rsb {
 
 ul.list-unstyled.container-info {
   margin-bottom: 0;
-  .comments {
-    padding: 0 4px 0 4px;
+}
+
+div.comments {
+  padding: 0 4px 0 4px;
+}
+
+span.label.container-label {
+  margin-right: 4px;
+  display: inline-block;
+  padding-top: 0.4em;
+  a {
+    color: #ffffff;
+  }
+}
+
+div.container-source-repos p {
+  margin: 0;
+}
+
+div.container-sharing {
+  width: 144px;
+  margin: 0 auto;
+  div {
+    line-height: 1em;
+  }
+}
+
+form.edit-container {
+  input.input-sm {
+    width: 360px;
   }
 }
 

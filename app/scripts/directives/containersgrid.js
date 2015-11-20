@@ -13,7 +13,8 @@ angular.module('dockstore.ui')
       controller: 'ContainersGridCtrl',
       scope: {
         containers: '=',
-        previewMode: '='
+        previewMode: '=',
+        searchQuery: '='
       },
       templateUrl: 'templates/containersgrid.html',
       link: function postLink(scope, element, attrs) {

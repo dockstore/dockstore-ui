@@ -100,6 +100,22 @@ angular.module('dockstore.ui')
       });
     };
 
+    this.setContainerLabels = function(containerId, labels) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'PUT',
+          url: WebService.API_URI + '/containers/' + containerId + '/labels',
+          params: {
+            labels: labels
+          }
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
     this.getDockerFile = function(containerId) {
       return $q(function(resolve, reject) {
         $http({
