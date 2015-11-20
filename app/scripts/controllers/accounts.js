@@ -31,6 +31,12 @@ angular.module('dockstore.ui')
         });
       };
 
+      $scope.linkBitbucketAccount = function() {
+        $window.location.href = WebService.BITBUCKET_AUTH_URL +
+          '?client_id=' + WebService.BITBUCKET_CLIENT_ID +
+          '&response_type=code';
+      };
+
       $scope.linkQuayIOAccount = function() {
         $window.location.href = WebService.QUAYIO_AUTH_URL +
           '?client_id=' + WebService.QUAYIO_CLIENT_ID +

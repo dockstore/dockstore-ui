@@ -30,6 +30,22 @@ angular.module('dockstore.ui')
         });
       };
 
+      this.registerBitbucketToken = function(userId, accessToken) {
+        return $q(function(resolve, reject) {
+          $http({
+            method: 'GET',
+            url: WebService.API_URI + '/auth/tokens/bitbucket.org/',
+            params: {
+              code: accessToken
+            }
+          }).then(function(response) {
+            resolve(response.data);
+          }, function(response) {
+            reject(response);
+          });
+        });
+      };
+
       this.registerQuayIOToken = function(userId, accessToken) {
         return $q(function(resolve, reject) {
           $http({
@@ -83,6 +99,7 @@ angular.module('dockstore.ui')
               var tokenStatusSet = {
                 dockstore: false,
                 github: false,
+                bitbucket: false,
                 quayio: false
               };
               for (var i = 0; i < tokens.length; i++) {
@@ -92,6 +109,9 @@ angular.module('dockstore.ui')
                     break;
                   case 'github.com':
                     tokenStatusSet.github = true;
+                    break;
+                  case 'bitbucket.org':
+                    tokenStatusSet.bitbucket = true;
                     break;
                   case 'quay.io':
                     tokenStatusSet.quayio = true;

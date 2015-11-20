@@ -28,6 +28,9 @@ angular.module('dockstore.ui')
     QUAYIO_REDIRECT_URI: 'http://localhost:9000/onboarding',
     QUAYIO_SCOPE: 'repo:read,user:read',
 
+    BITBUCKET_AUTH_URL: 'https://bitbucket.org/site/oauth2/authorize',
+    BITBUCKET_CLIENT_ID: 'K9VxydpaXKCgxxVpbx',
+
     DSCLI_RELEASE_URL: 'https://github.com/CancerCollaboratory/dockstore/' +
                         'releases/download/0.0.9/dockstore'
   });

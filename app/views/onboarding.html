@@ -35,6 +35,18 @@
           </button>
         </div>
 
+        <h4>Bitbucket Account</h4>
+        <div ng-show="tokenStatusSet.bitbucket">
+          <span class="label label-success">
+            <span class="glyphicon glyphicon-link"></span> Linked
+          </span>
+        </div>
+        <div ng-show="!tokenStatusSet.bitbucket">
+          <button class="btn btn-primary btn-xs" ng-click="linkBitbucketAccount()">
+            <span class="glyphicon glyphicon-link"></span> Link Account
+          </button>
+        </div>
+
         <h4>Quay.io Account</h4>
         <div ng-show="tokenStatusSet.quayio">
           <span class="label label-success">

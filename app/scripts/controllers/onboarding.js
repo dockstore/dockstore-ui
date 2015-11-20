@@ -51,6 +51,12 @@ angular.module('dockstore.ui')
         });
       };
 
+      $scope.linkBitbucketAccount = function() {
+        $window.location.href = WebService.BITBUCKET_AUTH_URL +
+          '?client_id=' + WebService.BITBUCKET_CLIENT_ID +
+          '&response_type=code';
+      };
+
       $scope.linkQuayIOAccount = function() {
         $window.location.href = WebService.QUAYIO_AUTH_URL +
           '?client_id=' + WebService.QUAYIO_CLIENT_ID +
@@ -63,7 +69,23 @@ angular.module('dockstore.ui')
       $scope.registerQuayIOToken = function(userId, accessToken) {
         return TokenService.registerQuayIOToken(userId, accessToken)
           .then(
-            function(token) {},
+            function(token) {
+              return token;
+            },
+            function(response) {
+              var message = '[' + response.status + '] ' + response.statusText;
+              NtfnService.popError('User Accounts', message);
+              return $q.reject(response);
+            }
+          );
+      };
+
+      $scope.registerBitbucketToken = function(userId, accessToken) {
+        return TokenService.registerBitbucketToken(userId, accessToken)
+          .then(
+            function(token) {
+              return token;
+            },
             function(response) {
               var message = '[' + response.status + '] ' + response.statusText;
               NtfnService.popError('User Accounts', message);
@@ -86,8 +108,9 @@ angular.module('dockstore.ui')
           );
       };
 
-      $scope.redirectQuayIOTokenRegister = function() {
+      $scope.redirectTokenRegister = function() {
         var quayIOTokenRegExp = /access_token=([a-zA-Z0-9]*)/;
+        var bitbucketTokenRegExp = /code=([a-zA-Z0-9]*)/;
         if (quayIOTokenRegExp.test($location.url())) {
           var quayIOToken = $location.url().match(quayIOTokenRegExp)[1];
           $scope.refreshingContainers = true;
@@ -101,10 +124,20 @@ angular.module('dockstore.ui')
                   });
               }
             );
+        } else if (bitbucketTokenRegExp.test($location.url())) {
+          var bitbucketToken = $location.url().match(bitbucketTokenRegExp)[1];
+          $scope.registeringToken = true;
+          $scope.registerBitbucketToken($scope.userObj.id, bitbucketToken)
+            .then(
+              function() {
+                $scope.registeringToken = false;
+                $window.location.href = '/onboarding';
+              }
+            );
         }
       };
 
-      $scope.redirectQuayIOTokenRegister();
+      $scope.redirectTokenRegister();
 
       TokenService.getUserTokenStatusSet($scope.userObj.id)
         .then(
