@@ -19,9 +19,13 @@ angular.module('dockstore.ui')
       },
       templateUrl: 'templates/containerdetails.html',
       link: function postLink(scope, element, attrs) {
-        scope.$watch('containerId',
+        scope.$watch('containerObj',
           function(newVal, oldVal, scope) {
             if (newVal) {
+              scope.dockerFileLoaded = false;
+              scope.dockerFileString = false;
+              scope.wfDescriptorFileLoaded = false;
+              scope.wfDescriptorFileString = false;
               if ($('[select="loadDockerFile()"]').hasClass('active')) {
                 scope.loadDockerFile();
               }

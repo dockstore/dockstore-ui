@@ -13,7 +13,7 @@ angular.module('dockstore.ui')
     function ($scope) {
     
       $scope.registerContainer = function() {
-        
+        $scope.registeringContainer = true;
       };
 
   }]);

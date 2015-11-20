@@ -33,15 +33,13 @@
 
       <uib-tab>
         <uib-tab-heading>Info</uib-tab-heading>
-        <a href class="pull-right" ng-if="editMode" ng-click="toggleInfoEditMode()">
-          <span ng-if="!infoEditMode">
-            <span class="glyphicon glyphicon-edit"></span>Edit
-          </span>
-          <span ng-if="infoEditMode">
-            <span class="glyphicon glyphicon-floppy-save"></span>Save
-          </span>
-        </a>
-        <ul class="list-unstyled container-info">
+        <button type="sbutton"
+            class="btn btn-link pull-right"
+            ng-if="editMode && !infoEditMode"
+            ng-click="toggleInfoEditMode()">
+          <span class="glyphicon glyphicon-edit"></span>Edit
+        </button>
+        <ul class="list-unstyled container-info" ng-show="!infoEditMode">
           <li>
             <strong>Name</strong>:
             {{containerObj.name}}
@@ -92,7 +90,6 @@
             <strong>Labels:</strong>
             <span ng-show="containerObj.labels.length === 0">n/a</span>
             <span class="label label-default container-label"
-
                   ng-repeat="label in getContainerLabelStrings(containerObj.labels)">
               <a ng-href="/search/label%3A{{label}}">
                 {{label}}
@@ -100,6 +97,37 @@
             </span>
           </li>
         </ul>
+        <form name="editContainerForm"
+            class="edit-container form-inline"
+            ng-submit="submitContainerEdits()"
+            novalidate>
+          <button type="submit"
+              class="btn btn-link pull-right"
+              ng-disabled="editContainerForm.$invalid"
+              ng-if="editMode && infoEditMode">
+            <span class="glyphicon glyphicon-floppy-save"></span>Save
+          </button>
+          <div ng-show="infoEditMode">
+            <div class="form-group">
+              <label>Container Labels:</label>
+              <input
+                  type="text"
+                  class="input-sm form-control"
+                  name="contLabels"
+                  ng-model="containerEditData.labels"
+                  ng-pattern="/^(|\s*([a-zA-Z0-9]+(-[a-zA-Z0-9]+)*)(\s*,\s*([a-zA-Z0-9]+(-[a-zA-Z0-9]+)*))*\s*)$/i"
+                  ng-maxlength="512"
+                  placeholder="e.g. dockstore, oicr-icgc, pancancer" />
+              <div
+                  class="form-error-messages"
+                  ng-messages="editContainerForm.contLabels.$error"
+                  ng-if="editContainerForm.contLabels.$touched">
+                <div ng-messages-include="templates/validation/containers/labels.html">
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
         <div ng-if="!editMode">
           <hr />
           <div disqus-comments class="comments" ng-if="!editMode"></div>

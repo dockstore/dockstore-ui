@@ -277,6 +277,12 @@ div.container-sharing {
   }
 }
 
+form.edit-container {
+  input.input-sm {
+    width: 360px;
+  }
+}
+
 /* Media Queries - Lower Resolutions (width < 1200px) */
 @media (max-width: 992px) {
   img.site-logo { width: 50px; }
