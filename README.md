@@ -32,11 +32,18 @@ All configuration for the Dockstore UI is done in the `app/scripts/services/webs
   QUAYIO_SCOPE: 'repo:read,user:read'
   ```
 
+3. Replace `BITBUCKET_CLIENT_ID` with the client id for your Bitbucket Dockstore application.
+  ```
+  BITBUCKET_AUTH_URL: 'https://bitbucket.org/site/oauth2/authorize',
+  BITBUCKET_CLIENT_ID: 'K9VxydpaXKCgxxVpbx',
+  ```
+
 ### Third-Party API Integration
 Dockstore currently integrates with GitHub and Quay.io, in the following steps, replace `http://localhost:9000` with a fully-qualified domain name on a production environment.
 
 1. On GitHub, create an application and enter the following for `Authorization callback URL`: `http://localhost:9000/login`.
 2. On Quay.io, create an application and enter the following for `Redirect/Callback URL Prefix`: `http://localhost:9000/onboarding`.
+3. On Bitbucket, create an application and enter the following for `Callback URL`: `http://localhost:9000/onboarding`. Due to security policies, it may be necessary to bind the application to a local IP address or FQDN rather than `localhost`, or else the Bitbucket will not redirect back to Dockstore properly.
 
 ### Setting Up the Build Environment
 1. Install Node.js and NPM on your workstation, specific instructions will vary depending on the operating system distribution. The use of [nvm](https://github.com/creationix/nvm) is encouraged in supported environments.

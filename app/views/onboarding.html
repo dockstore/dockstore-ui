@@ -42,7 +42,9 @@
           </span>
         </div>
         <div ng-show="!tokenStatusSet.bitbucket">
-          <button class="btn btn-primary btn-xs" ng-click="linkBitbucketAccount()">
+          <button class="btn btn-primary btn-xs"
+              ng-click="linkBitbucketAccount()"
+              ng-disabled="registeringToken">
             <span class="glyphicon glyphicon-link"></span> Link Account
           </button>
         </div>
