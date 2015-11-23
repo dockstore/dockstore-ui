@@ -59,11 +59,6 @@ angular
           controller: 'SearchCtrl',
           controllerAs: 'Search'
         })
-        /*.when('', {
-          templateUrl: 'views/searchcontainerdetails.html',
-          controller: 'SearchContainerDetailsCtrl',
-          controllerAs: 'SearchContainerDetails'
-        })*/
         .when('/containers/:containerPath*', {
           templateUrl: 'views/containerviewer.html',
           controller: 'ContainerViewerCtrl',
@@ -108,6 +103,11 @@ angular
           templateUrl: 'views/settings.html',
           controller: 'SettingsCtrl',
           controllerAs: 'Settings'
+        })
+        .when('/auth/:provider*', {
+          templateUrl: 'views/authentication.html',
+          controller: 'AuthenticationCtrl',
+          controllerAs: 'Authentication'
         })
         .when('/', {
           templateUrl: 'views/home.html',
