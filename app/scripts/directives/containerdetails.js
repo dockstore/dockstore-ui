@@ -22,15 +22,13 @@ angular.module('dockstore.ui')
         scope.$watch('containerObj',
           function(newVal, oldVal, scope) {
             if (newVal) {
-              scope.dockerFileLoaded = false;
-              scope.dockerFileString = false;
-              scope.wfDescriptorFileLoaded = false;
-              scope.wfDescriptorFileString = false;
+              scope.dockerfileEnabled = false;
+              scope.descriptorEnabled = false;
               if ($('[select="loadDockerFile()"]').hasClass('active')) {
-                scope.loadDockerFile();
+                scope.dockerfileEnabled = true;
               }
               if ($('[select="loadWFDescriptorFile()"]').hasClass('active')) {
-                scope.loadWFDescriptorFile();
+                scope.descriptorEnabled = true;
               }
             }
         });

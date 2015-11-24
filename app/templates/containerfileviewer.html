@@ -1,0 +1,20 @@
+<div>
+  <strong>Container Version</strong>:
+  <select ng-model="selTagName">
+    <option
+        ng-repeat="tag in containerTags"
+        value="{{tag}}">
+      {{tag}}
+    </option>
+  </select>
+</div>
+
+<div class="alert alert-warning" role="alert"
+    ng-show="fileLoaded && !fileContents">
+  <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
+  A {{expectedFilename}} associated with this Docker container could not be found.
+</div>
+<div hljs
+    source="fileContents"
+    ng-show="fileLoaded && fileContents">
+</div>

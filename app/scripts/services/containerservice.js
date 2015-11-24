@@ -129,7 +129,7 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.getWFDescriptorFile = function(containerId) {
+    this.getDescriptorFile = function(containerId) {
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',

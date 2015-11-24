@@ -52,12 +52,14 @@
             <strong>Author</strong>:
             {{ containerObj.author ? containerObj.author : 'n/a' }}
           </li>
-          <li>
-            <strong>GitHub</strong>:
-            <span ng-if="gitHubURL">
-              <a ng-href="{{gitHubURL}}" target="_blank">{{gitHubURL}}</a>
+          <li ng-if="gitReposProvider !== 'unknown'">
+            <strong>{{gitReposProviderName}}</strong>:
+            <span ng-if="gitReposProviderURL">
+              <a ng-href="{{gitReposProviderURL}}" target="_blank">
+                {{gitReposProviderURL}}
+              </a>
             </span>
-            <span ng-if="!gitHubURL">n/a</span>
+            <span ng-if="!gitReposProvider">n/a</span>
           </li>
           <li>
             <strong>Quay.io</strong>:
@@ -139,34 +141,21 @@
         <div versions-grid container-obj="containerObj"></div>
       </uib-tab>
 
-      <uib-tab select="loadDockerFile()">
+      <uib-tab select="dockerfileEnabled = true">
         <uib-tab-heading>Dockerfile</uib-tab-heading>
-        <div class="alert alert-warning" role="alert"
-              ng-show="dockerFileLoaded && !dockerFileString">
-          <p>
-            <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
-            A Dockerfile associated with this Docker container could not be found.
-          </p>
-        </div>
-        <div hljs
-              source="dockerFileString"
-              ng-show="dockerFileLoaded && dockerFileString">
+        <div container-file-viewer
+            type="dockerfile"
+            container-obj="containerObj"
+            enabled="dockerfileEnabled">
         </div>
       </uib-tab>
 
-      <uib-tab select="loadWFDescriptorFile()">
+      <uib-tab select="descriptorEnabled = true">
         <uib-tab-heading>Descriptor</uib-tab-heading>
-        <div class="alert alert-warning" role="alert"
-              ng-show="wfDescriptorFileLoaded && !wfDescriptorFileString">
-          <p>
-            <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
-            A collab.cwl descriptor associated with this Docker container could not
-            be found.
-          </p>
-        </div>
-        <div hljs
-              source="wfDescriptorFileString"
-              ng-show="wfDescriptorFileLoaded && wfDescriptorFileString">
+        <div container-file-viewer
+            type="descriptor"
+            container-obj="containerObj"
+            enabled="descriptorEnabled">
         </div>
       </uib-tab>
 
