@@ -74,6 +74,7 @@ angular.module('dockstore.ui')
 
       $scope.refreshDocument = function() {
         $scope.fileLoaded = false;
+        $scope.fileContents = null;
         switch ($scope.type) {
           case 'dockerfile':
             $scope.expectedFilename = 'Dockerfile';
