@@ -116,11 +116,14 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.getDockerFile = function(containerId) {
+    this.getDockerFile = function(containerId, tagName) {
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/containers/' + containerId + '/dockerfile'
+          url: WebService.API_URI + '/containers/' + containerId + '/dockerfile',
+          params: {
+            tag: tagName
+          }
         }).then(function(response) {
           resolve(response.data.content);
         }, function(response) {
@@ -129,11 +132,14 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.getDescriptorFile = function(containerId) {
+    this.getDescriptorFile = function(containerId, tagName) {
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/containers/' + containerId + '/cwl'
+          url: WebService.API_URI + '/containers/' + containerId + '/cwl',
+          params: {
+            tag: tagName
+          }
         }).then(function(response) {
           resolve(response.data.content);
         }, function(response) {

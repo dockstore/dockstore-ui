@@ -33,7 +33,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.getDockerFile = function(containerId, tagName) {
-        return ContainerService.getDockerFile(containerId)
+        return ContainerService.getDockerFile(containerId, tagName)
           .then(
             function(dockerFile) {
               $scope.fileContents = dockerFile;
@@ -51,7 +51,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.getDescriptorFile = function(containerId, tagName) {
-        return ContainerService.getDescriptorFile(containerId)
+        return ContainerService.getDescriptorFile(containerId, tagName)
           .then(
             function(descriptorFile) {
               $scope.fileContents = descriptorFile;
