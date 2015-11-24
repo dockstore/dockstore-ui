@@ -146,7 +146,8 @@
         <div container-file-viewer
             type="dockerfile"
             container-obj="containerObj"
-            enabled="dockerfileEnabled">
+            enabled="dockerfileEnabled"
+            ng-if="containerObj">
         </div>
       </uib-tab>
 
@@ -155,7 +156,8 @@
         <div container-file-viewer
             type="descriptor"
             container-obj="containerObj"
-            enabled="descriptorEnabled">
+            enabled="descriptorEnabled"
+            ng-if="containerObj">
         </div>
       </uib-tab>
 
