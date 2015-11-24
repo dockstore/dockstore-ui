@@ -289,6 +289,14 @@ form.edit-container {
   }
 }
 
+div.ds-version-selector {
+  margin-bottom: 4px;  
+}
+
+select.ds-version {
+  width: 120px;
+}
+
 /* Media Queries - Lower Resolutions (width < 1200px) */
 @media (max-width: 992px) {
   img.site-logo { width: 50px; }

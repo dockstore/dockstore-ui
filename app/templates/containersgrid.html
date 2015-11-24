@@ -42,8 +42,10 @@
                 {{ container.author ? container.author : 'n/a' }}
               </td>
               <td>
-                <span ng-if="getGitHubURL(container.gitUrl)">
-                  <a ng-href="{{getGitHubURL(container.gitUrl)}}" target="_blank">GitHub</a>
+                <span ng-if="getGitReposProvider(container.gitUrl) !== 'unknown'">
+                  <a ng-href="{{getGitReposProviderURL(container.gitUrl)}}" target="_blank">
+                    {{getGitReposProviderName(container.gitUrl)}}
+                  </a>
                 </span>
                 <span ng-if="getQuayIOURL(container.path)">
                   <a ng-href="{{getQuayIOURL(container.path)}}" target="_blank">Quay.io</a>

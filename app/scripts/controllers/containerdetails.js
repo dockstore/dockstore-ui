@@ -16,6 +16,8 @@ angular.module('dockstore.ui')
     function ($scope, $q, ContainerService, NtfnService) {
 
       $scope.infoEditMode = false;
+      $scope.dockerfileEnabled = false;
+      $scope.descriptorEnabled = false;
 
       $scope.loadContainerDetails = function(containerPath) {
         return ContainerService.getRegisteredContainerByPath(containerPath)
@@ -90,44 +92,28 @@ angular.module('dockstore.ui')
                 ((daysAgo === 1) ? ' day ago' : ' days ago');
       };
 
-      $scope.getDockerFile = function(containerId) {
-        return ContainerService.getDockerFile(containerId)
-          .then(
-            function(dockerFile) {
-              $scope.dockerFileString = dockerFile;
-            },
-            function(response) {
-              var message = '[' + response.status + '] ' + response.statusText;
-              NtfnService.popError('Docker Container Details', message);
-              return $q.reject(response);
-            }
-          )
-          .finally(
-            function() { $scope.dockerFileLoaded = true; }
-          );
-      };
-
-      $scope.getWFDescriptorFile = function(containerId) {
-        return ContainerService.getWFDescriptorFile(containerId)
-          .then(
-            function(wfDescriptorFile) {
-              $scope.wfDescriptorFileString = wfDescriptorFile;
-            },
-            function(response) {
-              var message = '[' + response.status + '] ' + response.statusText;
-              NtfnService.popError('Docker Container Details', message);
-              return $q.reject(response);
-            }
-          ).finally(
-            function() { $scope.wfDescriptorFileLoaded = true; }
-          );
+      $scope.getGitReposProvider = function() {
+        if ($scope.containerObj.gitUrl.indexOf('github.com') !== -1) {
+          return 'github.com';
+        } else if ($scope.containerObj.gitUrl.indexOf('bitbucket.org') !== -1) {
+          return 'bitbucket.org';
+        } else {
+          return 'unknown';
+        }
       };
 
       $scope.getGitHubURL = function(containerGitUrl) {
         if (containerGitUrl.length <= 0) return;
-        var gitHubURLRegexp = /^git@github.com:(.*)\/(.*).git$/i;
-        var matchRes = gitHubURLRegexp.exec(containerGitUrl);
+        var gitHubRegexp = /^git@github.com:(.*)\/(.*).git$/i;
+        var matchRes = gitHubRegexp.exec(containerGitUrl);
         return 'https://github.com/' + matchRes[1] + '/' + matchRes[2];
+      };
+
+      $scope.getBitbucketURL = function(containerGitUrl) {
+        if (containerGitUrl.length <= 0) return;
+        var bitbucketRegexp = /^git@bitbucket.org:(.*)\/(.*).git$/i;
+        var matchRes = bitbucketRegexp.exec(containerGitUrl);
+        return 'https://bitbucket.org/' + matchRes[1] + '/' + matchRes[2];
       };
 
       $scope.getQuayIOURL = function(containerPath) {
@@ -137,17 +123,18 @@ angular.module('dockstore.ui')
         return 'https://quay.io/repository/' + matchRes[1] + '/' + matchRes[2];
       };
 
-      $scope.getVersionTags = function(containerObj) {
-        var tags = containerObj ? containerObj.tags : null;
-        if (!tags || tags.length === 0) return ['n/a'];
-        var versionTags = [];
-        var descTags = tags.sort(function(a, b) {
-          return b.version.localeCompare(a.version);
-        });
-        for (var i = 0; i < descTags.length; i++) {
-          versionTags.push(descTags[i].version);
+      $scope.updateInfoURLs = function() {
+        $scope.gitReposProvider = $scope.getGitReposProvider();
+        if ($scope.gitReposProvider === 'github.com') {
+          $scope.gitReposProviderName = 'GitHub';
+          $scope.gitReposProviderURL =
+              $scope.getGitHubURL($scope.containerObj.gitUrl);
+        } else if ($scope.gitReposProvider === 'bitbucket.org') {
+          $scope.gitReposProviderName = 'Bitbucket';
+          $scope.gitReposProviderURL =
+              $scope.getBitbucketURL($scope.containerObj.gitUrl);
         }
-        return versionTags;
+        $scope.quayIOURL = $scope.getQuayIOURL($scope.containerObj.path);
       };
 
       $scope.getDateTimeString = function(timestamp) {
@@ -163,7 +150,9 @@ angular.module('dockstore.ui')
 
       $scope.getContainerLabelStrings = function(labels) {
         var sortedLabels = labels.sort(function(a, b) {
-          return a.value.localeCompare(b.value); 
+          if (a.value < b.value) return -1;
+          if (a.value > b.value) return 1;
+          return 0;
         });
         var labelStrings = [];
         for (var i = 0; i < sortedLabels.length; i++) {
@@ -191,31 +180,17 @@ angular.module('dockstore.ui')
         }
       };
 
-      $scope.loadDockerFile = function() {
-        if (!$scope.dockerFileLoaded) {
-          $scope.getDockerFile($scope.containerObj.id);
-        }
-      };
-
-      $scope.loadWFDescriptorFile = function() {
-        if (!$scope.wfDescriptorFileLoaded) {
-          $scope.getWFDescriptorFile($scope.containerObj.id);
-        }
-      };
-
       $scope.$watch('containerPath', function(newValue, oldValue) {
         if (newValue) {
           if (!$scope.editMode) {
             $scope.loadContainerDetails($scope.containerPath)
               .then(function(containerObj) {
-                $scope.gitHubURL = $scope.getGitHubURL($scope.containerObj.gitUrl);
-                $scope.quayIOURL = $scope.getQuayIOURL($scope.containerObj.path);
+                $scope.updateInfoURLs();
               });
           } else {
             $scope.infoEditMode = false;
             $scope.resetContainerEditData($scope.containerObj);
-            $scope.gitHubURL = $scope.getGitHubURL($scope.containerObj.gitUrl);
-            $scope.quayIOURL = $scope.getQuayIOURL($scope.containerObj.path);
+            $scope.updateInfoURLs();
           }
         }
       });
