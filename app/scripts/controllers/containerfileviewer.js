@@ -21,7 +21,9 @@ angular.module('dockstore.ui')
       $scope.getContainerTags = function() {
         var sortedTagObjs = $scope.containerObj.tags;
         sortedTagObjs.sort(function(a, b) {
-          return b.name.localeCompare(a.name);
+          if (a.name < b.name) return -1;
+          if (a.name > b.name) return 1;
+          return 0;
         });
         var tags = [];
         for (var i = 0; i < sortedTagObjs.length; i++) {
