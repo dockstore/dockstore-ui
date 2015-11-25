@@ -46,7 +46,9 @@ angular.module('dockstore.ui')
               NtfnService.popError('Container Registration', message);
               return $q.reject(response);
             }
-          );
+          ).finally(function(response) {
+            $scope.containerEditData.isRegistered = $scope.containerObj.is_registered;
+          });
       };
 
       /* Editing entire containers is not possible yet... */
@@ -77,7 +79,8 @@ angular.module('dockstore.ui')
         })(containerObj.labels);
 
         $scope.containerEditData = {
-          labels: labels
+          labels: labels,
+          isRegistered: containerObj.is_registered
         };
       };
 

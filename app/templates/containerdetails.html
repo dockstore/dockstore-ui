@@ -1,16 +1,26 @@
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-10">
     <h3>
       <span class="glyphicon glyphicon-lock" ng-if="!containerObj.is_public"></span>
       {{containerObj.namespace}}/{{containerObj.name}}
-      <span class="label reg-label" ng-class="containerObj.is_registered ? 'label-primary' : 'label-warning'" ng-if="editMode && containerObj">
-        {{ containerObj.is_registered ? 'REG' : 'UNREG' }}
-      </span>
     </h3>
     <p class="update">
       Last build:
       {{ containerObj.lastBuild ? getDaysAgoString(containerObj.lastBuild) : 'n/a' }} 
     </p>
+  </div>
+  <div class="col-md-2"
+      ng-if="editMode">
+    <h3>
+      <button uib-btn-checkbox
+          type="button"
+          class="btn btn-primary pull-right"
+          ng-click="setContainerRegistration(containerObj.id, containerEditData.isRegistered)"
+          ng-model="containerEditData.isRegistered"
+          ng-class="containerEditData.isRegistered ? 'btn-primary' : 'btn-warning'">
+        Register{{ containerEditData.isRegistered ? 'ed' : '' }}
+      </button>
+    </h3>
   </div>
   <!--div class="col-md-4">
     <span class="starRating">
@@ -161,7 +171,7 @@
         </div>
       </uib-tab>
 
-      <uib-tab ng-if="editMode">
+      <!--uib-tab ng-if="editMode">
         <uib-tab-heading>Sharing</uib-tab-heading>
         <h5>Container Registration:</h5>
         <button class="btn btn-sm"
@@ -177,7 +187,7 @@
             Unregister
           </a>
         </button>
-      </uib-tab>
+      </uib-tab-->
 
     </uib-tabset>
   </div>
