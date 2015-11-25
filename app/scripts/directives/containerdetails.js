@@ -24,10 +24,10 @@ angular.module('dockstore.ui')
             if (newVal) {
               scope.dockerfileEnabled = false;
               scope.descriptorEnabled = false;
-              if ($('[select="loadDockerFile()"]').hasClass('active')) {
+              if ($('[select="dockerfileEnabled = true"]').hasClass('active')) {
                 scope.dockerfileEnabled = true;
               }
-              if ($('[select="loadWFDescriptorFile()"]').hasClass('active')) {
+              if ($('[select="descriptorEnabled = true"]').hasClass('active')) {
                 scope.descriptorEnabled = true;
               }
             }
