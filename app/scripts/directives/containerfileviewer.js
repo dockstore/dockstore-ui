@@ -14,7 +14,7 @@ angular.module('dockstore.ui')
       scope: {
         type: '@',
         containerObj: '=',
-        enabled: '='
+        isEnabled: '='
       },
       templateUrl: 'templates/containerfileviewer.html',
       link: function postLink(scope, element, attrs) {
@@ -22,9 +22,9 @@ angular.module('dockstore.ui')
           if (newValue) scope.setDocument();
         });
         scope.$watchGroup(
-          ['selTagName', 'enabled', 'containerObj.id'],
+          ['selTagName', 'containerObj.id'],
           function(newValues, oldValues) {
-            if (newValues[1]) scope.refreshDocument();
+            scope.refreshDocument();
         });
       }
     };

@@ -176,21 +176,19 @@
         <uib-tab-heading>Versions</uib-tab-heading>
         <div versions-grid container-obj="containerObj"></div>
       </uib-tab>
-      <uib-tab select="dockerfileEnabled = true">
+      <uib-tab>
         <uib-tab-heading>Dockerfile</uib-tab-heading>
         <div container-file-viewer
             type="dockerfile"
             container-obj="containerObj"
-            enabled="dockerfileEnabled"
             ng-if="containerObj">
         </div>
       </uib-tab>
-      <uib-tab select="descriptorEnabled = true">
+      <uib-tab>
         <uib-tab-heading>Descriptor</uib-tab-heading>
         <div container-file-viewer
             type="descriptor"
             container-obj="containerObj"
-            enabled="descriptorEnabled"
             ng-if="containerObj">
         </div>
       </uib-tab>

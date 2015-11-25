@@ -17,21 +17,6 @@ angular.module('dockstore.ui')
         editMode: '=',
         updateContainerObj: '&'
       },
-      templateUrl: 'templates/containerdetails.html',
-      link: function postLink(scope, element, attrs) {
-        scope.$watch('containerObj',
-          function(newVal, oldVal, scope) {
-            if (newVal) {
-              scope.dockerfileEnabled = false;
-              scope.descriptorEnabled = false;
-              if ($('[select="loadDockerFile()"]').hasClass('active')) {
-                scope.dockerfileEnabled = true;
-              }
-              if ($('[select="loadWFDescriptorFile()"]').hasClass('active')) {
-                scope.descriptorEnabled = true;
-              }
-            }
-        });
-      }
+      templateUrl: 'templates/containerdetails.html'
     };
   });
