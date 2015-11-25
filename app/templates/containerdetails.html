@@ -40,16 +40,9 @@
 <div class="row">
   <div class="ds-tabs" ng-class="editMode ? 'col-md-12' : 'col-md-9'">
     <uib-tabset>
-
       <uib-tab>
         <uib-tab-heading>Info</uib-tab-heading>
-        <button type="sbutton"
-            class="btn btn-link pull-right"
-            ng-if="editMode && !infoEditMode"
-            ng-click="toggleInfoEditMode()">
-          <span class="glyphicon glyphicon-edit"></span>Edit
-        </button>
-        <ul class="list-unstyled container-info" ng-show="!infoEditMode">
+        <ul class="list-unstyled container-info" ng-show="!labelsEditMode">
           <li>
             <strong>Name</strong>:
             {{containerObj.name}}
@@ -98,6 +91,23 @@
               </span>
             </div>
           </li>
+        </ul>
+        <div ng-if="!editMode">
+          <hr />
+          <div disqus-comments class="comments" ng-if="!editMode"></div>
+        </div>
+      </uib-tab>
+
+
+      <uib-tab>
+        <uib-tab-heading>Labels</uib-tab-heading>
+        <button type="sbutton"
+            class="btn btn-link pull-right"
+            ng-if="editMode && !labelsEditMode"
+            ng-click="togglelabelsEditMode()">
+          <span class="glyphicon glyphicon-edit"></span>Edit
+        </button>
+        <ul class="list-unstyled container-info" ng-show="!labelsEditMode">
           <li ng-if="containerObj">
             <strong>Labels:</strong>
             <span ng-show="containerObj.labels.length === 0">n/a</span>
@@ -116,10 +126,10 @@
           <button type="submit"
               class="btn btn-link pull-right"
               ng-disabled="editContainerForm.$invalid"
-              ng-if="editMode && infoEditMode">
+              ng-if="editMode && labelsEditMode">
             <span class="glyphicon glyphicon-floppy-save"></span>Save
           </button>
-          <div ng-show="infoEditMode">
+          <div ng-show="labelsEditMode">
             <div class="form-group">
               <label>Container Labels:</label>
               <input
@@ -140,17 +150,13 @@
             </div>
           </div>
         </form>
-        <div ng-if="!editMode">
-          <hr />
-          <div disqus-comments class="comments" ng-if="!editMode"></div>
-        </div>
       </uib-tab>
+
 
       <uib-tab>
         <uib-tab-heading>Versions</uib-tab-heading>
         <div versions-grid container-obj="containerObj"></div>
       </uib-tab>
-
       <uib-tab select="dockerfileEnabled = true">
         <uib-tab-heading>Dockerfile</uib-tab-heading>
         <div container-file-viewer
@@ -160,7 +166,6 @@
             ng-if="containerObj">
         </div>
       </uib-tab>
-
       <uib-tab select="descriptorEnabled = true">
         <uib-tab-heading>Descriptor</uib-tab-heading>
         <div container-file-viewer
@@ -170,7 +175,6 @@
             ng-if="containerObj">
         </div>
       </uib-tab>
-
       <!--uib-tab ng-if="editMode">
         <uib-tab-heading>Sharing</uib-tab-heading>
         <h5>Container Registration:</h5>
@@ -188,7 +192,6 @@
           </a>
         </button>
       </uib-tab-->
-
     </uib-tabset>
   </div>
   <div class="side-block col-md-3" ng-if="!editMode">

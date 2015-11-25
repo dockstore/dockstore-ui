@@ -15,7 +15,7 @@ angular.module('dockstore.ui')
     'NotificationService',
     function ($scope, $q, ContainerService, NtfnService) {
 
-      $scope.infoEditMode = false;
+      $scope.labelsEditMode = false;
       $scope.dockerfileEnabled = false;
       $scope.descriptorEnabled = false;
 
@@ -164,13 +164,13 @@ angular.module('dockstore.ui')
         return labelStrings;
       };
 
-      $scope.toggleInfoEditMode = function() {
-        $scope.infoEditMode = !$scope.infoEditMode;
+      $scope.togglelabelsEditMode = function() {
+        $scope.labelsEditMode = !$scope.labelsEditMode;
       };
 
       $scope.submitContainerEdits = function() {
-        if (!$scope.infoEditMode) {
-          $scope.infoEditMode = true;
+        if (!$scope.labelsEditMode) {
+          $scope.labelsEditMode = true;
           return;
         }
         // the edit object should be recreated
@@ -178,7 +178,7 @@ angular.module('dockstore.ui')
           $scope.setContainerLabels($scope.containerObj.id,
               $scope.containerEditData.labels)
             .then(function(containerObj) {
-              $scope.infoEditMode = false;
+              $scope.labelsEditMode = false;
             });
         }
       };
@@ -191,7 +191,7 @@ angular.module('dockstore.ui')
                 $scope.updateInfoURLs();
               });
           } else {
-            $scope.infoEditMode = false;
+            $scope.labelsEditMode = false;
             $scope.resetContainerEditData($scope.containerObj);
             $scope.updateInfoURLs();
           }
