@@ -40,8 +40,6 @@ angular.module('dockstore.ui')
               return dockerFile;
             },
             function(response) {
-              var message = '[' + response.status + '] ' + response.statusText;
-              NtfnService.popError('Docker Container Details', message);
               return $q.reject(response);
             }
           )
@@ -58,8 +56,6 @@ angular.module('dockstore.ui')
               return descriptorFile;
             },
             function(response) {
-              var message = '[' + response.status + '] ' + response.statusText;
-              NtfnService.popError('Docker Container Details', message);
               return $q.reject(response);
             }
           ).finally(

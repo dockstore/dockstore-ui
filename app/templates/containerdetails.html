@@ -1,4 +1,23 @@
-<div class="row">
+<div class="row" ng-if="containerDetailsError">
+  <div class="col-md-12">
+    <div class="alert alert-danger alert-dismissable"
+        ng-class="!editMode ? 'push-top' : ''"
+        role="alert">
+      <button type="button"
+          class="close"
+          data-dismiss="alert"
+          ng-click="setContainerDetailsError(null)">
+        &times;
+      </button>
+      <p>
+        <span class="glyphicon glyphicon-warning-sign"></span>
+        {{containerDetailsError.message}}
+      </p>
+      <p class="error-output">{{containerDetailsError.errorDetails}}</p>
+    </div>
+  </div>
+</div>
+<div class="row" ng-show="containerObj">
   <div class="col-md-10">
     <h3>
       <span class="glyphicon glyphicon-lock" ng-if="!containerObj.is_public"></span>
@@ -37,12 +56,12 @@
     </span>
   </div-->
 </div>
-<div class="row">
+<div class="row" ng-show="containerObj">
   <div class="ds-tabs" ng-class="editMode ? 'col-md-12' : 'col-md-9'">
     <uib-tabset>
       <uib-tab>
         <uib-tab-heading>Info</uib-tab-heading>
-        <ul class="list-unstyled container-info" ng-show="!labelsEditMode">
+        <ul class="list-unstyled container-info">
           <li>
             <strong>Name</strong>:
             {{containerObj.name}}
@@ -104,7 +123,7 @@
         <button type="sbutton"
             class="btn btn-link pull-right"
             ng-if="editMode && !labelsEditMode"
-            ng-click="togglelabelsEditMode()">
+            ng-click="toggleLabelsEditMode()">
           <span class="glyphicon glyphicon-edit"></span>Edit
         </button>
         <ul class="list-unstyled container-info" ng-show="!labelsEditMode">

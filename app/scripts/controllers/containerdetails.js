@@ -20,20 +20,26 @@ angular.module('dockstore.ui')
       $scope.descriptorEnabled = false;
 
       $scope.loadContainerDetails = function(containerPath) {
+        $scope.setContainerDetailsError(null);
         return ContainerService.getRegisteredContainerByPath(containerPath)
           .then(
             function(containerObj) {
               $scope.containerObj = containerObj;
             },
             function(response) {
-              var message = '[' + response.status + '] ' + response.statusText;
-              NtfnService.popError('Docker Container Details', message);
+              $scope.setContainerDetailsError(
+                'The webservice encountered an error trying to retrieve this ' +
+                'container, please ensure that the container exists and is ' +
+                'registered for public access.',
+                '[' + response.status + '] ' + response.statusText
+              );
               return $q.reject(response);
             }
           );
       };
 
       $scope.setContainerRegistration = function(containerId, isRegistered) {
+        $scope.setContainerDetailsError(null);
         return ContainerService.setContainerRegistration(containerId, isRegistered)
           .then(
             function(containerObj) {
@@ -42,8 +48,12 @@ angular.module('dockstore.ui')
               return containerObj;
             },
             function(response) {
-              var message = '[' + response.status + '] ' + response.statusText;
-              NtfnService.popError('Container Registration', message);
+              $scope.setContainerDetailsError(
+                'The webservice encountered an error trying to register this ' +
+                'container, please ensure that the associated Dockerfile and ' +
+                'Dockstore.cwl descriptor are valid and accessible.',
+                '[' + response.status + '] ' + response.statusText
+              );
               return $q.reject(response);
             }
           ).finally(function(response) {
@@ -53,6 +63,7 @@ angular.module('dockstore.ui')
 
       /* Editing entire containers is not possible yet... */
       $scope.setContainerLabels = function(containerId, labels) {
+        $scope.setContainerDetailsError(null);
         return ContainerService.setContainerLabels(containerId, labels)
           .then(
             function(containerObj) {
@@ -82,6 +93,17 @@ angular.module('dockstore.ui')
           labels: labels,
           isRegistered: containerObj.is_registered
         };
+      };
+
+      $scope.setContainerDetailsError = function(message, errorDetails) {
+        if (message) {
+          $scope.containerDetailsError = {
+            message: message,
+            errorDetails: errorDetails
+          };
+        } else {
+          $scope.containerDetailsError = null;
+        }
       };
 
       $scope.getDaysAgo = function(timestamp) {
@@ -164,7 +186,7 @@ angular.module('dockstore.ui')
         return labelStrings;
       };
 
-      $scope.togglelabelsEditMode = function() {
+      $scope.toggleLabelsEditMode = function() {
         $scope.labelsEditMode = !$scope.labelsEditMode;
       };
 
@@ -185,6 +207,7 @@ angular.module('dockstore.ui')
 
       $scope.$watch('containerPath', function(newValue, oldValue) {
         if (newValue) {
+          $scope.setContainerDetailsError(null);
           if (!$scope.editMode) {
             $scope.loadContainerDetails($scope.containerPath)
               .then(function(containerObj) {
