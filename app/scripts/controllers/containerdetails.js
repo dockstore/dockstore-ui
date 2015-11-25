@@ -15,25 +15,31 @@ angular.module('dockstore.ui')
     'NotificationService',
     function ($scope, $q, ContainerService, NtfnService) {
 
-      $scope.infoEditMode = false;
+      $scope.labelsEditMode = false;
       $scope.dockerfileEnabled = false;
       $scope.descriptorEnabled = false;
 
       $scope.loadContainerDetails = function(containerPath) {
+        $scope.setContainerDetailsError(null);
         return ContainerService.getRegisteredContainerByPath(containerPath)
           .then(
             function(containerObj) {
               $scope.containerObj = containerObj;
             },
             function(response) {
-              var message = '[' + response.status + '] ' + response.statusText;
-              NtfnService.popError('Docker Container Details', message);
+              $scope.setContainerDetailsError(
+                'The webservice encountered an error trying to retrieve this ' +
+                'container, please ensure that the container exists and is ' +
+                'registered for public access.',
+                '[' + response.status + '] ' + response.statusText
+              );
               return $q.reject(response);
             }
           );
       };
 
       $scope.setContainerRegistration = function(containerId, isRegistered) {
+        $scope.setContainerDetailsError(null);
         return ContainerService.setContainerRegistration(containerId, isRegistered)
           .then(
             function(containerObj) {
@@ -42,15 +48,22 @@ angular.module('dockstore.ui')
               return containerObj;
             },
             function(response) {
-              var message = '[' + response.status + '] ' + response.statusText;
-              NtfnService.popError('Container Registration', message);
+              $scope.setContainerDetailsError(
+                'The webservice encountered an error trying to register this ' +
+                'container, please ensure that the associated Dockerfile and ' +
+                'Dockstore.cwl descriptor are valid and accessible.',
+                '[' + response.status + '] ' + response.statusText
+              );
               return $q.reject(response);
             }
-          );
+          ).finally(function(response) {
+            $scope.containerEditData.isRegistered = $scope.containerObj.is_registered;
+          });
       };
 
       /* Editing entire containers is not possible yet... */
       $scope.setContainerLabels = function(containerId, labels) {
+        $scope.setContainerDetailsError(null);
         return ContainerService.setContainerLabels(containerId, labels)
           .then(
             function(containerObj) {
@@ -77,8 +90,20 @@ angular.module('dockstore.ui')
         })(containerObj.labels);
 
         $scope.containerEditData = {
-          labels: labels
+          labels: labels,
+          isRegistered: containerObj.is_registered
         };
+      };
+
+      $scope.setContainerDetailsError = function(message, errorDetails) {
+        if (message) {
+          $scope.containerDetailsError = {
+            message: message,
+            errorDetails: errorDetails
+          };
+        } else {
+          $scope.containerDetailsError = null;
+        }
       };
 
       $scope.getDaysAgo = function(timestamp) {
@@ -161,13 +186,13 @@ angular.module('dockstore.ui')
         return labelStrings;
       };
 
-      $scope.toggleInfoEditMode = function() {
-        $scope.infoEditMode = !$scope.infoEditMode;
+      $scope.toggleLabelsEditMode = function() {
+        $scope.labelsEditMode = !$scope.labelsEditMode;
       };
 
       $scope.submitContainerEdits = function() {
-        if (!$scope.infoEditMode) {
-          $scope.infoEditMode = true;
+        if (!$scope.labelsEditMode) {
+          $scope.labelsEditMode = true;
           return;
         }
         // the edit object should be recreated
@@ -175,20 +200,21 @@ angular.module('dockstore.ui')
           $scope.setContainerLabels($scope.containerObj.id,
               $scope.containerEditData.labels)
             .then(function(containerObj) {
-              $scope.infoEditMode = false;
+              $scope.labelsEditMode = false;
             });
         }
       };
 
       $scope.$watch('containerPath', function(newValue, oldValue) {
         if (newValue) {
+          $scope.setContainerDetailsError(null);
           if (!$scope.editMode) {
             $scope.loadContainerDetails($scope.containerPath)
               .then(function(containerObj) {
                 $scope.updateInfoURLs();
               });
           } else {
-            $scope.infoEditMode = false;
+            $scope.labelsEditMode = false;
             $scope.resetContainerEditData($scope.containerObj);
             $scope.updateInfoURLs();
           }

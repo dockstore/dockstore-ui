@@ -297,6 +297,21 @@ select.ds-version {
   width: 120px;
 }
 
+div.well.well-sm {
+  margin-bottom: 0;
+}
+
+p.error-output {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+div.alert.alert-dismissable {
+  margin-bottom: 0;
+  &.push-top {
+    margin-top: 20px;
+  }
+}
+
 /* Media Queries - Lower Resolutions (width < 1200px) */
 @media (max-width: 992px) {
   img.site-logo { width: 50px; }
