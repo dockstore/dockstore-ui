@@ -45,7 +45,7 @@ angular.module('dockstore.ui')
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/containers/' + containerPathEncoded + 
+          url: WebService.API_URI + '/containers/path/' + containerPathEncoded + 
                 '/registered/'
         }).then(function(response) {
           resolve(response.data);
