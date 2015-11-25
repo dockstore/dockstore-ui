@@ -63,7 +63,7 @@ angular.module('dockstore.ui')
           );
       };
 
-      $scope.setDocument = function() {
+      $scope.setDocument = function() {console.log('yy:', $scope.containerTags);
         $scope.containerTags = $scope.getContainerTags();
         $scope.selTagName = $scope.containerTags[0];
       };

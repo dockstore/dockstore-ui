@@ -19,11 +19,13 @@ angular.module('dockstore.ui')
       templateUrl: 'templates/containerfileviewer.html',
       link: function postLink(scope, element, attrs) {
         scope.$watch('containerObj.path', function(newValue, oldValue) {
+          console.log('n:', newValue);
           if (newValue) scope.setDocument();
         });
         scope.$watchGroup(
           ['selTagName', 'enabled', 'containerObj.id'],
           function(newValues, oldValues) {
+            console.log('nn:', newValues);
             if (newValues[1]) scope.refreshDocument();
         });
       }

@@ -9,6 +9,7 @@
   </select>
 </div>
 
+{{fileLoaded}}
 <div class="alert alert-warning" role="alert"
     ng-show="fileLoaded && !fileContents">
   <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
@@ -18,3 +19,4 @@
     source="fileContents"
     ng-show="fileLoaded && fileContents">
 </div>
+{{fileContents}}
