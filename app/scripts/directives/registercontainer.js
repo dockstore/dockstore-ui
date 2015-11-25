@@ -13,7 +13,7 @@ angular.module('dockstore.ui')
       controller: 'RegisterContainerCtrl',
       templateUrl: 'templates/registercontainer.html',
       link: function postLink(scope, element, attrs) {
-        element.text('this is the registerContainer directive');
+        
       }
     };
   });
