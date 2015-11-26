@@ -19,7 +19,6 @@ angular.module('dockstore.ui')
       templateUrl: 'templates/containerfileviewer.html',
       link: function postLink(scope, element, attrs) {
         scope.$watch('containerObj.path', function(newValue, oldValue) {
-          console.log('n:', newValue);
           if (newValue) scope.setDocument();
         });
         scope.$watchGroup(

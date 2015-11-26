@@ -114,10 +114,29 @@ angular
           controller: 'HomeCtrl',
           controllerAs: 'Home'
         })
+        .when('/maintenance', {
+          templateUrl: 'views/maintenance.html',
+          controller: 'MaintenanceCtrl',
+          controllerAs: 'Maintenance'
+        })
         .otherwise({
           redirectTo: '/'
         });
       $locationProvider.html5Mode(true);
+  }])
+  .factory('webserviceResponseInterceptor', [
+      '$q',
+      '$window',
+      function($q, $window) {
+        return {
+          responseError: function(rejection) {
+            if (rejection.status === -1) {
+              $window.location.href = '/maintenance';
+              return;
+            }
+            return $q.reject(rejection);
+          }
+        };
   }])
   .factory('authHttpResponseInterceptor', [
       '$q',
@@ -139,6 +158,7 @@ angular
         };
   }])
   .config(['$httpProvider', function($httpProvider) {
+    $httpProvider.interceptors.push('webserviceResponseInterceptor');
     $httpProvider.interceptors.push('authHttpResponseInterceptor');
   }])
   .run(['$rootScope', '$auth', '$location', 'UserService',
@@ -155,7 +175,7 @@ angular
       $rootScope.$on('$routeChangeStart', function(event, next, current) {
         if ($location.url() === '/') return;
         var public_views = [
-          '/search', '/containers', '/docs', '/login', '/register'
+          '/search', '/containers', '/docs', '/login', '/register', 'maintenance'
         ];
         var isViewPublic = function(path) {
           for (var i = 0; i < public_views.length; i++) {
