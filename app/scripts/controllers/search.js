@@ -52,12 +52,11 @@ angular.module('dockstore.ui')
       }
 
       // incomplete
-      // also need to remove 'label:' prefix!
-      $scope.$on('$locationChangeStart', function(event, newState, oldState) {
-        if ($rootScope.searchQuery && $rootScope.searchQuery.length > 0) {
-          $rootScope.searchQuery = '';
-        }
-      });
+      // $scope.$on('$locationChangeStart', function(event, newState, oldState) {
+      //   if ($rootScope.searchQuery && $rootScope.searchQuery.length > 0) {
+      //     $rootScope.searchQuery = '';
+      //   }
+      // });
 
       if ($routeParams.searchQuery) {
         $rootScope.searchQuery = $routeParams.searchQuery;
