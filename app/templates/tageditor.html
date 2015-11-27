@@ -1,0 +1,74 @@
+<div class="modal fade" id="tagEditorModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Version Tag</h4>
+      </div>
+      <form name="tagEditorForm" ng-submit="saveTagChanges()" novalidate>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Dockerfile:</label>
+            <input
+                type="text"
+                class="form-control"
+                name="dockerfilePath"
+                ng-model="tagObj.dockerfilePath"
+                ng-minlength="3"
+                ng-maxlength="128"
+                ng-pattern="/^\/(.*\/)*Dockerfile$/i"
+                required
+                placeholder="e.g. /Dockerfile"/>
+            <div
+                class="form-error-messages"
+                ng-messages="tagEditorForm.dockerfilePath.$error"
+                ng-if="tagEditorForm.dockerfilePath.$touched">
+              <div ng-messages-include="templates/validation/tags/dockerfilepath.html">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+          <label>CWL Descriptor:</label>
+            <input
+                type="text"
+                class="form-control"
+                name="descriptorPath"
+                ng-model="tagObj.descriptorPath"
+                ng-minlength="3"
+                ng-maxlength="128"
+                ng-pattern="/^\/(.*\/)*Dockstore\.cwl$/i"
+                required
+                placeholder="e.g. /Dockstore.cwl"/>
+            <div
+                class="form-error-messages"
+                ng-messages="tagEditorForm.descriptorPath.$error"
+                ng-if="tagEditorForm.descriptorPath.$touched">
+              <div ng-messages-include="templates/validation/tags/descriptorpath.html">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            Close
+          </button>
+          <button type="submit"
+              class="btn btn-primary"
+              ng-disabled="tagEditorForm.$invalid">
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<a href
+    data-toggle="modal"
+    data-target="#tagEditorModal">
+  Edit
+</a>
+<!-- <button type="button"
+    class="btn btn-primary btn-sm"
+    data-toggle="modal"
+    data-target="#tagEditorModal">
+  Edit
+</button> -->

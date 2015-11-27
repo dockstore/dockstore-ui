@@ -11,6 +11,27 @@
             </span>
           </th>
           <th>
+            Git Reference
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('gitReference')"
+                  ng-click="clickSortColumn('gitReference')">
+            </span>
+          </th>
+          <th>
+            Dockerfile Path
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('dockerfilePath')"
+                  ng-click="clickSortColumn('dockerfilePath')">
+            </span>
+          </th>
+          <th>
+            CWL Path
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('cwlPath')"
+                  ng-click="clickSortColumn('cwlPath')">
+            </span>
+          </th>
+          <th>
             Size
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('size')"
@@ -25,7 +46,24 @@
             </span>
           </th>
           <th>
+            Valid
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('valid')"
+                  ng-click="clickSortColumn('valid')">
+            </span>
+          </th>
+          <th>
+            Automated
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('automated')"
+                  ng-click="clickSortColumn('automated')">
+            </span>
+          </th>
+          <th>
             Docker Pull
+          </th>
+          <th>
+            Actions
           </th>
         </tr>
       </thead>
@@ -40,13 +78,32 @@
             {{versionTag.name}}
           </td>
           <td>
+            939917ee66ebace44669
+          </td>
+          <td>
+            /Dockerfile
+          </td>
+          <td>
+            /Dockstore.cwl
+          </td>
+          <td>
             {{getHRSize(versionTag.size)}}
           </td>
           <td>
             {{getDateModified(versionTag.last_modified)}}
           </td>
           <td>
+            No
+          </td>
+          <td>
+            Yes
+          </td>
+          <td>
             <div copy-text>docker pull {{containerObj.path}}:{{versionTag.name}}</div>
+          </td>
+          <td>
+            <div tag-editor></div>
+            Hide
           </td>
         </tr>
       </tbody>
