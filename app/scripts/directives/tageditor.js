@@ -11,8 +11,12 @@ angular.module('dockstore.ui')
     return {
       restrict: 'AE',
       controller: 'TagEditorCtrl',
+      scope: {
+      	tagObj: '='
+      },
       templateUrl: 'templates/tageditor.html',
       link: function postLink(scope, element, attrs) {
+      	scope.editTagObj = angular.copy(scope.tagObj);
         // element.text('this is the tagEditor directive');
       }
     };

@@ -17,7 +17,7 @@
                   ng-click="clickSortColumn('gitReference')">
             </span>
           </th>
-          <th>
+          <!--th>
             Dockerfile Path
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('dockerfilePath')"
@@ -30,7 +30,7 @@
                   ng-class="getIconClass('cwlPath')"
                   ng-click="clickSortColumn('cwlPath')">
             </span>
-          </th>
+          </th-->
           <th>
             Size
             <span class="glyphicon pull-right"
@@ -52,18 +52,18 @@
                   ng-click="clickSortColumn('valid')">
             </span>
           </th>
-          <th>
+          <!--th>
             Automated
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('automated')"
                   ng-click="clickSortColumn('automated')">
             </span>
+          </th-->
+          <th>
+            Actions
           </th>
           <th>
             Docker Pull
-          </th>
-          <th>
-            Actions
           </th>
         </tr>
       </thead>
@@ -80,12 +80,12 @@
           <td>
             939917ee66ebace44669
           </td>
-          <td>
+          <!--td>
             /Dockerfile
           </td>
           <td>
             /Dockstore.cwl
-          </td>
+          </td-->
           <td>
             {{getHRSize(versionTag.size)}}
           </td>
@@ -95,15 +95,16 @@
           <td>
             No
           </td>
-          <td>
+          <!--td>
             Yes
+          </td-->
+          <td>
+            <div tag-editor
+                tag-obj="versionTag">
+            </div>
           </td>
           <td>
             <div copy-text>docker pull {{containerObj.path}}:{{versionTag.name}}</div>
-          </td>
-          <td>
-            <div tag-editor></div>
-            Hide
           </td>
         </tr>
       </tbody>

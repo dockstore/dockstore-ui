@@ -63,16 +63,25 @@ table.tokens-grid {
 
 table.versions-grid {
   th:nth-child(1) {
-    width: 20%;
-  }
-  th:nth-child(2) {
     width: 10%;
   }
-  th:nth-child(3) {
+  th:nth-child(2) {
     width: 20%;
   }
+  th:nth-child(3) {
+    width: 10%;
+  }
   th:nth-child(4) {
-    width: 50%;
+    width: 10%;
+  }
+  th:nth-child(5) {
+    width: 10%;
+  }
+  th:nth-child(6) {
+    width: 10%;
+  }
+  th:nth-child(7) {
+    width: 30%;
   }
 }
 
@@ -309,6 +318,13 @@ div.alert.alert-dismissable {
   margin-bottom: 0;
   &.push-top {
     margin-top: 20px;
+  }
+}
+
+div.form-group.form-group-sm {
+  div.checkbox {
+    position: relative;
+    bottom: 2.5px;
   }
 }
 
