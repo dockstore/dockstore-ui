@@ -13,13 +13,14 @@ angular.module('dockstore.ui')
     '$rootScope',
     '$q',
     '$window',
+    '$location',
     '$auth',
     '$routeParams',
     'ContainerService',
     'UserService',
     'TokenService',
     'NotificationService',
-    function ($scope, $rootScope, $q, $window, $auth, $routeParams,
+    function ($scope, $rootScope, $q, $window, $location, $auth, $routeParams,
         ContainerService, UserService, TokenService, NtfnService) {
 
       $scope.userObj = UserService.getUserObj();
@@ -49,6 +50,14 @@ angular.module('dockstore.ui')
             }
           );
       }
+
+      // incomplete
+      // also need to remove 'label:' prefix!
+      $scope.$on('$locationChangeStart', function(event, newState, oldState) {
+        if ($rootScope.searchQuery && $rootScope.searchQuery.length > 0) {
+          $rootScope.searchQuery = '';
+        }
+      });
 
       if ($routeParams.searchQuery) {
         $rootScope.searchQuery = $routeParams.searchQuery;
