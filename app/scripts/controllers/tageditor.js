@@ -14,7 +14,7 @@ angular.module('dockstore.ui')
     function ($scope, FrmttSrvc) {
     
       $scope.getHRSize = FrmttSrvc.getHRSize;
-      $scope.getDateModified = FrmttSrvc.getDateModified;
+      $scope.getDateTimeString = FrmttSrvc.getDateTimeString;
 
       
   }]);
