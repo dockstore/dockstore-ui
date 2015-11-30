@@ -4,7 +4,7 @@
       <thead>
         <tr>
           <th>
-            Version Tag
+            Tag
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('name')"
                   ng-click="clickSortColumn('name')">
@@ -78,7 +78,10 @@
             {{versionTag.name}}
           </td>
           <td>
-            939917ee66ebace44669
+            <div class="git-ref"
+                title="21d00bd9d9faf1926694260991448b598e0d968a">
+              21d00bd9d9faf1926694260991448b598e0d968a
+            </span>
           </td>
           <!--td>
             /Dockerfile
@@ -100,7 +103,9 @@
           </td-->
           <td>
             <div tag-editor
-                tag-obj="versionTag">
+                tag-obj="versionTag"
+                container-path="{{containerObj.path}}"
+                edit-mode="editMode">
             </div>
           </td>
           <td>

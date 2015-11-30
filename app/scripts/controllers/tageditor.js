@@ -10,9 +10,11 @@
 angular.module('dockstore.ui')
   .controller('TagEditorCtrl', [
     '$scope',
-    function ($scope) {
+    'FormattingService',
+    function ($scope, FrmttSrvc) {
     
-      // ...
+      $scope.getHRSize = FrmttSrvc.getHRSize;
+      $scope.getDateModified = FrmttSrvc.getDateModified;
 
       
   }]);

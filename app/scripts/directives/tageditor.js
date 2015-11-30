@@ -12,7 +12,9 @@ angular.module('dockstore.ui')
       restrict: 'AE',
       controller: 'TagEditorCtrl',
       scope: {
-      	tagObj: '='
+      	tagObj: '=',
+      	containerPath: '@',
+      	editMode: '='
       },
       templateUrl: 'templates/tageditor.html',
       link: function postLink(scope, element, attrs) {
