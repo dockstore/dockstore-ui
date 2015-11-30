@@ -4,12 +4,33 @@
       <thead>
         <tr>
           <th>
-            Version Tag
+            Tag
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('name')"
                   ng-click="clickSortColumn('name')">
             </span>
           </th>
+          <th>
+            Git Reference
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('gitReference')"
+                  ng-click="clickSortColumn('gitReference')">
+            </span>
+          </th>
+          <!--th>
+            Dockerfile Path
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('dockerfilePath')"
+                  ng-click="clickSortColumn('dockerfilePath')">
+            </span>
+          </th>
+          <th>
+            CWL Path
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('cwlPath')"
+                  ng-click="clickSortColumn('cwlPath')">
+            </span>
+          </th-->
           <th>
             Size
             <span class="glyphicon pull-right"
@@ -23,6 +44,23 @@
                   ng-class="getIconClass('last_modified')"
                   ng-click="clickSortColumn('last_modified')">
             </span>
+          </th>
+          <th>
+            Valid
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('valid')"
+                  ng-click="clickSortColumn('valid')">
+            </span>
+          </th>
+          <!--th>
+            Automated
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('automated')"
+                  ng-click="clickSortColumn('automated')">
+            </span>
+          </th-->
+          <th>
+            Actions
           </th>
           <th>
             Docker Pull
@@ -40,10 +78,35 @@
             {{versionTag.name}}
           </td>
           <td>
+            <div class="git-ref"
+                title="21d00bd9d9faf1926694260991448b598e0d968a">
+              21d00bd9d9faf1926694260991448b598e0d968a
+            </span>
+          </td>
+          <!--td>
+            /Dockerfile
+          </td>
+          <td>
+            /Dockstore.cwl
+          </td-->
+          <td>
             {{getHRSize(versionTag.size)}}
           </td>
           <td>
             {{getDateModified(versionTag.last_modified)}}
+          </td>
+          <td>
+            No
+          </td>
+          <!--td>
+            Yes
+          </td-->
+          <td>
+            <div tag-editor
+                tag-obj="versionTag"
+                container-path="{{containerObj.path}}"
+                edit-mode="editMode">
+            </div>
           </td>
           <td>
             <div copy-text>docker pull {{containerObj.path}}:{{versionTag.name}}</div>

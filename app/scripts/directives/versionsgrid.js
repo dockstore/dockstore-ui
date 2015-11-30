@@ -12,7 +12,8 @@ angular.module('dockstore.ui')
       restrict: 'AE',
       controller: 'VersionsGridCtrl',
       scope: {
-      	containerObj: '='
+      	containerObj: '=',
+        editMode: '='
       },
       templateUrl: 'templates/versionsgrid.html',
       link: function postLink(scope, element, attrs) {

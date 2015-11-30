@@ -12,8 +12,9 @@ angular.module('dockstore.ui')
     '$scope',
     '$q',
     'ContainerService',
+    'FormattingService',
     'NotificationService',
-    function ($scope, $q, ContainerService, NtfnService) {
+    function ($scope, $q, ContainerService, FrmttSrvc, NtfnService) {
 
       $scope.labelsEditMode = false;
       $scope.dockerfileEnabled = false;
@@ -162,16 +163,7 @@ angular.module('dockstore.ui')
         $scope.quayIOURL = $scope.getQuayIOURL($scope.containerObj.path);
       };
 
-      $scope.getDateTimeString = function(timestamp) {
-        var moy = ['Jan.', 'Feb.', 'Mar.', 'Apr.',
-                    'May', 'Jun.', 'Jul.', 'Aug.',
-                    'Sept.', 'Oct.', 'Nov.', 'Dec.'];
-        var dateObj = new Date(timestamp);
-        return moy[dateObj.getMonth()] + ' ' +
-                dateObj.getDate() + ', ' +
-                dateObj.getFullYear() + ' at ' +
-                dateObj.toLocaleTimeString();
-      };
+      $scope.getDateTimeString = FrmttSrvc.getDateTimeString;
 
       $scope.getContainerLabelStrings = function(labels) {
         var sortedLabels = labels.sort(function(a, b) {

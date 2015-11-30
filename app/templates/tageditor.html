@@ -1,0 +1,180 @@
+<div class="modal fade" id="tagEditorModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{!editMode ? 'View' : 'Edit'}} Version Tag</h4>
+      </div>
+      <form name="tagEditorForm" 
+          class="form-horizontal"
+          ng-submit="saveTagChanges()"
+          novalidate>
+        <div class="modal-body">
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Version Tag:
+            </label>
+            <div class="col-sm-9">
+              <input
+                  type="text"
+                  class="form-control"
+                  name="tagName"
+                  ng-model="tagObj.name"
+                  ng-disabled="true" />
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Git Reference:
+            </label>
+            <div class="col-sm-9">
+              <input
+                  type="text"
+                  class="form-control"
+                  name="dockerfilePath"
+                  ng-model="tagObj.dockerfilePath"
+                  ng-disabled="true" />
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Dockerfile:
+            </label>
+            <div class="col-sm-9">
+              <input
+                  type="text"
+                  class="form-control"
+                  name="dockerfilePath"
+                  ng-model="editTagObj.dockerfilePath"
+                  ng-minlength="3"
+                  ng-maxlength="128"
+                  ng-pattern="/^\/(.*\/)*Dockerfile$/i"
+                  required
+                  placeholder="e.g. /Dockerfile"
+                  ng-disabled="!editMode" />
+              <div
+                  class="form-error-messages"
+                  ng-messages="tagEditorForm.dockerfilePath.$error"
+                  ng-if="tagEditorForm.dockerfilePath.$touched">
+                <div ng-messages-include="templates/validation/tags/dockerfilepath.html">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              CWL Descriptor:
+            </label>
+            <div class="col-sm-9">
+              <input
+                  type="text"
+                  class="form-control"
+                  name="descriptorPath"
+                  ng-model="editTagObj.descriptorPath"
+                  ng-minlength="3"
+                  ng-maxlength="128"
+                  ng-pattern="/^\/(.*\/)*Dockstore\.cwl$/i"
+                  required
+                  placeholder="e.g. /Dockstore.cwl"
+                  ng-disabled="!editMode" />
+              <div
+                  class="form-error-messages"
+                  ng-messages="tagEditorForm.descriptorPath.$error"
+                  ng-if="tagEditorForm.descriptorPath.$touched">
+                <div ng-messages-include="templates/validation/tags/descriptorpath.html">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Automated:
+            </label>
+            <div class="col-sm-9">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox"
+                      ng-model="editTagObj.isAutomated"
+                      ng-disabled="!editMode" />
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Hidden:
+            </label>
+            <div class="col-sm-9">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox"
+                      ng-model="editTagObj.isHidden"
+                      ng-disabled="!editMode" />
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Image Size:
+            </label>
+            <div class="col-sm-9">
+              <div class="label-value">
+                {{getHRSize(tagObj.size)}}
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Date Modified:
+            </label>
+            <div class="col-sm-9">
+              <div class="label-value">
+                {{getDateModified(tagObj.last_modified)}}
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Valid:
+            </label>
+            <div class="col-sm-9">
+              <div class="label-value">
+                {{tagObj.isValid ? 'Yes' : 'No'}}
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Docker Pull:
+            </label>
+            <div class="col-sm-9">
+              <div copy-text>docker pull {{containerPath}}:{{tagObj.name}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            Close
+          </button>
+          <button type="submit"
+              class="btn btn-primary"
+              ng-show="editMode"
+              ng-disabled="tagEditorForm.$invalid">
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<a href
+    data-toggle="modal"
+    data-target="#tagEditorModal">
+  {{!editMode ? 'View' : 'Edit'}}
+</a>
+<!-- <button type="button"
+    class="btn btn-primary btn-sm"
+    data-toggle="modal"
+    data-target="#tagEditorModal">
+  Edit
+</button> -->
