@@ -11,6 +11,9 @@ angular.module('dockstore.ui')
     return {
       restrict: 'AE',
       controller: 'RegisterContainerCtrl',
+      scope: {
+      	containerNS: '@'
+      },
       templateUrl: 'templates/registercontainer.html',
       link: function postLink(scope, element, attrs) {
         

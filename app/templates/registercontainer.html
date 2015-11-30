@@ -4,17 +4,146 @@
       <div class="modal-header">
         <h4 class="modal-title">Register Container</h4>
       </div>
-      <div class="modal-body">
-        <p>AbC</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">
-          Close
-        </button>
-        <button type="button" class="btn btn-primary">
-          Add Container
-        </button>
-      </div>
+      <form name="registerContainerForm" 
+          class="form-horizontal"
+          ng-submit="registerContainer()"
+          novalidate>
+        <div class="modal-body">
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Source Code Repository:
+            </label>
+            <div class="col-sm-9">
+              <input
+                  type="text"
+                  class="form-control"
+                  name="srcCodeRepository"
+                  ng-model="newContainerObj.srcCodeRepository"
+                  ng-minlength="3"
+                  ng-maxlength="128"
+                  ng-pattern="/^\/(.*\/)*Dockerfile$/i"
+                  required
+                  placeholder="e.g. https://github.com/CancerCollaboratory/dockstore-tool-liftover" />
+              <div
+                  class="form-error-messages"
+                  ng-messages="registerContainerForm.srcCodeRepository.$error"
+                  ng-if="registerContainerForm.srcCodeRepository.$touched">
+                <div ng-messages-include="templates/validation/tags/dockerfilepath.html">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Dockerfile:
+            </label>
+            <div class="col-sm-9">
+              <input
+                  type="text"
+                  class="form-control"
+                  name="dockerfilePath"
+                  ng-model="newContainerObj.dockerfilePath"
+                  ng-minlength="3"
+                  ng-maxlength="128"
+                  ng-pattern="/^\/(.*\/)*Dockerfile$/i"
+                  required
+                  placeholder="e.g. /Dockerfile" />
+              <div
+                  class="form-error-messages"
+                  ng-messages="registerContainerForm.dockerfilePath.$error"
+                  ng-if="registerContainerForm.dockerfilePath.$touched">
+                <div ng-messages-include="templates/validation/tags/dockerfilepath.html">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              CWL Descriptor:
+            </label>
+            <div class="col-sm-9">
+              <input
+                  type="text"
+                  class="form-control"
+                  name="descriptorPath"
+                  ng-model="newContainerObj.descriptorPath"
+                  ng-minlength="3"
+                  ng-maxlength="128"
+                  ng-pattern="/^\/(.*\/)*Dockstore\.cwl$/i"
+                  required
+                  placeholder="e.g. /Dockstore.cwl" />
+              <div
+                  class="form-error-messages"
+                  ng-messages="registerContainerForm.descriptorPath.$error"
+                  ng-if="registerContainerForm.descriptorPath.$touched">
+                <div ng-messages-include="templates/validation/tags/descriptorpath.html">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Image Registry:
+            </label>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <div class="input-group-addon">https://quay.io/repository/</div>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="imageUrl"
+                    ng-model="newContainerObj.imageUrl"
+                    ng-minlength="3"
+                    ng-maxlength="128"
+                    ng-pattern="/^[\w-]+(\/[\w-]+)*$/i"
+                    required
+                    placeholder="e.g. cancercollaboratory/dockstore-tool-liftover" />
+              </div>
+              <div
+                  class="form-error-messages"
+                  ng-messages="registerContainerForm.imageUrl.$error"
+                  ng-if="registerContainerForm.imageUrl.$touched">
+                <div ng-messages-include="templates/validation/containers/imagepath.html">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Tool Name:
+            </label>
+            <div class="col-sm-9">
+              <input
+                  type="text"
+                  class="form-control"
+                  name="toolname"
+                  ng-model="newContainerObj.toolName"
+                  ng-minlength="3"
+                  ng-maxlength="256"
+                  ng-pattern="/^\/(.*\/)*Dockerfile$/i"
+                  required
+                  placeholder="e.g. liftover-fast" />
+              <div
+                  class="form-error-messages"
+                  ng-messages="registerContainerForm.toolName.$error"
+                  ng-if="registerContainerForm.toolName.$touched">
+                <div ng-messages-include="templates/validation/tags/dockerfilepath.html">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            Close
+          </button>
+          <button type="submit"
+              class="btn btn-primary"
+              ng-disabled="registerContainerForm.$invalid">
+            Add Container
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
