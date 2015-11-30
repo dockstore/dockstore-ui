@@ -101,6 +101,20 @@
           </div>
           <div class="form-group form-group-sm">
             <label class="col-sm-3 control-label">
+              Hidden:
+            </label>
+            <div class="col-sm-9">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox"
+                      ng-model="editTagObj.isHidden"
+                      ng-disabled="!editMode" />
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
               Image Size:
             </label>
             <div class="col-sm-9">
