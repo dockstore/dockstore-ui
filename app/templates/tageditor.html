@@ -17,7 +17,7 @@
               <input
                   type="text"
                   class="form-control"
-                  name="tagName"
+                  name="name"
                   ng-model="tagObj.name"
                   ng-disabled="true" />
             </div>
@@ -30,8 +30,8 @@
               <input
                   type="text"
                   class="form-control"
-                  name="dockerfilePath"
-                  ng-model="tagObj.dockerfilePath"
+                  name="reference"
+                  ng-model="tagObj.reference"
                   ng-disabled="true" />
             </div>
           </div>
@@ -43,8 +43,8 @@
               <input
                   type="text"
                   class="form-control"
-                  name="dockerfilePath"
-                  ng-model="editTagObj.dockerfilePath"
+                  name="dockerfile_path"
+                  ng-model="tagObj.dockerfile_path"
                   ng-minlength="3"
                   ng-maxlength="128"
                   ng-pattern="/^\/(.*\/)*Dockerfile$/i"
@@ -68,8 +68,8 @@
               <input
                   type="text"
                   class="form-control"
-                  name="descriptorPath"
-                  ng-model="editTagObj.descriptorPath"
+                  name="cwl_path"
+                  ng-model="tagObj.cwl_path"
                   ng-minlength="3"
                   ng-maxlength="128"
                   ng-pattern="/^\/(.*\/)*Dockstore\.cwl$/i"
@@ -93,7 +93,7 @@
               <div class="checkbox">
                 <label>
                   <input type="checkbox"
-                      ng-model="editTagObj.isAutomated"
+                      ng-model="tagObj.isAutomated"
                       ng-disabled="!editMode" />
                 </label>
               </div>
@@ -107,7 +107,7 @@
               <div class="checkbox">
                 <label>
                   <input type="checkbox"
-                      ng-model="editTagObj.isHidden"
+                      ng-model="tagObj.hidden"
                       ng-disabled="!editMode" />
                 </label>
               </div>
@@ -139,7 +139,7 @@
             </label>
             <div class="col-sm-9">
               <div class="label-value">
-                {{tagObj.isValid ? 'Yes' : 'No'}}
+                n/a <!--{{tagObj.isValid ? 'Yes' : 'No'}}-->
               </div>
             </div>
           </div>
@@ -148,7 +148,7 @@
               Docker Pull:
             </label>
             <div class="col-sm-9">
-              <div copy-text>docker pull {{containerPath}}:{{tagObj.name}}</div>
+              <div copy-text ng-if="tagObj">docker pull {{containerPath}}:{{tagObj.name}}</div>
             </div>
           </div>
         </div>
@@ -167,14 +167,3 @@
     </div>
   </div>
 </div>
-<a href
-    data-toggle="modal"
-    data-target="#tagEditorModal">
-  {{!editMode ? 'View' : 'Edit'}}
-</a>
-<!-- <button type="button"
-    class="btn btn-primary btn-sm"
-    data-toggle="modal"
-    data-target="#tagEditorModal">
-  Edit
-</button> -->

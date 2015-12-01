@@ -13,13 +13,13 @@ angular.module('dockstore.ui')
       controller: 'TagEditorCtrl',
       scope: {
       	tagObj: '=',
+        containerId: '@',
       	containerPath: '@',
       	editMode: '='
       },
       templateUrl: 'templates/tageditor.html',
       link: function postLink(scope, element, attrs) {
-      	scope.editTagObj = angular.copy(scope.tagObj);
-        // element.text('this is the tagEditor directive');
+      	//scope.editTagObj = angular.copy(scope.tagObj);
       }
     };
   });

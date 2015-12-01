@@ -100,6 +100,23 @@ angular.module('dockstore.ui')
       });
     };
 
+    this.updateContainerTag = function(containerId, tagObj) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'PUT',
+          url: WebService.API_URI + '/containers/' + containerId + '/tags',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: [tagObj]
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
     this.setContainerLabels = function(containerId, labels) {
       return $q(function(resolve, reject) {
         $http({
