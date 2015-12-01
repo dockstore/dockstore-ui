@@ -19,16 +19,16 @@
                   class="form-control"
                   name="srcCodeRepository"
                   ng-model="newContainerObj.srcCodeRepository"
-                  ng-minlength="3"
-                  ng-maxlength="128"
-                  ng-pattern="/^\/(.*\/)*Dockerfile$/i"
+                  ng-minlength="16"
+                  ng-maxlength="256"
+                  ng-pattern="/^(https?:)?\/\/(www\.)?(github\.com|bitbucket.org)\/([\w-]+)\/([\w-]+)$/i"
                   required
                   placeholder="e.g. https://github.com/CancerCollaboratory/dockstore-tool-liftover" />
               <div
                   class="form-error-messages"
                   ng-messages="registerContainerForm.srcCodeRepository.$error"
                   ng-if="registerContainerForm.srcCodeRepository.$touched">
-                <div ng-messages-include="templates/validation/tags/dockerfilepath.html">
+                <div ng-messages-include="templates/validation/containers/sourcecoderepository.html">
                 </div>
               </div>
             </div>
@@ -44,7 +44,7 @@
                   name="dockerfilePath"
                   ng-model="newContainerObj.dockerfilePath"
                   ng-minlength="3"
-                  ng-maxlength="128"
+                  ng-maxlength="256"
                   ng-pattern="/^\/(.*\/)*Dockerfile$/i"
                   required
                   placeholder="e.g. /Dockerfile" />
@@ -52,7 +52,7 @@
                   class="form-error-messages"
                   ng-messages="registerContainerForm.dockerfilePath.$error"
                   ng-if="registerContainerForm.dockerfilePath.$touched">
-                <div ng-messages-include="templates/validation/tags/dockerfilepath.html">
+                <div ng-messages-include="templates/validation/containers/dockerfilepath.html">
                 </div>
               </div>
             </div>
@@ -68,7 +68,7 @@
                   name="descriptorPath"
                   ng-model="newContainerObj.descriptorPath"
                   ng-minlength="3"
-                  ng-maxlength="128"
+                  ng-maxlength="256"
                   ng-pattern="/^\/(.*\/)*Dockstore\.cwl$/i"
                   required
                   placeholder="e.g. /Dockstore.cwl" />
@@ -76,7 +76,7 @@
                   class="form-error-messages"
                   ng-messages="registerContainerForm.descriptorPath.$error"
                   ng-if="registerContainerForm.descriptorPath.$touched">
-                <div ng-messages-include="templates/validation/tags/descriptorpath.html">
+                <div ng-messages-include="templates/validation/containers/descriptorpath.html">
                 </div>
               </div>
             </div>
@@ -94,7 +94,7 @@
                     name="imageUrl"
                     ng-model="newContainerObj.imageUrl"
                     ng-minlength="3"
-                    ng-maxlength="128"
+                    ng-maxlength="256"
                     ng-pattern="/^[\w-]+(\/[\w-]+)*$/i"
                     required
                     placeholder="e.g. cancercollaboratory/dockstore-tool-liftover" />
@@ -118,16 +118,15 @@
                   class="form-control"
                   name="toolname"
                   ng-model="newContainerObj.toolName"
-                  ng-minlength="3"
+                  ng-minlength="1"
                   ng-maxlength="256"
-                  ng-pattern="/^\/(.*\/)*Dockerfile$/i"
-                  required
-                  placeholder="e.g. liftover-fast" />
+                  ng-pattern="/^[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*$/i"
+                  placeholder="e.g. liftover-fast (optional)" />
               <div
                   class="form-error-messages"
                   ng-messages="registerContainerForm.toolName.$error"
                   ng-if="registerContainerForm.toolName.$touched">
-                <div ng-messages-include="templates/validation/tags/dockerfilepath.html">
+                <div ng-messages-include="templates/validation/containers/toolname.html">
                 </div>
               </div>
             </div>

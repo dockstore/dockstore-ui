@@ -337,6 +337,11 @@ div.form-group.form-group-sm {
     top: 5px;
   }
 }
+
+form.form-horizontal {
+  line-height: 1.428571429;
+}
+
 /* Media Queries - Lower Resolutions (width < 1200px) */
 @media (max-width: 992px) {
   img.site-logo { width: 50px; }
