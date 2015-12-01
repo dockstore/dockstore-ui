@@ -12,8 +12,6 @@ angular.module('dockstore.ui')
     '$scope',
     function ($scope) {
     
-      $scope.registerContainer = function() {
-        $scope.registeringContainer = true;
-      };
+      
 
   }]);

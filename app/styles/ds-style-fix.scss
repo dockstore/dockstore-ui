@@ -342,6 +342,15 @@ form.form-horizontal {
   line-height: 1.428571429;
 }
 
+button.add-container-ns {
+  position: relative;
+  top: 5px;
+  right: 13px;
+  span.glyphicon {
+    left: 1px;
+  }
+}
+
 /* Media Queries - Lower Resolutions (width < 1200px) */
 @media (max-width: 992px) {
   img.site-logo { width: 50px; }
