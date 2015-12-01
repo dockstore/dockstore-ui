@@ -18,11 +18,12 @@ angular.module('dockstore.ui')
       $scope.getDateTimeString = FrmttSrvc.getDateTimeString;
 
       $scope.saveTagChanges = function() {
+        if ($scope.savingChanges) return;
+        $scope.savingChanges = true;
         return ContainerService.updateContainerTag($scope.containerId, $scope.tagObj)
           .then(
             function(versionTags) {
-              console.log(versionTags);
-              // $scope.containers = containers;
+              $scope.toggleModal = true;
               return versionTags;
             },
             function(response) {
@@ -30,7 +31,9 @@ angular.module('dockstore.ui')
               NtfnService.popError('Update Container Tags', message);
               return $q.reject(response);
             }
-          );
+          ).finally(function(response) {
+            $scope.savingChanges = false;
+          });
       };
 
   }]);

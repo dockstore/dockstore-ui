@@ -19,7 +19,12 @@ angular.module('dockstore.ui')
       },
       templateUrl: 'templates/tageditor.html',
       link: function postLink(scope, element, attrs) {
-      	//scope.editTagObj = angular.copy(scope.tagObj);
+        scope.$watch('toggleModal', function(newValue, oldValue) {
+          if (scope.toggleModal) {
+            $('#tagEditorModal').modal('toggle');
+            scope.toggleModal = false;
+          }
+        });
       }
     };
   });

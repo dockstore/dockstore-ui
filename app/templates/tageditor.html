@@ -32,7 +32,44 @@
                   class="form-control"
                   name="reference"
                   ng-model="tagObj.reference"
-                  ng-disabled="true" />
+                  ng-minlength="3"
+                  ng-maxlength="128"
+                  ng-pattern="/^[\w-]+(\/[\w-]+)*$/i"
+                  required
+                  placeholder="e.g. refs/heads/master"
+                  ng-disabled="!editMode" />
+              <div
+                  class="form-error-messages"
+                  ng-messages="tagEditorForm.reference.$error"
+                  ng-if="tagEditorForm.reference.$touched">
+                <div ng-messages-include="templates/validation/tags/reference.html">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Image ID:
+            </label>
+            <div class="col-sm-9">
+              <input
+                  type="text"
+                  class="form-control"
+                  name="image_id"
+                  ng-model="tagObj.image_id"
+                  ng-minlength="3"
+                  ng-maxlength="128"
+                  ng-pattern="/^[a-zA-Z0-9]*$/i"
+                  required
+                  placeholder="e.g. 28d30887157514b6047c9"
+                  ng-disabled="!editMode" />
+              <div
+                  class="form-error-messages"
+                  ng-messages="tagEditorForm.image_id.$error"
+                  ng-if="tagEditorForm.image_id.$touched">
+                <div ng-messages-include="templates/validation/tags/imageid.html">
+                </div>
+              </div>
             </div>
           </div>
           <div class="form-group form-group-sm">
@@ -53,8 +90,8 @@
                   ng-disabled="!editMode" />
               <div
                   class="form-error-messages"
-                  ng-messages="tagEditorForm.dockerfilePath.$error"
-                  ng-if="tagEditorForm.dockerfilePath.$touched">
+                  ng-messages="tagEditorForm.dockerfile_path.$error"
+                  ng-if="tagEditorForm.dockerfile_path.$touched">
                 <div ng-messages-include="templates/validation/tags/dockerfilepath.html">
                 </div>
               </div>
@@ -78,24 +115,10 @@
                   ng-disabled="!editMode" />
               <div
                   class="form-error-messages"
-                  ng-messages="tagEditorForm.descriptorPath.$error"
-                  ng-if="tagEditorForm.descriptorPath.$touched">
+                  ng-messages="tagEditorForm.cwl_path.$error"
+                  ng-if="tagEditorForm.cwl_path.$touched">
                 <div ng-messages-include="templates/validation/tags/descriptorpath.html">
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="form-group form-group-sm">
-            <label class="col-sm-3 control-label">
-              Automated:
-            </label>
-            <div class="col-sm-9">
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox"
-                      ng-model="tagObj.isAutomated"
-                      ng-disabled="!editMode" />
-                </label>
               </div>
             </div>
           </div>
@@ -110,6 +133,16 @@
                       ng-model="tagObj.hidden"
                       ng-disabled="!editMode" />
                 </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Automated:
+            </label>
+            <div class="col-sm-9">
+              <div class="label-value">
+                n/a <!--{{tagObj.isAutomated ? 'Yes' : 'No'}}-->
               </div>
             </div>
           </div>
