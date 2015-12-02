@@ -77,7 +77,8 @@ angular.module('dockstore.ui')
           create: true,
           dockerfile_path: '/Dockerfile',
           cwl_path: '/Dockstore.cwl',
-          hidden: true
+          hidden: true,
+          automated: false
         };
       };
 
