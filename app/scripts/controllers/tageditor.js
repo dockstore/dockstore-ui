@@ -46,7 +46,7 @@ angular.module('dockstore.ui')
         if ($scope.savingActive) return;
         $scope.savingActive = true;
         var tagObj = $scope.tagObj;
-        delete tagObj['create'];
+        delete tagObj.create;
         return ContainerService.createContainerTag($scope.containerId, tagObj)
           .then(
             function(versionTags) {

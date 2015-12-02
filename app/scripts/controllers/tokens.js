@@ -26,7 +26,7 @@ angular.module('dockstore.ui')
           .then(
             function(tokens) {
               $scope.tokens = tokens;
-              return tokens
+              return tokens;
             },
             function(response) {
               var message = '[' + response.status + '] ' + response.statusText;
