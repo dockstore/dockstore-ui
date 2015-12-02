@@ -75,8 +75,8 @@ angular.module('dockstore.ui')
       $scope.getCreateTagObj = function() {
         return {
           create: true,
-          dockerfile_path: '/Dockerfile',
-          cwl_path: '/Dockstore.cwl',
+          dockerfile_path: $scope.containerObj.default_dockerfile_path,
+          cwl_path: $scope.containerObj.default_cwl_path,
           hidden: true,
           automated: false
         };
