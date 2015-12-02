@@ -26,6 +26,9 @@ angular.module('dockstore.ui')
             scope.toggleModal = false;
           }
         });
+        scope.$watch('tagObj', function(newValue, oldValue) {
+          if (newValue) scope.setDockerPullCmd();
+        });
       }
     };
   });

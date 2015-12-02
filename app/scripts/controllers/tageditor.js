@@ -74,6 +74,11 @@ angular.module('dockstore.ui')
           });
       };
 
+      $scope.setDockerPullCmd = function() {
+        $scope.dockerPullCmd = 'docker pull ' +
+            $scope.containerPath + ':' + $scope.tagObj.name;
+      };
+
       $scope.closeEditTagModal = function() {
         $scope.setTagEditError(null);
         $scope.toggleModal = true;

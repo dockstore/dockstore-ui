@@ -208,7 +208,7 @@
               Docker Pull:
             </label>
             <div class="col-sm-9">
-              <div copy-text ng-if="tagObj">docker pull {{containerPath}}:{{tagObj.name}}</div>
+              <div copy-text value="dockerPullCmd" ng-if="tagObj"></div>
             </div>
           </div>
         </div>
