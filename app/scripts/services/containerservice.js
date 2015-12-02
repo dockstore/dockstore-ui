@@ -117,6 +117,37 @@ angular.module('dockstore.ui')
       });
     };
 
+    this.createContainerTag = function(containerId, tagObj) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'POST',
+          url: WebService.API_URI + '/containers/' + containerId + '/tags',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: [tagObj]
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.deleteContainerTag = function(containerId, tagId) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'DELETE',
+          url: WebService.API_URI + '/containers/' + containerId +
+              '/tags/' + tagId
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
     this.setContainerLabels = function(containerId, labels) {
       return $q(function(resolve, reject) {
         $http({

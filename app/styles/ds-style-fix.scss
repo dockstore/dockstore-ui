@@ -89,6 +89,7 @@ table.versions-grid {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  margin-bottom: 10px;
 }
 
 .side-block table {
@@ -349,6 +350,10 @@ button.add-container-ns {
   span.glyphicon {
     left: 1px;
   }
+}
+
+div.modal-header + div.alert {
+  margin: 6px 8px 0 8px;
 }
 
 /* Media Queries - Lower Resolutions (width < 1200px) */

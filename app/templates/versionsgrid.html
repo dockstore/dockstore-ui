@@ -71,12 +71,25 @@
           <td>
             n/a
           </td>
-          <td>
+          <td class="tag-actions">
             <a href
                 data-toggle="modal"
                 data-target="#tagEditorModal"
-                ng-click="VersionsGrid.editTagObj = versionTag">
-              {{!editMode ? 'View' : 'Edit'}}
+                ng-click="VersionsGrid.editTagObj = versionTag"
+                ng-if="!editMode">
+              View
+            </a>
+            <a href
+                data-toggle="modal"
+                data-target="#tagEditorModal"
+                ng-click="VersionsGrid.editTagObj = versionTag"
+                ng-if="editMode">
+              Edit
+            </a>
+            <a href
+                ng-click="deleteTag(versionTag.id)"
+                ng-if="editMode">
+              Delete
             </a>
           </td>
           <td>
@@ -85,11 +98,21 @@
         </tr>
       </tbody>
     </table>
+    <button type="button"
+        class="btn btn-primary btn-sm pull-right">
+      <a href
+          data-toggle="modal"
+          data-target="#tagEditorModal"
+          ng-click="VersionsGrid.editTagObj = getCreateTagObj()">
+        Add Tag
+      </a>
+    </button>
     <div tag-editor
         tag-obj="VersionsGrid.editTagObj"
         container-id="{{containerObj.id}}"
         container-path="{{containerObj.path}}"
-        edit-mode="editMode">
+        edit-mode="editMode"
+        add-version-tag="addVersionTag">
     </div>
   </div>
 </div>

@@ -15,7 +15,8 @@ angular.module('dockstore.ui')
       	tagObj: '=',
         containerId: '@',
       	containerPath: '@',
-      	editMode: '='
+      	editMode: '=',
+        addVersionTag: '&'
       },
       templateUrl: 'templates/tageditor.html',
       link: function postLink(scope, element, attrs) {
