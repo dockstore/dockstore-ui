@@ -25,6 +25,14 @@ angular.module('dockstore.ui')
             scope.containerNs ? scope.containerNs + '/' : ''
           );
         });
+        scope.$watch('newContainerObj.imageUrl', function(newValue, oldValue) {
+          if (newValue) {
+            var matchObj = newValue.match(/^(.+\/)*([\w-]+)$/i);
+            var imageName = '';
+            if (matchObj && matchObj.length > 2) imageName = matchObj[2];
+            $(element).find('input[name="toolName"]').val(imageName);
+          }
+        });
       }
     };
   });
