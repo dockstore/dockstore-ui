@@ -19,14 +19,10 @@ angular.module('dockstore.ui')
       link: function postLink(scope, element, attrs) {
         scope.$watch('containerObj', function(newValue, oldValue, scope) {
           if (newValue) {
-            $(element).find('input[name="srcCodeRepository"]').val(
-              scope.containerObj.namespace ?
-                'https://github.com/' + scope.containerObj.namespace + '/' : ''
-            );
-            $(element).find('input[name="imageUrl"]').val(
-              scope.containerObj.namespace ?
-                  scope.containerObj.namespace + '/' : ''
-            );
+            scope.containerObj.gitUrl = scope.containerObj.namespace ?
+              'https://github.com/' + scope.containerObj.namespace + '/' : '';
+            scope.containerObj.imageUrl = scope.containerObj.namespace ?
+              'https://quay.io/repository/' + scope.containerObj.namespace + '/' : '';
           }
         });
         scope.$watch('toggleModal', function(newValue, oldValue) {

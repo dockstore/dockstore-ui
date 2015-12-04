@@ -27,19 +27,13 @@ angular.module('dockstore.ui')
               var savedContainerObj = null;
               console.log('Returned: ', containerObj);
               $scope.addContainer()(containerObj);
-              // for (var i = 0; i < versionTags.length; i++) {
-              //   if (versionTags[i].name === tagObj.name) {
-              //     $scope.addVersionTag()(versionTags[i]);
-              //     break;
-              //   }
-              // }
               return containerObj;
             },
             function(response) {
               $scope.setContainerEditError(
                 'The webservice encountered an error trying to create this ' +
                 'container, please ensure that the container attributes are ' +
-                'valid.',
+                'valid and the same image has not already been registered.',
                 '[' + response.status + '] ' + response.statusText
               );
               return $q.reject(response);
@@ -50,7 +44,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.getImageName = function(imageUrl, part) {
-        var imageUrlRegexp = /^(https?:)?\/\/(www\.)?(quay\.io|hub\.docker\.com)(\/([\w-]+))+\/([\w-]+)\/?$/i;
+        var imageUrlRegexp = /^(https?:)?\/\/(www\.)?(quay\.io\/repository|hub\.docker\.com\/r)(\/([\w-]+))+\/([\w-]+)\/?$/i;
         var matchObj = imageUrl.match(imageUrlRegexp);
         var imageName = '';
         if (matchObj && matchObj.length > 2) {
