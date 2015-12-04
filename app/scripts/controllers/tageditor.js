@@ -81,6 +81,7 @@ angular.module('dockstore.ui')
 
       $scope.closeEditTagModal = function() {
         $scope.setTagEditError(null);
+        $scope.tagEditorForm.$setPristine();
         $scope.toggleModal = true;
       };
 

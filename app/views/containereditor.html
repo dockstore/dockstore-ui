@@ -51,7 +51,7 @@
                 class="btn btn-primary btn-xs pull-right add-container-ns"
                 data-toggle="modal"
                 data-target="#registerContainerModal"
-                ng-click="ContainerEditor.regContainerNS = nsObj.namespace">
+                ng-click="ContainerEditor.editContainerObj = getCreateContainerObj(nsObj.namespace)">
               <span class="glyphicon glyphicon-plus"></span>
             </button>
           </uib-accordion-group>
@@ -61,11 +61,11 @@
           class="btn btn-primary btn-sm pull-right"
           data-toggle="modal"
           data-target="#registerContainerModal"
-          ng-click="ContainerEditor.regContainerNS = null">
+          ng-click="ContainerEditor.editContainerObj = getCreateContainerObj(null)">
         <span>Add Container</span>
       </button>
       <div register-container
-          container-ns="ContainerEditor.regContainerNS">
+          container-obj="ContainerEditor.editContainerObj">
       </div>
     </div>
     <div class="col-md-9">

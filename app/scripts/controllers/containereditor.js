@@ -158,4 +158,20 @@ angular.module('dockstore.ui')
         $scope.updateNSContainersRegistered($scope.selContainerObj);
       };
 
+      $scope.getCreateContainerObj = function(namespace) {
+        return {
+          create: true,
+          mode: 'MANUAL_IMAGE_PATH',
+          name: '',
+          toolname: '',
+          namespace: namespace ? namespace : '',
+          registry: '',
+          gitUrl: '',
+          default_dockerfile_path: '',
+          default_cwl_path: '',
+          is_public: true,
+          is_registered: false
+        };
+      };
+
   }]);

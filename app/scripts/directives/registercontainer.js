@@ -12,25 +12,32 @@ angular.module('dockstore.ui')
       restrict: 'AE',
       controller: 'RegisterContainerCtrl',
       scope: {
-      	containerNs: '='
+        containerObj: '='
       },
       templateUrl: 'templates/registercontainer.html',
       link: function postLink(scope, element, attrs) {
-        scope.$watch('containerNs', function(newValue, oldValue, scope) {
-          $(element).find('input[name="srcCodeRepository"]').val(
-            scope.containerNs ?
-              'https://github.com/' + scope.containerNs + '/' : ''
-          );
-          $(element).find('input[name="imageUrl"]').val(
-            scope.containerNs ? scope.containerNs + '/' : ''
-          );
-        });
-        scope.$watch('newContainerObj.imageUrl', function(newValue, oldValue) {
+        scope.$watch('containerObj', function(newValue, oldValue, scope) {
           if (newValue) {
-            var matchObj = newValue.match(/^(.+\/)*([\w-]+)$/i);
-            var imageName = '';
-            if (matchObj && matchObj.length > 2) imageName = matchObj[2];
-            $(element).find('input[name="toolName"]').val(imageName);
+            $(element).find('input[name="srcCodeRepository"]').val(
+              scope.containerObj.namespace ?
+                'https://github.com/' + scope.containerObj.namespace + '/' : ''
+            );
+            $(element).find('input[name="imageUrl"]').val(
+              scope.containerObj.namespace ?
+                  scope.containerObj.namespace + '/' : ''
+            );
+          }
+        });
+        scope.$watch('toggleModal', function(newValue, oldValue) {
+          if (scope.toggleModal) {
+            $('#registerContainerModal').modal('toggle');
+            scope.toggleModal = false;
+          }
+        });
+        scope.$watch('containerObj.imageUrl', function(newValue, oldValue) {
+          if (newValue) {
+            var imageName = scope.getImageName(newValue);
+            if (imageName) scope.containerObj.toolname = imageName;
           }
         });
       }

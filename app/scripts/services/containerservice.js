@@ -68,6 +68,40 @@ angular.module('dockstore.ui')
       });
     };
 
+    this.addContainer = function(containerObj) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'POST',
+          url: WebService.API_URI + '/containers/registerManual',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: containerObj
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.registerContainer = function(containerObj) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'POST',
+          url: WebService.API_URI + '/containers/registered',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: containerObj
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
     this.refreshUserContainers = function(userId) {
       return $q(function(resolve, reject) {
         $http({
