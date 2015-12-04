@@ -8,7 +8,7 @@
         <div class="button back-to-containers pull-right">
           <p>
             <a href ng-click="refreshUserContainers(userObj.id)">
-              Refresh Containers
+              Resync Containers
             </a>
           </p>
         </div>
@@ -31,7 +31,12 @@
     <div class="col-md-3 containers-rsb">
       <div class="ns-containers-accordion" ng-if="nsContainers">
         <uib-accordion ng-repeat="nsObj in nsContainers" close-others="true">
-          <uib-accordion-group heading="{{nsObj.namespace}}" is-open="$first">
+          <uib-accordion-group is-open="nsContainers[$index].isOpen">
+            <uib-accordion-heading>
+              <div class="container-namespace-label-oflw">
+                {{nsObj.namespace}}
+              </div>
+            </uib-accordion-heading>
             <div
                 class="container-label"
                 ng-class="{selected: selContainerObj.id === containerObj.id}"
@@ -47,13 +52,27 @@
                 </span>
               </div>
             </div>
+            <button type="button"
+                class="btn btn-primary btn-xs pull-right add-container-ns"
+                data-toggle="modal"
+                data-target="#registerContainerModal"
+                ng-click="ContainerEditor.editContainerObj = getCreateContainerObj(nsObj.namespace)">
+              <span class="glyphicon glyphicon-plus"></span>
+            </button>
           </uib-accordion-group>
         </uib-accordion>
       </div>
-      <button class="btn btn-primary btn-sm pull-right">
-        <a href="/my-containers/register">Add Container</a>
+      <button type="button"
+          class="btn btn-primary btn-sm pull-right"
+          data-toggle="modal"
+          data-target="#registerContainerModal"
+          ng-click="ContainerEditor.editContainerObj = getCreateContainerObj(null)">
+        <span>Add Container</span>
       </button>
-      <!--div register-container class="pull-right"></div-->
+      <div register-container
+          container-obj="ContainerEditor.editContainerObj"
+          add-container="addContainer">
+      </div>
     </div>
     <div class="col-md-9">
       <div container-details

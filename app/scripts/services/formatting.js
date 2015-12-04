@@ -39,6 +39,7 @@ angular.module('dockstore.ui')
       };
 
       this.getDateTimeString = function(timestamp) {
+        if (!timestamp) return 'n/a';
         var moy = ['Jan.', 'Feb.', 'Mar.', 'Apr.',
                     'May', 'Jun.', 'Jul.', 'Aug.',
                     'Sept.', 'Oct.', 'Nov.', 'Dec.'];

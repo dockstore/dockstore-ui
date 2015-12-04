@@ -14,7 +14,8 @@ angular.module('dockstore.ui')
       transclude: true,
       scope: {
         type: '@',
-        length: '@'
+        length: '@',
+        value: '='
       },
       templateUrl: 'templates/copytext.html',
       link: function postLink(scope, element, attrs) {
@@ -35,6 +36,12 @@ angular.module('dockstore.ui')
           var text = $(element).find('[ng-transclude] > span').html();
           if (text && text.length > 0) {
             window.clearInterval(intervalId);
+          } else if (scope.value && scope.value.length > 0) {
+            text = scope.value;
+            window.clearInterval(intervalId);
+            scope.$watch('value', function(newValue, oldValue) {
+              if (newValue) $(element).find('input').val(newValue);
+            });
           } else {
             return;
           }
@@ -59,6 +66,7 @@ angular.module('dockstore.ui')
             });
           }
         }, 10);
+
       }
     };
   });

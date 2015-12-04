@@ -13,13 +13,25 @@ angular.module('dockstore.ui')
       controller: 'TagEditorCtrl',
       scope: {
       	tagObj: '=',
+        containerId: '@',
       	containerPath: '@',
-      	editMode: '='
+      	editMode: '=',
+        addVersionTag: '&'
       },
       templateUrl: 'templates/tageditor.html',
       link: function postLink(scope, element, attrs) {
-      	scope.editTagObj = angular.copy(scope.tagObj);
-        // element.text('this is the tagEditor directive');
+        $('#tagEditorModal').on('hidden.bs.modal', function(event) {
+          scope.closeEditTagModal(false);
+        });
+        scope.$watch('toggleModal', function(newValue, oldValue) {
+          if (scope.toggleModal) {
+            $('#tagEditorModal').modal('toggle');
+            scope.toggleModal = false;
+          }
+        });
+        scope.$watch('tagObj', function(newValue, oldValue) {
+          if (newValue) scope.setDockerPullCmd();
+        });
       }
     };
   });

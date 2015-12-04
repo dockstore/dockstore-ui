@@ -10,8 +10,11 @@
 angular.module('dockstore.ui')
   .controller('VersionsGridCtrl', [
     '$scope',
+    '$q',
+    'ContainerService',
     'FormattingService',
-    function ($scope, FrmttSrvc) {
+    'NotificationService',
+    function ($scope, $q, ContainerService, FrmttSrvc, NtfnService) {
       
       $scope.containers = [];
       $scope.sortColumn = 'name';
@@ -36,6 +39,50 @@ angular.module('dockstore.ui')
         } else {
           return 'glyphicon-sort';
         }
+      };
+
+      $scope.deleteTag = function(tagId) {
+        $scope.setError(null);
+        return ContainerService.deleteContainerTag($scope.containerObj.id, tagId)
+          .then(
+            function(response) {
+              $scope.removeVersionTag(tagId);
+            },
+            function(response) {
+              $scope.setError(
+                'The webservice encountered an error trying to delete this ' +
+                'tag, please ensure that the container and the tag both exist.',
+                '[' + response.status + '] ' + response.statusText
+              );
+              return $q.reject(response);
+            }
+          );
+      };
+
+      $scope.addVersionTag = function(tagObj) {
+        $scope.versionTags.push(tagObj);
+      };
+
+      $scope.removeVersionTag = function(tagId) {
+        for (var i = 0; i < $scope.versionTags.length; i++) {
+          if ($scope.versionTags[i].id === tagId) {
+            $scope.versionTags.splice(i, 1);
+            break;
+          }
+        }
+      };
+
+      $scope.getCreateTagObj = function() {
+        return {
+          create: true,
+          name: '',
+          reference: '',
+          image_id: '',
+          dockerfile_path: $scope.containerObj.default_dockerfile_path,
+          cwl_path: $scope.containerObj.default_cwl_path,
+          hidden: true,
+          automated: false
+        };
       };
 
   }]);

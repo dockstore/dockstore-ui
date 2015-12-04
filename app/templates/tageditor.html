@@ -4,9 +4,24 @@
       <div class="modal-header">
         <h4 class="modal-title">{{!editMode ? 'View' : 'Edit'}} Version Tag</h4>
       </div>
+      <div class="alert alert-danger alert-dismissable"
+          role="alert"
+          ng-if="tagEditError">
+        <button type="button"
+            class="close"
+            data-dismiss="alert"
+            ng-click="setTagEditError(null)">
+          &times;
+        </button>
+        <p>
+          <span class="glyphicon glyphicon-warning-sign"></span>
+          {{tagEditError.message}}
+        </p>
+        <p class="error-output">{{tagEditError.errorDetails}}</p>
+      </div>
       <form name="tagEditorForm" 
           class="form-horizontal"
-          ng-submit="saveTagChanges()"
+          ng-submit="tagObj.create ? createTag() : saveTagChanges()"
           novalidate>
         <div class="modal-body">
           <div class="form-group form-group-sm">
@@ -17,9 +32,21 @@
               <input
                   type="text"
                   class="form-control"
-                  name="tagName"
+                  name="name"
                   ng-model="tagObj.name"
-                  ng-disabled="true" />
+                  ng-minlength="3"
+                  ng-maxlength="128"
+                  ng-pattern="/^[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*$/i"
+                  required
+                  placeholder="e.g. develop"
+                  ng-disabled="!tagObj.create" />
+              <div
+                  class="form-error-messages"
+                  ng-messages="tagEditorForm.name.$error"
+                  ng-if="tagEditorForm.name.$touched">
+                <div ng-messages-include="templates/validation/tags/name.html">
+                </div>
+              </div>
             </div>
           </div>
           <div class="form-group form-group-sm">
@@ -30,9 +57,46 @@
               <input
                   type="text"
                   class="form-control"
-                  name="dockerfilePath"
-                  ng-model="tagObj.dockerfilePath"
-                  ng-disabled="true" />
+                  name="reference"
+                  ng-model="tagObj.reference"
+                  ng-minlength="3"
+                  ng-maxlength="128"
+                  ng-pattern="/^[\w-]+(\/[\w-]+)*$/i"
+                  required
+                  placeholder="e.g. refs/heads/master"
+                  ng-disabled="!editMode || (editMode && tagObj.automated)" />
+              <div
+                  class="form-error-messages"
+                  ng-messages="tagEditorForm.reference.$error"
+                  ng-if="tagEditorForm.reference.$touched">
+                <div ng-messages-include="templates/validation/tags/reference.html">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Image ID:
+            </label>
+            <div class="col-sm-9">
+              <input
+                  type="text"
+                  class="form-control"
+                  name="image_id"
+                  ng-model="tagObj.image_id"
+                  ng-minlength="3"
+                  ng-maxlength="128"
+                  ng-pattern="/^[a-zA-Z0-9]*$/i"
+                  required
+                  placeholder="e.g. 28d30887157514b6047c9"
+                  ng-disabled="!editMode" />
+              <div
+                  class="form-error-messages"
+                  ng-messages="tagEditorForm.image_id.$error"
+                  ng-if="tagEditorForm.image_id.$touched">
+                <div ng-messages-include="templates/validation/tags/imageid.html">
+                </div>
+              </div>
             </div>
           </div>
           <div class="form-group form-group-sm">
@@ -43,8 +107,8 @@
               <input
                   type="text"
                   class="form-control"
-                  name="dockerfilePath"
-                  ng-model="editTagObj.dockerfilePath"
+                  name="dockerfile_path"
+                  ng-model="tagObj.dockerfile_path"
                   ng-minlength="3"
                   ng-maxlength="128"
                   ng-pattern="/^\/(.*\/)*Dockerfile$/i"
@@ -53,8 +117,8 @@
                   ng-disabled="!editMode" />
               <div
                   class="form-error-messages"
-                  ng-messages="tagEditorForm.dockerfilePath.$error"
-                  ng-if="tagEditorForm.dockerfilePath.$touched">
+                  ng-messages="tagEditorForm.dockerfile_path.$error"
+                  ng-if="tagEditorForm.dockerfile_path.$touched">
                 <div ng-messages-include="templates/validation/tags/dockerfilepath.html">
                 </div>
               </div>
@@ -68,8 +132,8 @@
               <input
                   type="text"
                   class="form-control"
-                  name="descriptorPath"
-                  ng-model="editTagObj.descriptorPath"
+                  name="cwl_path"
+                  ng-model="tagObj.cwl_path"
                   ng-minlength="3"
                   ng-maxlength="128"
                   ng-pattern="/^\/(.*\/)*Dockstore\.cwl$/i"
@@ -78,24 +142,10 @@
                   ng-disabled="!editMode" />
               <div
                   class="form-error-messages"
-                  ng-messages="tagEditorForm.descriptorPath.$error"
-                  ng-if="tagEditorForm.descriptorPath.$touched">
+                  ng-messages="tagEditorForm.cwl_path.$error"
+                  ng-if="tagEditorForm.cwl_path.$touched">
                 <div ng-messages-include="templates/validation/tags/descriptorpath.html">
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="form-group form-group-sm">
-            <label class="col-sm-3 control-label">
-              Automated:
-            </label>
-            <div class="col-sm-9">
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox"
-                      ng-model="editTagObj.isAutomated"
-                      ng-disabled="!editMode" />
-                </label>
               </div>
             </div>
           </div>
@@ -107,13 +157,23 @@
               <div class="checkbox">
                 <label>
                   <input type="checkbox"
-                      ng-model="editTagObj.isHidden"
+                      ng-model="tagObj.hidden"
                       ng-disabled="!editMode" />
                 </label>
               </div>
             </div>
           </div>
           <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Automated:
+            </label>
+            <div class="col-sm-9">
+              <div class="label-value">
+                {{tagObj.automated ? 'Yes' : 'No'}}
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm" ng-if="!tagObj.create">
             <label class="col-sm-3 control-label">
               Image Size:
             </label>
@@ -123,7 +183,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group form-group-sm">
+          <div class="form-group form-group-sm" ng-if="!tagObj.create">
             <label class="col-sm-3 control-label">
               Last Modified:
             </label>
@@ -133,48 +193,45 @@
               </div>
             </div>
           </div>
-          <div class="form-group form-group-sm">
+          <div class="form-group form-group-sm" ng-if="!tagObj.create">
             <label class="col-sm-3 control-label">
               Valid:
             </label>
             <div class="col-sm-9">
               <div class="label-value">
-                {{tagObj.isValid ? 'Yes' : 'No'}}
+                n/a <!--{{tagObj.isValid ? 'Yes' : 'No'}}-->
               </div>
             </div>
           </div>
-          <div class="form-group form-group-sm">
+          <div class="form-group form-group-sm" ng-if="!tagObj.create">
             <label class="col-sm-3 control-label">
               Docker Pull:
             </label>
             <div class="col-sm-9">
-              <div copy-text>docker pull {{containerPath}}:{{tagObj.name}}</div>
+              <div copy-text value="dockerPullCmd" ng-if="tagObj"></div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">
+          <button type="button"
+              class="btn btn-default"
+              ng-click="closeEditTagModal(true)">
             Close
           </button>
           <button type="submit"
               class="btn btn-primary"
-              ng-show="editMode"
+              ng-show="editMode && !tagObj.create"
               ng-disabled="tagEditorForm.$invalid">
             Save Changes
+          </button>
+          <button type="submit"
+              class="btn btn-primary"
+              ng-show="editMode && tagObj.create"
+              ng-disabled="tagEditorForm.$invalid">
+            Add Tag
           </button>
         </div>
       </form>
     </div>
   </div>
 </div>
-<a href
-    data-toggle="modal"
-    data-target="#tagEditorModal">
-  {{!editMode ? 'View' : 'Edit'}}
-</a>
-<!-- <button type="button"
-    class="btn btn-primary btn-sm"
-    data-toggle="modal"
-    data-target="#tagEditorModal">
-  Edit
-</button> -->

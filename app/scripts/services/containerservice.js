@@ -68,6 +68,40 @@ angular.module('dockstore.ui')
       });
     };
 
+    this.addContainer = function(containerObj) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'POST',
+          url: WebService.API_URI + '/containers/registerManual',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: containerObj
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.registerContainer = function(containerObj) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'POST',
+          url: WebService.API_URI + '/containers/registered',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: containerObj
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
     this.refreshUserContainers = function(userId) {
       return $q(function(resolve, reject) {
         $http({
@@ -92,6 +126,54 @@ angular.module('dockstore.ui')
           data: {
             register: isRegistered
           }
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.updateContainerTag = function(containerId, tagObj) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'PUT',
+          url: WebService.API_URI + '/containers/' + containerId + '/tags',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: [tagObj]
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.createContainerTag = function(containerId, tagObj) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'POST',
+          url: WebService.API_URI + '/containers/' + containerId + '/tags',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: [tagObj]
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.deleteContainerTag = function(containerId, tagId) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'DELETE',
+          url: WebService.API_URI + '/containers/' + containerId +
+              '/tags/' + tagId
         }).then(function(response) {
           resolve(response.data);
         }, function(response) {

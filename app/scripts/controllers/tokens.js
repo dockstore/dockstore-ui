@@ -22,10 +22,11 @@ angular.module('dockstore.ui')
       $scope.userObj = UserService.getUserObj();
 
       $scope.listTokens = function(userId) {
-        TokenService.getUserTokens(userId)
+        return TokenService.getUserTokens(userId)
           .then(
             function(tokens) {
               $scope.tokens = tokens;
+              return tokens;
             },
             function(response) {
               var message = '[' + response.status + '] ' + response.statusText;

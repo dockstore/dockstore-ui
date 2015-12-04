@@ -89,6 +89,7 @@ table.versions-grid {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  margin-bottom: 10px;
 }
 
 .side-block table {
@@ -192,6 +193,12 @@ div.view-content.ns-containers {
   div.panel {
     border-radius: 0;
     border-color: #ddd;
+    div.container-namespace-label-oflw {
+      width: 230px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
     div.container-label {
       background-color: #ffffff;
       color: #487980;
@@ -337,6 +344,24 @@ div.form-group.form-group-sm {
     top: 5px;
   }
 }
+
+form.form-horizontal {
+  line-height: 1.428571429;
+}
+
+button.add-container-ns {
+  position: relative;
+  top: 5px;
+  right: 13px;
+  span.glyphicon {
+    left: 1px;
+  }
+}
+
+div.modal-header + div.alert {
+  margin: 6px 8px 0 8px;
+}
+
 /* Media Queries - Lower Resolutions (width < 1200px) */
 @media (max-width: 992px) {
   img.site-logo { width: 50px; }
