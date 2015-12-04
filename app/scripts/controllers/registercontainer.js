@@ -26,7 +26,7 @@ angular.module('dockstore.ui')
               $scope.closeRegisterContainerModal();
               var savedContainerObj = null;
               console.log('Returned: ', containerObj);
-              $scope.addContainer(containerObj);
+              $scope.addContainer()(containerObj);
               // for (var i = 0; i < versionTags.length; i++) {
               //   if (versionTags[i].name === tagObj.name) {
               //     $scope.addVersionTag()(versionTags[i]);

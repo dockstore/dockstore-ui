@@ -193,6 +193,12 @@ div.view-content.ns-containers {
   div.panel {
     border-radius: 0;
     border-color: #ddd;
+    div.container-namespace-label-oflw {
+      width: 230px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
     div.container-label {
       background-color: #ffffff;
       color: #487980;

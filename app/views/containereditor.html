@@ -31,7 +31,12 @@
     <div class="col-md-3 containers-rsb">
       <div class="ns-containers-accordion" ng-if="nsContainers">
         <uib-accordion ng-repeat="nsObj in nsContainers" close-others="true">
-          <uib-accordion-group heading="{{nsObj.namespace}}" is-open="$first">
+          <uib-accordion-group is-open="nsContainers[$index].isOpen">
+            <uib-accordion-heading>
+              <div class="container-namespace-label-oflw">
+                {{nsObj.namespace}}
+              </div>
+            </uib-accordion-heading>
             <div
                 class="container-label"
                 ng-class="{selected: selContainerObj.id === containerObj.id}"
@@ -65,7 +70,8 @@
         <span>Add Container</span>
       </button>
       <div register-container
-          container-obj="ContainerEditor.editContainerObj">
+          container-obj="ContainerEditor.editContainerObj"
+          add-container="addContainer">
       </div>
     </div>
     <div class="col-md-9">

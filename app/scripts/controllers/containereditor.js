@@ -104,9 +104,19 @@ angular.module('dockstore.ui')
         })(nsContainers, username);
       };
 
+      $scope.openNamespaceItem = function(namespace) {
+        for (var i = 0; i < $scope.nsContainers.length; i++) {
+          if ($scope.nsContainers[i].namespace === namespace) {
+            $scope.nsContainers[i].isOpen = true;
+            break;
+          }
+        }
+      };
+
       $scope.selectContainer = function(containerId) {
         for (var i = 0; i < $scope.containers.length; i++) {
           if ($scope.containers[i].id === containerId) {
+            $scope.openNamespaceItem($scope.containers[i].namespace);
             $scope.selContainerObj = $scope.containers[i];
             break;
           }
@@ -141,6 +151,7 @@ angular.module('dockstore.ui')
           function(containers) {
             TokenService.getUserToken($scope.userObj.id, 'quay.io')
               .then(function(tokenObj) {
+                $scope.quayTokenObj = tokenObj;
                 $scope.nsContainers = $scope.sortNSContainers(containers, tokenObj.username);
                 if ($scope.nsContainers.length > 0) {
                   $scope.selectContainer($scope.nsContainers[0].containers[0].id);
@@ -172,6 +183,15 @@ angular.module('dockstore.ui')
           is_public: true,
           is_registered: false
         };
+      };
+
+      $scope.addContainer = function(containerObj) {
+        $scope.containers.push(containerObj);
+        $scope.nsContainers = $scope.sortNSContainers(
+          $scope.containers,
+          $scope.quayTokenObj.username
+        );
+        $scope.selectContainer(containerObj.id);
       };
 
   }]);
