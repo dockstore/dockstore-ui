@@ -26,6 +26,7 @@ angular.module('dockstore.ui')
               $scope.closeRegisterContainerModal();
               var savedContainerObj = null;
               console.log('Returned: ', containerObj);
+              $scope.addContainer(containerObj);
               // for (var i = 0; i < versionTags.length; i++) {
               //   if (versionTags[i].name === tagObj.name) {
               //     $scope.addVersionTag()(versionTags[i]);
@@ -53,7 +54,7 @@ angular.module('dockstore.ui')
         var matchObj = imageUrl.match(imageUrlRegexp);
         var imageName = '';
         if (matchObj && matchObj.length > 2) {
-          imageName = (part === 'name') ? matchObj[5] : matchObj[6];
+          imageName = (part !== 'name') ? matchObj[5] : matchObj[6];
         }
         return imageName;
       };

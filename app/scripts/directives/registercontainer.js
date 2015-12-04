@@ -12,7 +12,8 @@ angular.module('dockstore.ui')
       restrict: 'AE',
       controller: 'RegisterContainerCtrl',
       scope: {
-        containerObj: '='
+        containerObj: '=',
+        addContainer: '&'
       },
       templateUrl: 'templates/registercontainer.html',
       link: function postLink(scope, element, attrs) {
@@ -36,7 +37,7 @@ angular.module('dockstore.ui')
         });
         scope.$watch('containerObj.imageUrl', function(newValue, oldValue) {
           if (newValue) {
-            var imageName = scope.getImageName(newValue);
+            var imageName = scope.getImageName(newValue, 'name');
             if (imageName) scope.containerObj.toolname = imageName;
           }
         });
