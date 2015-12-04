@@ -79,10 +79,10 @@ angular.module('dockstore.ui')
             $scope.containerPath + ':' + $scope.tagObj.name;
       };
 
-      $scope.closeEditTagModal = function() {
+      $scope.closeEditTagModal = function(toggle) {
         $scope.setTagEditError(null);
-        $scope.tagEditorForm.$setPristine();
-        $scope.toggleModal = true;
+        $scope.tagEditorForm.$setUntouched();
+        if (toggle) $scope.toggleModal = true;
       };
 
       $scope.setTagEditError = function(message, errorDetails) {

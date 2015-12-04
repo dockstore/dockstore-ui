@@ -17,6 +17,9 @@ angular.module('dockstore.ui')
       },
       templateUrl: 'templates/registercontainer.html',
       link: function postLink(scope, element, attrs) {
+        $('#registerContainerModal').on('hidden.bs.modal', function(event) {
+          scope.closeRegisterContainerModal(false);
+        });
         scope.$watch('containerObj', function(newValue, oldValue, scope) {
           if (newValue) {
             scope.containerObj.gitUrl = scope.containerObj.namespace ?

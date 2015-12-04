@@ -23,7 +23,7 @@ angular.module('dockstore.ui')
         return ContainerService.addContainer(containerObj)
           .then(
             function(containerObj) {
-              $scope.closeRegisterContainerModal();
+              $scope.closeRegisterContainerModal(true);
               var savedContainerObj = null;
               console.log('Returned: ', containerObj);
               $scope.addContainer()(containerObj);
@@ -78,10 +78,10 @@ angular.module('dockstore.ui')
         };
       };
 
-      $scope.closeRegisterContainerModal = function() {
+      $scope.closeRegisterContainerModal = function(toggle) {console.log('emit!');
         $scope.setContainerEditError(null);
         $scope.registerContainerForm.$setUntouched();
-        $scope.toggleModal = true;
+        if (toggle) $scope.toggleModal = true;
       };
 
       $scope.setContainerEditError = function(message, errorDetails) {

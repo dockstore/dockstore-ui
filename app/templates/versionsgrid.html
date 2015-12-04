@@ -88,7 +88,7 @@
             </a>
             <a href
                 ng-click="deleteTag(versionTag.id)"
-                ng-if="editMode">
+                ng-if="editMode && containerObj.mode === 'MANUAL_IMAGE_PATH'">
               Delete
             </a>
           </td>
@@ -100,7 +100,7 @@
     </table>
     <button type="button"
         class="btn btn-primary btn-sm pull-right"
-        ng-if="editMode">
+        ng-if="editMode && containerObj.mode === 'MANUAL_IMAGE_PATH'">
       <a href
           data-toggle="modal"
           data-target="#tagEditorModal"

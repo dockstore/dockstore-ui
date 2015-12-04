@@ -20,6 +20,9 @@ angular.module('dockstore.ui')
       },
       templateUrl: 'templates/tageditor.html',
       link: function postLink(scope, element, attrs) {
+        $('#tagEditorModal').on('hidden.bs.modal', function(event) {
+          scope.closeEditTagModal(false);
+        });
         scope.$watch('toggleModal', function(newValue, oldValue) {
           if (scope.toggleModal) {
             $('#tagEditorModal').modal('toggle');
