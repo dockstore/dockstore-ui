@@ -25,7 +25,7 @@ angular.module('dockstore.ui')
         return ContainerService.updateContainerTag($scope.containerId, $scope.tagObj)
           .then(
             function(versionTags) {
-              $scope.closeEditTagModal();
+              $scope.closeEditTagModal(true);
               return versionTags;
             },
             function(response) {
@@ -50,7 +50,7 @@ angular.module('dockstore.ui')
         return ContainerService.createContainerTag($scope.containerId, tagObj)
           .then(
             function(versionTags) {
-              $scope.closeEditTagModal();
+              $scope.closeEditTagModal(true);
               var savedTagObj = null;
               for (var i = 0; i < versionTags.length; i++) {
                 if (versionTags[i].name === tagObj.name) {
