@@ -118,49 +118,30 @@ angular.module('dockstore.ui')
                 ((daysAgo === 1) ? ' day ago' : ' days ago');
       };
 
-      $scope.getGitReposProvider = function() {
-        if ($scope.containerObj.gitUrl.indexOf('github.com') !== -1) {
-          return 'github.com';
-        } else if ($scope.containerObj.gitUrl.indexOf('bitbucket.org') !== -1) {
-          return 'bitbucket.org';
-        } else {
-          return 'unknown';
-        }
-      };
-
-      $scope.getGitHubURL = function(containerGitUrl) {
-        if (containerGitUrl.length <= 0) return;
-        var gitHubRegexp = /^git@github.com:(.*)\/(.*).git$/i;
-        var matchRes = gitHubRegexp.exec(containerGitUrl);
-        return matchRes ? 'https://github.com/' + matchRes[1] + '/' + matchRes[2] : 'n/a';
-      };
-
-      $scope.getBitbucketURL = function(containerGitUrl) {
-        if (containerGitUrl.length <= 0) return;
-        var bitbucketRegexp = /^git@bitbucket.org:(.*)\/(.*).git$/i;
-        var matchRes = bitbucketRegexp.exec(containerGitUrl);
-        return matchRes ? 'https://bitbucket.org/' + matchRes[1] + '/' + matchRes[2] : 'n/a';
-      };
-
-      $scope.getQuayIOURL = function(containerPath) {
-        if (containerPath.length <= 0) return;
-        var quayIOPathRegexp = /^quay\.io\/(.*)\/(.*)$/i;
-        var matchRes = quayIOPathRegexp.exec(containerPath);
-        return matchRes ? 'https://quay.io/repository/' + matchRes[1] + '/' + matchRes[2] : 'n/a';
-      };
+      $scope.getGitReposProvider = FrmttSrvc.getGitReposProvider;
+      $scope.getGitReposProviderName = FrmttSrvc.getGitReposProviderName;
+      $scope.getGitReposWebUrl = FrmttSrvc.getGitReposWebUrl;
+      $scope.getImageReposProvider = FrmttSrvc.getImageReposProvider;
+      $scope.getImageReposProviderName = FrmttSrvc.getImageReposProviderName;
+      $scope.getImageReposWebUrl = FrmttSrvc.getImageReposWebUrl;
 
       $scope.updateInfoURLs = function() {
-        $scope.gitReposProvider = $scope.getGitReposProvider();
-        if ($scope.gitReposProvider === 'github.com') {
-          $scope.gitReposProviderName = 'GitHub';
-          $scope.gitReposProviderURL =
-              $scope.getGitHubURL($scope.containerObj.gitUrl);
-        } else if ($scope.gitReposProvider === 'bitbucket.org') {
-          $scope.gitReposProviderName = 'Bitbucket';
-          $scope.gitReposProviderURL =
-              $scope.getBitbucketURL($scope.containerObj.gitUrl);
-        }
-        $scope.quayIOURL = $scope.getQuayIOURL($scope.containerObj.path);
+        /* Git Repository */
+        $scope.gitReposProvider = $scope.getGitReposProvider(
+            $scope.containerObj.gitUrl);
+        $scope.gitReposProviderName = $scope.getGitReposProviderName(
+            $scope.gitReposProvider);
+        $scope.gitReposWebUrl = $scope.getGitReposWebUrl(
+            $scope.containerObj.gitUrl,
+            $scope.gitReposProvider);
+        /* Image Repository */
+        $scope.imageReposProvider = $scope.getImageReposProvider(
+            $scope.containerObj.path);
+        $scope.imageReposProviderName = $scope.getImageReposProviderName(
+            $scope.imageReposProvider);
+        $scope.imageReposWebUrl = $scope.getImageReposWebUrl(
+            $scope.containerObj.path,
+            $scope.imageReposProvider);
       };
 
       $scope.getDateTimeString = FrmttSrvc.getDateTimeString;

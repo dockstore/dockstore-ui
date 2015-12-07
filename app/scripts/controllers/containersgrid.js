@@ -11,7 +11,8 @@ angular.module('dockstore.ui')
   .controller('ContainersGridCtrl', [
     '$scope',
     '$rootScope',
-    function ($scope, $rootScope) {
+    'FormattingService',
+    function ($scope, $rootScope, FrmttSrvc) {
 
       $scope.containers = [];
       $scope.sortColumn = 'name';
@@ -20,54 +21,12 @@ angular.module('dockstore.ui')
       $scope.currPage = 1;
       $scope.contLimit = $scope.previewMode ? 5 : undefined;
 
-      $scope.getGitReposProvider = function(containerGitUrl) {
-        if (containerGitUrl.indexOf('github.com') !== -1) {
-          return 'github.com';
-        } else if (containerGitUrl.indexOf('bitbucket.org') !== -1) {
-          return 'bitbucket.org';
-        } else {
-          return 'unknown';
-        }
-      };
-
-      $scope.getGitHubURL = function(containerGitUrl) {
-        if (containerGitUrl.length <= 0) return;
-        var gitHubURLRegexp = /^git@github.com:(.*)\/(.*).git$/i;
-        var matchRes = gitHubURLRegexp.exec(containerGitUrl);
-        return 'https://github.com/' + matchRes[1] + '/' + matchRes[2];
-      };
-
-      $scope.getBitbucketURL = function(containerGitUrl) {
-        if (containerGitUrl.length <= 0) return;
-        var bitbucketRegexp = /^git@bitbucket.org:(.*)\/(.*).git$/i;
-        var matchRes = bitbucketRegexp.exec(containerGitUrl);
-        return 'https://bitbucket.org/' + matchRes[1] + '/' + matchRes[2];
-      };
-
-      $scope.getQuayIOURL = function(containerPath) {
-        if (containerPath.length <= 0) return;
-        var quayIOPathRegexp = /^quay\.io\/(.*)\/(.*)$/i;
-        var matchRes = quayIOPathRegexp.exec(containerPath);
-        return 'https://quay.io/repository/' + matchRes[1] + '/' + matchRes[2];
-      };
-
-      $scope.getGitReposProviderName = function(containerGitUrl) {
-        var gitReposProvider = $scope.getGitReposProvider(containerGitUrl);
-        if (gitReposProvider === 'github.com') {
-          return 'GitHub';
-        } else if (gitReposProvider === 'bitbucket.org') {
-          return 'Bitbucket';
-        }
-      };
-
-      $scope.getGitReposProviderURL = function(containerGitUrl) {
-        var gitReposProvider = $scope.getGitReposProvider(containerGitUrl);
-        if (gitReposProvider === 'github.com') {
-          return $scope.getGitHubURL(containerGitUrl);
-        } else if (gitReposProvider === 'bitbucket.org') {
-          return $scope.getBitbucketURL(containerGitUrl);
-        }
-      };
+      $scope.getGitReposProvider = FrmttSrvc.getGitReposProvider;
+      $scope.getGitReposProviderName = FrmttSrvc.getGitReposProviderName;
+      $scope.getGitReposWebUrl = FrmttSrvc.getGitReposWebUrl;
+      $scope.getImageReposProvider = FrmttSrvc.getImageReposProvider;
+      $scope.getImageReposProviderName = FrmttSrvc.getImageReposProviderName;
+      $scope.getImageReposWebUrl = FrmttSrvc.getImageReposWebUrl;
 
       /* Column Sorting */
       $scope.clickSortColumn = function(columnName) {

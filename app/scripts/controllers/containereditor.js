@@ -181,7 +181,9 @@ angular.module('dockstore.ui')
           default_dockerfile_path: '',
           default_cwl_path: '',
           is_public: true,
-          is_registered: false
+          is_registered: false,
+          scrProvider: 'GitHub',
+          irProvider: 'Quay.io'
         };
       };
 

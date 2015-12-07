@@ -362,6 +362,12 @@ div.modal-header + div.alert {
   margin: 6px 8px 0 8px;
 }
 
+div.modal form {
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+  }
+}
+
 /* Media Queries - Lower Resolutions (width < 1200px) */
 @media (max-width: 992px) {
   img.site-logo { width: 50px; }

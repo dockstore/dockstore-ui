@@ -43,42 +43,65 @@ angular.module('dockstore.ui')
           });
       };
 
-      $scope.getImageName = function(imageUrl, part) {
-        var imageUrlRegexp = /^(https?:)?\/\/(www\.)?(quay\.io\/repository|hub\.docker\.com\/r)(\/([\w-]+))+\/([\w-]+)\/?$/i;
-        var matchObj = imageUrl.match(imageUrlRegexp);
+      $scope.getGitUrl = function(gitPath) {
+        var gitUrl = '';
+        switch ($scope.containerObj.scrProvider) {
+          case 'GitHub':
+            gitUrl = 'https://github.com/';
+            break;
+          case 'Bitbucket':
+            /* falls through */
+          default:
+            gitUrl = 'https://bitbucket.org/';
+        }
+        gitUrl += gitPath;
+        return gitUrl;
+      };
+
+      $scope.getImagePath = function(imagePath, part) {
+        var imagePathRegexp = /^([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)\/([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)$/i;
+        var matchObj = imagePath.match(imagePathRegexp);
         var imageName = '';
         if (matchObj && matchObj.length > 2) {
-          imageName = (part !== 'name') ? matchObj[5] : matchObj[6];
+          imageName = (part !== 'name') ? matchObj[1] : matchObj[3];
         }
         return imageName;
       };
 
-      $scope.getContainerRegistry = function(imageUrl) {
+      $scope.getContainerRegistry = function(irProvider) {
         var registry = '';
-        if (imageUrl.indexOf('quay.io') !== -1) {
-          registry = 'QUAY_IO';
-        } else if (imageUrl.indexOf('hub.docker.com') !== -1) {
-          registry = 'DOCKER_HUB';
+        switch (irProvider) {
+          case 'Quay.io':
+            registry = 'QUAY_IO';
+            break;
+          case 'Docker Hub':
+            /* falls through */
+          default:
+            registry = 'DOCKER_HUB';
         }
         return registry;
       };
 
       $scope.getNormalizedContainerObj = function(containerObj) {
-        return {
+        var normContainerObj = {
           mode: 'MANUAL_IMAGE_PATH',
-          name: $scope.getImageName(containerObj.imageUrl, 'name'),
+          name: $scope.getImagePath(containerObj.imagePath, 'name'),
           toolname: containerObj.toolname,
-          namespace: $scope.getImageName(containerObj.imageUrl, 'namespace'),
-          registry: $scope.getContainerRegistry(containerObj.imageUrl),
-          gitUrl: containerObj.gitUrl,
+          namespace: $scope.getImagePath(containerObj.imagePath, 'namespace'),
+          registry: $scope.getContainerRegistry(containerObj.irProvider),
+          gitUrl: $scope.getGitUrl(containerObj.gitPath),
           default_dockerfile_path: containerObj.default_dockerfile_path,
           default_cwl_path: containerObj.default_cwl_path,
           is_public: containerObj.is_public,
           is_registered: containerObj.is_registered
         };
+        if (normContainerObj.toolname === normContainerObj.name) {
+          delete normContainerObj.toolname;
+        }
+        return normContainerObj;
       };
 
-      $scope.closeRegisterContainerModal = function(toggle) {console.log('emit!');
+      $scope.closeRegisterContainerModal = function(toggle) {
         $scope.setContainerEditError(null);
         $scope.registerContainerForm.$setUntouched();
         if (toggle) $scope.toggleModal = true;

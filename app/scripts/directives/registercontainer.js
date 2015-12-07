@@ -22,10 +22,10 @@ angular.module('dockstore.ui')
         });
         scope.$watch('containerObj', function(newValue, oldValue, scope) {
           if (newValue) {
-            scope.containerObj.gitUrl = scope.containerObj.namespace ?
-              'https://github.com/' + scope.containerObj.namespace + '/' : '';
-            scope.containerObj.imageUrl = scope.containerObj.namespace ?
-              'https://quay.io/repository/' + scope.containerObj.namespace + '/' : '';
+            scope.containerObj.gitPath = scope.containerObj.namespace ?
+              scope.containerObj.namespace + '/' + 'new_container' : '';
+            scope.containerObj.imagePath = scope.containerObj.namespace ?
+              scope.containerObj.namespace + '/' + 'new_container' : '';
           }
         });
         scope.$watch('toggleModal', function(newValue, oldValue) {
@@ -34,9 +34,14 @@ angular.module('dockstore.ui')
             scope.toggleModal = false;
           }
         });
-        scope.$watch('containerObj.imageUrl', function(newValue, oldValue) {
+        scope.$watch('containerObj.gitPath', function(newValue, oldValue) {
           if (newValue) {
-            var imageName = scope.getImageName(newValue, 'name');
+            scope.containerObj.imagePath = newValue;
+          }
+        });
+        scope.$watch('containerObj.imagePath', function(newValue, oldValue) {
+          if (newValue) {
+            var imageName = scope.getImagePath(newValue, 'name');
             if (imageName) scope.containerObj.toolname = imageName;
           }
         });

@@ -21,7 +21,7 @@
   <div class="col-md-10">
     <h3>
       <span class="glyphicon glyphicon-lock" ng-if="!containerObj.is_public"></span>
-      {{containerObj.namespace}}/{{containerObj.name}}
+      {{containerObj.namespace + '/' + containerObj.name + (containerObj.toolname ? ' (' + containerObj.toolname + ')' : '')}}
     </h3>
     <p class="update">
       Last build:
@@ -64,7 +64,7 @@
         <ul class="list-unstyled container-info">
           <li>
             <strong>Name</strong>:
-            {{containerObj.name}}
+            {{containerObj.name + (containerObj.toolname ? ' (' + containerObj.toolname + ')' : '')}}
           </li>
           <li>
             <strong>Path</strong>:
@@ -74,21 +74,23 @@
             <strong>Author</strong>:
             {{ containerObj.author ? containerObj.author : 'n/a' }}
           </li>
-          <li ng-if="gitReposProvider !== 'unknown'">
+          <li ng-if="gitReposProvider">
             <strong>{{gitReposProviderName}}</strong>:
-            <span ng-if="gitReposProviderURL">
-              <a ng-href="{{gitReposProviderURL}}" target="_blank">
-                {{gitReposProviderURL}}
+            <span ng-if="!gitReposProvider">n/a</span>
+            <span ng-if="gitReposWebUrl">
+              <a ng-href="{{gitReposWebUrl}}" target="_blank">
+                {{gitReposWebUrl}}
               </a>
             </span>
-            <span ng-if="!gitReposProvider">n/a</span>
           </li>
-          <li>
-            <strong>Quay.io</strong>:
-            <span ng-if="quayIOURL">
-              <a ng-href="{{quayIOURL}}" target="_blank">{{quayIOURL}}</a>
+          <li ng-if="imageReposProvider">
+            <strong>{{imageReposProviderName}}</strong>:
+            <span ng-if="!imageReposWebUrl">n/a</span>
+            <span ng-if="imageReposWebUrl">
+              <a ng-href="{{imageReposWebUrl}}" target="_blank">
+                {{imageReposWebUrl}}
+              </a>
             </span>
-            <span ng-if="!quayIOURL">n/a</span>
           </li>
           <li>
             <strong>Last Build</strong>:
@@ -102,10 +104,10 @@
             <strong>Description</strong>:
             <div class="well well-sm">
               <div
-                  ng-show="containerObj.description.length > 0"
+                  ng-show="containerObj.description"
                   marked="containerObj.description">
               </div>
-              <span ng-show="containerObj.description.length <= 0">
+              <span ng-show="!containerObj.description">
                 No description associated with this container.
               </span>
             </div>
@@ -241,17 +243,17 @@
           <td>
             <div class="container-source-repos">
               <p>
-                <span ng-if="gitReposProviderURL">
-                  <a ng-href="{{gitReposProviderURL}}" target="_blank">
+                <span ng-if="gitReposProvider">
+                  <a ng-href="{{gitReposWebUrl}}" target="_blank">
                     {{gitReposProviderName}}
                     <span class="glyphicon glyphicon-new-window"></span>
                   </a>
                 </span>
               </p>
               <p>
-                <span ng-if="quayIOURL">
-                  <a ng-href="{{quayIOURL}}" target="_blank">
-                    Quay.io
+                <span ng-if="imageReposProvider">
+                  <a ng-href="{{imageReposWebUrl}}" target="_blank">
+                    {{imageReposProviderName}}
                     <span class="glyphicon glyphicon-new-window"></span>
                   </a>
                 </span>

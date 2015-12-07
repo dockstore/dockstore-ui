@@ -1,5 +1,5 @@
 <div class="modal fade" id="registerContainerModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Register Container</h4>
@@ -29,28 +29,49 @@
               Source Code Repository:
             </label>
             <div class="col-sm-9">
-              <input
-                  type="text"
-                  class="form-control"
-                  name="gitUrl"
-                  ng-model="containerObj.gitUrl"
-                  ng-minlength="16"
-                  ng-maxlength="256"
-                  ng-pattern="/^(https?:)?\/\/(www\.)?(github\.com|bitbucket\.org)\/([\w-]+)\/([\w-]+)$/i"
-                  required
-                  placeholder="e.g. https://github.com/CancerCollaboratory/dockstore-tool-liftover" />
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <button type="button"
+                      class="btn btn-default btn-sm dropdown-toggle"
+                      data-toggle="dropdown">
+                    {{containerObj.scrProvider}} <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href ng-click="containerObj.scrProvider = 'GitHub'">
+                        GitHub
+                      </a>
+                    </li>
+                    <li>
+                      <a href ng-click="containerObj.scrProvider = 'Bitbucket'">
+                        Bitbucket
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="gitPath"
+                    ng-model="containerObj.gitPath"
+                    ng-minlength="3"
+                    ng-maxlength="128"
+                    ng-pattern="/^([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)\/([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)$/i"
+                    required
+                    placeholder="e.g. CancerCollaboratory/dockstore-tool-liftover" />
+              </div>
               <div
                   class="form-error-messages"
-                  ng-messages="registerContainerForm.gitUrl.$error"
-                  ng-if="registerContainerForm.gitUrl.$touched">
-                <div ng-messages-include="templates/validation/containers/giturl.html">
+                  ng-messages="registerContainerForm.gitPath.$error"
+                  ng-if="registerContainerForm.gitPath.$touched">
+                <div ng-messages-include="templates/validation/containers/gitpath.html">
                 </div>
               </div>
             </div>
           </div>
           <div class="form-group form-group-sm">
             <label class="col-sm-3 control-label">
-              Dockerfile:
+              Dockerfile Path:
             </label>
             <div class="col-sm-9">
               <input
@@ -74,7 +95,7 @@
           </div>
           <div class="form-group form-group-sm">
             <label class="col-sm-3 control-label">
-              CWL Descriptor:
+              CWL Descriptor Path:
             </label>
             <div class="col-sm-9">
               <input
@@ -101,21 +122,42 @@
               Image Registry:
             </label>
             <div class="col-sm-9">
-              <input
-                  type="text"
-                  class="form-control"
-                  name="imageUrl"
-                  ng-model="containerObj.imageUrl"
-                  ng-minlength="3"
-                  ng-maxlength="256"
-                  ng-pattern="/^(https?:)?\/\/(www\.)?(quay\.io\/repository|hub\.docker\.com\/r)(\/([\w-]+))+\/([\w-]+)\/?$/i"
-                  required
-                  placeholder="e.g. https://quay.io/repository/cancercollaboratory/dockstore-tool-liftover" />
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <button type="button"
+                      class="btn btn-default btn-sm dropdown-toggle"
+                      data-toggle="dropdown">
+                    {{containerObj.irProvider}} <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href ng-click="containerObj.irProvider = 'Quay.io'">
+                        Quay.io
+                      </a>
+                    </li>
+                    <li>
+                      <a href ng-click="containerObj.irProvider = 'Docker Hub'">
+                        Docker Hub
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="imagePath"
+                    ng-model="containerObj.imagePath"
+                    ng-minlength="3"
+                    ng-maxlength="128"
+                    ng-pattern="/^([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)\/([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)$/i"
+                    required
+                    placeholder="e.g. cancercollaboratory/dockstore-tool-liftover" />
+              </div>
               <div
                   class="form-error-messages"
-                  ng-messages="registerContainerForm.imageUrl.$error"
-                  ng-if="registerContainerForm.imageUrl.$touched">
-                <div ng-messages-include="templates/validation/containers/imageurl.html">
+                  ng-messages="registerContainerForm.imagePath.$error"
+                  ng-if="registerContainerForm.imagePath.$touched">
+                <div ng-messages-include="templates/validation/containers/imagepath.html">
                 </div>
               </div>
             </div>

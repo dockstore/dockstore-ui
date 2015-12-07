@@ -50,4 +50,88 @@ angular.module('dockstore.ui')
                 dateObj.toLocaleTimeString();
       };
 
+      this.getGitReposProvider = function(gitUrl) {
+        if (gitUrl.indexOf('github.com') !== -1) {
+          return 'GITHUB';
+        } else if (gitUrl.indexOf('bitbucket.org') !== -1) {
+          return 'BITBUCKET';
+        } else {
+          return null;
+        }
+      };
+
+      this.getGitReposProviderName = function(providerName) {
+        switch (providerName) {
+          case 'GITHUB':
+            return 'GitHub';
+          case 'BITBUCKET':
+            return 'Bitbucket';
+          default:
+            return 'Unknown';
+        }
+      };
+
+      this.getGitReposWebUrl = function(gitUrl, gitProvider) {
+        if (!gitUrl) return null;
+        var gitUrlRegExp = /^.*:(.*)\/(.*).git$/i;
+        var matchRes = gitUrlRegExp.exec(gitUrl);
+        if (!matchRes) return null;
+        var gitWebUrl = '';
+        switch (gitProvider) {
+          case 'GITHUB':
+            gitWebUrl = 'https://github.com/';
+            break;
+          case 'BITBUCKET':
+            gitWebUrl = 'https://bitbucket.org/';
+            break;
+          default:
+            return null;
+        }
+        gitWebUrl += matchRes[1] + '/' + matchRes[2];
+        return gitWebUrl;
+      };
+
+      this.getImageReposProvider = function(path) {
+        if (path.indexOf('quay.io') !== -1) {
+          return 'QUAY_IO';
+        } else if (path.indexOf('hub.docker.com') !== -1) {
+          return 'DOCKER_HUB';
+        } else {
+          return null;
+        }
+      };
+
+      this.getImageReposProviderName = function(imageReposProvider) {
+        switch (imageReposProvider) {
+          case 'QUAY_IO':
+            return 'Quay.io';
+          case 'DOCKER_HUB':
+            return 'Docker Hub';
+          default:
+            return 'Unknown';
+        }
+      };
+
+      this.getImageReposWebUrl = function(path, imageReposProvider) {
+        if (!path) return null;
+        var imageReposRegExp = /^.*\/(.*)\/(.*)\/?$/i;
+        var matchRes = imageReposRegExp.exec(path);
+        if (!matchRes) return null;
+        var imageReposWebUrl = '';
+        var suffix = '';
+        switch (imageReposProvider) {
+          case 'QUAY_IO':
+            imageReposWebUrl = 'https://quay.io/repository/';
+            break;
+          case 'DOCKER_HUB':
+            imageReposWebUrl = 'https://hub.docker.com/r/';
+            suffix = '/';
+            break;
+          default:
+            return null;
+        }
+        imageReposWebUrl += matchRes[1] + '/' + matchRes[2] + suffix;
+        return imageReposWebUrl;
+      };
+
   }]);

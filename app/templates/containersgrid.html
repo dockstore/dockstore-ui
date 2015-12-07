@@ -36,19 +36,27 @@
             <!-- need a to write a 'smart search' filter -->
             <tr ng-repeat="container in ((filteredContainers = (containers | PreviewFilter:contLimit | filter: searchQuery)) | orderBy:sortColumn:sortReverse | PaginationFilter:getListRange())">
               <td>
-                <a href="/containers/{{container.path}}">{{container.name}}</a>
+                <a href="/containers/{{container.path}}">{{container.name + (containerObj.toolname ? ' (' + containerObj.toolname + ')' : '')}}</a>
               </td>
               <td>
                 {{ container.author ? container.author : 'n/a' }}
               </td>
-              <td>
-                <span ng-if="getGitReposProvider(container.gitUrl) !== 'unknown'">
-                  <a ng-href="{{getGitReposProviderURL(container.gitUrl)}}" target="_blank">
-                    {{getGitReposProviderName(container.gitUrl)}}
+              <td ng-init="gitReposProvider = getGitReposProvider(container.gitUrl); imageReposProvider = getImageReposProvider(container.path)">
+                <span
+                    ng-init="gitReposWebUrl = getGitReposWebUrl(container.gitUrl, gitReposProvider)">
+                  <a ng-href="{{gitReposWebUrl}}"
+                      target="_blank"
+                      ng-if="gitReposWebUrl">
+                    {{getGitReposProviderName(gitReposProvider)}}
                   </a>
                 </span>
-                <span ng-if="getQuayIOURL(container.path)">
-                  <a ng-href="{{getQuayIOURL(container.path)}}" target="_blank">Quay.io</a>
+                <span
+                    ng-init="imageReposWebUrl = getImageReposWebUrl(container.path, imageReposProvider)">
+                  <a ng-href="{{imageReposWebUrl}}"
+                      target="_blank"
+                      ng-if="imageReposWebUrl">
+                    {{getImageReposProviderName(imageReposProvider)}}
+                  </a>
                 </span>
               </td>
               <td>

@@ -43,7 +43,7 @@
                 ng-repeat="containerObj in nsObj.containers">
               <div class="container-name-oflw pull-left">
                 <a href ng-click="selectContainer(containerObj.id)">
-                  {{containerObj.name}}
+                  {{containerObj.name + (containerObj.toolname ? ' (' + containerObj.toolname + ')' : '')}}
                 </a>
               </div>
               <div class="pull-right">
