@@ -15,16 +15,24 @@ angular.module('dockstore.ui')
     function ($scope, $q, ContainerService) {
     
       $scope.registerContainer = function() {
+        var containerObj = $scope.getNormalizedContainerObj($scope.containerObj);
+        $scope.createContainer(containerObj)
+          .then(function(containerObj) {
+            $scope.refreshContainer(containerObj.id)
+              .then(function(containerObj) {
+                $scope.closeRegisterContainerModal(true);
+                var savedContainerObj = null;
+                $scope.addContainer()(containerObj);
+              });
+          });
+      };
+
+      $scope.createContainer = function(containerObj) {
         if ($scope.savingActive) return;
         $scope.savingActive = true;
-        var containerObj = $scope.getNormalizedContainerObj($scope.containerObj);
-
-        return ContainerService.addContainer(containerObj)
+        return ContainerService.createContainer(containerObj)
           .then(
             function(containerObj) {
-              $scope.closeRegisterContainerModal(true);
-              var savedContainerObj = null;
-              $scope.addContainer()(containerObj);
               return containerObj;
             },
             function(response) {
@@ -38,6 +46,28 @@ angular.module('dockstore.ui')
             }
           ).finally(function(response) {
             $scope.savingActive = false;
+          });
+      };
+
+      $scope.refreshContainer = function(containerId) {
+        if ($scope.refreshingContainer) return;
+        $scope.refreshingContainer = true;
+        return ContainerService.refreshContainer(containerId)
+          .then(
+            function(containerObj) {
+              return containerObj;
+            },
+            function(response) {
+              $scope.setContainerEditError(
+                'The webservice encountered an error trying to refresh this ' +
+                'container, please ensure that the associated Dockerfile and ' +
+                'Dockstore.cwl descriptor are valid and accessible.',
+                '[' + response.status + '] ' + response.statusText
+              );
+              return $q.reject(response);
+            }
+          ).finally(function(response) {
+            $scope.refreshingContainer = false;
           });
       };
 

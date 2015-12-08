@@ -68,7 +68,7 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.addContainer = function(containerObj) {
+    this.createContainer = function(containerObj) {
       return $q(function(resolve, reject) {
         $http({
           method: 'POST',
@@ -94,6 +94,19 @@ angular.module('dockstore.ui')
             'Content-Type': 'application/json'
           },
           data: containerObj
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.refreshContainer = function(containerId) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: WebService.API_URI + '/containers/' + containerId + '/refresh',
         }).then(function(response) {
           resolve(response.data);
         }, function(response) {

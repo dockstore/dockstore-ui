@@ -66,6 +66,30 @@ angular.module('dockstore.ui')
           });
       };
 
+      $scope.refreshContainer = function(containerId) {
+        if ($scope.refreshingContainer) return;
+        $scope.refreshingContainer = true;console.log('refreshing:', containerId);
+        return ContainerService.refreshContainer(containerId)
+          .then(
+            function(containerObj) {console.log('returning:', containerObj);
+              $scope.containerObj = containerObj; // may not be proper copy
+              $scope.updateContainerObj();
+              return containerObj;
+            },
+            function(response) {
+              $scope.setContainerDetailsError(
+                'The webservice encountered an error trying to refresh this ' +
+                'container, please ensure that the associated Dockerfile and ' +
+                'Dockstore.cwl descriptor are valid and accessible.',
+                '[' + response.status + '] ' + response.statusText
+              );
+              return $q.reject(response);
+            }
+          ).finally(function(response) {
+            $scope.refreshingContainer = false;
+          });
+      };
+
       /* Editing entire containers is not possible yet... */
       $scope.setContainerLabels = function(containerId, labels) {
         $scope.setContainerDetailsError(null);
