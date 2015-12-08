@@ -26,7 +26,7 @@ angular.module('dockstore.ui')
 
       $scope.loadContainerDetails = function(containerPath) {
         $scope.setContainerDetailsError(null);
-        return ContainerService.getRegisteredContainerByPath(containerPath)
+        return ContainerService.getRegisteredContainerByToolPath(containerPath)
           .then(
             function(containerObj) {
               $scope.containerObj = containerObj;
@@ -203,6 +203,10 @@ angular.module('dockstore.ui')
 
       $scope.toggleLabelsEditMode = function() {
         $scope.labelsEditMode = !$scope.labelsEditMode;
+      };
+
+      $scope.getDockerPullCmd = function(path) {
+        return FrmttSrvc.getFilteredDockerPullCmd(path);
       };
 
       $scope.submitContainerEdits = function() {

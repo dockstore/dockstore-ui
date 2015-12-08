@@ -92,8 +92,8 @@
               Delete
             </a>
           </td>
-          <td>
-            <div copy-text>docker pull {{containerObj.path}}:{{versionTag.name}}</div>
+          <td ng-init="dockerPullCmd = getDockerPullCmd(containerObj.path, versionTag.name)">
+            <div copy-text>{{dockerPullCmd}}</div>
           </td>
         </tr>
       </tbody>

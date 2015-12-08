@@ -134,4 +134,15 @@ angular.module('dockstore.ui')
         return imageReposWebUrl;
       };
 
+      this.getFilteredDockerPullCmd = function(path, tagName) {
+        var dockerPullCmd = 'docker pull ';console.log('sliced:', path.slice(0, 24));
+        if (path.slice(0, 24) !== 'registry.hub.docker.com/') {
+          dockerPullCmd += path;
+        } else {
+          dockerPullCmd += path.slice(24);
+        }
+        if (tagName) dockerPullCmd += ':' + tagName;
+        return dockerPullCmd;
+      };
+
   }]);

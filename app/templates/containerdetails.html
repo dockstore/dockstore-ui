@@ -243,8 +243,8 @@
       </thead>
       <tbody>
         <tr>
-          <td>
-            <div copy-text>docker pull {{containerObj.path}}</div>
+          <td ng-init="dockerPullCmd = getDockerPullCmd(containerObj.path)">
+            <div copy-text>{{dockerPullCmd}}</div>
           </td>
         </tr>
       </tbody>

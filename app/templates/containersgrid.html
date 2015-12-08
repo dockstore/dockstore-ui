@@ -59,8 +59,8 @@
                   </a>
                 </span>
               </td>
-              <td>
-                <div copy-text>docker pull {{container.path}}</div>
+              <td ng-init="dockerPullCmd = getDockerPullCmd(container.path)">
+                <div copy-text>{{dockerPullCmd}}</div>
               </td>
             </tr>
             <tr ng-show="previewMode && filteredContainers.length !== 0">

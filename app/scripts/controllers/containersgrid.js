@@ -28,6 +28,10 @@ angular.module('dockstore.ui')
       $scope.getImageReposProviderName = FrmttSrvc.getImageReposProviderName;
       $scope.getImageReposWebUrl = FrmttSrvc.getImageReposWebUrl;
 
+      $scope.getDockerPullCmd = function(path) {
+        return FrmttSrvc.getFilteredDockerPullCmd(path);
+      };
+
       /* Column Sorting */
       $scope.clickSortColumn = function(columnName) {
         if ($scope.sortColumn === columnName) {

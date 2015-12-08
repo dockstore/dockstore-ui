@@ -55,6 +55,21 @@ angular.module('dockstore.ui')
       });
     };
 
+    this.getRegisteredContainerByToolPath = function(containerPath) {
+      var containerPathEncoded = containerPath.replace(/\//g, '%2F');
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: WebService.API_URI + '/containers/path/tool/' + containerPathEncoded + 
+                '/registered/'
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
     this.getUserContainerList = function(userId) {
       return $q(function(resolve, reject) {
         $http({
