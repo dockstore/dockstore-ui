@@ -111,6 +111,19 @@ angular.module('dockstore.ui')
         }
       };
 
+      $scope.getContainerModeString = function(mode) {
+        switch (mode) {
+          case 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS':
+            return 'Fully-Automated';
+          case 'AUTO_DETECT_QUAY_TAGS_WITH_MIXED':
+            return 'Partially-Automated';
+          case 'MANUAL_IMAGE_PATH':
+            return 'Manual';
+          default:
+            return 'Unknown';
+        }
+      };
+
       $scope.getDaysAgo = function(timestamp) {
         var timeDiff = (new Date()).getTime() - timestamp;
         return Math.floor(timeDiff / (1000 * 60 * 60 * 24));

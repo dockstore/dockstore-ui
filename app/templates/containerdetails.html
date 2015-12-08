@@ -93,6 +93,10 @@
             </span>
           </li>
           <li>
+            <strong>Build Mode</strong>:
+            {{getContainerModeString(containerObj.mode)}}
+          </li>
+          <li>
             <strong>Last Build</strong>:
             {{ containerObj.lastBuild ? getDateTimeString(containerObj.lastBuild) : 'n/a' }}
           </li>
