@@ -59,7 +59,7 @@
 <div class="row" ng-show="containerObj">
   <div class="ds-tabs" ng-class="editMode ? 'col-md-12' : 'col-md-9'">
     <uib-tabset>
-      <uib-tab>
+      <uib-tab active="activeTabs[0]">
         <uib-tab-heading>Info</uib-tab-heading>
         <ul class="list-unstyled container-info">
           <li>
@@ -118,9 +118,7 @@
           <div disqus-comments class="comments" ng-if="!editMode"></div>
         </div>
       </uib-tab>
-
-
-      <uib-tab>
+      <uib-tab active="activeTabs[1]">
         <uib-tab-heading>Labels</uib-tab-heading>
         <button type="sbutton"
             class="btn btn-link pull-right"
@@ -172,9 +170,7 @@
           </div>
         </form>
       </uib-tab>
-
-
-      <uib-tab>
+      <uib-tab  active="activeTabs[2]">
         <uib-tab-heading>Versions</uib-tab-heading>
         <div versions-grid
             container-obj="containerObj"
@@ -182,7 +178,7 @@
             set-error="setContainerDetailsError">
         </div>
       </uib-tab>
-      <uib-tab>
+      <uib-tab active="activeTabs[3]">
         <uib-tab-heading>Dockerfile</uib-tab-heading>
         <div container-file-viewer
             type="dockerfile"
@@ -190,7 +186,7 @@
             ng-if="containerObj">
         </div>
       </uib-tab>
-      <uib-tab>
+      <uib-tab active="activeTabs[4]">
         <uib-tab-heading>Descriptor</uib-tab-heading>
         <div container-file-viewer
             type="descriptor"
@@ -198,7 +194,7 @@
             ng-if="containerObj">
         </div>
       </uib-tab>
-      <!--uib-tab ng-if="editMode">
+      <!--uib-tab ng-if="editMode" active="activeTabs[5]">
         <uib-tab-heading>Sharing</uib-tab-heading>
         <h5>Container Registration:</h5>
         <button class="btn btn-sm"

@@ -19,6 +19,10 @@ angular.module('dockstore.ui')
       $scope.labelsEditMode = false;
       $scope.dockerfileEnabled = false;
       $scope.descriptorEnabled = false;
+      if (!$scope.activeTabs) {
+        $scope.activeTabs = [true];
+        for (var i = 0; i < 4; i++) $scope.activeTabs.push(false);
+      }
 
       $scope.loadContainerDetails = function(containerPath) {
         $scope.setContainerDetailsError(null);

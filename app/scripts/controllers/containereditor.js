@@ -21,6 +21,8 @@ angular.module('dockstore.ui')
         ContainerService, UserService, TokenService, NtfnService) {
 
       $scope.userObj = UserService.getUserObj();
+      $scope.activeTabs = [true];
+      for (var i = 0; i < 4; i++) $scope.activeTabs.push(false);
 
       $scope.listUserContainers = function(userId) {
         return ContainerService.getUserContainerList(userId)
@@ -194,6 +196,7 @@ angular.module('dockstore.ui')
           $scope.quayTokenObj.username
         );
         $scope.selectContainer(containerObj.id);
+        $scope.activeTabs[2] = true;
       };
 
   }]);

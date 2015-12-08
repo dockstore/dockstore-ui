@@ -15,6 +15,7 @@ angular.module('dockstore.ui')
         containerPath: '=',
         containerObj: '=',
         editMode: '=',
+        activeTabs: '=',
         updateContainerObj: '&'
       },
       templateUrl: 'templates/containerdetails.html'

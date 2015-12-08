@@ -19,13 +19,11 @@ angular.module('dockstore.ui')
         $scope.savingActive = true;
         var containerObj = $scope.getNormalizedContainerObj($scope.containerObj);
 
-        console.log('Submitting:', containerObj);
         return ContainerService.addContainer(containerObj)
           .then(
             function(containerObj) {
               $scope.closeRegisterContainerModal(true);
               var savedContainerObj = null;
-              console.log('Returned: ', containerObj);
               $scope.addContainer()(containerObj);
               return containerObj;
             },
