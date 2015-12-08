@@ -45,7 +45,8 @@
             class="btn btn-primary"
             ng-click="setContainerRegistration(containerObj.id, containerEditData.isRegistered)"
             ng-model="containerEditData.isRegistered"
-            ng-class="containerEditData.isRegistered ? 'btn-primary' : 'btn-warning'">
+            ng-class="containerEditData.isRegistered ? 'btn-primary' : 'btn-warning'"
+            ng-disabled="refreshingContainer">
           Register{{ containerEditData.isRegistered ? 'ed' : '' }}
         </button>
         <button type="button"

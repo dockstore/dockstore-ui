@@ -15,6 +15,7 @@ angular.module('dockstore.ui')
     function ($scope, $q, ContainerService) {
     
       $scope.registerContainer = function() {
+        $scope.setContainerEditError(null);
         var containerObj = $scope.getNormalizedContainerObj($scope.containerObj);
         $scope.createContainer(containerObj)
           .then(function(containerObj) {

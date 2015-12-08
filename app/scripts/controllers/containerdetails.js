@@ -67,6 +67,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.refreshContainer = function(containerId) {
+        $scope.setContainerDetailsError(null);
         if ($scope.refreshingContainer) return;
         $scope.refreshingContainer = true;console.log('refreshing:', containerId);
         return ContainerService.refreshContainer(containerId)

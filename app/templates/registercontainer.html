@@ -200,7 +200,7 @@
           </button>
           <button type="submit"
               class="btn btn-primary"
-              ng-disabled="registerContainerForm.$invalid">
+              ng-disabled="registerContainerForm.$invalid || savingActive || refreshingContainer">
             Add Container
           </button>
         </div>
