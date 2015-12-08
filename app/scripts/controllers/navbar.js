@@ -36,4 +36,10 @@ angular.module('dockstore.ui')
         $rootScope.searchQuery = newValue;
       });
 
+      $scope.$on('$routeChangeStart', function(event, next, current) {
+        if ($location.url().indexOf('/search') === -1) {
+          $scope.searchQuery = '';
+        }
+      });
+
   }]);

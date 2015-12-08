@@ -149,7 +149,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group form-group-sm">
+          <div class="form-group form-group-sm" ng-if="editMode">
             <label class="col-sm-3 control-label">
               Hidden:
             </label>
@@ -157,8 +157,7 @@
               <div class="checkbox">
                 <label>
                   <input type="checkbox"
-                      ng-model="tagObj.hidden"
-                      ng-disabled="!editMode" />
+                      ng-model="tagObj.hidden" />
                 </label>
               </div>
             </div>
