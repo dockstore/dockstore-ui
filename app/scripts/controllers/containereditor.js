@@ -167,8 +167,13 @@ angular.module('dockstore.ui')
           }
         );
 
-      $scope.updateContainerObj = function() {
-        $scope.updateNSContainersRegistered($scope.selContainerObj);
+      $scope.updateContainerObj = function(containerObj) {
+        if (containerObj) {
+          $scope.replaceContainer(containerObj);
+        } else {
+          /* 'Real-time' */
+          $scope.updateNSContainersRegistered($scope.selContainerObj);
+        }
       };
 
       $scope.getCreateContainerObj = function(namespace) {
@@ -197,6 +202,19 @@ angular.module('dockstore.ui')
         );
         $scope.selectContainer(containerObj.id);
         $scope.activeTabs[2] = true;
+      };
+
+      $scope.replaceContainer = function(containerObj) {
+        for (var i = 0; i < $scope.containers.length; i++) {
+          if ($scope.containers[i].id === containerObj.id) break;
+        }
+        $scope.containers[i] = containerObj;
+        $scope.nsContainers = $scope.sortNSContainers(
+          $scope.containers,
+          $scope.quayTokenObj.username
+        );
+        $scope.selectContainer(containerObj.id);
+        $scope.activeTabs[0] = true;
       };
 
   }]);
