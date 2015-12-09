@@ -21,16 +21,17 @@
       <div class="col-md-6">
         <h4 class="title caption">DockStore, developed by the Cancer Genome Collaboratory, is an open platform for sharing Docker-based tools described with the Common Workflow Language used by GA4GH.</h4>
       </div>
-      <div class="col-md-3 row-center">
+      <div class="col-md-3 row-center"
+          ng-if="!userObj">
         <div class="button">
           <p><a href="/login">Sign up to Contribute &raquo;</a></p>
         </div>
       </div>
-        <div class="col-md-3 row-center">
-          <div class="button">
-            <p><a href="/docs/about">About DockStore &raquo;</a></p>
-          </div>
+      <div class="col-md-3 row-center">
+        <div class="button">
+          <p><a href="/docs/about">About DockStore &raquo;</a></p>
         </div>
+      </div>
     </div>
   </div>
 </div>
