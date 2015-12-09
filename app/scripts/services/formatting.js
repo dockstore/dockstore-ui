@@ -135,12 +135,10 @@ angular.module('dockstore.ui')
       };
 
       this.getFilteredDockerPullCmd = function(path, tagName) {
-        var dockerPullCmd = 'docker pull ';console.log('sliced:', path.slice(0, 24));
-        if (path.slice(0, 24) !== 'registry.hub.docker.com/') {
-          dockerPullCmd += path;
-        } else {
-          dockerPullCmd += path.slice(24);
-        }
+        var dockerPullCmd = 'docker pull ';
+        var prefix = 'registry.hub.docker.com/';
+        dockerPullCmd += (path.indexOf(prefix) === -1) ?
+            path : path.replace(prefix, '');
         if (tagName) dockerPullCmd += ':' + tagName;
         return dockerPullCmd;
       };
