@@ -26,7 +26,7 @@ angular.module('dockstore.ui')
 
       $scope.loadContainerDetails = function(containerPath) {
         $scope.setContainerDetailsError(null);
-        return ContainerService.getRegisteredContainerByPath(containerPath)
+        return ContainerService.getRegisteredContainerByToolPath(containerPath)
           .then(
             function(containerObj) {
               $scope.containerObj = containerObj;
@@ -63,6 +63,30 @@ angular.module('dockstore.ui')
             }
           ).finally(function(response) {
             $scope.containerEditData.isRegistered = $scope.containerObj.is_registered;
+          });
+      };
+
+      $scope.refreshContainer = function(containerId) {
+        $scope.setContainerDetailsError(null);
+        if ($scope.refreshingContainer) return;
+        $scope.refreshingContainer = true;
+        return ContainerService.refreshContainer(containerId)
+          .then(
+            function(containerObj) {
+              $scope.updateContainerObj({containerObj: containerObj});
+              return containerObj;
+            },
+            function(response) {
+              $scope.setContainerDetailsError(
+                'The webservice encountered an error trying to refresh this ' +
+                'container, please ensure that the associated Dockerfile and ' +
+                'Dockstore.cwl descriptor are valid and accessible.',
+                '[' + response.status + '] ' + response.statusText
+              );
+              return $q.reject(response);
+            }
+          ).finally(function(response) {
+            $scope.refreshingContainer = false;
           });
       };
 
@@ -178,6 +202,10 @@ angular.module('dockstore.ui')
 
       $scope.toggleLabelsEditMode = function() {
         $scope.labelsEditMode = !$scope.labelsEditMode;
+      };
+
+      $scope.getDockerPullCmd = function(path) {
+        return FrmttSrvc.getFilteredDockerPullCmd(path);
       };
 
       $scope.submitContainerEdits = function() {

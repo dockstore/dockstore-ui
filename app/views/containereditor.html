@@ -23,7 +23,7 @@
       <div class="alert alert-info" role="alert">
         <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
         </span>
-        Please wait, retrieving Quay.io containers...
+        Please wait, retrieving Quay.io and/or Docker Hub containers...
       </div>
     </div>
   </div>
@@ -80,7 +80,7 @@
           container-obj="selContainerObj"
           edit-mode="true"
           active-tabs="activeTabs"
-          update-container-obj="updateContainerObj()"
+          update-container-obj="updateContainerObj(containerObj)"
           ng-if="selContainerObj">
       </div>
     </div>

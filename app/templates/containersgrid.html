@@ -36,7 +36,7 @@
             <!-- need a to write a 'smart search' filter -->
             <tr ng-repeat="container in ((filteredContainers = (containers | PreviewFilter:contLimit | filter: searchQuery)) | orderBy:sortColumn:sortReverse | PaginationFilter:getListRange())">
               <td>
-                <a href="/containers/{{container.path}}">{{container.name + (containerObj.toolname ? ' (' + containerObj.toolname + ')' : '')}}</a>
+                <a href="/containers/{{container.path + (container.toolname ? '/' + container.toolname : '')}}">{{container.name + (container.toolname ? ' (' + container.toolname + ')' : '')}}</a>
               </td>
               <td>
                 {{ container.author ? container.author : 'n/a' }}
@@ -59,8 +59,8 @@
                   </a>
                 </span>
               </td>
-              <td>
-                <div copy-text>docker pull {{container.path}}</div>
+              <td ng-init="dockerPullCmd = getDockerPullCmd(container.path)">
+                <div copy-text>{{dockerPullCmd}}</div>
               </td>
             </tr>
             <tr ng-show="previewMode && filteredContainers.length !== 0">

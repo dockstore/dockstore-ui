@@ -134,4 +134,13 @@ angular.module('dockstore.ui')
         return imageReposWebUrl;
       };
 
+      this.getFilteredDockerPullCmd = function(path, tagName) {
+        var dockerPullCmd = 'docker pull ';
+        var prefix = 'registry.hub.docker.com/';
+        dockerPullCmd += (path.indexOf(prefix) === -1) ?
+            path : path.replace(prefix, '');
+        if (tagName) dockerPullCmd += ':' + tagName;
+        return dockerPullCmd;
+      };
+
   }]);

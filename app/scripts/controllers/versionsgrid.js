@@ -72,6 +72,10 @@ angular.module('dockstore.ui')
         }
       };
 
+      $scope.getDockerPullCmd = function(path, tagName) {
+        return FrmttSrvc.getFilteredDockerPullCmd(path, tagName);
+      };
+
       $scope.getCreateTagObj = function() {
         return {
           create: true,

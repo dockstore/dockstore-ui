@@ -1,8 +1,9 @@
-<div class="row" ng-if="containerDetailsError">
+<div class="row" ng-if="containerDetailsError || refreshingContainer">
   <div class="col-md-12">
     <div class="alert alert-danger alert-dismissable"
         ng-class="!editMode ? 'push-top' : ''"
-        role="alert">
+        role="alert"
+        ng-if="containerDetailsError">
       <button type="button"
           class="close"
           data-dismiss="alert"
@@ -15,10 +16,17 @@
       </p>
       <p class="error-output">{{containerDetailsError.errorDetails}}</p>
     </div>
+    <div class="alert alert-info"
+          role="alert"
+          ng-if="refreshingContainer">
+        <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
+        </span>
+        Please wait, retrieving {{imageReposProviderName}} container...
+      </div>
   </div>
 </div>
 <div class="row" ng-show="containerObj">
-  <div class="col-md-10">
+  <div class="col-md-8">
     <h3>
       <span class="glyphicon glyphicon-lock" ng-if="!containerObj.is_public"></span>
       {{containerObj.namespace + '/' + containerObj.name + (containerObj.toolname ? ' (' + containerObj.toolname + ')' : '')}}
@@ -28,17 +36,26 @@
       {{ containerObj.lastBuild ? getDaysAgoString(containerObj.lastBuild) : 'n/a' }} 
     </p>
   </div>
-  <div class="col-md-2"
+  <div class="col-md-4"
       ng-if="editMode">
     <h3>
-      <button uib-btn-checkbox
-          type="button"
-          class="btn btn-primary pull-right"
-          ng-click="setContainerRegistration(containerObj.id, containerEditData.isRegistered)"
-          ng-model="containerEditData.isRegistered"
-          ng-class="containerEditData.isRegistered ? 'btn-primary' : 'btn-warning'">
-        Register{{ containerEditData.isRegistered ? 'ed' : '' }}
-      </button>
+      <div class="btn-group pull-right" role="group">
+        <button uib-btn-checkbox
+            type="button"
+            class="btn btn-primary"
+            ng-click="setContainerRegistration(containerObj.id, containerEditData.isRegistered)"
+            ng-model="containerEditData.isRegistered"
+            ng-class="containerEditData.isRegistered ? 'btn-primary' : 'btn-warning'"
+            ng-disabled="refreshingContainer">
+          Register{{ containerEditData.isRegistered ? 'ed' : '' }}
+        </button>
+        <button type="button"
+            class="btn btn-primary"
+            ng-click="refreshContainer(containerObj.id)"
+            ng-disabled="refreshingContainer">
+          Resync
+        </button>
+      </div>
     </h3>
   </div>
   <!--div class="col-md-4">
@@ -226,8 +243,8 @@
       </thead>
       <tbody>
         <tr>
-          <td>
-            <div copy-text>docker pull {{containerObj.path}}</div>
+          <td ng-init="dockerPullCmd = getDockerPullCmd(containerObj.path)">
+            <div copy-text>{{dockerPullCmd}}</div>
           </td>
         </tr>
       </tbody>
