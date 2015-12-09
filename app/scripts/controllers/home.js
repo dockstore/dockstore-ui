@@ -16,7 +16,7 @@ angular.module('dockstore.ui')
     'NotificationService',
     function ($scope, $q, ContainerService, UserService, NtfnService) {
 
-      $scope.userObj = UserService.getUserObj();console.log('is:', $scope.userObj);
+      $scope.userObj = UserService.getUserObj();
     
       $scope.listRegisteredContainers = function() {
         return ContainerService.getRegisteredContainerList()
