@@ -403,7 +403,10 @@ ul.pagination li{
 
 ul.our-sponsors li {
   display: inline;
-  padding-right: 50px;
+  padding-right: 32px;
+  a {
+    text-decoration: none;
+  }
 }
 
 ul.our-sponsors li img {
