@@ -8,20 +8,22 @@ For more background information on the Dockstore project please see the [About](
 
 ## Sign Up for Accounts
 
-Dockstore is powered by [Quay.io](http://quay.io), for storing Docker images, and [GitHub](http://github.com) for storing the build file (`Dockerfile`) and metadata descriptor file (`Dockstore.cwl`) that are used by this site.  Since the Dockstore does not store your Docker images, your Dockerfile, or your Dockstore.cwl metadata file, you are free to use all the excellent features of Quay.io and GitHub.  If you are already using these services then you will appreciate the fact that registering your Docker images on Dockstore is extremely easy and requires very little interruption to the way you work already.  For those of you that use [DockerHub](https://hub.docker.com/), an extremely popular Docker registry, we are planning on adding support in the near future.  For now, we recommend users of Dockstore sign up for both Quay.io and GitHub accounts to host their Docker images and build/metadata files respectively.  If you are already building your Docker images on DockerHub automatically it takes just minutes to setup a comparable build on Quay.io.
+Dockstore is powered by [Quay.io](http://quay.io/) and [Docker Hub](https://hub.docker.com/), for storing Docker images, and [GitHub](http://github.com/) and [Bitbucket](https://bitbucket.org/) for storing the build file (`Dockerfile`) and metadata descriptor file (`Dockstore.cwl`) that are used by this site.  Since the Dockstore does not store your Docker images, your Dockerfile, or your Dockstore.cwl metadata file, you are free to use all the excellent features of Quay.io/Docker Hub and GitHub/Bitbucket.  If you are already using these services then you will appreciate the fact that registering your Docker images on Dockstore is extremely easy and requires very little interruption to the way you work already.  For those of you that use [Docker Hub](https://hub.docker.com/), an extremely popular Docker registry, we are planning on adding enhanced support for features in the near future.  For now, we recommend users of Dockstore sign up for both Quay.io and GitHub/Bitbucket accounts to host their Docker images and build/metadata files respectively.  If you are already building your Docker images on Docker Hub automatically it takes just minutes to setup a comparable build on Quay.io.
 
-* [Sign up for an account on GitHub...](https://github.com)
-* [Sign up for an account on Quay.io... (signing in with GitHub is sufficient)](https://quay.io)
+* [Sign up for an account on GitHub...](https://github.com/) (Required for authentication.)
+* [Sign up for an account on Bitbucket...](https://bitbucket.org/)
+* [Sign up for an account on Quay.io...](https://quay.io/)
+* [Sign up for an account on Docker Hub...](https://hub.docker.com/)
 
 ## Create Your Tool
 
-Docker is a fantastic tool for creating light-weight containers to run your tools.  What this means is it gives you a fast VM-like environment for Linux where you can install dependencies, make configurations, and setup your tool exactly the way you want, as you would on a "normal" Linux host.  You can then quickly and easily share these Docker images with the world using registries like DockerHub or Quay.io (and indexed in Dockstore).  The full details on how to make new Docker images is beyond the scope of this site but the first place to look is the excellent documentation on Docker's site.  See Docker's [documentation](https://docs.docker.com/) which will walk you through installing Docker on your computer and making your own images.  The goal is to create a Dockerfile for your tool, stored in Github.  The steps, at a high level, are:
+Docker is a fantastic tool for creating light-weight containers to run your tools.  What this means is it gives you a fast VM-like environment for Linux where you can automatically install dependencies, make configurations, and setup your tool exactly the way you want, as you would on a "normal" Linux host.  You can then quickly and easily share these Docker images with the world using registries like Docker Hub and Quay.io (indexed by Dockstore).  The full details on how to make new Docker images is beyond the scope of this site but the first place to look is in the excellent documentation on Docker's site.  See Docker's [documentation](https://docs.docker.com/), which will walk you through installing Docker on your computer and making your own images.  The goal is to create a Dockerfile for your tool, stored in GitHub.  The steps, at a high level, are:
 
-0. create a new repository on GitHub
-0. create a `Dockerfile` in that repository that conforms to the guide above
+0. create a new repository on GitHub or Bitbucket
+0. create a `Dockerfile` in that repository that conforms to that described in the guide above
 0. use the Docker tools to build and test your Docker image
-0. use the release process on GitHub to make distinct release tags, we like the  [HubFlow](https://datasift.github.io/gitflow/) process in our group for managing releases in git
-0. setup Quay.io to automatically build your Docker image
+0. use the release process on GitHub or Bitbucket to make distinct release tags, we like the  [HubFlow](https://datasift.github.io/gitflow/) process in our group for managing releases in git
+0. setup Quay.io to automatically build your Docker image or manually register public Docker Hub containers
 
 For an example, see the [dockstore-tool-bamstats](https://github.com/briandoconnor/dockstore-tool-bamstats) repository on GitHub which we created as an example.  The [README](https://github.com/briandoconnor/dockstore-tool-bamstats/blob/develop/README.md) has more information which you may find helpful.  Here is the Dockerfile for this tool:
 
@@ -31,7 +33,7 @@ Read more on the development process at [http://docs.docker.com...](https://docs
 
 ## Describe Your Tool
 
-Now that you have a git repository that includes a `Dockerfile`, you have tested it, and are satisfied your tool works in Docker, the next step is to create a [CWL tool definition file](http://common-workflow-language.github.io/). This YAML file describes the inputs, outputs, and Docker image dependencies for your tool.
+Now that you have a git repository that includes a `Dockerfile`, you have tested it, and are satisfied that your tool works in Docker, the next step is to create a [CWL tool definition file](http://common-workflow-language.github.io/). This YAML file describes the inputs, outputs, and Docker image dependencies for your tool.
 
 It is recommended that you have the following minimum fields:
 
@@ -50,9 +52,9 @@ You can see this tool takes two inputs, a parameter to control memory usage and 
 
 The [CWL standard](http://common-workflow-language.github.io/) is continuing to evolve and hopefully we will see new features, like support for [EDAM ontology](http://edamontology.org/page) terms, in future releases.  In the mean time the [Gitter chat](https://gitter.im/common-workflow-language/common-workflow-language) is an active community to help drive the development in positive directions and we recommend tool authors make their voices heard.
 
-## Linking GitHub and Quay.io
+## Linking GitHub, Bitbucket and Quay.io
 
-The first step is to log in to the Dockstore which will link your accounts for GitHub and Quay.io along with providing you the command line tool we will use for most of the tasks in this tutorial.  Make sure you have your GitHub and Quay.io accounts established and follow the onboarding wizard:
+The first step is to log in to the Dockstore which will link your accounts for GitHub, Bitbucket and Quay.io along with providing you the command line tool we will use for most of the tasks in this tutorial.  Make sure you have your GitHub and Quay.io accounts established and follow the onboarding wizard:
 
 https://www.dockstore.org/login
 
@@ -60,16 +62,53 @@ Your link to GitHub is established on login and you will then be prompted to lin
 
 ![Link accounts](docs/linking1.png)
 
-![Link accounts](docs/linking2.png)
+Linking a supported image repository service (e.g. Quay.io) will automatically trigger a synchronization order to retrieve information about the account's containers
 
-The wizard will instruct you to setup the `dockstore` command line tool after linking your accounts.
+![Refresh containers](docs/linking2.png)
 
-![Link accounts](docs/linking3.png)
+Below, GitHub, BitBucket and Quay.io accounts have been linked, it is currently necessary for at least a GitHub account to be linked in order to perform regular account activities.
+
+![Link accounts completed](docs/linking3.png)
+
+Next, the wizard will instruct you to setup the `dockstore` command line tool after linking your accounts, and upon completetion you will be ready to use Dockstore.
+
+![Link accounts](docs/linking4.png)
 
 ## Register Your Tool in Dockstore
 
 Now that you have your `Dockerfile` and `Dockstore.cwl` in GitHub, have setup Quay.io to automatically build your Docker image, and have linked your accounts to Dockstore, it is time to register your tool.
-The `dockstore` command line has several options.  We recommend you first `dockstore refresh` to ensure the latest GitHub and Quay.io information is indexed properly.
+
+### Web UI Client
+
+In the authenticated Web UI, navigate to 'My Containers' to begin managing Docker images imported through your linked account(s).
+
+![My Containers](docs/register_ui.png)
+
+#### Manual Registration of Containers
+
+In certain cases, it is not possible for Dockstore to perquisition every existing container, especially those with unusual project structures. Most notably, Docker Hub images can not be automatically detected by Dockstore. For these images, it is necessary to manually register their details to Dockstore.
+
+Containers can be registered manually from the 'My Containers' page by pressing the 'Add Container' button at the bottom of the right side bar, or any of the '+' buttons in each accordion namespace group. A modal will appear as below:
+
+![Register Container Manual](docs/register_container_manual.png)
+
+The Source Code Repository and Image Registry fields must be filled out, they are in the format `namespace`/`name` (they may differ). The Dockerfile Path and CWL Descriptor Paths are relative to the root of the Source Code Repository (must begin with '/'), these will be the default locations to find their corresponding files, unless specified otherwise in the tags. The toolname is an optional 'suffix' appended to the Dockstore path, it allows for repositories to share the same Git and Image Registry namespaces and names, but have different configurations within Dockstore.
+
+Upon successful submission and registration of the container, a resync call will be made to fetch all available data from the given repositories.
+
+The user will then be taken to the 'Versions' tab of the new container, where tags (corresponding to GitHub/Bitbucket tag names) may be added.
+
+![Versions Grid](docs/version_tags.png)
+
+Press the 'Add Tag' button to begin creating tags for the different versions of the image. The tag creation modal will appear:
+
+![Edit Version Tag Dialogue](docs/tageditor_modal.png)
+
+The fields in the form should correspond to the actual values on GitHub/Bitbucket and Quay.io/Docker Hub in order for the information to be useful to other users. Selecting `Hidden` will prevent the tag from appearing under the public listing of tags for the image.
+
+### CLI Client
+
+The `dockstore` command line has several options.  We recommend you first `dockstore refresh` to ensure the latest GitHub, Bitbucket and Quay.io information is indexed properly.
 
 ![command](docs/cmd1.png)
 
@@ -77,8 +116,8 @@ You can then use `dockstore publish` to see the list of available Docker images 
 
 0. public
 0. built by Quay.io
-0. Quay.io is linked to GitHub for the `Dockerfile`
-0. the same GitHub repository also containers a `Dockstore.cwl`
+0. Quay.io is linked to GitHub or Bitbucket for the `Dockerfile`
+0. the same GitHub or Bitbucket repository contains a corresponding `Dockstore.cwl`
 
 ![command](docs/cmd2.png)
 
