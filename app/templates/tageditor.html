@@ -2,7 +2,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">{{!editMode ? 'View' : 'Edit'}} Version Tag</h4>
+        <h4 class="modal-title">{{!editMode ? 'View' : (tagObj.create ? 'Add' : 'Edit')}} Version Tag</h4>
       </div>
       <div class="alert alert-danger alert-dismissable"
           role="alert"
