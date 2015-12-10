@@ -62,7 +62,6 @@
                   ng-minlength="3"
                   ng-maxlength="128"
                   ng-pattern="/^[\w-]+(\/[\w-]+)*$/i"
-                  required
                   placeholder="e.g. develop"
                   ng-disabled="!editMode || (editMode && tagObj.automated)" />
               <div
@@ -111,7 +110,7 @@
                   ng-model="tagObj.dockerfile_path"
                   ng-minlength="3"
                   ng-maxlength="128"
-                  ng-pattern="/^\/(.*\/)*Dockerfile$/i"
+                  ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*Dockerfile$/i"
                   required
                   placeholder="e.g. /Dockerfile"
                   ng-disabled="!editMode" />
@@ -136,7 +135,7 @@
                   ng-model="tagObj.cwl_path"
                   ng-minlength="3"
                   ng-maxlength="128"
-                  ng-pattern="/^\/(.*\/)*Dockstore\.cwl$/i"
+                  ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.cwl$/i"
                   required
                   placeholder="e.g. /Dockstore.cwl"
                   ng-disabled="!editMode" />
