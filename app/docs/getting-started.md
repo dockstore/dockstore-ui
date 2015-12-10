@@ -84,6 +84,10 @@ In the authenticated Web UI, navigate to 'My Containers' to begin managing Docke
 
 ![My Containers](docs/register_ui.png)
 
+The left side menu is a list of all image repositories associated with the user, group alphabetally by namespace. Words encapsulated in parentheses denotes the toolname. Detailed information and links for each container is located on the 'Info' tab, the 'Labels' tab allows keywords to be associated with a container for efficient searching. Settings such as the path to the Dockerfile and CWL Descriptor can be modified on a per-tag basis in the 'Versions' tab. The Dockerfile and CWL Descriptor may be viewed in the last two tabs, by `Version` tag.
+
+A container is not visible on the public 'Containers' listing unless it is published. To publish a container, press the yellow 'Register' button in the top-right corner.
+
 #### Manual Registration of Containers
 
 In certain cases, it is not possible for Dockstore to perquisition every existing container, especially those with unusual project structures. Most notably, Docker Hub images can not be automatically detected by Dockstore. For these images, it is necessary to manually register their details to Dockstore.
