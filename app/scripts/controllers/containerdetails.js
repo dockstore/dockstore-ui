@@ -53,7 +53,7 @@ angular.module('dockstore.ui')
               $scope.updateContainerObj();
               return containerObj;
             },
-            function(response) {console.log(response);
+            function(response) {
               $scope.setContainerDetailsError(
                 'The webservice encountered an error trying to register this ' +
                 'container, please ensure that the associated Dockerfile and ' +
