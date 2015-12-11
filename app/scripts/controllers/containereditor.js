@@ -164,7 +164,7 @@ angular.module('dockstore.ui')
           .then(
             function(tokenStatusSet) {
               $scope.tokenStatusSet = tokenStatusSet;
-              if (!(tokenStatusSet.github && tokenStatusSet.quayio)) {
+              if (!tokenStatusSet.github) {
                 $window.location.href = '/onboarding';
               }
             }
@@ -175,13 +175,27 @@ angular.module('dockstore.ui')
         .then(
           function(containers) {
             TokenService.getUserToken($scope.userObj.id, 'quay.io')
-              .then(function(tokenObj) {
-                $scope.quayTokenObj = tokenObj;
-                $scope.nsContainers = $scope.sortNSContainers(containers, tokenObj.username);
-                if ($scope.nsContainers.length > 0) {
-                  $scope.selectContainer($scope.nsContainers[0].containers[0].id);
+              .then(
+                function(tokenObj) {
+                  $scope.quayTokenObj = tokenObj;
+                  $scope.nsContainers = $scope.sortNSContainers(
+                      containers,
+                      tokenObj.username
+                  );
+                  if ($scope.nsContainers.length > 0) {
+                    $scope.selectContainer($scope.nsContainers[0].containers[0].id);
+                  }
+                },
+                function(response) {
+                  $scope.nsContainers = $scope.sortNSContainers(
+                      containers,
+                      $scope.userObj.username
+                  );
+                  if ($scope.nsContainers.length > 0) {
+                    $scope.selectContainer($scope.nsContainers[0].containers[0].id);
+                  }
                 }
-              });
+            );
           });
 
       $scope.updateContainerObj = function(containerObj) {
@@ -215,7 +229,8 @@ angular.module('dockstore.ui')
         $scope.containers.push(containerObj);
         $scope.nsContainers = $scope.sortNSContainers(
           $scope.containers,
-          $scope.quayTokenObj.username
+          $scope.quayTokenObj ?
+              $scope.quayTokenObj.username : $scope.userObj.username
         );
         $scope.selectContainer(containerObj.id);
         $scope.activeTabs[2] = true;
@@ -228,7 +243,8 @@ angular.module('dockstore.ui')
         $scope.containers[i] = containerObj;
         $scope.nsContainers = $scope.sortNSContainers(
           $scope.containers,
-          $scope.quayTokenObj.username
+          $scope.quayTokenObj ?
+              $scope.quayTokenObj.username : $scope.userObj.username
         );
         $scope.selectContainer(containerObj.id);
         $scope.activeTabs[0] = true;

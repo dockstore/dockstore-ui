@@ -70,8 +70,7 @@ angular.module('dockstore.ui')
         .then(
           function(tokenStatusSet) {
             $scope.tokenStatusSet = tokenStatusSet;
-            $scope.tokenSetComplete = 
-              (tokenStatusSet.github && tokenStatusSet.quayio);
+            $scope.tokenSetComplete = tokenStatusSet.github;
           }
         );
 

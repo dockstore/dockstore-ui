@@ -45,7 +45,7 @@ angular.module('dockstore.ui')
           .then(
             function(tokenStatusSet) {
               $scope.tokenStatusSet = tokenStatusSet;
-              if (!(tokenStatusSet.github && tokenStatusSet.quayio)) {
+              if (!tokenStatusSet.github) {
                 $window.location.href = '/onboarding';
               }
             }
