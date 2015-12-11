@@ -98,7 +98,7 @@ Containers can be registered manually from the 'My Containers' page by pressing 
 
 The Source Code Repository and Image Registry fields must be filled out, they are in the format `namespace/name` (the two paths may differ). The Dockerfile Path and CWL Descriptor Paths are relative to the root of the Source Code Repository (and must begin with '/'), these will be the default locations to find their corresponding files, unless specified otherwise in the tags. The toolname is an optional 'suffix' appended to the Dockstore path, it allows for two repositories to share the same Git and Image Registry paths; the image registry path and the toolname uniquely distinguishes image repositories in Dockstore.
 
-Upon successful submission and registration of the container, a resynchronization call will be made to fetch all available data from the given sources.
+Upon successful submission and registration of the container, a resynchronization call will be made to fetch all available data from the given sources. If the image registry is Quay.io, existing version tags will be prepopulated for the Dockstore record.
 
 The user will then be taken to the 'Versions' tab of the new container, where tags (corresponding to GitHub/Bitbucket tag names) may be added.
 
