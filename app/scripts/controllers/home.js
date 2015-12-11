@@ -25,7 +25,8 @@ angular.module('dockstore.ui')
               $scope.containers = containers;
             },
             function(response) {
-              var message = '[' + response.status + '] ' + response.statusText;
+              var message = '[HTTP ' + response.status + '] ' +
+                  response.statusText + ': ' + response.data;
               NtfnService.popError('List Registered Containers', message);
               return $q.reject(response);
             }

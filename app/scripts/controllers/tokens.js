@@ -29,7 +29,8 @@ angular.module('dockstore.ui')
               return tokens;
             },
             function(response) {
-              var message = '[' + response.status + '] ' + response.statusText;
+              var message = '[HTTP ' + response.status + '] ' +
+                  response.statusText + ': ' + response.data;
               NtfnService.popError('List Tokens', message);
               return $q.reject(response);
             }
@@ -43,7 +44,8 @@ angular.module('dockstore.ui')
               $route.reload();
             },
             function(response) {
-              var message = '[' + response.status + '] ' + response.statusText;
+              var message = '[HTTP ' + response.status + '] ' +
+                  response.statusText + ': ' + response.data;
               NtfnService.popError('Delete Token', message);
               return $q.reject(response);
             }

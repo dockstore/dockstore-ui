@@ -25,6 +25,7 @@ angular.module('dockstore.ui')
       for (var i = 0; i < 4; i++) $scope.activeTabs.push(false);
 
       $scope.listUserContainers = function(userId) {
+        $scope.setContainerEditorError(null);
         return ContainerService.getUserContainerList(userId)
           .then(
             function(containers) {
@@ -32,8 +33,12 @@ angular.module('dockstore.ui')
               return containers;
             },
             function(response) {
-              var message = '[' + response.status + '] ' + response.statusText;
-              NtfnService.popError('List User Containers', message);
+              $scope.setContainerEditorError(
+                'The webservice encountered an error trying to load a list ' +
+                'of containers for this account.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
               return $q.reject(response);
             }
           );
@@ -42,6 +47,7 @@ angular.module('dockstore.ui')
       $scope.refreshUserContainers = function(userId) {
         if ($scope.refreshingContainers) return;
         $scope.refreshingContainers = true;
+        $scope.setContainerEditorError(null);
         return ContainerService.refreshUserContainers(userId)
           .then(
             function(containers) {
@@ -50,8 +56,14 @@ angular.module('dockstore.ui')
               return containers;
             },
             function(response) {
-              var message = '[' + response.status + '] ' + response.statusText;
-              NtfnService.popError('Refresh User Containers', message);
+              $scope.setContainerEditorError(
+                'The webservice encountered an error trying to refresh ' +
+                'containers for User: ' + $scope.userObj.username + '. If the ' +
+                'problem persists after 60 min. has passed, try re-linking ' +
+                'your external accounts and repeating the action.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
               return $q.reject(response);
             }
           );
@@ -136,6 +148,17 @@ angular.module('dockstore.ui')
         }
       };
 
+      $scope.setContainerEditorError = function(message, errorDetails) {
+        if (message) {
+          $scope.containerEditorError = {
+            message: message,
+            errorDetails: errorDetails
+          };
+        } else {
+          $scope.containerEditorError = null;
+        }
+      };
+
       if ($auth.isAuthenticated()) {
         TokenService.getUserTokenStatusSet($scope.userObj.id)
           .then(
@@ -159,13 +182,7 @@ angular.module('dockstore.ui')
                   $scope.selectContainer($scope.nsContainers[0].containers[0].id);
                 }
               });
-          },
-          function(response) {
-            var message = '[' + response.status + '] ' + response.statusText;
-            NtfnService.popError('Docker User Containers', message);
-            return $q.reject(response);
-          }
-        );
+          });
 
       $scope.updateContainerObj = function(containerObj) {
         if (containerObj) {

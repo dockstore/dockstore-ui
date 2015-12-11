@@ -36,7 +36,8 @@ angular.module('dockstore.ui')
                 'The webservice encountered an error trying to retrieve this ' +
                 'container, please ensure that the container exists and is ' +
                 'registered for public access.',
-                '[' + response.status + '] ' + response.statusText
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
               );
               return $q.reject(response);
             }
@@ -52,12 +53,13 @@ angular.module('dockstore.ui')
               $scope.updateContainerObj();
               return containerObj;
             },
-            function(response) {
+            function(response) {console.log(response);
               $scope.setContainerDetailsError(
                 'The webservice encountered an error trying to register this ' +
                 'container, please ensure that the associated Dockerfile and ' +
                 'Dockstore.cwl descriptor are valid and accessible.',
-                '[' + response.status + '] ' + response.statusText
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
               );
               return $q.reject(response);
             }
@@ -81,7 +83,8 @@ angular.module('dockstore.ui')
                 'The webservice encountered an error trying to refresh this ' +
                 'container, please ensure that the associated Dockerfile and ' +
                 'Dockstore.cwl descriptor are valid and accessible.',
-                '[' + response.status + '] ' + response.statusText
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
               );
               return $q.reject(response);
             }
@@ -101,8 +104,14 @@ angular.module('dockstore.ui')
               return containerObj;
             },
             function(response) {
-              var message = '[' + response.status + '] ' + response.statusText;
-              NtfnService.popError('Docker Container Details', message);
+              $scope.setContainerDetailsError(
+                'The webservice encountered an error trying to modify labels ' +
+                'for this container, please ensure that the label list is ' +
+                'properly-formatted and does not contain prohibited ' +
+                'characters of words.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
               return $q.reject(response);
             }
           );

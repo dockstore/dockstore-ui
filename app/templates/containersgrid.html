@@ -47,16 +47,14 @@
                   <a ng-href="{{gitReposWebUrl}}"
                       target="_blank"
                       ng-if="gitReposWebUrl">
-                    {{getGitReposProviderName(gitReposProvider)}}
-                  </a>
+                    {{getGitReposProviderName(gitReposProvider)}}</a>
                 </span>
                 <span
                     ng-init="imageReposWebUrl = getImageReposWebUrl(container.path, imageReposProvider)">
                   <a ng-href="{{imageReposWebUrl}}"
                       target="_blank"
                       ng-if="imageReposWebUrl">
-                    {{getImageReposProviderName(imageReposProvider)}}
-                  </a>
+                    {{getImageReposProviderName(imageReposProvider)}}</a>
                 </span>
               </td>
               <td ng-init="dockerPullCmd = getDockerPullCmd(container.path)">

@@ -52,7 +52,8 @@ angular.module('dockstore.ui')
               $scope.setError(
                 'The webservice encountered an error trying to delete this ' +
                 'tag, please ensure that the container and the tag both exist.',
-                '[' + response.status + '] ' + response.statusText
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
               );
               return $q.reject(response);
             }

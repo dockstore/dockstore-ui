@@ -41,7 +41,8 @@ angular.module('dockstore.ui')
                 'The webservice encountered an error trying to create this ' +
                 'container, please ensure that the container attributes are ' +
                 'valid and the same image has not already been registered.',
-                '[' + response.status + '] ' + response.statusText
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
               );
               return $q.reject(response);
             }
@@ -63,7 +64,8 @@ angular.module('dockstore.ui')
                 'The webservice encountered an error trying to refresh this ' +
                 'container, please ensure that the associated Dockerfile and ' +
                 'Dockstore.cwl descriptor are valid and accessible.',
-                '[' + response.status + '] ' + response.statusText
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
               );
               return $q.reject(response);
             }

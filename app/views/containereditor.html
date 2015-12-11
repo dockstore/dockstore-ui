@@ -18,9 +18,26 @@
 </div>
 
 <div class="container view-content ns-containers" style="margin-top: 12px;">
-  <div class="row" ng-if="refreshingContainers">
+  <div class="row" ng-if="containerEditorError || refreshingContainers">
     <div class="col-md-12">
-      <div class="alert alert-info" role="alert">
+      <div class="alert alert-danger alert-dismissable"
+          role="alert"
+          ng-if="containerEditorError">
+        <button type="button"
+            class="close"
+            data-dismiss="alert"
+            ng-click="setContainerEditorError(null)">
+          &times;
+        </button>
+        <p>
+          <span class="glyphicon glyphicon-warning-sign"></span>
+          {{containerEditorError.message}}
+        </p>
+        <p class="error-output">{{containerEditorError.errorDetails}}</p>
+      </div>
+      <div class="alert alert-info"
+          role="alert"
+          ng-if="refreshingContainers">
         <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
         </span>
         Please wait, retrieving Quay.io and/or Docker Hub containers...

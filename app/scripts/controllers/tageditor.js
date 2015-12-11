@@ -33,7 +33,8 @@ angular.module('dockstore.ui')
                 'The webservice encountered an error trying to save this ' +
                 'container, please ensure that the container exists and the ' +
                 'tag attributes are valid.',
-                '[' + response.status + '] ' + response.statusText
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
               );
               return $q.reject(response);
             }
@@ -65,7 +66,8 @@ angular.module('dockstore.ui')
                 'The webservice encountered an error trying to save this ' +
                 'container, please ensure that the container exists and the ' +
                 'tag attributes are valid.',
-                '[' + response.status + '] ' + response.statusText
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
               );
               return $q.reject(response);
             }
