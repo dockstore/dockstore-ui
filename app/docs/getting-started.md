@@ -78,9 +78,9 @@ Next, the wizard will instruct you to setup the `dockstore` command line tool af
 
 Now that you have your `Dockerfile` and `Dockstore.cwl` in GitHub, have setup Quay.io to automatically build your Docker image, and have linked your accounts to Dockstore, it is time to register your tool.
 
-### Web UI Client
+### Quick Registration via the Web UI 
 
-In the authenticated Web UI, navigate to 'My Containers' to begin managing Docker images imported through your linked account(s).
+In the authenticated Web UI, navigate to 'My Containers' to begin managing Docker images imported through your linked account(s). These pages will allow you to quickly register containers that follow a particularly simple format (look below to manual registration for more complex formats). For quick registration, we look through your quay.io images and see if any are setup as [automated builds](https://docs.quay.io/guides/building.html). Using those to track back to your github or bitbucket accounts, we list all pairs of Docker images with git repositories that contain a `Dockstore.cwl` and a `Dockerfile`. When we discover both of these, we create an unregistered entry in the interface below. 
 
 ![My Containers](docs/register_ui.png)
 
@@ -90,7 +90,7 @@ A container is not visible on the public 'Containers' listing unless it is publi
 
 #### Manual Registration of Containers
 
-In certain cases, it is not possible for Dockstore to perquisition every existing container, especially those with unusual project structures. Most notably, Docker Hub images can not be automatically detected by Dockstore. For those images, it is necessary to manually register their details to Dockstore.
+In certain cases, it is not possible for Dockstore to perquisition every existing container, especially those with unusual project structures. Most notably, Docker Hub images can not be automatically detected by Dockstore. The second possibility is that you have multiple CWL documents in a GitHub repository associated with multiple images. For those cases, it is necessary to manually register their details to Dockstore.
 
 Containers can be registered manually from the 'My Containers' page by pressing the 'Add Container' button at the bottom of the right side bar, or any of the '+' buttons in each accordion namespace group. A modal will appear as below:
 
@@ -128,7 +128,7 @@ You can then use `dockstore publish` to see the list of available Docker images 
 
 You can see in the above, the tool (identified with `quay.io/briandoconnor/dockstore-tool-bamstats` in Dockstore and Quay.io) was successfully registered and can be seen by anyone on the Dockstore site.
 
-The `dockstore manual_publish` command can be used to manually register a container on Docker Hub. Its usage is outlined in the publish_manual help menu.
+The `dockstore manual_publish` command can be used to manually register a container on Docker Hub. Its usage is outlined in the publish_manual help menu. This will allow you to register entries that do not follow the qualities above (non-automated builds and Docker Hub images). 
 
 ![command](docs/cmd3_xliu.png)
 
