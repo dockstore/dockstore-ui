@@ -114,18 +114,23 @@ The fields in the form should correspond to the actual values on GitHub/Bitbucke
 
 The `dockstore` command line has several options.  We recommend you first `dockstore refresh` to ensure the latest GitHub, Bitbucket and Quay.io information is indexed properly.
 
-![command](docs/cmd1.png)
+![command](docs/cmd1_xliu.png)
 
-You can then use `dockstore publish` to see the list of available Docker images you can register with Dockstore.  The key is that Docker images you wish to register have the following 4 qualities:
+You can then use `dockstore publish` to see the list of available Docker images you can register with Dockstore. This is for you to publish containers that are auto-detected from Quay.io. The key is that Docker images you wish to register have the following qualities:
 
 0. public
-0. built by Quay.io
-0. Quay.io is linked to GitHub or Bitbucket for the `Dockerfile`
-0. the same GitHub or Bitbucket repository contains a corresponding `Dockstore.cwl`
+0. atleast one valid tag. In order to be valid, a tag has to:
+    * be automated from a GitHub or Bitbucket reference
+    * have the reference be linked to the `Dockerfile`
+    * have the reference be linked a corresponding `Dockstore.cwl`
 
 ![command](docs/cmd2.png)
 
 You can see in the above, the tool (identified with `quay.io/briandoconnor/dockstore-tool-bamstats` in Dockstore and Quay.io) was successfully registered and can be seen by anyone on the Dockstore site.
+
+The `dockstore manual_publish` command can be used to manualy register a container on Docker Hub. Its usage is outlined in the publish_manual help menu.
+
+![command](docs/cmd3_xliu.png)
 
 ## Run Tools
 
