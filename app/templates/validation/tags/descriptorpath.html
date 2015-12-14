@@ -1,8 +1,11 @@
 <p ng-message="required">
   This field cannot be empty.
 </p>
+<p ng-message="minlength">
+  Descriptor Path is too short. (Min. 3 characters.)
+</p>
 <p ng-message="maxlength">
-  Descriptor Path is too long. (Max 128 characters.)
+  Dockerfile Path is too long. (Max 128 characters.)
 </p>
 <p ng-message="pattern">
   Invalid Descriptor Path format. Descriptor Path must begin with '/' and end with '*.cwl'.

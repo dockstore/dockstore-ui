@@ -88,7 +88,7 @@
                   ng-model="containerObj.default_dockerfile_path"
                   ng-minlength="3"
                   ng-maxlength="256"
-                  ng-pattern="/^\/(.*\/)*Dockerfile$/i"
+                  ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*Dockerfile$/i"
                   required
                   placeholder="e.g. /Dockerfile" />
               <div
@@ -112,7 +112,7 @@
                   ng-model="containerObj.default_cwl_path"
                   ng-minlength="3"
                   ng-maxlength="256"
-                  ng-pattern="/^\/(.*\/)*Dockstore\.cwl$/i"
+                  ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.cwl$/i"
                   required
                   placeholder="e.g. /Dockstore.cwl" />
               <div
