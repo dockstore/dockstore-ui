@@ -36,7 +36,7 @@
                   ng-model="tagObj.name"
                   ng-minlength="3"
                   ng-maxlength="128"
-                  ng-pattern="/^[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*$/i"
+                  ng-pattern="/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*$/i"
                   required
                   placeholder="e.g. develop"
                   ng-disabled="!tagObj.create" />
@@ -61,7 +61,7 @@
                   ng-model="tagObj.reference"
                   ng-minlength="3"
                   ng-maxlength="128"
-                  ng-pattern="/^[\w-]+(\/[\w-]+)*$/i"
+                  ng-pattern="/^[\w-]+((\/|\.)[\w-]+)*$/i"
                   placeholder="e.g. develop"
                   ng-disabled="!editMode || (editMode && tagObj.automated)" />
               <div
