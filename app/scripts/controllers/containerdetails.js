@@ -12,16 +12,21 @@ angular.module('dockstore.ui')
     '$scope',
     '$q',
     'ContainerService',
+    'FormattingService',
     'NotificationService',
-    function ($scope, $q, ContainerService, NtfnService) {
+    function ($scope, $q, ContainerService, FrmttSrvc, NtfnService) {
 
       $scope.labelsEditMode = false;
       $scope.dockerfileEnabled = false;
       $scope.descriptorEnabled = false;
+      if (!$scope.activeTabs) {
+        $scope.activeTabs = [true];
+        for (var i = 0; i < 4; i++) $scope.activeTabs.push(false);
+      }
 
       $scope.loadContainerDetails = function(containerPath) {
         $scope.setContainerDetailsError(null);
-        return ContainerService.getRegisteredContainerByPath(containerPath)
+        return ContainerService.getRegisteredContainerByToolPath(containerPath)
           .then(
             function(containerObj) {
               $scope.containerObj = containerObj;
@@ -31,7 +36,8 @@ angular.module('dockstore.ui')
                 'The webservice encountered an error trying to retrieve this ' +
                 'container, please ensure that the container exists and is ' +
                 'registered for public access.',
-                '[' + response.status + '] ' + response.statusText
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
               );
               return $q.reject(response);
             }
@@ -52,12 +58,38 @@ angular.module('dockstore.ui')
                 'The webservice encountered an error trying to register this ' +
                 'container, please ensure that the associated Dockerfile and ' +
                 'Dockstore.cwl descriptor are valid and accessible.',
-                '[' + response.status + '] ' + response.statusText
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
               );
               return $q.reject(response);
             }
           ).finally(function(response) {
             $scope.containerEditData.isRegistered = $scope.containerObj.is_registered;
+          });
+      };
+
+      $scope.refreshContainer = function(containerId) {
+        $scope.setContainerDetailsError(null);
+        if ($scope.refreshingContainer) return;
+        $scope.refreshingContainer = true;
+        return ContainerService.refreshContainer(containerId)
+          .then(
+            function(containerObj) {
+              $scope.updateContainerObj({containerObj: containerObj});
+              return containerObj;
+            },
+            function(response) {
+              $scope.setContainerDetailsError(
+                'The webservice encountered an error trying to refresh this ' +
+                'container, please ensure that the associated Dockerfile and ' +
+                'Dockstore.cwl descriptor are valid and accessible.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
+              return $q.reject(response);
+            }
+          ).finally(function(response) {
+            $scope.refreshingContainer = false;
           });
       };
 
@@ -72,8 +104,14 @@ angular.module('dockstore.ui')
               return containerObj;
             },
             function(response) {
-              var message = '[' + response.status + '] ' + response.statusText;
-              NtfnService.popError('Docker Container Details', message);
+              $scope.setContainerDetailsError(
+                'The webservice encountered an error trying to modify labels ' +
+                'for this container, please ensure that the label list is ' +
+                'properly-formatted and does not contain prohibited ' +
+                'characters of words.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
               return $q.reject(response);
             }
           );
@@ -106,6 +144,19 @@ angular.module('dockstore.ui')
         }
       };
 
+      $scope.getContainerModeString = function(mode) {
+        switch (mode) {
+          case 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS':
+            return 'Fully-Automated';
+          case 'AUTO_DETECT_QUAY_TAGS_WITH_MIXED':
+            return 'Partially-Automated';
+          case 'MANUAL_IMAGE_PATH':
+            return 'Manual';
+          default:
+            return 'Unknown';
+        }
+      };
+
       $scope.getDaysAgo = function(timestamp) {
         var timeDiff = (new Date()).getTime() - timestamp;
         return Math.floor(timeDiff / (1000 * 60 * 60 * 24));
@@ -117,61 +168,33 @@ angular.module('dockstore.ui')
                 ((daysAgo === 1) ? ' day ago' : ' days ago');
       };
 
-      $scope.getGitReposProvider = function() {
-        if ($scope.containerObj.gitUrl.indexOf('github.com') !== -1) {
-          return 'github.com';
-        } else if ($scope.containerObj.gitUrl.indexOf('bitbucket.org') !== -1) {
-          return 'bitbucket.org';
-        } else {
-          return 'unknown';
-        }
-      };
-
-      $scope.getGitHubURL = function(containerGitUrl) {
-        if (containerGitUrl.length <= 0) return;
-        var gitHubRegexp = /^git@github.com:(.*)\/(.*).git$/i;
-        var matchRes = gitHubRegexp.exec(containerGitUrl);
-        return 'https://github.com/' + matchRes[1] + '/' + matchRes[2];
-      };
-
-      $scope.getBitbucketURL = function(containerGitUrl) {
-        if (containerGitUrl.length <= 0) return;
-        var bitbucketRegexp = /^git@bitbucket.org:(.*)\/(.*).git$/i;
-        var matchRes = bitbucketRegexp.exec(containerGitUrl);
-        return 'https://bitbucket.org/' + matchRes[1] + '/' + matchRes[2];
-      };
-
-      $scope.getQuayIOURL = function(containerPath) {
-        if (containerPath.length <= 0) return;
-        var quayIOPathRegexp = /^quay\.io\/(.*)\/(.*)$/i;
-        var matchRes = quayIOPathRegexp.exec(containerPath);
-        return 'https://quay.io/repository/' + matchRes[1] + '/' + matchRes[2];
-      };
+      $scope.getGitReposProvider = FrmttSrvc.getGitReposProvider;
+      $scope.getGitReposProviderName = FrmttSrvc.getGitReposProviderName;
+      $scope.getGitReposWebUrl = FrmttSrvc.getGitReposWebUrl;
+      $scope.getImageReposProvider = FrmttSrvc.getImageReposProvider;
+      $scope.getImageReposProviderName = FrmttSrvc.getImageReposProviderName;
+      $scope.getImageReposWebUrl = FrmttSrvc.getImageReposWebUrl;
 
       $scope.updateInfoURLs = function() {
-        $scope.gitReposProvider = $scope.getGitReposProvider();
-        if ($scope.gitReposProvider === 'github.com') {
-          $scope.gitReposProviderName = 'GitHub';
-          $scope.gitReposProviderURL =
-              $scope.getGitHubURL($scope.containerObj.gitUrl);
-        } else if ($scope.gitReposProvider === 'bitbucket.org') {
-          $scope.gitReposProviderName = 'Bitbucket';
-          $scope.gitReposProviderURL =
-              $scope.getBitbucketURL($scope.containerObj.gitUrl);
-        }
-        $scope.quayIOURL = $scope.getQuayIOURL($scope.containerObj.path);
+        /* Git Repository */
+        $scope.gitReposProvider = $scope.getGitReposProvider(
+            $scope.containerObj.gitUrl);
+        $scope.gitReposProviderName = $scope.getGitReposProviderName(
+            $scope.gitReposProvider);
+        $scope.gitReposWebUrl = $scope.getGitReposWebUrl(
+            $scope.containerObj.gitUrl,
+            $scope.gitReposProvider);
+        /* Image Repository */
+        $scope.imageReposProvider = $scope.getImageReposProvider(
+            $scope.containerObj.path);
+        $scope.imageReposProviderName = $scope.getImageReposProviderName(
+            $scope.imageReposProvider);
+        $scope.imageReposWebUrl = $scope.getImageReposWebUrl(
+            $scope.containerObj.path,
+            $scope.imageReposProvider);
       };
 
-      $scope.getDateTimeString = function(timestamp) {
-        var moy = ['Jan.', 'Feb.', 'Mar.', 'Apr.',
-                    'May', 'Jun.', 'Jul.', 'Aug.',
-                    'Sept.', 'Oct.', 'Nov.', 'Dec.'];
-        var dateObj = new Date(timestamp);
-        return moy[dateObj.getMonth()] + ' ' +
-                dateObj.getDate() + ', ' +
-                dateObj.getFullYear() + ' at ' +
-                dateObj.toLocaleTimeString();
-      };
+      $scope.getDateTimeString = FrmttSrvc.getDateTimeString;
 
       $scope.getContainerLabelStrings = function(labels) {
         var sortedLabels = labels.sort(function(a, b) {
@@ -188,6 +211,10 @@ angular.module('dockstore.ui')
 
       $scope.toggleLabelsEditMode = function() {
         $scope.labelsEditMode = !$scope.labelsEditMode;
+      };
+
+      $scope.getDockerPullCmd = function(path) {
+        return FrmttSrvc.getFilteredDockerPullCmd(path);
       };
 
       $scope.submitContainerEdits = function() {

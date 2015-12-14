@@ -1,8 +1,9 @@
-<div class="row" ng-if="containerDetailsError">
+<div class="row" ng-if="containerDetailsError || refreshingContainer">
   <div class="col-md-12">
     <div class="alert alert-danger alert-dismissable"
         ng-class="!editMode ? 'push-top' : ''"
-        role="alert">
+        role="alert"
+        ng-if="containerDetailsError">
       <button type="button"
           class="close"
           data-dismiss="alert"
@@ -15,30 +16,46 @@
       </p>
       <p class="error-output">{{containerDetailsError.errorDetails}}</p>
     </div>
+    <div class="alert alert-info"
+        role="alert"
+        ng-if="refreshingContainer">
+      <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
+      </span>
+      Please wait, retrieving {{imageReposProviderName}} container...
+    </div>
   </div>
 </div>
 <div class="row" ng-show="containerObj">
-  <div class="col-md-10">
+  <div class="col-md-8">
     <h3>
       <span class="glyphicon glyphicon-lock" ng-if="!containerObj.is_public"></span>
-      {{containerObj.namespace}}/{{containerObj.name}}
+      {{containerObj.namespace + '/' + containerObj.name + (containerObj.toolname ? ' (' + containerObj.toolname + ')' : '')}}
     </h3>
     <p class="update">
       Last build:
       {{ containerObj.lastBuild ? getDaysAgoString(containerObj.lastBuild) : 'n/a' }} 
     </p>
   </div>
-  <div class="col-md-2"
+  <div class="col-md-4"
       ng-if="editMode">
     <h3>
-      <button uib-btn-checkbox
-          type="button"
-          class="btn btn-primary pull-right"
-          ng-click="setContainerRegistration(containerObj.id, containerEditData.isRegistered)"
-          ng-model="containerEditData.isRegistered"
-          ng-class="containerEditData.isRegistered ? 'btn-primary' : 'btn-warning'">
-        Register{{ containerEditData.isRegistered ? 'ed' : '' }}
-      </button>
+      <div class="btn-group pull-right" role="group">
+        <button uib-btn-checkbox
+            type="button"
+            class="btn btn-primary"
+            ng-click="setContainerRegistration(containerObj.id, containerEditData.isRegistered)"
+            ng-model="containerEditData.isRegistered"
+            ng-class="containerEditData.isRegistered ? 'btn-primary' : 'btn-warning'"
+            ng-disabled="refreshingContainer">
+          Register{{ containerEditData.isRegistered ? 'ed' : '' }}
+        </button>
+        <button type="button"
+            class="btn btn-primary"
+            ng-click="refreshContainer(containerObj.id)"
+            ng-disabled="refreshingContainer">
+          Re-sync
+        </button>
+      </div>
     </h3>
   </div>
   <!--div class="col-md-4">
@@ -59,12 +76,12 @@
 <div class="row" ng-show="containerObj">
   <div class="ds-tabs" ng-class="editMode ? 'col-md-12' : 'col-md-9'">
     <uib-tabset>
-      <uib-tab>
+      <uib-tab active="activeTabs[0]">
         <uib-tab-heading>Info</uib-tab-heading>
         <ul class="list-unstyled container-info">
           <li>
             <strong>Name</strong>:
-            {{containerObj.name}}
+            {{containerObj.name + (containerObj.toolname ? ' (' + containerObj.toolname + ')' : '')}}
           </li>
           <li>
             <strong>Path</strong>:
@@ -74,21 +91,27 @@
             <strong>Author</strong>:
             {{ containerObj.author ? containerObj.author : 'n/a' }}
           </li>
-          <li ng-if="gitReposProvider !== 'unknown'">
+          <li ng-if="gitReposProvider">
             <strong>{{gitReposProviderName}}</strong>:
-            <span ng-if="gitReposProviderURL">
-              <a ng-href="{{gitReposProviderURL}}" target="_blank">
-                {{gitReposProviderURL}}
+            <span ng-if="!gitReposProvider">n/a</span>
+            <span ng-if="gitReposWebUrl">
+              <a ng-href="{{gitReposWebUrl}}" target="_blank">
+                {{gitReposWebUrl}}
               </a>
             </span>
-            <span ng-if="!gitReposProvider">n/a</span>
+          </li>
+          <li ng-if="imageReposProvider">
+            <strong>{{imageReposProviderName}}</strong>:
+            <span ng-if="!imageReposWebUrl">n/a</span>
+            <span ng-if="imageReposWebUrl">
+              <a ng-href="{{imageReposWebUrl}}" target="_blank">
+                {{imageReposWebUrl}}
+              </a>
+            </span>
           </li>
           <li>
-            <strong>Quay.io</strong>:
-            <span ng-if="quayIOURL">
-              <a ng-href="{{quayIOURL}}" target="_blank">{{quayIOURL}}</a>
-            </span>
-            <span ng-if="!quayIOURL">n/a</span>
+            <strong>Build Mode</strong>:
+            {{getContainerModeString(containerObj.mode)}}
           </li>
           <li>
             <strong>Last Build</strong>:
@@ -102,10 +125,10 @@
             <strong>Description</strong>:
             <div class="well well-sm">
               <div
-                  ng-show="containerObj.description.length > 0"
+                  ng-show="containerObj.description"
                   marked="containerObj.description">
               </div>
-              <span ng-show="containerObj.description.length <= 0">
+              <span ng-show="!containerObj.description">
                 No description associated with this container.
               </span>
             </div>
@@ -116,9 +139,7 @@
           <div disqus-comments class="comments" ng-if="!editMode"></div>
         </div>
       </uib-tab>
-
-
-      <uib-tab>
+      <uib-tab active="activeTabs[1]">
         <uib-tab-heading>Labels</uib-tab-heading>
         <button type="sbutton"
             class="btn btn-link pull-right"
@@ -170,13 +191,15 @@
           </div>
         </form>
       </uib-tab>
-
-
-      <uib-tab>
+      <uib-tab  active="activeTabs[2]">
         <uib-tab-heading>Versions</uib-tab-heading>
-        <div versions-grid container-obj="containerObj"></div>
+        <div versions-grid
+            container-obj="containerObj"
+            edit-mode="editMode"
+            set-error="setContainerDetailsError">
+        </div>
       </uib-tab>
-      <uib-tab>
+      <uib-tab active="activeTabs[3]">
         <uib-tab-heading>Dockerfile</uib-tab-heading>
         <div container-file-viewer
             type="dockerfile"
@@ -184,7 +207,7 @@
             ng-if="containerObj">
         </div>
       </uib-tab>
-      <uib-tab>
+      <uib-tab active="activeTabs[4]">
         <uib-tab-heading>Descriptor</uib-tab-heading>
         <div container-file-viewer
             type="descriptor"
@@ -192,7 +215,7 @@
             ng-if="containerObj">
         </div>
       </uib-tab>
-      <!--uib-tab ng-if="editMode">
+      <!--uib-tab ng-if="editMode" active="activeTabs[5]">
         <uib-tab-heading>Sharing</uib-tab-heading>
         <h5>Container Registration:</h5>
         <button class="btn btn-sm"
@@ -220,8 +243,8 @@
       </thead>
       <tbody>
         <tr>
-          <td>
-            <div copy-text>docker pull {{containerObj.path}}</div>
+          <td ng-init="dockerPullCmd = getDockerPullCmd(containerObj.path)">
+            <div copy-text>{{dockerPullCmd}}</div>
           </td>
         </tr>
       </tbody>
@@ -237,17 +260,17 @@
           <td>
             <div class="container-source-repos">
               <p>
-                <span ng-if="gitReposProviderURL">
-                  <a ng-href="{{gitReposProviderURL}}" target="_blank">
+                <span ng-if="gitReposProvider">
+                  <a ng-href="{{gitReposWebUrl}}" target="_blank">
                     {{gitReposProviderName}}
                     <span class="glyphicon glyphicon-new-window"></span>
                   </a>
                 </span>
               </p>
               <p>
-                <span ng-if="quayIOURL">
-                  <a ng-href="{{quayIOURL}}" target="_blank">
-                    Quay.io
+                <span ng-if="imageReposProvider">
+                  <a ng-href="{{imageReposWebUrl}}" target="_blank">
+                    {{imageReposProviderName}}
                     <span class="glyphicon glyphicon-new-window"></span>
                   </a>
                 </span>

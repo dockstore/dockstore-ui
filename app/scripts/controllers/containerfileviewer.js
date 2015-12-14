@@ -21,6 +21,10 @@ angular.module('dockstore.ui')
       $scope.getContainerTags = function() {
         var sortedTagObjs = $scope.containerObj.tags;
         sortedTagObjs.sort(function(a, b) {
+          if (a.name === 'latest') return -1;
+          if ((new RegExp(/[a-zA-Z]/i).test(a.name.slice(0, 1))) &&
+                (new RegExp(/[^a-zA-Z]/i).test(b.name.slice(0, 1)))) return -1;
+          /* Lexicographic Sorting */
           if (a.name < b.name) return -1;
           if (a.name > b.name) return 1;
           return 0;

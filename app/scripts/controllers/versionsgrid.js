@@ -10,38 +10,18 @@
 angular.module('dockstore.ui')
   .controller('VersionsGridCtrl', [
     '$scope',
-    function ($scope) {
+    '$q',
+    'ContainerService',
+    'FormattingService',
+    'NotificationService',
+    function ($scope, $q, ContainerService, FrmttSrvc, NtfnService) {
       
       $scope.containers = [];
       $scope.sortColumn = 'name';
       $scope.sortReverse = false;
 
-      $scope.getHRSize = function(size) {
-        if (!size) return 'n/a';
-        var hrSize = '';
-        var exp = Math.log(size) / Math.log(2);
-        if (exp < 10) {
-          hrSize = size.toFixed(2) + ' bytes';
-        } else if (exp < 20) {
-          hrSize = (size / Math.pow(2, 10)).toFixed(2) + ' kB';
-        } else if (exp < 30) {
-          hrSize = (size / Math.pow(2, 20)).toFixed(2) + ' MB';
-        } else if (exp < 40) {
-          hrSize = (size / Math.pow(2, 30)).toFixed(2) + ' GB';
-        }
-        return hrSize;
-      };
-
-      $scope.getDateModified = function(timestamp) {
-        if (!timestamp) return 'n/a';
-        var moy = ['Jan.', 'Feb.', 'Mar.', 'Apr.',
-                    'May', 'Jun.', 'Jul.', 'Aug.',
-                    'Sept.', 'Oct.', 'Nov.', 'Dec.'];
-        var dateObj = new Date(timestamp);
-        return moy[dateObj.getMonth()] + ' ' +
-                dateObj.getDate() + ', ' +
-                dateObj.getFullYear();
-      };
+      $scope.getHRSize = FrmttSrvc.getHRSize;
+      $scope.getDateModified = FrmttSrvc.getDateModified;
 
       $scope.clickSortColumn = function(columnName) {
         if ($scope.sortColumn === columnName) {
@@ -59,6 +39,55 @@ angular.module('dockstore.ui')
         } else {
           return 'glyphicon-sort';
         }
+      };
+
+      $scope.deleteTag = function(tagId) {
+        $scope.setError(null);
+        return ContainerService.deleteContainerTag($scope.containerObj.id, tagId)
+          .then(
+            function(response) {
+              $scope.removeVersionTag(tagId);
+            },
+            function(response) {
+              $scope.setError(
+                'The webservice encountered an error trying to delete this ' +
+                'tag, please ensure that the container and the tag both exist.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
+              return $q.reject(response);
+            }
+          );
+      };
+
+      $scope.addVersionTag = function(tagObj) {
+        $scope.versionTags.push(tagObj);
+      };
+
+      $scope.removeVersionTag = function(tagId) {
+        for (var i = 0; i < $scope.versionTags.length; i++) {
+          if ($scope.versionTags[i].id === tagId) {
+            $scope.versionTags.splice(i, 1);
+            break;
+          }
+        }
+      };
+
+      $scope.getDockerPullCmd = function(path, tagName) {
+        return FrmttSrvc.getFilteredDockerPullCmd(path, tagName);
+      };
+
+      $scope.getCreateTagObj = function() {
+        return {
+          create: true,
+          name: '',
+          reference: '',
+          image_id: '',
+          dockerfile_path: $scope.containerObj.default_dockerfile_path,
+          cwl_path: $scope.containerObj.default_cwl_path,
+          hidden: true,
+          automated: false
+        };
       };
 
   }]);

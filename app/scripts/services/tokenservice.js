@@ -85,7 +85,8 @@ angular.module('dockstore.ui')
               return $q.reject();
             },
             function(response) {
-              var message = '[' + response.status + '] ' + response.statusText;
+              var message = '[HTTP ' + response.status + '] ' +
+                  response.statusText + ': ' + response.data;
               NtfnService.popError('User Accounts', message);
               return $q.reject(response);
             }
@@ -121,7 +122,8 @@ angular.module('dockstore.ui')
               return tokenStatusSet;
             },
             function(response) {
-              var message = '[' + response.status + '] ' + response.statusText;
+              var message = '[HTTP ' + response.status + '] ' +
+                  response.statusText + ': ' + response.data;
               NtfnService.popError('User Accounts', message);
               return $q.reject(response);
             }

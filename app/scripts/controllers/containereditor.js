@@ -21,8 +21,11 @@ angular.module('dockstore.ui')
         ContainerService, UserService, TokenService, NtfnService) {
 
       $scope.userObj = UserService.getUserObj();
+      $scope.activeTabs = [true];
+      for (var i = 0; i < 4; i++) $scope.activeTabs.push(false);
 
       $scope.listUserContainers = function(userId) {
+        $scope.setContainerEditorError(null);
         return ContainerService.getUserContainerList(userId)
           .then(
             function(containers) {
@@ -30,15 +33,21 @@ angular.module('dockstore.ui')
               return containers;
             },
             function(response) {
-              var message = '[' + response.status + '] ' + response.statusText;
-              NtfnService.popError('List User Containers', message);
+              $scope.setContainerEditorError(
+                'The webservice encountered an error trying to load a list ' +
+                'of containers for this account.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
               return $q.reject(response);
             }
           );
       };
 
       $scope.refreshUserContainers = function(userId) {
+        if ($scope.refreshingContainers) return;
         $scope.refreshingContainers = true;
+        $scope.setContainerEditorError(null);
         return ContainerService.refreshUserContainers(userId)
           .then(
             function(containers) {
@@ -47,8 +56,14 @@ angular.module('dockstore.ui')
               return containers;
             },
             function(response) {
-              var message = '[' + response.status + '] ' + response.statusText;
-              NtfnService.popError('Refresh User Containers', message);
+              $scope.setContainerEditorError(
+                'The webservice encountered an error trying to refresh ' +
+                'containers for User: ' + $scope.userObj.username + '. If the ' +
+                'problem persists after 60 min. has passed, try re-linking ' +
+                'your external accounts and repeating the action.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
               return $q.reject(response);
             }
           );
@@ -103,9 +118,19 @@ angular.module('dockstore.ui')
         })(nsContainers, username);
       };
 
+      $scope.openNamespaceItem = function(namespace) {
+        for (var i = 0; i < $scope.nsContainers.length; i++) {
+          if ($scope.nsContainers[i].namespace === namespace) {
+            $scope.nsContainers[i].isOpen = true;
+            break;
+          }
+        }
+      };
+
       $scope.selectContainer = function(containerId) {
         for (var i = 0; i < $scope.containers.length; i++) {
           if ($scope.containers[i].id === containerId) {
+            $scope.openNamespaceItem($scope.containers[i].namespace);
             $scope.selContainerObj = $scope.containers[i];
             break;
           }
@@ -123,12 +148,23 @@ angular.module('dockstore.ui')
         }
       };
 
+      $scope.setContainerEditorError = function(message, errorDetails) {
+        if (message) {
+          $scope.containerEditorError = {
+            message: message,
+            errorDetails: errorDetails
+          };
+        } else {
+          $scope.containerEditorError = null;
+        }
+      };
+
       if ($auth.isAuthenticated()) {
         TokenService.getUserTokenStatusSet($scope.userObj.id)
           .then(
             function(tokenStatusSet) {
               $scope.tokenStatusSet = tokenStatusSet;
-              if (!(tokenStatusSet.github && tokenStatusSet.quayio)) {
+              if (!tokenStatusSet.github) {
                 $window.location.href = '/onboarding';
               }
             }
@@ -139,22 +175,79 @@ angular.module('dockstore.ui')
         .then(
           function(containers) {
             TokenService.getUserToken($scope.userObj.id, 'quay.io')
-              .then(function(tokenObj) {
-                $scope.nsContainers = $scope.sortNSContainers(containers, tokenObj.username);
-                if ($scope.nsContainers.length > 0) {
-                  $scope.selectContainer($scope.nsContainers[0].containers[0].id);
+              .then(
+                function(tokenObj) {
+                  $scope.quayTokenObj = tokenObj;
+                  $scope.nsContainers = $scope.sortNSContainers(
+                      containers,
+                      tokenObj.username
+                  );
+                  if ($scope.nsContainers.length > 0) {
+                    $scope.selectContainer($scope.nsContainers[0].containers[0].id);
+                  }
+                },
+                function(response) {
+                  $scope.nsContainers = $scope.sortNSContainers(
+                      containers,
+                      $scope.userObj.username
+                  );
+                  if ($scope.nsContainers.length > 0) {
+                    $scope.selectContainer($scope.nsContainers[0].containers[0].id);
+                  }
                 }
-              });
-          },
-          function(response) {
-            var message = '[' + response.status + '] ' + response.statusText;
-            NtfnService.popError('Docker User Containers', message);
-            return $q.reject(response);
-          }
-        );
+            );
+          });
 
-      $scope.updateContainerObj = function() {
-        $scope.updateNSContainersRegistered($scope.selContainerObj);
+      $scope.updateContainerObj = function(containerObj) {
+        if (containerObj) {
+          $scope.replaceContainer(containerObj);
+        } else {
+          /* 'Real-time' */
+          $scope.updateNSContainersRegistered($scope.selContainerObj);
+        }
+      };
+
+      $scope.getCreateContainerObj = function(namespace) {
+        return {
+          create: true,
+          mode: 'MANUAL_IMAGE_PATH',
+          name: '',
+          toolname: '',
+          namespace: namespace ? namespace : '',
+          registry: '',
+          gitUrl: '',
+          default_dockerfile_path: '',
+          default_cwl_path: '',
+          is_public: true,
+          is_registered: false,
+          scrProvider: 'GitHub',
+          irProvider: 'Quay.io'
+        };
+      };
+
+      $scope.addContainer = function(containerObj) {
+        $scope.containers.push(containerObj);
+        $scope.nsContainers = $scope.sortNSContainers(
+          $scope.containers,
+          $scope.quayTokenObj ?
+              $scope.quayTokenObj.username : $scope.userObj.username
+        );
+        $scope.selectContainer(containerObj.id);
+        $scope.activeTabs[2] = true;
+      };
+
+      $scope.replaceContainer = function(containerObj) {
+        for (var i = 0; i < $scope.containers.length; i++) {
+          if ($scope.containers[i].id === containerObj.id) break;
+        }
+        $scope.containers[i] = containerObj;
+        $scope.nsContainers = $scope.sortNSContainers(
+          $scope.containers,
+          $scope.quayTokenObj ?
+              $scope.quayTokenObj.username : $scope.userObj.username
+        );
+        $scope.selectContainer(containerObj.id);
+        $scope.activeTabs[0] = true;
       };
 
   }]);

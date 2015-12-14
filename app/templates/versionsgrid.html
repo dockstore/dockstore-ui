@@ -4,10 +4,17 @@
       <thead>
         <tr>
           <th>
-            Version Tag
+            Tag
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('name')"
                   ng-click="clickSortColumn('name')">
+            </span>
+          </th>
+          <th>
+            Git Reference
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('reference')"
+                  ng-click="clickSortColumn('reference')">
             </span>
           </th>
           <th>
@@ -25,19 +32,35 @@
             </span>
           </th>
           <th>
+            Valid
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('valid')"
+                  ng-click="clickSortColumn('valid')">
+            </span>
+          </th>
+          <th>
+            Actions
+          </th>
+          <th>
             Docker Pull
           </th>
         </tr>
       </thead>
       <tbody>
         <tr ng-show="filteredVersionTags.length === 0">
-          <td colspan="4">
+          <td colspan="7">
             <div class="text-center">No Records Found</div>
           </td>
         </tr>
-        <tr ng-repeat="versionTag in (filteredVersionTags = (versionTags | orderBy:sortColumn:sortReverse))">
+        <tr ng-repeat="versionTag in (filteredVersionTags = (versionTags | HiddenTagsFilter:editMode | orderBy:sortColumn:sortReverse))" ng-hide="!editMode && versionTag.hidden">
           <td>
             {{versionTag.name}}
+          </td>
+          <td>
+            <div class="git-ref"
+                title="{{versionTag.reference ? versionTag.reference : 'n/a'}}">
+              {{versionTag.reference ? versionTag.reference : 'n/a'}}
+            </span>
           </td>
           <td>
             {{getHRSize(versionTag.size)}}
@@ -46,10 +69,51 @@
             {{getDateModified(versionTag.last_modified)}}
           </td>
           <td>
-            <div copy-text>docker pull {{containerObj.path}}:{{versionTag.name}}</div>
+            {{versionTag.valid ? 'Yes' : 'No'}}
+          </td>
+          <td class="tag-actions">
+            <a href
+                data-toggle="modal"
+                data-target="#tagEditorModal"
+                ng-click="VersionsGrid.editTagObj = versionTag"
+                ng-if="!editMode">
+              View
+            </a>
+            <a href
+                data-toggle="modal"
+                data-target="#tagEditorModal"
+                ng-click="VersionsGrid.editTagObj = versionTag"
+                ng-if="editMode">
+              Edit
+            </a>
+            <a href
+                ng-click="deleteTag(versionTag.id)"
+                ng-if="editMode && containerObj.mode === 'MANUAL_IMAGE_PATH'">
+              Delete
+            </a>
+          </td>
+          <td ng-init="dockerPullCmd = getDockerPullCmd(containerObj.path, versionTag.name)">
+            <div copy-text>{{dockerPullCmd}}</div>
           </td>
         </tr>
       </tbody>
     </table>
+    <button type="button"
+        class="btn btn-primary btn-sm pull-right"
+        ng-if="editMode && containerObj.mode === 'MANUAL_IMAGE_PATH'">
+      <a href
+          data-toggle="modal"
+          data-target="#tagEditorModal"
+          ng-click="VersionsGrid.editTagObj = getCreateTagObj()">
+        Add Tag
+      </a>
+    </button>
+    <div tag-editor
+        tag-obj="VersionsGrid.editTagObj"
+        container-id="{{containerObj.id}}"
+        container-path="{{containerObj.path}}"
+        edit-mode="editMode"
+        add-version-tag="addVersionTag">
+    </div>
   </div>
 </div>

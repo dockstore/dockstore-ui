@@ -44,7 +44,7 @@ angular.module('dockstore.ui')
                 UserService.setUserObj(response);
                 NtfnService.popSuccess('Authentication Success',
                   'Login successful via ' + provider + '.');
-                $window.location.href = '/search';
+                $window.location.href = '/onboarding';
               }, function(response) {
                 NtfnService.popError('Authentication Error', response);
                 $auth.logout();

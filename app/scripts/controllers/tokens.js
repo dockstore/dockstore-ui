@@ -22,13 +22,15 @@ angular.module('dockstore.ui')
       $scope.userObj = UserService.getUserObj();
 
       $scope.listTokens = function(userId) {
-        TokenService.getUserTokens(userId)
+        return TokenService.getUserTokens(userId)
           .then(
             function(tokens) {
               $scope.tokens = tokens;
+              return tokens;
             },
             function(response) {
-              var message = '[' + response.status + '] ' + response.statusText;
+              var message = '[HTTP ' + response.status + '] ' +
+                  response.statusText + ': ' + response.data;
               NtfnService.popError('List Tokens', message);
               return $q.reject(response);
             }
@@ -42,7 +44,8 @@ angular.module('dockstore.ui')
               $route.reload();
             },
             function(response) {
-              var message = '[' + response.status + '] ' + response.statusText;
+              var message = '[HTTP ' + response.status + '] ' +
+                  response.statusText + ': ' + response.data;
               NtfnService.popError('Delete Token', message);
               return $q.reject(response);
             }

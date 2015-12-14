@@ -19,18 +19,19 @@
     <img class="blue-rectangle" src="images/rectangle.png">
     <div class="row header-lower">
       <div class="col-md-6">
-        <h4 class="title caption">DockStore, developed by the Cancer Genome Collaboratory, is an open platform for sharing Docker-based tools described with the GA4GH Common Workflow Language.</h4>
+        <h4 class="title caption">DockStore, developed by the <a href="https://www.cancercollaboratory.org/" target="_blank">Cancer Genome Collaboratory</a>, is an open platform for sharing Docker-based tools described with the <a href="http://www.commonwl.org/" target="_blank">Common Workflow Language</a> used by the <a href="https://genomicsandhealth.org/" target="_blank">GA4GH</a>.</h4>
       </div>
-      <div class="col-md-3 row-center">
+      <div class="col-md-3 row-center"
+          ng-if="!userObj">
         <div class="button">
           <p><a href="/login">Sign up to Contribute &raquo;</a></p>
         </div>
       </div>
-        <div class="col-md-3 row-center">
-          <div class="button">
-            <p><a href="/docs/about">About DockStore &raquo;</a></p>
-          </div>
+      <div class="col-md-3 row-center">
+        <div class="button">
+          <p><a href="/docs/about">About DockStore &raquo;</a></p>
         </div>
+      </div>
     </div>
   </div>
 </div>
@@ -56,30 +57,58 @@
       <div class="col-md-4">
         <h3 class="documentation">About DockStore</h3>
         <ul>
-          <li><a href="/docs/about#about-the-dockstore">About the DockStore</a></li>
-          <li><a href="/docs/about#built-with-quay-io-and-github">Built with Quay.io and GitHub</a></li>
-          <li><a href="/docs/about#best-practices">Best Practices</a></li>
-          <li><a href="/docs/about#promoting-standards">Promoting Standards</a></li>
-          <li><a href="/docs/about#building-a-community">Building a Community</a></li>
-          <li><a href="/docs/about#future-plans">Future Plans</a></li>
+          <li>
+            <a href="/docs/about#about-the-dockstore">About the DockStore</a>
+          </li>
+          <li>
+            <a href="/docs/about#built-with-quay-io-and-github">Built with Quay.io and GitHub</a>
+          </li>
+          <li>
+            <a href="/docs/about#best-practices">Best Practices</a>
+          </li>
+          <li>
+            <a href="/docs/about#promoting-standards">Promoting Standards</a>
+          </li>
+          <li>
+            <a href="/docs/about#building-a-community">Building a Community</a>
+          </li>
+          <li>
+            <a href="/docs/about#future-plans">Future Plans</a>
+          </li>
         </ul>
       </div>
       <div class="col-md-4">
         <h3>Adding to DockStore</h3>
         <ul>
-        <li><a href="/docs/getting-started#sign-up-for-accounts">Sign Up for Accounts</a></li>
-        <li><a href="/docs/getting-started#create-your-tool">Create Your Tool</a></li>
-        <li><a href="/docs/getting-started#describe-your-tool">Describe Your Tool</a></li>
-        <li><a href="/docs/getting-started#linking-github-and-quay-io">Linking GitHub and Quay.io</a></li>
-        <li><a href="/docs/getting-started#register-your-tool-in-dockstore">Register Your Tool in Dockstore</a></li>
-      </ul>
+          <li>
+            <a href="/docs/getting-started#sign-up-for-accounts">Sign Up for Accounts</a>
+          </li>
+          <li>
+            <a href="/docs/getting-started#create-your-tool">Create Your Tool</a>
+          </li>
+          <li>
+            <a href="/docs/getting-started#describe-your-tool">Describe Your Tool</a>
+          </li>
+          <li>
+            <a href="/docs/getting-started#linking-github-and-quay-io">Linking GitHub and Quay.io</a>
+          </li>
+          <li>
+            <a href="/docs/getting-started#register-your-tool-in-dockstore">Register Your Tool in Dockstore</a>
+          </li>
+        </ul>
       </div>
       <div class="col-md-4">
         <h3>Using DockStore</h3>
         <ul>
-          <li><a href="/docs/getting-started#run-tools">Run Tools</a></li>
-          <li><a href="/docs/getting-started#find-other-tools">Find Other Tools</a></li>
-          <li><a href="/docs/getting-started#next-steps">Next Steps</a></li>
+          <li>
+            <a href="/docs/getting-started#run-tools">Run Tools</a>
+          </li>
+          <li>
+            <a href="/docs/getting-started#find-other-tools">Find Other Tools</a>
+          </li>
+          <li>
+            <a href="/docs/getting-started#next-steps">Next Steps</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -92,9 +121,26 @@
       <div class="col-md-12">
         <ul class="our-sponsors">
           <li>In Affiliation With:</li>
-          <li><img src="images/collaboratory.png"></li>
-          <li><img src="images/oicr.png"></li>
-          <li><img src="images/ga4gh.png"></li>
+          <li>
+            <a href="https://www.cancercollaboratory.org/" target="_blank">
+              <img src="images/collaboratory.png" />
+            </a>
+          </li>
+          <li>
+            <a href="https://oicr.on.ca/" target="_blank">
+              <img src="images/oicr.png" />
+            </a>
+          </li>
+          <li>
+            <a href="https://genomicsandhealth.org/" target="_blank">
+              <img src="images/ga4gh.png" />
+            </a>
+          </li>
+          <li>
+            <a href="http://www.commonwl.org/" target="_blank">
+              <img src="images/cwl.png" />
+            </a>
+          </li>
         </ul>
       </div>
     </div>

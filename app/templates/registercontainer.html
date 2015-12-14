@@ -1,26 +1,210 @@
 <div class="modal fade" id="registerContainerModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Register Container</h4>
       </div>
-      <div class="modal-body">
-        <p>AbC</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">
-          Close
+      <div class="alert alert-danger alert-dismissable"
+          role="alert"
+          ng-if="containerEditError">
+        <button type="button"
+            class="close"
+            data-dismiss="alert"
+            ng-click="setContainerEditError(null)">
+          &times;
         </button>
-        <button type="button" class="btn btn-primary">
-          Add Container
-        </button>
+        <p>
+          <span class="glyphicon glyphicon-warning-sign"></span>
+          {{containerEditError.message}}
+        </p>
+        <p class="error-output">{{containerEditError.errorDetails}}</p>
       </div>
+      <div class="alert alert-info"
+          role="alert"
+          ng-if="refreshingContainer">
+        <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
+        </span>
+        Please wait, retrieving Quay.io and/or Docker Hub container...
+      </div>
+      <form name="registerContainerForm" 
+          class="form-horizontal"
+          ng-submit="registerContainer()"
+          novalidate>
+        <div class="modal-body">
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Source Code Repository:
+            </label>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <button type="button"
+                      class="btn btn-default btn-sm dropdown-toggle"
+                      data-toggle="dropdown">
+                    {{containerObj.scrProvider}} <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href ng-click="containerObj.scrProvider = 'GitHub'">
+                        GitHub
+                      </a>
+                    </li>
+                    <li>
+                      <a href ng-click="containerObj.scrProvider = 'Bitbucket'">
+                        Bitbucket
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="gitPath"
+                    ng-model="containerObj.gitPath"
+                    ng-minlength="3"
+                    ng-maxlength="128"
+                    ng-pattern="/^([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)\/([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)$/i"
+                    required
+                    placeholder="e.g. CancerCollaboratory/dockstore-tool-liftover" />
+              </div>
+              <div
+                  class="form-error-messages"
+                  ng-messages="registerContainerForm.gitPath.$error"
+                  ng-if="registerContainerForm.gitPath.$touched">
+                <div ng-messages-include="templates/validation/containers/gitpath.html">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Dockerfile Path:
+            </label>
+            <div class="col-sm-9">
+              <input
+                  type="text"
+                  class="form-control"
+                  name="default_dockerfile_path"
+                  ng-model="containerObj.default_dockerfile_path"
+                  ng-minlength="3"
+                  ng-maxlength="256"
+                  ng-pattern="/^\/(.*\/)*Dockerfile$/i"
+                  required
+                  placeholder="e.g. /Dockerfile" />
+              <div
+                  class="form-error-messages"
+                  ng-messages="registerContainerForm.default_dockerfile_path.$error"
+                  ng-if="registerContainerForm.default_dockerfile_path.$touched">
+                <div ng-messages-include="templates/validation/containers/dockerfilepath.html">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              CWL Descriptor Path:
+            </label>
+            <div class="col-sm-9">
+              <input
+                  type="text"
+                  class="form-control"
+                  name="default_cwl_path"
+                  ng-model="containerObj.default_cwl_path"
+                  ng-minlength="3"
+                  ng-maxlength="256"
+                  ng-pattern="/^\/(.*\/)*Dockstore\.cwl$/i"
+                  required
+                  placeholder="e.g. /Dockstore.cwl" />
+              <div
+                  class="form-error-messages"
+                  ng-messages="registerContainerForm.default_cwl_path.$error"
+                  ng-if="registerContainerForm.default_cwl_path.$touched">
+                <div ng-messages-include="templates/validation/containers/descriptorpath.html">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Image Registry:
+            </label>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <button type="button"
+                      class="btn btn-default btn-sm dropdown-toggle"
+                      data-toggle="dropdown">
+                    {{containerObj.irProvider}} <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href ng-click="containerObj.irProvider = 'Quay.io'">
+                        Quay.io
+                      </a>
+                    </li>
+                    <li>
+                      <a href ng-click="containerObj.irProvider = 'Docker Hub'">
+                        Docker Hub
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <input
+                    type="text"
+                    class="form-control"
+                    name="imagePath"
+                    ng-model="containerObj.imagePath"
+                    ng-minlength="3"
+                    ng-maxlength="128"
+                    ng-pattern="/^([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)\/([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)$/i"
+                    required
+                    placeholder="e.g. cancercollaboratory/dockstore-tool-liftover" />
+              </div>
+              <div
+                  class="form-error-messages"
+                  ng-messages="registerContainerForm.imagePath.$error"
+                  ng-if="registerContainerForm.imagePath.$touched">
+                <div ng-messages-include="templates/validation/containers/imagepath.html">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Tool Name:
+            </label>
+            <div class="col-sm-9">
+              <input
+                  type="text"
+                  class="form-control"
+                  name="toolname"
+                  ng-model="containerObj.toolname"
+                  ng-maxlength="256"
+                  ng-pattern="/^[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*$/i"
+                  placeholder="e.g. liftover-fast (optional)" />
+              <div
+                  class="form-error-messages"
+                  ng-messages="registerContainerForm.toolname.$error"
+                  ng-if="registerContainerForm.toolname.$touched">
+                <div ng-messages-include="templates/validation/containers/toolname.html">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button"
+              class="btn btn-default"
+              ng-click="closeRegisterContainerModal(true)">
+            Close
+          </button>
+          <button type="submit"
+              class="btn btn-primary"
+              ng-disabled="registerContainerForm.$invalid || savingActive || refreshingContainer">
+            Add Container
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
-<button type="button"
-    class="btn btn-primary btn-sm"
-    data-toggle="modal"
-    data-target="#registerContainerModal">
-  Add Container
-</button>
