@@ -257,7 +257,11 @@ span.reg-label {
   padding-bottom: 0.2em;
 }
 
-div.document img { max-width: 95%; }
+div.document img {
+  max-width: 95%;
+  padding: 4px;
+  border: 1px solid #d3d3d3;
+}
 
 div.footer > span.contact {
   float: left;
