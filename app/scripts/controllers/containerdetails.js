@@ -76,6 +76,7 @@ angular.module('dockstore.ui')
           .then(
             function(containerObj) {
               $scope.updateContainerObj({containerObj: containerObj});
+              $scope.$broadcast('refreshFiles');
               return containerObj;
             },
             function(response) {
