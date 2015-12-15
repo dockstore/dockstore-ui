@@ -2,7 +2,7 @@
 
 ### Dockstore Components
 
-The Dockstore project consists of three major components, the `dockstore-webservice`, the `dockstore-client` and the `dockstore-ui`.
+The Dockstore project consists of three major components: the `dockstore-webservice`, the `dockstore-client` and the `dockstore-ui`.
 
 #### dockstore-webservice
 
@@ -68,12 +68,14 @@ PostgreSQL is used as the datastore for Dockstore, to install it on Ubuntu Linux
 
 ### dockstore-webservice Back-end (REST API)
 
-1. Install a Java 8 JDK, these instructions are for Ubuntu Linux 14.04:
+1. Install a Java 8 JDK, follow the instructions and installer prompts for Ubuntu Linux 14.04:
 
   ```
   sudo add-apt-repository ppa:webupd8team/java
   sudo apt-get update
   sudo apt-get install oracle-java8-installer
+  echo "export JAVA_HOME=/usr/lib/jvm/java-8-oracle" >> ~/.profile
+  source
   ```
 
 2. Make sure that other build tools are installed:
@@ -138,11 +140,81 @@ PostgreSQL is used as the datastore for Dockstore, to install it on Ubuntu Linux
 
 ## Normal Workflow
 
+### Server Deployment
 
-### Deploying to Staging
+This section describes the strcuture of the Dockstore server environments, and recommended instructions on how to maintain the server, perform backups, update the Dockstore builds and publish new releases.
+
+#### Dockstore Servers
+
+Name | IP Address (Public) | Hostname | Location | Details
+--- | --- | --- | --- | ---
+dockstore-staging | [...] | [staging.dockstore.org](https://staging.dockstore.org/) | us-east-1 | AWS [...] Instance, Ubuntu 14.04.03
+dockstore-production | [...]  | [www.dockstore.org](https://www.dockstore.org/) | us-east-1 | AWS [...] Instance, Ubuntu 14.04.03
+
+#### Setting Up a Server
+
+The `dockstore-webservice` requires a Java 8 VM to run, but is otherwise standalone, and has no additional dependencies or need for application servers. The `dockstore-ui` produces compiled static HTML/CSS/JS code, it only requires an HTTP server, with minor configuration settings to support HTML5-style URLs. NGINX is used for serving the files and providing TLS encryption to the client.
+
+The following instructions will assume that the server is provisioned with an Ubuntu Linux 14.04 image.
+
+1. Install Java 8, installing the full JDK will allow Dockstore to be built on the server:
+
+  ```
+  sudo add-apt-repository ppa:webupd8team/java
+  sudo apt-get update
+  sudo apt-get install oracle-java8-installer
+  echo "export JAVA_HOME=/usr/lib/jvm/java-8-oracle" >> ~/.profile
+  source
+  ```
+
+2. Install other programs and utilities through the package manager:
+
+  ```
+  sudo apt-get install nginx postgres postgres-contrib python3 awscli
+  ```
+
+3. Set up the database:
+
+  ```
+  sudo su - postgres
+  psql
+  ```
+
+  1. `webservice`: Required in all setups. (Check the `Dockstore.yml` file for configuration changes.)
+
+      ```
+      CREATE USER webservice WITH PASSWORD 'iAMs00perSecrEET';
+      CREATE DATABASE webservice;
+      GRANT ALL PRIVILEGES ON DATABASE webservice to webservice;
+      ```
+
+  2. `webservice_test`: This one is for integration tests, it is only necessary if you wish to compile `dockstore` and run tests on the local environment (<sup>i.e.</sup> not required on Production):
+
+      ```
+      CREATE USER dockstore WITH PASSWORD 'dockstore';
+      ALTER USER dockstore WITH superuser;
+      CREATE DATABASE webservice_test WITH owner=dockstore;
+      ```
+
+4. Configure NGINX with URL redirection and TLS certificates:
+  1. ...
+  2. Example NGINX server host file:
+
+    ```
+
+    ```
 
 
-### Deploying to Production
+5. The same TLS certificates used in the previous step can be used to create a Java Keystore file for use with `dockstore-webservice`. [...]
+
+6. 
+
+#### Deploying to Staging
+
+The staging server should be set up to build the respective `develop` branches of dockstore and dockstore-ui.
+
+#### Deploying to Production
+
 
 
 ## Debugging
@@ -151,5 +223,7 @@ PostgreSQL is used as the datastore for Dockstore, to install it on Ubuntu Linux
 
 
 * Authentication Issues
-
+  * `dockstore-ui`
+    * Pop-up appears and disappears, redirects to a blank page or shows message about an invalid redirect URI
+      *
 
