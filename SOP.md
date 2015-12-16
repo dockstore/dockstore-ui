@@ -51,6 +51,7 @@ Quay.io | repo:read,user:read
 After authenticating, per the OAuth 2.0 flow, the user is redirected to a pre-determined page given by the 'Redirect URL', for `dockstore-production`, they should be configured as:
 
 Provider | Redirect URL
+--- | ---
 GitHub | https://www.dockstore.org/login
 Bitbucket | https://www.dockstore.org/auth/quay.io
 Quay.io | https://www.dockstore.org/auth/bitbucket.org
@@ -68,7 +69,7 @@ GitHub uses the [Authorization Code Grant](https://tools.ietf.org/html/rfc6749#s
 Bitbucket and Quay.io use the simplified [Implicit Grant](https://tools.ietf.org/html/rfc6749#section-1.3.2) flow:
 
   1. From the _Onboarding Wizard_ or _Accounts_ page on the Web UI, a user may link their Bitbucket and Quay.io accounts by clicking the respective 'Link Account' button.
-  2. The user is taken to the provider's site (with the *Client ID*, redirect URI and scope information as parameters) to login and authorize the Dockstore application.
+  2. The user is taken to the provider's site (with the **Client ID**, redirect URI and scope information as parameters) to login and authorize the Dockstore application.
   3. The user is then redirected back to the Web UI, with a new Access Token in the URL as GET parameters, this is parsed in AngularJS and sent to the Dockstore API through an AJAX call.
   4. If this is a Quay.io token, all of the user's Dockstore images will be refreshed immediately before continuing.
   5. Finally, the Web UI goes to the _Onboarding Wizard_ page, the 'Link Account' button be replaced by a green 'Linked' label to indicate that the linking process was completed successfully.
@@ -196,8 +197,8 @@ This section describes the strcuture of the Dockstore server environments, and r
 
 Name | IP Address (Public) | Hostname | Location | Details
 --- | --- | --- | --- | ---
-dockstore-staging | [...] | [staging.dockstore.org](https://staging.dockstore.org/) | us-east-1 | AWS [...] Instance, Ubuntu 14.04.03
-dockstore-production | [...]  | [www.dockstore.org](https://www.dockstore.org/) | us-east-1 | AWS [...] Instance, Ubuntu 14.04.03
+dockstore-staging | 52.3.124.195 | [staging.dockstore.org](https://staging.dockstore.org/) | us-east-1 | AWS [...] Instance, Ubuntu 14.04.03
+dockstore-production | 52.23.25.242  | [www.dockstore.org](https://www.dockstore.org/) | us-east-1 | AWS [...] Instance, Ubuntu 14.04.03
 
 #### Setting Up a Server
 
@@ -245,17 +246,102 @@ The following instructions will assume that the server is provisioned with an Ub
       ```
 
 4. Configure NGINX with URL redirection and TLS certificates:
-  1. ...
-  2. Example NGINX server host file:
+  1. Create a virtual host file in /etc/nginx/sites-available/.
+  2. This is an example NGINX server host file, replace the variables in the <> brackets accordingly:
 
     ```
+    ## Dockstore Staging Server
 
+    # HTTP Redirect
+    server {
+            listen 80;
+            server_name staging.dockstore.org;
+            return 301 https://$server_name$request_uri;
+    }
+
+    # HTTPS server
+    server {
+            listen 443 ssl;
+            server_name staging.dockstore.org;
+
+            root /srv/www/staging.dockstore.org/public_html;
+            index index.html index.htm;
+
+            ssl on;
+            ssl_certificate <PATH_TO_TLS_CERT>;
+            ssl_certificate_key <PATH_TLS_KEY>;
+
+            ssl_session_timeout 5m;
+
+            ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+            ssl_ciphers "HIGH:!aNULL:!MD5 or HIGH:!aNULL:!MD5:!3DES";
+            ssl_prefer_server_ciphers on;
+
+            location / {
+                    try_files $uri $uri/ /index.html =404;
+            }
+
+            error_page 404 /index.html;
+    }
     ```
 
+  3. After saving the file, create a symlink to it in `/etc/nginx/sites-enabled`:
+
+    ```
+    ln -s '/etc/nginx/sites-available/<filename>' '/etc/nginx/sites-enabled/<filename>'
+    ```
+
+  4. Reload the NGINX process to let the new configuration take effect:
+
+    ```
+    sudo service nginx reload
+    ```
 
 5. The same TLS certificates used in the previous step can be used to create a Java Keystore file for use with `dockstore-webservice`. [...]
 
-6. 
+6. Nightly back-ups of the database are performed on the `dockstore-production` server, this can be set up on any other server:
+  1. Login as the `postgres` user with: `sudo su - postgres`
+  2. Set an AWS access key pair for the account, the database dump will be backed-up to an Amazon S3 bucket:
+
+    ```
+    $ aws configure
+    AWS Access Key ID [None]: <AWS_ACCESS_KEY_ID>
+    AWS Secret Access Key [None]: <AWS_ACCESS_SECRET_KEY>
+    Default region name [None]: us-east-1
+    Default output format [None]: JSON
+    ```
+
+  3. Create a simple back-up script and save it in `~/cron/db_backup.sh`, set the variables accordingly:
+
+    ```
+    #!/usr/bin/env bash
+
+    set -e
+
+    s3_url_db_backup='s3://oicr.backups/dockstore.org/database/'`date +%Y-%m-%d`
+    temp_dir=`mktemp -d`
+    output_file=ds-webservice_${2:-prod}_`date +%Y-%m-%dT%H-%M-%S%z`.sql
+
+    pg_dump ${1:-webservice} > $temp_dir/$output_file
+
+    aws s3 cp $temp_dir/$output_file $s3_url_db_backup/
+
+    echo "Dumped database ${1:-webservice} and uploaded to $s3_url_db_backup/$output_file."
+    ```
+
+  4. Add a Cron entry to back-up the Dockstore database every night at 11:55 pm.
+
+    ```
+    $ crontab -e
+    ```
+
+    Append the following to the end of the file:
+
+    ```
+    55 23 * * * echo '['`date`'] Nightly Back-up' >> /var/lib/postgresql/cron/ds_backup.log && /var/lib/postgresql/cron/ds_backup.sh 2>&1 >> /var/lib/postgresql/cron/ds_backup.log
+    ```
+
+  5. After verifying that the script and cron configuration works as expected, make the final changes and logout.
 
 #### Deploying to Staging
 
