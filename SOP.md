@@ -345,11 +345,74 @@ The following instructions will assume that the server is provisioned with an Ub
 
 #### Deploying to Staging
 
-The staging server should be set up to build the respective `develop` branches of dockstore and dockstore-ui.
+The staging server should be set up to build the respective `develop` branches of `dockstore` and `dockstore-ui`.
+
+1. The local Git repositories are located in `/home/ubuntu/workspace/`, they are set up so that the server can be easily updated with new changes.
+
+2. To update the `dockstore-webservice`:
+  1. Attach to the active [tmux](https://tmux.github.io/) session: `tmux attach`.
+
+  2. Press CTRL+C to to end `dockstore-webservice` process, this is typically in the first tab.
+
+  3. Pull the latest version of the `develop` branch: `git pull` in the `/home/ubuntu/workspace/dockstore` directory.
+
+  4. Build the project: `mvn clean install`
+
+  5. Start the new `dockstore-webservice` in the same directory:
+
+    ```
+    java -jar dockstore-webservice/target/dockstore-webservice-*.jar server ~/.dockstore/dockstore.yml 2>&1 | tee ~/.dockstore/dockstore-webservice.log
+    ```
+
+    The server output will be saved in `~/.dockstore/dockstore-webservice.log`.
+
+  6. Press CTRL+P and then CTRL+Q to detach from the tmux session.
+
+3. To update the `dockstore-ui`:
+  1. Change directory to `/home/ubuntu/workspace/dockstore-ui`.
+  
+  2. Pull the latest version of the `develop` branch: `git pull`
+  
+  3. Select the stable version of Node.js in this terminal session: `nvm use stable`
+
+  4. Build/compile the project: `grunt`
+
+  5. The compiled Web UI is now in the `dist` folder, the NGINX configuration is set up to link to this folder, so the changes are immediately served. Refresh the Dockstore page(s) and cache in the browser on your local computer.
 
 #### Deploying to Production
 
+The production server is set up similarly to staging, except the files are not served directly from the `/home/ubuntu/workspace` directory.
 
+1. Perform a back-up of the production database, this may simply be triggering the normal back-up script. Also save a copy of the `dockstore-webservice` log: `/srv/dockstore/dockstore-webservice.log`.
+
+2. To update `dockstore-webservice`:
+  1. Terminate the active `dockstore-webservice` instance:
+
+    ```
+    ps aux | grep java
+    kill <PID>
+    ```
+
+  2. Replace the `dockstore-webservice` JAR file in `/srv/dockstore/` with the newly-built one (`wget` from [Artifactory](https://seqwaremaven.oicr.on.ca/artifactory/) or use `scp` to upload it).
+
+  3. Start the new `dockstore-webservice`:
+
+    ```
+    nohup java -jar /srv/dockstore/dockstore-webservice-<VERSION>.jar server /srv/dockstore/dockstore.yml &> dockstore-webservice.log &
+    ```
+
+3. To update the `dockstore-ui`:
+  1. Change the directory to `/srv/www/www.dockstore.org/public_html`. Delete the all the files in the directory.
+
+  2. Upload the Web UI built to this folder (this was done on locally or on the server's `~/workspace/dockstore-ui` directory).
+
+  3. Change the files' owner to the webserver group/user:
+
+    ```
+    chown -R www-data:www-data /srv/www/www.dockstore.org/public_html/\*
+    ```
+
+  4. Refresh your browser/caches to make the changes take effect locally.
 
 ## Debugging
 
