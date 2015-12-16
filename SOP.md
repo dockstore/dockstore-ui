@@ -31,6 +31,54 @@ Maintainers | _None_
 Description | A single-page web application written in AngularJS and Bootstrap (with a lot of plugins) that interfaces with the `dockstore-webservice`. At a minimum, users must register through this portal to acquire a `dockstore authentication token` and link accounts from GitHub, BitBucket, Quay.io and/or Docker Hub. Docker images may be published on this site after registration to share with other users.
 URLs | [Staging Site (Development)](https://staging.dockstore.org/) (Only accessible in OICR subnet.), [Production Site (Public)](https://www.dockstore.org/)
 
+### Third-Party API Integration
+
+Dockstore supports integration with GitHub, Bitbucket and Quay.io through [Oauth 2.0](http://oauth.net/2/). An 'OAuth application' must be registered for each of these services, this will provide you with a Client ID/Secret key pair and the ability to request users' permission to generate scope-restricted API tokens on their behalf. This linking process only needs to be performed once (unless the token is revoked, expires or otherwise becomes invalid), it is done through the Web UI upon login (in the `Onboarding Wizard`), the secret key is only kept and used by the Dockstore API.
+
+#### Token Scopes and Permissions
+
+For security and privacy reasons, Dockstore should only request the minimum set of permissions required for it to perform its operations. The table below lists the current scopes/permissions for each provider:
+
+Provider | Scopes/Permissions
+--- | ---
+GitHub | read:org
+Bitbucket | Account(Email, Read), Team Membership (Read), Repositories (Read), Pull Requests (Read), Issues (Read\*), Wikis (Read\*, Write\*), Snippets (Read\*)
+Quay.io | repo:read,user:read
+\* Probably don't need these, should test without them before removing.
+
+#### Redirect URLs
+
+After authenticating, per the OAuth 2.0 flow, the user is redirected to a pre-determined page given by the 'Redirect URL', for `dockstore-production`, they should be configured as:
+
+Provider | Redirect URL
+GitHub | https://www.dockstore.org/login
+Bitbucket | https://www.dockstore.org/auth/quay.io
+Quay.io | https://www.dockstore.org/auth/bitbucket.org
+
+#### Authorization Flows
+
+GitHub uses the [Authorization Code Grant](https://tools.ietf.org/html/rfc6749#section-1.3.1) flow for obtaining access tokens, GitHub is also currently the sole authentication provider for Dockstore:
+  
+  1. From the login screen of the Web UI, a pop-up appears to a GitHub login page. This is a special page configured with the GitHub **Client ID** parameter.
+  2. Upon completion, an **Access Code** is returned to Web UI, this is passed to the Dockstore API through an AJAX call.
+  3. The Dockstore API makes an API call to GitHub, with the **Access Code** and **Secret Key**, it receives an **Access Token** in return. If a Dockstore user with the GitHub username does not exist, a new user account will be created. A Dockstore token is then generated and/or returned.
+  4. From the Web UI side, the Dockstore API call with the **Access Code** finishes and returns a **Dockstore Token**, this is stored in the browser's _[Local Storage](http://www.html5rocks.com/en/features/storage)_ (as defined by HTML5) for the domain, and sent with every subsequent HTTP call in the header as the _Bearer_ token.
+  5. The logout action will cause the Dockstore token to be deleted from Local Storage, no action is taken on the Dockstore API side to invalidate neither the GitHub token nor the Dockstore token.
+
+Bitbucket and Quay.io use the simplified [Implicit Grant](https://tools.ietf.org/html/rfc6749#section-1.3.2) flow:
+
+  1. From the _Onboarding Wizard_ or _Accounts_ page on the Web UI, a user may link their Bitbucket and Quay.io accounts by clicking the respective 'Link Account' button.
+  2. The user is taken to the provider's site (with the *Client ID*, redirect URI and scope information as parameters) to login and authorize the Dockstore application.
+  3. The user is then redirected back to the Web UI, with a new Access Token in the URL as GET parameters, this is parsed in AngularJS and sent to the Dockstore API through an AJAX call.
+  4. If this is a Quay.io token, all of the user's Dockstore images will be refreshed immediately before continuing.
+  5. Finally, the Web UI goes to the _Onboarding Wizard_ page, the 'Link Account' button be replaced by a green 'Linked' label to indicate that the linking process was completed successfully.
+
+#### Satellizer and JSON Web Tokens
+
+The Dockstore Web UI currently only supports authentication through GitHub (and soon: Bitbucket, Google, ...), native authentication will eventually be supported. The authentication mechanism is provided by [Satellizer](https://github.com/sahat/satellizer), an AngularJS plugin.
+
+The Dockstore API does not currently return a token in the [JSON Web Token](http://jwt.io/) (JWT) format through a POST request as expected by Satellizer, this necessitated a small modification to the code. The modified library can be found in: `app/scripts/libs/satellizer/satellizer-ds.js` of the `dockstore-ui` project.
+
 ## Environment Setup
 
 ### Database
