@@ -1,10 +1,39 @@
 # Dockstore Standard Operating Procedures
 
-### Dockstore Components
+[...]
+
+### Table of Contents
+* Dockstore Components
+  * dockstore-webservice
+  * dockstore-client
+  * dockstore-ui
+* Third-Party API Integration
+  * Token Scopes and Permissions
+  * Redirect URLs
+  * Authorization Flows
+  * Satellizer and JSON Web Tokens
+* Configuration Parameters
+  * dockstore-webservice
+  * dockstore-ui
+* Environment Setup
+  * Database
+  * Dockstore API
+  * Dockstore Web UI
+* Normal Workflow
+  * Server Deployment
+    * Dockstore Servers
+    * Setting Up a Server
+    * Deploying to Staging
+    * Deploying to Production
+* Debugging
+  * Database/ORM Issues
+  * Authentication Issues
+
+## Dockstore Components
 
 The Dockstore project consists of three major components: the `dockstore-webservice`, the `dockstore-client` and the `dockstore-ui`.
 
-#### dockstore-webservice
+### dockstore-webservice
 
 &nbsp; | dockstore-webservice
 --- | ---
@@ -13,7 +42,7 @@ Maintainers | [denis-yuen](https://github.com/denis-yuen)
 Description | The central REST API providing all the functions of Dockstore, including user accounts and token-based authentication, Docker image registration, synchronization and management, and publication controls. It is written in Java 8 using the [Dropwizard Framework](http://www.dropwizard.io/) for the REST API and [Swagger](http://swagger.io/) for endpoint documentation/interactive testing.
 URLs | [swagger-ui](http://localhost:8080/static/swagger-ui/index.html) on localhost
 
-#### dockstore-client
+### dockstore-client
 
 &nbsp; | dockstore-client
 --- | ---
@@ -22,7 +51,7 @@ Maintainers | [denis-yuen](https://github.com/denis-yuen)
 Description | A command line interface client for the `dockstore-webservice`, supported on Linux and Mac OS X. It is part of the `dockstore` repository on GitHub, and is written in Java 8 with shell scripts.
 URLs | [...]
 
-#### dockstore-ui
+### dockstore-ui
 
 &nbsp; | dockstore-ui
 --- | ---
@@ -31,11 +60,11 @@ Maintainers | _None_
 Description | A single-page web application written in AngularJS and Bootstrap (with a lot of plugins) that interfaces with the `dockstore-webservice`. At a minimum, users must register through this portal to acquire a `dockstore authentication token` and link accounts from GitHub, BitBucket, Quay.io and/or Docker Hub. Docker images may be published on this site after registration to share with other users.
 URLs | [Staging Site (Development)](https://staging.dockstore.org/) (Only accessible in OICR subnet.), [Production Site (Public)](https://www.dockstore.org/)
 
-### Third-Party API Integration
+## Third-Party API Integration
 
 Dockstore supports integration with GitHub, Bitbucket and Quay.io through [Oauth 2.0](http://oauth.net/2/). An 'OAuth application' must be registered for each of these services, this will provide you with a Client ID/Secret key pair and the ability to request users' permission to generate scope-restricted API tokens on their behalf. This linking process only needs to be performed once (unless the token is revoked, expires or otherwise becomes invalid), it is done through the Web UI upon login (in the `Onboarding Wizard`), the secret key is only kept and used by the Dockstore API.
 
-#### Token Scopes and Permissions
+### Token Scopes and Permissions
 
 For security and privacy reasons, Dockstore should only request the minimum set of permissions required for it to perform its operations. The table below lists the current scopes/permissions for each provider:
 
@@ -46,7 +75,7 @@ Bitbucket | Account(Email, Read), Team Membership (Read), Repositories (Read), P
 Quay.io | repo:read,user:read
 \* Probably don't need these, should test without them before removing.
 
-#### Redirect URLs
+### Redirect URLs
 
 After authenticating, per the OAuth 2.0 flow, the user is redirected to a pre-determined page given by the 'Redirect URL', for `dockstore-production`, they should be configured as:
 
@@ -56,7 +85,7 @@ GitHub | https://www.dockstore.org/login
 Bitbucket | https://www.dockstore.org/auth/quay.io
 Quay.io | https://www.dockstore.org/auth/bitbucket.org
 
-#### Authorization Flows
+### Authorization Flows
 
 GitHub uses the [Authorization Code Grant](https://tools.ietf.org/html/rfc6749#section-1.3.1) flow for obtaining access tokens, GitHub is also currently the sole authentication provider for Dockstore:
   
@@ -74,11 +103,132 @@ Bitbucket and Quay.io use the simplified [Implicit Grant](https://tools.ietf.org
   4. If this is a Quay.io token, all of the user's Dockstore images will be refreshed immediately before continuing.
   5. Finally, the Web UI goes to the _Onboarding Wizard_ page, the 'Link Account' button be replaced by a green 'Linked' label to indicate that the linking process was completed successfully.
 
-#### Satellizer and JSON Web Tokens
+### Satellizer and JSON Web Tokens
 
-The Dockstore Web UI currently only supports authentication through GitHub (and soon: Bitbucket, Google, ...), native authentication will eventually be supported. The authentication mechanism is provided by [Satellizer](https://github.com/sahat/satellizer), an AngularJS plugin.
+The Dockstore Web UI currently only supports authentication through GitHub (and soon: Bitbucket, Google, ...), native authentication via Username and Password login will eventually be supported. The authentication mechanism is provided by [Satellizer](https://github.com/sahat/satellizer), an AngularJS plugin.
 
-The Dockstore API does not currently return a token in the [JSON Web Token](http://jwt.io/) (JWT) format through a POST request as expected by Satellizer, this necessitated a small modification to the code. The modified library can be found in: `app/scripts/libs/satellizer/satellizer-ds.js` of the `dockstore-ui` project.
+The Dockstore API does not return a token in the [JSON Web Token](http://jwt.io/) (JWT) format through a POST request as expected by Satellizer, this necessitated a small modification to the code. The modified library can be found in: `app/scripts/libs/satellizer/satellizer-ds.js` of the `dockstore-ui` project.
+
+## Configuration Parameters
+
+### dockstore-webservice
+
+At runtime, the `dockstore-webservice` configuration is read from the `dockstore.yml` file passed as the second argument.
+
+This is the template for the `dockstore-staging` configuration file, with TLS encryption (the certificates are in `dockstore.org.keystore`):
+
+```
+template: Hello, %s!
+quayClientID: <QUAY_APPLICATION CLIENT_ID>
+quayRedirectURI: https://staging.dockstore.org/auth/quay.io
+githubClientID: <GITHUB_APPLICATION_CLIENT_ID>
+githubClientSecret: <GITHUB_APPLICATION_CLIENT_SECRET>
+githubRedirectURI: https://staging.dockstore.org/login
+bitbucketClientID: <BITBUCKET_APPLICATION_CLIENT_ID>
+bitbucketClientSecret: <BITBUCKET_APPLICATION_CLIENT_SECRET>
+hostname: staging.dockstore.org
+scheme: https
+port: 8443
+
+authenticationCachePolicy: maximumSize=10000, expireAfterAccess=10m
+
+httpClient:
+  timeout: 5500ms
+  connectionTimeout: 5500ms
+  timeToLive: 1h
+  cookiesEnabled: false
+  maxConnections: 1024
+  maxConnectionsPerRoute: 1024
+  keepAlive: 0ms
+  retries: 0
+
+server:
+  applicationConnectors:
+    - type: https
+      port: 8443
+      keyStorePath: dockstore.org.keystore
+      keyStorePassword: <KEYSTORE_PASSWORD>
+      validateCerts: false
+
+authenticationCachePolicy: maximumSize=10000, expireAfterAccess=10m
+
+database:
+  # the name of your JDBC driver
+  driverClass: org.postgresql.Driver
+
+  # the username
+  user: webservice
+
+  # the password
+  password: iAMs00perSecrEET
+
+  # the JDBC URL
+  url: jdbc:postgresql://localhost:5432/webservice
+
+  # any properties specific to your JDBC driver:
+  properties:
+    charSet: UTF-8
+    hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+    # create database as needed, disable in production
+    hibernate.hbm2ddl.auto: create
+
+  # the maximum amount of time to wait on an empty pool before throwing an exception
+  maxWaitForConnection: 1s
+
+  # the SQL query to run when validating a connection's liveness
+  validationQuery: "/* MyApplication Health Check */ SELECT 1"
+
+  # the minimum number of connections to keep open
+  minSize: 8
+
+  # the maximum number of connections to keep open
+  maxSize: 32
+
+  # whether or not idle connections should be validated
+  checkConnectionWhileIdle: false
+```
+
+Notes:
+* quayRedirectURI and githubRedirectURI are only used for the development of the web service, when the Web UI is bypassed, their values are ignored otherwise
+* hibernate.hbm2ddl.auto can be set to:
+  * `create`: Clears the database on restart
+  * `update`: Keeps existing database contents, performs in-place updates to table structure
+  * `validate`: Validates the schema, does not alter the database
+  * `create-drop`: Clears database on termination
+
+### dockstore-ui
+
+All configuration settings for the Web UI is done in the `app/scripts/services/webservice.js` file. This file is compiled along with the rest of the application, it must be set before running `grunt`.
+
+Replace <LOCAL_IP_ADDRESS> with the workstation's IP address in the LAN, if `localhost` is used, Bitbucket authentication will fail due to browser redirection domain security policies.
+
+1. For development, the server name should be `http://<LOCAL_IP_ADDRESS>:9000`, on a production environment, replace this URI with a fully-qualified domain name (e.g. `https://www.dockstore.org:8443`).
+  ```
+  API_URI: 'http://<LOCAL_IP_ADDRESS>:8080',
+  API_URI_DEBUG: 'http://<LOCAL_IP_ADDRESS>:8090/tests/dummy-data',
+  ```
+
+2. Replace `GITHUB_CLIENT_ID` with the client id for your GitHub Dockstore application.
+  ```
+  GITHUB_AUTH_URL: 'https://github.com/login/oauth/authorize',
+  GITHUB_CLIENT_ID: '<GITHUB_DEV_APPLICATION_CLIENT_ID>',
+  GITHUB_REDIRECT_URI: 'http://<LOCAL_IP_ADDRESS>:9000/login',
+  GITHUB_SCOPE: 'read:org',
+  ```
+
+3. Replace `QUAYIO_CLIENT_ID` with the client id for your Quay.io Dockstore application. Use `http://<LOCAL_IP_ADDRESS>:9000` only for development.
+  ```
+  QUAYIO_AUTH_URL: 'https://quay.io/oauth/authorize',
+  QUAYIO_CLIENT_ID: '<GITHUB_QUAY_IO_APPLICATION_CLIENT_ID>',
+  QUAYIO_REDIRECT_URI: 'http://<LOCAL_IP_ADDRESS>:9000/auth/quay.io',
+  QUAYIO_SCOPE: 'repo:read,user:read'
+  ```
+
+3. Replace `BITBUCKET_CLIENT_ID` with the client id for your Bitbucket Dockstore application.
+  ```
+  BITBUCKET_AUTH_URL: 'https://bitbucket.org/site/oauth2/authorize',
+  BITBUCKET_CLIENT_ID: '<BITBUCKET_DEV_APPLICATION_CLIENT_ID>,
+  ```
 
 ## Environment Setup
 
@@ -115,7 +265,7 @@ PostgreSQL is used as the datastore for Dockstore, to install it on Ubuntu Linux
       CREATE DATABASE webservice_test WITH owner=dockstore;
       ```
 
-### dockstore-webservice Back-end (REST API)
+### Dockstore API
 
 1. Install a Java 8 JDK, follow the instructions and installer prompts for Ubuntu Linux 14.04:
 
@@ -149,7 +299,7 @@ PostgreSQL is used as the datastore for Dockstore, to install it on Ubuntu Linux
 
 5. The project may be imported into an IDE such as Eclipse or NetBeans for easier development.
 
-### dockstore-ui Front-end (Web UI)
+### Dockstore UI
 
 1. Install [Node.js](https://nodejs.org/en/) and [NPM](https://www.npmjs.com/) on your workstation, specific instructions will vary depending on the operating system distribution. The use of [nvm](https://github.com/creationix/nvm) is encouraged in supported environments. On Mac OS X, [`brew`](http://brew.sh/) may alternatively be used to install Node.js.
 
@@ -366,7 +516,7 @@ The staging server should be set up to build the respective `develop` branches o
 
     The server output will be saved in `~/.dockstore/dockstore-webservice.log`.
 
-  6. Press CTRL+P and then CTRL+Q to detach from the tmux session.
+  6. Press `CTRL+B` and then `d` to detach from the tmux session.
 
 3. To update the `dockstore-ui`:
   1. Change directory to `/home/ubuntu/workspace/dockstore-ui`.
@@ -409,18 +559,18 @@ The production server is set up similarly to staging, except the files are not s
   3. Change the files' owner to the webserver group/user:
 
     ```
-    chown -R www-data:www-data /srv/www/www.dockstore.org/public_html/\*
+    chown -R www-data:www-data /srv/www/www.dockstore.org/public_html/*
     ```
 
   4. Refresh your browser/caches to make the changes take effect locally.
 
 ## Debugging
 
-* Database/Hibernate ORM Issues
+### Database/ORM Issues
 
 
-* Authentication Issues
-  * `dockstore-ui`
-    * Pop-up appears and disappears, redirects to a blank page or shows message about an invalid redirect URI
-      *
+### Authentication Issues
+* `dockstore-ui`
+  * Pop-up appears and disappears, redirects to a blank page or shows message about an invalid redirect URI
+    *
 
