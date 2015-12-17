@@ -1,12 +1,13 @@
 # Dockstore Standard Operating Procedures
 
-[...]
+This document contains an overview of the entire Dockstore project, and instructions for setting up and maintaining the staging and production servers for hosting Dockstore. More specfic information can be found in the respective GitHub repositories of each subcomponent and in the official documentation.
 
 ### Table of Contents
 * [Dockstore Components](#dockstore-components)
   * [dockstore-webservice](#dockstore-webservice)
   * [dockstore-client](#dockstore-client)
   * [dockstore-ui](#dockstore-ui)
+* [Terminology](#terminology)
 * [Third-Party API Integration](#third-party-api-integration)
   * [Token Scopes and Permissions](#token-scopes-and-permissions)
   * [Redirect URLs](#redirect-urls)
@@ -40,7 +41,7 @@ The Dockstore project consists of three major components: the `dockstore-webserv
 Project Link | [GitHub](https://github.com/ga4gh/dockstore)
 Maintainers | [denis-yuen](https://github.com/denis-yuen)
 Description | The central REST API providing all the functions of Dockstore, including user accounts and token-based authentication, Docker image registration, synchronization and management, and publication controls. It is written in Java 8 using the [Dropwizard Framework](http://www.dropwizard.io/) for the REST API and [Swagger](http://swagger.io/) for endpoint documentation/interactive testing.
-URLs | [swagger-ui](http://localhost:8080/static/swagger-ui/index.html) on localhost
+URLs | [Dockstore API (Staging)](https://staging.dockstore.org:8443/static/swagger-ui/index.html), [Dockstore API (Production)](https://www.dockstore.org:8443/static/swagger-ui/index.html)
 
 ### dockstore-client
 
@@ -58,7 +59,21 @@ URLs | [...]
 Project Link | [GitHub](https://github.com/ga4gh/dockstore-ui)
 Maintainers | _None_
 Description | A single-page web application written in AngularJS and Bootstrap (with a lot of plugins) that interfaces with the `dockstore-webservice`. At a minimum, users must register through this portal to acquire a `dockstore authentication token` and link accounts from GitHub, BitBucket, Quay.io and/or Docker Hub. Docker images may be published on this site after registration to share with other users.
-URLs | [Staging Site (Development)](https://staging.dockstore.org/) (Only accessible in OICR subnet.), [Production Site (Public)](https://www.dockstore.org/)
+URLs | [Dockstore Website (Staging)](https://staging.dockstore.org/) (Only accessible in OICR subnet.), [Dockstore Website (Production)](https://www.dockstore.org/)
+
+## Terminology
+
+Term | Definition
+--- | ---
+Image | A Docker image, containing an OS and prespecified software, built from a specific version of a Dockerfile.
+Container\* | An instance of a Docker image, possibly running a workflow on a set of inputs.
+GitHub | A service for hosting Git Repositories, used to host the Dockstore project, issues tracking and Docker images.
+BitBucket | Another service for hosting Mercurial/Git Repositories
+Quay.io | A registry for building and hosting public and private Docker images.
+Docker Hub | The official Docker registry for building and hosting Docker images, API is closed.
+Re-sync | Calls the `/refresh` endpoint to pull new data and cache files from GitHub, Bitbucket and Quay.io to all the images administrated by a user.
+Publish | Makes an image visible on Dockstore to the public, this function does not alter anything on its image registry.
+\* _Images_ are currently called _Containers_ on Dockstore, a [heroic renaming effort](https://github.com/ga4gh/dockstore/issues/36) is underway to correct this. In the context of `dockstore-ui` however, what are currently known as _Containers_ is actually a collection of _Images_, but _Images_ will be used in the absence of a more appropriate term.
 
 ## Third-Party API Integration
 
@@ -189,6 +204,7 @@ database:
 ```
 
 **Notes**:
+* On `dockstore-staging` and `dockstore-production`, the Dockstore API is binded to port 8443, with TLS configured. On local development environments, it is binded to port 8080.
 * `quayRedirectURI` and `githubRedirectURI` are only used for the development of the web service, when the Web UI is bypassed, their values are ignored otherwise
 * `hibernate.hbm2ddl.auto` can be set to:
   * `create`: Clears the database on restart
@@ -250,7 +266,7 @@ PostgreSQL is used as the datastore for Dockstore, to install it on Ubuntu Linux
   psql
   ```
 
-  1. `webservice`: Required in all setups. (Check the `Dockstore.yml` file for configuration changes.)
+  1. `webservice`: Required in all setups. (Check the `Dockstore.yml` file for configuration changes. Change the database password, obviously.)
 
       ```
       CREATE USER webservice WITH PASSWORD 'iAMs00perSecrEET';
@@ -348,8 +364,8 @@ This section describes the structure of the Dockstore server environments, and r
 
 Name | IP Address (Public) | Hostname | Location | Details
 --- | --- | --- | --- | ---
-dockstore-staging | 52.3.124.195 | [staging.dockstore.org](https://staging.dockstore.org/) | us-east-1 | AWS [...] Instance, Ubuntu 14.04.03
-dockstore-production | 52.23.25.242  | [www.dockstore.org](https://www.dockstore.org/) | us-east-1 | AWS [...] Instance, Ubuntu 14.04.03
+dockstore-staging | 52.3.124.195 | [staging.dockstore.org](https://staging.dockstore.org/) | us-east-1 | AWS EC2 Instance, Ubuntu Linux 14.04.03
+dockstore-production | 52.23.25.242  | [www.dockstore.org](https://www.dockstore.org/) | us-east-1 | AWS EC2 Instance, Ubuntu Linux 14.04.03
 
 #### Setting Up a Server
 
@@ -448,7 +464,7 @@ The following instructions will assume that the server is provisioned with an Ub
     sudo service nginx reload
     ```
 
-5. The same TLS certificates used in the previous step can be used to create a Java Keystore file for use with `dockstore-webservice`. [...]
+5. The same TLS certificates used in the previous step can be used to create a Java Keystore file for use with `dockstore-webservice`.
 
 6. Nightly back-ups of the database are performed on the `dockstore-production` server, this can be set up on any other server:
   1. Login as the `postgres` user with: `sudo su - postgres`
@@ -544,7 +560,7 @@ The production server is set up similarly to staging, except the files are not s
     kill <PID>
     ```
 
-  2. Replace the `dockstore-webservice` JAR file in `/srv/dockstore/` with the newly-built one (`wget` from [Artifactory](https://seqwaremaven.oicr.on.ca/artifactory/) or use `scp` to upload it).
+  2. Replace the `dockstore-webservice` production JAR file in `/srv/dockstore/` with the newly-built one (`wget` from [Artifactory](https://seqwaremaven.oicr.on.ca/artifactory/) or use `scp` to upload it).
 
   3. Start the new `dockstore-webservice`:
 
@@ -555,23 +571,33 @@ The production server is set up similarly to staging, except the files are not s
 3. To update the `dockstore-ui`:
   1. Change the directory to `/srv/www/www.dockstore.org/public_html`. Delete the all the files in the directory.
 
-  2. Upload the Web UI built to this folder (this was done on locally or on the server's `~/workspace/dockstore-ui` directory).
+  2. Build the `dockstore-ui` release locally, with the `webservice.js` file configured with the `dockstore-production` Client ID/Secret key pairs and other settings.
 
-  3. Change the files' owner to the webserver group/user:
+  3. Upload the `dockstore-ui` production build to this folder.
+
+  4. Change the files' owner to the webserver group/user:
 
     ```
     chown -R www-data:www-data /srv/www/www.dockstore.org/public_html/*
     ```
 
-  4. Refresh your browser/caches to make the changes take effect locally.
+  5. Refresh your browser/caches to make the changes take effect locally.
 
 ## Debugging
 
 ### Database/ORM Issues
-
+* `dockstore-webservice`
+  * Errors on start-up when `dockstore.yml` configuration set with `hibernate.hbm2ddl.auto: update`
+    * Read the error message
+    * Columns may not have been created if they were set to `NOT NULL`, and a default value was not specified with it in Hibernate, this will cause the web service to malfunction:
+      1. Login as the `postgres` user and manually create the missing column(s)
+      2. Copy/migrate data to the new column(s) as necessary
+      3. Perform a refresh/re-sync of the Docker images
 
 ### Authentication Issues
 * `dockstore-ui`
   * Pop-up appears and disappears, redirects to a blank page or shows message about an invalid redirect URI
-    *
+    * Verify the server's response by examining the AJAX call log in the browser's _Network_ tab
+    * Check that the correct Client ID/Secret key pair are used, and are set to the correct application (Development, Staging and Production all use distinct applications)
+    * The Redirect URI in the third-party application configuration must be identical to the one in the `dockstore-ui` configuration (in `app/scripts/services/webservice.js`)
 
