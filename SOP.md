@@ -3,31 +3,31 @@
 [...]
 
 ### Table of Contents
-* Dockstore Components
-  * dockstore-webservice
-  * dockstore-client
-  * dockstore-ui
-* Third-Party API Integration
-  * Token Scopes and Permissions
-  * Redirect URLs
-  * Authorization Flows
-  * Satellizer and JSON Web Tokens
-* Configuration Parameters
-  * dockstore-webservice
-  * dockstore-ui
-* Environment Setup
-  * Database
-  * Dockstore API
-  * Dockstore Web UI
-* Normal Workflow
-  * Server Deployment
-    * Dockstore Servers
-    * Setting Up a Server
-    * Deploying to Staging
-    * Deploying to Production
-* Debugging
-  * Database/ORM Issues
-  * Authentication Issues
+* [Dockstore Components](#dockstore-components)
+  * [dockstore-webservice](#dockstore-webservice)
+  * [dockstore-client](#dockstore-client)
+  * [dockstore-ui](#dockstore-ui)
+* [Third-Party API Integration](#third-party-api-integration)
+  * [Token Scopes and Permissions](#token-scopes-and-permissions)
+  * [Redirect URLs](#redirect-urls)
+  * [Authorization Flows](#authorization-flows)
+  * [Satellizer and JSON Web Tokens](#satellizer-and-json-web-tokens)
+* [Configuration Parameters](#configuration-parameters)
+  * [Dockstore API](#dockstore-api)
+  * [Dockstore Web UI](#dockstore-web-ui)
+* [Environment Setup](#environment-setup)
+  * [Database](#database)
+  * [Dockstore API](#dockstore-api-1)
+  * [Dockstore Web UI](#dockstore-web-ui-1)
+* [Normal Workflow](#normal-workflow)
+  * [Server Deployment](#server-deployment)
+    * [Dockstore Servers](#dockstore-servers)
+    * [Setting Up a Server](#setting-up-a-server)
+    * [Deploying to Staging](#deploying-to-staging)
+    * [Deploying to Production](#deploying-to-production)
+* [Debugging](#debugging)
+  * [Database/ORM Issues](#databaseorm-issues)
+  * [Authentication Issues](#authentication-issues)
 
 ## Dockstore Components
 
@@ -111,7 +111,7 @@ The Dockstore API does not return a token in the [JSON Web Token](http://jwt.io/
 
 ## Configuration Parameters
 
-### dockstore-webservice
+### Dockstore API
 
 At runtime, the `dockstore-webservice` configuration is read from the `dockstore.yml` file passed as the second argument.
 
@@ -188,15 +188,16 @@ database:
   checkConnectionWhileIdle: false
 ```
 
-Notes:
-* quayRedirectURI and githubRedirectURI are only used for the development of the web service, when the Web UI is bypassed, their values are ignored otherwise
-* hibernate.hbm2ddl.auto can be set to:
+**Notes**:
+* `quayRedirectURI` and `githubRedirectURI` are only used for the development of the web service, when the Web UI is bypassed, their values are ignored otherwise
+* `hibernate.hbm2ddl.auto` can be set to:
   * `create`: Clears the database on restart
   * `update`: Keeps existing database contents, performs in-place updates to table structure
   * `validate`: Validates the schema, does not alter the database
   * `create-drop`: Clears database on termination
+  * The `dockstore-production` instance **must always** be set to use `update` or `validate`!!
 
-### dockstore-ui
+### Dockstore Web UI
 
 All configuration settings for the Web UI is done in the `app/scripts/services/webservice.js` file. This file is compiled along with the rest of the application, it must be set before running `grunt`.
 
@@ -299,7 +300,7 @@ PostgreSQL is used as the datastore for Dockstore, to install it on Ubuntu Linux
 
 5. The project may be imported into an IDE such as Eclipse or NetBeans for easier development.
 
-### Dockstore UI
+### Dockstore Web UI
 
 1. Install [Node.js](https://nodejs.org/en/) and [NPM](https://www.npmjs.com/) on your workstation, specific instructions will vary depending on the operating system distribution. The use of [nvm](https://github.com/creationix/nvm) is encouraged in supported environments. On Mac OS X, [`brew`](http://brew.sh/) may alternatively be used to install Node.js.
 
@@ -341,7 +342,7 @@ PostgreSQL is used as the datastore for Dockstore, to install it on Ubuntu Linux
 
 ### Server Deployment
 
-This section describes the strcuture of the Dockstore server environments, and recommended instructions on how to maintain the server, perform backups, update the Dockstore builds and publish new releases.
+This section describes the structure of the Dockstore server environments, and recommended instructions on how to maintain the server, perform backups, update the Dockstore builds and publish new releases.
 
 #### Dockstore Servers
 
@@ -536,7 +537,7 @@ The production server is set up similarly to staging, except the files are not s
 1. Perform a back-up of the production database, this may simply be triggering the normal back-up script. Also save a copy of the `dockstore-webservice` log: `/srv/dockstore/dockstore-webservice.log`.
 
 2. To update `dockstore-webservice`:
-  1. Terminate the active `dockstore-webservice` instance:
+  1. Terminate the active `dockstore-webservice` instance with your favourite process-killing program:
 
     ```
     ps aux | grep java
