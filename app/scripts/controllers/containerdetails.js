@@ -68,14 +68,17 @@ angular.module('dockstore.ui')
           });
       };
 
-      $scope.refreshContainer = function(containerId) {
+      $scope.refreshContainer = function(containerId, activeTabIndex) {
         $scope.setContainerDetailsError(null);
         if ($scope.refreshingContainer) return;
         $scope.refreshingContainer = true;
         return ContainerService.refreshContainer(containerId)
           .then(
             function(containerObj) {
-              $scope.updateContainerObj({containerObj: containerObj});
+              $scope.updateContainerObj({
+                containerObj: containerObj,
+                activeTabIndex: activeTabIndex ? activeTabIndex : null
+              });
               $scope.$broadcast('refreshFiles');
               return containerObj;
             },

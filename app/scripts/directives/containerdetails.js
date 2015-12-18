@@ -18,6 +18,12 @@ angular.module('dockstore.ui')
         activeTabs: '=',
         updateContainerObj: '&'
       },
-      templateUrl: 'templates/containerdetails.html'
+      templateUrl: 'templates/containerdetails.html',
+      link: function postLink(scope, element, attrs) {
+        scope.$on('tagEditorRefreshContainer', function(event, containerId) {
+          console.log('Received `tagEditorRefreshContainer` event, containerId:', containerId);
+          scope.refreshContainer(containerId, 2);
+        });
+      }
     };
   });
