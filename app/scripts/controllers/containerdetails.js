@@ -68,14 +68,19 @@ angular.module('dockstore.ui')
           });
       };
 
-      $scope.refreshContainer = function(containerId) {
+      $scope.refreshContainer = function(containerId, activeTabIndex) {
         $scope.setContainerDetailsError(null);
         if ($scope.refreshingContainer) return;
         $scope.refreshingContainer = true;
         return ContainerService.refreshContainer(containerId)
           .then(
             function(containerObj) {
-              $scope.updateContainerObj({containerObj: containerObj});
+              $scope.updateContainerObj({
+                containerObj: containerObj,
+                activeTabIndex: activeTabIndex ? activeTabIndex : null
+              });
+              $scope.updateInfoURLs();
+              $scope.$broadcast('refreshFiles');
               return containerObj;
             },
             function(response) {
@@ -246,6 +251,10 @@ angular.module('dockstore.ui')
             $scope.updateInfoURLs();
           }
         }
+      });
+
+      $scope.$watch('containerToolname', function(newValue, oldValue) {
+        if (newValue) $scope.updateInfoURLs();
       });
 
   }]);

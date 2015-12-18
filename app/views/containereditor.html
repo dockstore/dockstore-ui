@@ -80,7 +80,7 @@
               </div>
               <div class="pull-right">
                 <span class="label" ng-class="containerObj.is_registered ? 'label-primary' : 'label-warning'">
-                  {{ containerObj.is_registered ? 'REG' : 'UNREG' }}
+                  {{ containerObj.is_registered ? 'PUB' : 'UNPUB' }}
                 </span>
               </div>
             </div>
@@ -110,10 +110,11 @@
     <div class="col-md-9">
       <div container-details
           container-path="selContainerObj.path"
+          container-toolname="selContainerObj.toolname"
           container-obj="selContainerObj"
           edit-mode="true"
           active-tabs="activeTabs"
-          update-container-obj="updateContainerObj(containerObj)"
+          update-container-obj="updateContainerObj(containerObj, activeTabIndex)"
           ng-if="selContainerObj">
       </div>
     </div>

@@ -47,6 +47,7 @@ angular.module('dockstore.ui')
           .then(
             function(response) {
               $scope.removeVersionTag(tagId);
+              $scope.$emit('tagEditorRefreshContainer', $scope.containerObj.id);
             },
             function(response) {
               $scope.setError(

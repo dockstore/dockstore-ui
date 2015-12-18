@@ -81,7 +81,7 @@ angular.module('dockstore.ui')
             $scope.getDockerFile($scope.containerObj.id, $scope.selTagName);
             break;
           case 'descriptor':
-            $scope.expectedFilename = 'Dockstore.cwl descriptor';
+            $scope.expectedFilename = '*.cwl descriptor';
             $scope.getDescriptorFile($scope.containerObj.id, $scope.selTagName);
             break;
           default:
