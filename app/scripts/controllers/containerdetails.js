@@ -79,6 +79,7 @@ angular.module('dockstore.ui')
                 containerObj: containerObj,
                 activeTabIndex: activeTabIndex ? activeTabIndex : null
               });
+              $scope.updateInfoURLs();
               $scope.$broadcast('refreshFiles');
               return containerObj;
             },
@@ -250,6 +251,10 @@ angular.module('dockstore.ui')
             $scope.updateInfoURLs();
           }
         }
+      });
+
+      $scope.$watch('containerToolname', function(newValue, oldValue) {
+        if (newValue) $scope.updateInfoURLs();
       });
 
   }]);

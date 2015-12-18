@@ -13,6 +13,7 @@ angular.module('dockstore.ui')
       controller: 'ContainerDetailsCtrl',
       scope: {
         containerPath: '=',
+        containerToolname: '=',
         containerObj: '=',
         editMode: '=',
         activeTabs: '=',
@@ -21,7 +22,6 @@ angular.module('dockstore.ui')
       templateUrl: 'templates/containerdetails.html',
       link: function postLink(scope, element, attrs) {
         scope.$on('tagEditorRefreshContainer', function(event, containerId) {
-          console.log('Received `tagEditorRefreshContainer` event, containerId:', containerId);
           scope.refreshContainer(containerId, 2);
         });
       }
