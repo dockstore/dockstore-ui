@@ -39,7 +39,7 @@
   <div class="col-md-4"
       ng-if="editMode">
     <h3>
-      <div class="btn-group pull-right" role="group">
+      <div class="pull-right">
         <button uib-btn-checkbox
             type="button"
             class="btn btn-primary"
@@ -47,7 +47,7 @@
             ng-model="containerEditData.isRegistered"
             ng-class="containerEditData.isRegistered ? 'btn-primary' : 'btn-warning'"
             ng-disabled="refreshingContainer">
-          Publish{{ containerEditData.isRegistered ? 'ed' : '' }}
+          {{ containerEditData.isRegistered ? 'Unpublish' : 'Publish' }}
         </button>
         <button type="button"
             class="btn btn-primary"
