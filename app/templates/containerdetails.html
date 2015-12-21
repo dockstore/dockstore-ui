@@ -26,7 +26,7 @@
   </div>
 </div>
 <div class="row" ng-show="containerObj">
-  <div class="col-md-8">
+  <div ng-class="editMode ? 'col-md-8' : 'col-md-7'">
     <h3>
       <span class="glyphicon glyphicon-lock" ng-if="!containerObj.is_public"></span>
       {{containerObj.namespace + '/' + containerObj.name + (containerObj.toolname ? ' (' + containerObj.toolname + ')' : '')}}
@@ -58,7 +58,18 @@
       </div>
     </h3>
   </div>
-  <!--div class="col-md-4">
+  <div class="col-md-3">
+    <h3>
+      <button type="button"
+          class="btn btn-primary contact-button"
+          ng-if="!editMode && !containerObj.is_public">
+        <a href="mailto:anonymous@domain.tld?subject=Dockstore.org Request for Access to {{containerObj.path}}&body=I would like to request access to your Docker image {{containerObj.path}} housed on {{gitReposProviderName}}.  My username on {{gitReposProviderName}} is <username>.">
+          Request Access
+        </a>
+      </button>
+    </h3>
+  </div>
+  <!--div class="col-md-2">
     <span class="starRating">
       <input id="rating5" type="radio" name="rating" value="5">
       <label for="rating5">5</label>
