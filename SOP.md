@@ -85,7 +85,7 @@ For security and privacy reasons, Dockstore should only request the minimum set 
 
 Provider | Scopes/Permissions
 --- | ---
-GitHub | read:org
+GitHub | read:org,user:email
 Bitbucket | Account(Email, Read), Team Membership (Read), Repositories (Read), Pull Requests (Read), Issues (Read\*), Wikis (Read\*, Write\*), Snippets (Read\*)
 Quay.io | repo:read,user:read
 \* Probably don't need these, should test without them before removing.
