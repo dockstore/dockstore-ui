@@ -17,6 +17,7 @@ angular.module('dockstore.ui')
       },
       templateUrl: 'templates/registercontainer.html',
       link: function postLink(scope, element, attrs) {
+        /* Watch for changes to the container being edited */
         $('#registerContainerModal').on('hidden.bs.modal', function(event) {
           scope.closeRegisterContainerModal(false);
         });
@@ -26,6 +27,7 @@ angular.module('dockstore.ui')
               scope.containerObj.namespace + '/' + 'new_container' : '';
             scope.containerObj.imagePath = scope.containerObj.namespace ?
               scope.containerObj.namespace + '/' + 'new_container' : '';
+            $(element).find('[data-toggle="tooltip"]').tooltip();
           }
         });
         scope.$watch('toggleModal', function(newValue, oldValue) {

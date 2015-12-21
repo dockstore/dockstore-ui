@@ -20,6 +20,7 @@ angular.module('dockstore.ui')
       },
       templateUrl: 'templates/tageditor.html',
       link: function postLink(scope, element, attrs) {
+        /* Watch for changes to the tag being edited */
         $('#tagEditorModal').on('hidden.bs.modal', function(event) {
           scope.closeEditTagModal(false);
         });
@@ -30,7 +31,10 @@ angular.module('dockstore.ui')
           }
         });
         scope.$watch('tagObj', function(newValue, oldValue) {
-          if (newValue) scope.setDockerPullCmd();
+          if (newValue) {
+            scope.setDockerPullCmd();
+            $(element).find('[data-toggle="tooltip"]').tooltip();
+          }
         });
       }
     };
