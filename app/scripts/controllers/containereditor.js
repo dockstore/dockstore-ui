@@ -265,6 +265,25 @@ angular.module('dockstore.ui')
         $scope.activeTabs[2] = true;
       };
 
+      $scope.removeContainer = function(containerId) {console.log('Removiing container:', containerId);
+        for (var i = 0; i < $scope.containers.length; i++) {
+          if ($scope.containers[i].id === containerId) {
+            $scope.containers.splice(i, 1);
+            break;
+          }
+        }
+        $scope.nsContainers = $scope.sortNSContainers(
+          $scope.containers,
+          $scope.quayTokenObj ?
+              $scope.quayTokenObj.username : $scope.userObj.username
+        );
+        $scope.updateContainerTooltips();
+        if ($scope.nsContainers.length > 0) {
+          $scope.selectContainer($scope.nsContainers[0].containers[0].id);
+        }
+        $scope.activeTabs[0] = true;
+      };
+
       $scope.replaceContainer = function(containerObj, activeTabIndex) {
         for (var i = 0; i < $scope.containers.length; i++) {
           if ($scope.containers[i].id === containerObj.id) break;
@@ -279,5 +298,9 @@ angular.module('dockstore.ui')
         $scope.selectContainer(containerObj.id);
         $scope.activeTabs[activeTabIndex ? activeTabIndex : 0] = true;
       };
+
+      $scope.$on('deregisterContainer', function(event, containerId) {
+        $scope.removeContainer(containerId);
+      });
 
   }]);
