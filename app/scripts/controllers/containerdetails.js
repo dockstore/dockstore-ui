@@ -44,6 +44,7 @@ angular.module('dockstore.ui')
           );
       };
 
+      /* i.e. unpublish, rmb. to change this... */
       $scope.setContainerRegistration = function(containerId, isRegistered) {
         $scope.setContainerDetailsError(null);
         return ContainerService.setContainerRegistration(containerId, isRegistered)
@@ -66,6 +67,10 @@ angular.module('dockstore.ui')
           ).finally(function(response) {
             $scope.containerEditData.isRegistered = $scope.containerObj.is_registered;
           });
+      };
+
+      $scope.deregisterContainer = function(containerId) {
+        console.log('Deregistering Container:', containerId);
       };
 
       $scope.refreshContainer = function(containerId, activeTabIndex) {
