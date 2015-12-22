@@ -265,7 +265,7 @@ angular.module('dockstore.ui')
         $scope.activeTabs[2] = true;
       };
 
-      $scope.removeContainer = function(containerId) {console.log('Removiing container:', containerId);
+      $scope.removeContainer = function(containerId) {
         for (var i = 0; i < $scope.containers.length; i++) {
           if ($scope.containers[i].id === containerId) {
             $scope.containers.splice(i, 1);

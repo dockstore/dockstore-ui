@@ -44,7 +44,6 @@ angular.module('dockstore.ui')
           );
       };
 
-      /* i.e. unpublish, rmb. to change this... */
       $scope.setContainerRegistration = function(containerId, isRegistered) {
         $scope.setContainerDetailsError(null);
         return ContainerService.setContainerRegistration(containerId, isRegistered)
