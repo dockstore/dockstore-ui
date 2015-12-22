@@ -13,11 +13,12 @@ angular.module('dockstore.ui')
     '$q',
     '$window',
     '$auth',
+    '$timeout',
     'ContainerService',
     'UserService',
     'TokenService',
     'NotificationService',
-    function ($scope, $q, $window, $auth,
+    function ($scope, $q, $window, $auth, $timeout,
         ContainerService, UserService, TokenService, NtfnService) {
 
       $scope.userObj = UserService.getUserObj();
@@ -175,6 +176,9 @@ angular.module('dockstore.ui')
       $scope.listUserContainers($scope.userObj.id)
         .then(
           function(containers) {
+            $timeout(function() {
+              $('div.ns-containers-accordion [data-toggle="tooltip"]').tooltip();
+            }, 200);
             TokenService.getUserToken($scope.userObj.id, 'quay.io')
               .then(
                 function(tokenObj) {
@@ -196,7 +200,7 @@ angular.module('dockstore.ui')
                     $scope.selectContainer($scope.nsContainers[0].containers[0].id);
                   }
                 }
-            );
+              );
           });
 
       $scope.updateContainerObj = function(containerObj, activeTabIndex) {

@@ -65,7 +65,9 @@
         <uib-accordion ng-repeat="nsObj in nsContainers" close-others="true">
           <uib-accordion-group is-open="nsContainers[$index].isOpen">
             <uib-accordion-heading>
-              <div class="container-namespace-label-oflw">
+              <div class="container-namespace-label-oflw"
+                  title="{{nsObj.namespace}}"
+                  data-toggle="tooltip">
                 {{nsObj.namespace}}
               </div>
             </uib-accordion-heading>
@@ -73,13 +75,18 @@
                 class="container-label"
                 ng-class="{selected: selContainerObj.id === containerObj.id}"
                 ng-repeat="containerObj in nsObj.containers">
-              <div class="container-name-oflw pull-left">
+              <div class="container-name-oflw pull-left"
+                  title="{{containerObj.name + (containerObj.toolname ? ' (' + containerObj.toolname + ')' : '')}}"
+                  data-toggle="tooltip">
                 <a href ng-click="selectContainer(containerObj.id)">
                   {{containerObj.name + (containerObj.toolname ? ' (' + containerObj.toolname + ')' : '')}}
                 </a>
               </div>
               <div class="pull-right">
-                <span class="label" ng-class="containerObj.is_registered ? 'label-primary' : 'label-warning'">
+                <span class="label"
+                  ng-class="containerObj.is_registered ? 'label-primary' : 'label-warning'"
+                  title="{{ containerObj.is_registered ? 'Published' : 'Unpublished' }}"
+                  data-toggle="tooltip">
                   {{ containerObj.is_registered ? 'PUB' : 'UNPUB' }}
                 </span>
               </div>
