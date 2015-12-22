@@ -29,7 +29,11 @@
   <div ng-class="editMode ? 'col-md-7' : 'col-md-8'">
     <h3>
       <span class="glyphicon glyphicon-lock" ng-if="!containerObj.is_public"></span>
-      {{containerObj.namespace + '/' + containerObj.name + (containerObj.toolname ? ' (' + containerObj.toolname + ')' : '')}}
+      {{
+        (containerObj.namespace !== '_' ? containerObj.namespace + '/' : '') +
+        containerObj.name +
+        (containerObj.toolname ? ' (' + containerObj.toolname + ')' : '')
+      }}
     </h3>
     <p class="update">
       Last build:

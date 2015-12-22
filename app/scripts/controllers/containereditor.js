@@ -103,20 +103,38 @@ angular.module('dockstore.ui')
         return (function(nsContainers, username) {
           var sortedNSContainers = [];
           /* User's Containers Appear in First Section */
+          var unIndex = -1; // username (user's personal containers)
+          var orIndex = -1; // 'Others' (i.e. no namespace)
+          var orNSObj = null;
           for (var i = 0; i < nsContainers.length; i++) {
             if (nsContainers[i].namespace === username) {
+              unIndex = i;
               sortedNSContainers.push(nsContainers[i]);
-              nsContainers.splice(i, 1);
-              break;
+            } else if (nsContainers[i].namespace === '_') {
+              orIndex = i;
+              orNSObj = {
+                namespace: 'Others',
+                containers: nsContainers[i].containers
+              };
             }
           }
-          return sortedNSContainers.concat(
+          if (unIndex >= 0) nsContainers.splice(unIndex, 1);
+          if (orIndex >= 0) {
+            nsContainers.splice(
+              (unIndex < orIndex) ? orIndex - 1: orIndex,
+              1
+            );
+          }
+          sortedNSContainers = sortedNSContainers.concat(
             nsContainers.sort(function(a, b) {
               if (a.namespace < b.namespace) return -1;
               if (a.namespace > b.namespace) return 1;
               return 0;
             })
           );
+          if (orIndex >= 0) sortedNSContainers.push(orNSObj);
+
+          return sortedNSContainers;
         })(nsContainers, username);
       };
 
@@ -150,6 +168,12 @@ angular.module('dockstore.ui')
         }
       };
 
+      $scope.updateContainerTooltips = function() {
+        $timeout(function() {
+          $('div.ns-containers-accordion [data-toggle="tooltip"]').tooltip();
+        }, 200);
+      };
+
       $scope.setContainerEditorError = function(message, errorDetails) {
         if (message) {
           $scope.containerEditorError = {
@@ -176,9 +200,6 @@ angular.module('dockstore.ui')
       $scope.listUserContainers($scope.userObj.id)
         .then(
           function(containers) {
-            $timeout(function() {
-              $('div.ns-containers-accordion [data-toggle="tooltip"]').tooltip();
-            }, 200);
             TokenService.getUserToken($scope.userObj.id, 'quay.io')
               .then(
                 function(tokenObj) {
@@ -187,6 +208,7 @@ angular.module('dockstore.ui')
                       containers,
                       tokenObj.username
                   );
+                  $scope.updateContainerTooltips();
                   if ($scope.nsContainers.length > 0) {
                     $scope.selectContainer($scope.nsContainers[0].containers[0].id);
                   }
@@ -196,6 +218,7 @@ angular.module('dockstore.ui')
                       containers,
                       $scope.userObj.username
                   );
+                  $scope.updateContainerTooltips();
                   if ($scope.nsContainers.length > 0) {
                     $scope.selectContainer($scope.nsContainers[0].containers[0].id);
                   }
@@ -237,6 +260,7 @@ angular.module('dockstore.ui')
           $scope.quayTokenObj ?
               $scope.quayTokenObj.username : $scope.userObj.username
         );
+        $scope.updateContainerTooltips();
         $scope.selectContainer(containerObj.id);
         $scope.activeTabs[2] = true;
       };
@@ -251,6 +275,7 @@ angular.module('dockstore.ui')
           $scope.quayTokenObj ?
               $scope.quayTokenObj.username : $scope.userObj.username
         );
+        $scope.updateContainerTooltips();
         $scope.selectContainer(containerObj.id);
         $scope.activeTabs[activeTabIndex ? activeTabIndex : 0] = true;
       };

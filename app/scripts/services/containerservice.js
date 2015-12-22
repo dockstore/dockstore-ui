@@ -83,7 +83,7 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.createContainer = function(containerObj) {
+    this.createContainer = function(containerObj) {console.log('Registering:', containerObj);
       return $q(function(resolve, reject) {
         $http({
           method: 'POST',

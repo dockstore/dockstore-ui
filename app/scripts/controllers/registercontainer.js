@@ -90,11 +90,11 @@ angular.module('dockstore.ui')
       };
 
       $scope.getImagePath = function(imagePath, part) {
-        var imagePathRegexp = /^([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)\/([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)$/i;
+        var imagePathRegexp = /^(([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)|_)\/([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)$/i;
         var matchObj = imagePath.match(imagePathRegexp);
         var imageName = '';
         if (matchObj && matchObj.length > 2) {
-          imageName = (part !== 'name') ? matchObj[1] : matchObj[3];
+          imageName = (part !== 'name') ? matchObj[1] : matchObj[4];
         }
         return imageName;
       };
