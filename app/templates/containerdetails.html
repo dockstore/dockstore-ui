@@ -39,7 +39,7 @@
   <div class="col-md-4"
       ng-if="editMode">
     <h3>
-      <div class="btn-group pull-right" role="group">
+      <div class="pull-right">
         <button uib-btn-checkbox
             type="button"
             class="btn btn-primary"
@@ -47,7 +47,7 @@
             ng-model="containerEditData.isRegistered"
             ng-class="containerEditData.isRegistered ? 'btn-primary' : 'btn-warning'"
             ng-disabled="refreshingContainer">
-          Register{{ containerEditData.isRegistered ? 'ed' : '' }}
+          {{ containerEditData.isRegistered ? 'Unpublish' : 'Publish' }}
         </button>
         <button type="button"
             class="btn btn-primary"
@@ -311,8 +311,9 @@
           <td>
           <div class="container-sharing">
               <sn-addthis-toolbox
-                  class="addthis_default_style addthis_32x32_style">
+                  class="addthis_toolbox addthis_default_style addthis_32x32_style">
                 <a href class="addthis_button_twitter"></a>
+                <a href class="addthis_button_facebook"></a>
                 <a href class="addthis_button_google_plusone_share"></a>
                 <a href class="addthis_button_evernote"></a>
                 <a href class="addthis_button_email"></a>

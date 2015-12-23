@@ -51,7 +51,6 @@ angular.module('dockstore.ui')
         return ContainerService.refreshUserContainers(userId)
           .then(
             function(containers) {
-              $scope.refreshingContainers = false;
               $window.location.href = '/my-containers';
               return containers;
             },
@@ -66,7 +65,9 @@ angular.module('dockstore.ui')
               );
               return $q.reject(response);
             }
-          );
+          ).finally(function(response) {
+            $scope.refreshingContainers = false;
+          });
       };
 
       $scope.sortNSContainers = function(containers, username) {
@@ -198,9 +199,9 @@ angular.module('dockstore.ui')
             );
           });
 
-      $scope.updateContainerObj = function(containerObj) {
+      $scope.updateContainerObj = function(containerObj, activeTabIndex) {
         if (containerObj) {
-          $scope.replaceContainer(containerObj);
+          $scope.replaceContainer(containerObj, activeTabIndex);
         } else {
           /* 'Real-time' */
           $scope.updateNSContainersRegistered($scope.selContainerObj);
@@ -236,7 +237,7 @@ angular.module('dockstore.ui')
         $scope.activeTabs[2] = true;
       };
 
-      $scope.replaceContainer = function(containerObj) {
+      $scope.replaceContainer = function(containerObj, activeTabIndex) {
         for (var i = 0; i < $scope.containers.length; i++) {
           if ($scope.containers[i].id === containerObj.id) break;
         }
@@ -247,7 +248,7 @@ angular.module('dockstore.ui')
               $scope.quayTokenObj.username : $scope.userObj.username
         );
         $scope.selectContainer(containerObj.id);
-        $scope.activeTabs[0] = true;
+        $scope.activeTabs[activeTabIndex ? activeTabIndex : 0] = true;
       };
 
   }]);

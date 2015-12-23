@@ -26,6 +26,7 @@ angular.module('dockstore.ui')
           .then(
             function(versionTags) {
               $scope.closeEditTagModal(true);
+              $scope.$emit('tagEditorRefreshContainer', $scope.containerId);
               return versionTags;
             },
             function(response) {
@@ -59,6 +60,7 @@ angular.module('dockstore.ui')
                   break;
                 }
               }
+              $scope.$emit('tagEditorRefreshContainer', $scope.containerId);
               return versionTags;
             },
             function(response) {
