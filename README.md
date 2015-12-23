@@ -42,11 +42,12 @@ Replace <LOCAL_IP_ADDRESS> with the workstation's IP address in the LAN, if `loc
   ```
 
 ### Third-Party API Integration
-Dockstore currently integrates with GitHub and Quay.io, in the following steps, replace `http://localhost:9000` with a fully-qualified domain name on a production environment.
 
-1. On GitHub, create an application and enter the following for `Authorization callback URL`: `http://localhost:9000/login`.
-2. On Quay.io, create an application and enter the following for `Redirect/Callback URL Prefix`: `http://localhost:9000/auth/quay.io`.
-3. On Bitbucket, create an application and enter the following for `Callback URL`: `http://localhost:9000/auth/bitbucket.org`. Due to security policies, it may be necessary to bind the application to a local IP address or FQDN rather than `localhost`, or else the Bitbucket will not redirect back to Dockstore properly.
+Dockstore currently integrates with GitHub and Quay.io, in the following steps, replace `http://<LOCAL_IP_ADDRESS>:9000` with a fully-qualified domain name on a production environment.
+
+1. On GitHub, create an application and enter the following for `Authorization callback URL`: `http://<LOCAL_IP_ADDRESS>:9000/login`.
+2. On Quay.io, create an application and enter the following for `Redirect/Callback URL Prefix`: `http://<LOCAL_IP_ADDRESS>:9000/auth/quay.io`.
+3. On Bitbucket, create an application and enter the following for `Callback URL`: `http://<LOCAL_IP_ADDRESS>:9000/auth/bitbucket.org`. Due to security policies, it may be necessary to bind the application to a local IP address or FQDN rather than `localhost`, or else the Bitbucket will not redirect back to Dockstore properly.
 
 ### Setting Up the Build Environment
 
@@ -87,6 +88,7 @@ Dockstore currently integrates with GitHub and Quay.io, in the following steps, 
   ```
 
 ### Running the Dockstore UI (Development)
+
 1. The Dockstore web service and database should be running, and the API accessible on `http://localhost:8080`.
 2. All the configuration in the JavaScript and on GitHub/Quay.io should be set to use `http://localhost:9000`.
 3. In the dockstore-ui repository root directory, run `grunt serve`.
@@ -140,4 +142,5 @@ Documents written in Markdown should be placed in the `app/docs/` directory, the
 ```
 
 ### Resources
+
 + [Getting Started with Grunt](http://blog.teamtreehouse.com/getting-started-with-grunt)
