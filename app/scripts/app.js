@@ -99,11 +99,6 @@ angular
           controller: 'TokensCtrl',
           controllerAs: 'Tokens'
         })
-        .when('/settings', {
-          templateUrl: 'views/settings.html',
-          controller: 'SettingsCtrl',
-          controllerAs: 'Settings'
-        })
         .when('/auth/:provider*', {
           templateUrl: 'views/authentication.html',
           controller: 'AuthenticationCtrl',

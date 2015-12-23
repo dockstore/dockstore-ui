@@ -162,6 +162,19 @@ angular.module('dockstore.ui')
       });
     };
 
+    this.deleteContainer = function(containerId) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'DELETE',
+          url: WebService.API_URI + '/containers/' + containerId,
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
     this.updateContainerTag = function(containerId, tagObj) {
       return $q(function(resolve, reject) {
         $http({

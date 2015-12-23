@@ -41,10 +41,11 @@
                   class="form-control"
                   name="name"
                   ng-model="tagObj.name"
-                  ng-minlength="3"
                   ng-maxlength="128"
                   ng-pattern="/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*$/i"
                   required
+                  data-toggle="tooltip"
+                  title="Docker Image tag name."
                   placeholder="e.g. develop"
                   ng-disabled="!tagObj.create" />
               <div
@@ -69,6 +70,8 @@
                   ng-minlength="3"
                   ng-maxlength="128"
                   ng-pattern="/^[\w-]+((\/|\.)[\w-]+)*$/i"
+                  data-toggle="tooltip"
+                  title="Git branch or tag name."
                   placeholder="e.g. develop"
                   ng-disabled="!editMode || (editMode && tagObj.automated)" />
               <div
@@ -94,6 +97,8 @@
                   ng-maxlength="128"
                   ng-pattern="/^[a-zA-Z0-9]*$/i"
                   required
+                  data-toggle="tooltip"
+                  title="Docker Image ID."
                   placeholder="e.g. 28d30887157514b6047c9"
                   ng-disabled="!editMode" />
               <div
@@ -119,6 +124,8 @@
                   ng-maxlength="128"
                   ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*Dockerfile$/i"
                   required
+                  data-toggle="tooltip"
+                  title="Relative path to the Dockerfile in the Git repository."
                   placeholder="e.g. /Dockerfile"
                   ng-disabled="!editMode" />
               <div
@@ -144,6 +151,8 @@
                   ng-maxlength="128"
                   ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.cwl$/i"
                   required
+                  data-toggle="tooltip"
+                  title="Relative path to the CWL Descriptor in the Git repository."
                   placeholder="e.g. /Dockstore.cwl"
                   ng-disabled="!editMode" />
               <div
@@ -163,7 +172,9 @@
               <div class="checkbox">
                 <label>
                   <input type="checkbox"
-                      ng-model="tagObj.hidden" />
+                      ng-model="tagObj.hidden"
+                      data-toggle="tooltip"
+                      title="Hide tag from public view." />
                 </label>
               </div>
             </div>

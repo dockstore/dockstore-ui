@@ -13,11 +13,12 @@ angular.module('dockstore.ui')
     '$q',
     '$window',
     '$auth',
+    '$timeout',
     'ContainerService',
     'UserService',
     'TokenService',
     'NotificationService',
-    function ($scope, $q, $window, $auth,
+    function ($scope, $q, $window, $auth, $timeout,
         ContainerService, UserService, TokenService, NtfnService) {
 
       $scope.userObj = UserService.getUserObj();
@@ -102,20 +103,38 @@ angular.module('dockstore.ui')
         return (function(nsContainers, username) {
           var sortedNSContainers = [];
           /* User's Containers Appear in First Section */
+          var unIndex = -1; // username (user's personal containers)
+          var orIndex = -1; // 'Others' (i.e. no namespace)
+          var orNSObj = null;
           for (var i = 0; i < nsContainers.length; i++) {
             if (nsContainers[i].namespace === username) {
+              unIndex = i;
               sortedNSContainers.push(nsContainers[i]);
-              nsContainers.splice(i, 1);
-              break;
+            } else if (nsContainers[i].namespace === '_') {
+              orIndex = i;
+              orNSObj = {
+                namespace: 'Others',
+                containers: nsContainers[i].containers
+              };
             }
           }
-          return sortedNSContainers.concat(
+          if (unIndex >= 0) nsContainers.splice(unIndex, 1);
+          if (orIndex >= 0) {
+            nsContainers.splice(
+              (unIndex < orIndex) ? orIndex - 1: orIndex,
+              1
+            );
+          }
+          sortedNSContainers = sortedNSContainers.concat(
             nsContainers.sort(function(a, b) {
               if (a.namespace < b.namespace) return -1;
               if (a.namespace > b.namespace) return 1;
               return 0;
             })
           );
+          if (orIndex >= 0) sortedNSContainers.push(orNSObj);
+
+          return sortedNSContainers;
         })(nsContainers, username);
       };
 
@@ -147,6 +166,12 @@ angular.module('dockstore.ui')
             }
           }
         }
+      };
+
+      $scope.updateContainerTooltips = function() {
+        $timeout(function() {
+          $('div.ns-containers-accordion [data-toggle="tooltip"]').tooltip();
+        }, 200);
       };
 
       $scope.setContainerEditorError = function(message, errorDetails) {
@@ -183,6 +208,7 @@ angular.module('dockstore.ui')
                       containers,
                       tokenObj.username
                   );
+                  $scope.updateContainerTooltips();
                   if ($scope.nsContainers.length > 0) {
                     $scope.selectContainer($scope.nsContainers[0].containers[0].id);
                   }
@@ -192,11 +218,12 @@ angular.module('dockstore.ui')
                       containers,
                       $scope.userObj.username
                   );
+                  $scope.updateContainerTooltips();
                   if ($scope.nsContainers.length > 0) {
                     $scope.selectContainer($scope.nsContainers[0].containers[0].id);
                   }
                 }
-            );
+              );
           });
 
       $scope.updateContainerObj = function(containerObj, activeTabIndex) {
@@ -217,8 +244,8 @@ angular.module('dockstore.ui')
           namespace: namespace ? namespace : '',
           registry: '',
           gitUrl: '',
-          default_dockerfile_path: '',
-          default_cwl_path: '',
+          default_dockerfile_path: '/Dockerfile',
+          default_cwl_path: '/Dockstore.cwl',
           is_public: true,
           is_registered: false,
           scrProvider: 'GitHub',
@@ -233,8 +260,28 @@ angular.module('dockstore.ui')
           $scope.quayTokenObj ?
               $scope.quayTokenObj.username : $scope.userObj.username
         );
+        $scope.updateContainerTooltips();
         $scope.selectContainer(containerObj.id);
         $scope.activeTabs[2] = true;
+      };
+
+      $scope.removeContainer = function(containerId) {
+        for (var i = 0; i < $scope.containers.length; i++) {
+          if ($scope.containers[i].id === containerId) {
+            $scope.containers.splice(i, 1);
+            break;
+          }
+        }
+        $scope.nsContainers = $scope.sortNSContainers(
+          $scope.containers,
+          $scope.quayTokenObj ?
+              $scope.quayTokenObj.username : $scope.userObj.username
+        );
+        $scope.updateContainerTooltips();
+        if ($scope.nsContainers.length > 0) {
+          $scope.selectContainer($scope.nsContainers[0].containers[0].id);
+        }
+        $scope.activeTabs[0] = true;
       };
 
       $scope.replaceContainer = function(containerObj, activeTabIndex) {
@@ -247,8 +294,13 @@ angular.module('dockstore.ui')
           $scope.quayTokenObj ?
               $scope.quayTokenObj.username : $scope.userObj.username
         );
+        $scope.updateContainerTooltips();
         $scope.selectContainer(containerObj.id);
         $scope.activeTabs[activeTabIndex ? activeTabIndex : 0] = true;
       };
+
+      $scope.$on('deregisterContainer', function(event, containerId) {
+        $scope.removeContainer(containerId);
+      });
 
   }]);

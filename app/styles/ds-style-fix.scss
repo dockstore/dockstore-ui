@@ -375,6 +375,16 @@ div.modal form {
   }
 }
 
+.tooltip-inner {
+  max-width: 450px;
+}
+
+button.contact-button {
+  a {
+    color: #ffffff;
+  }
+}
+
 /* Media Queries - Lower Resolutions (width < 1200px) */
 @media (max-width: 992px) {
   img.site-logo { width: 50px; }

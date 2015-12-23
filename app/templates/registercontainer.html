@@ -65,6 +65,8 @@
                     ng-maxlength="128"
                     ng-pattern="/^([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)\/([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)$/i"
                     required
+                    data-toggle="tooltip"
+                    title="Git Repository path."
                     placeholder="e.g. CancerCollaboratory/dockstore-tool-liftover" />
               </div>
               <div
@@ -90,6 +92,8 @@
                   ng-maxlength="256"
                   ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*Dockerfile$/i"
                   required
+                  data-toggle="tooltip"
+                  title="Default relative path to the Dockerfile in the Git repository."
                   placeholder="e.g. /Dockerfile" />
               <div
                   class="form-error-messages"
@@ -114,6 +118,8 @@
                   ng-maxlength="256"
                   ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.cwl$/i"
                   required
+                  data-toggle="tooltip"
+                  title="Default relative path to the CWL Descriptor in the Git repository."
                   placeholder="e.g. /Dockstore.cwl" />
               <div
                   class="form-error-messages"
@@ -156,8 +162,10 @@
                     ng-model="containerObj.imagePath"
                     ng-minlength="3"
                     ng-maxlength="128"
-                    ng-pattern="/^([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)\/([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)$/i"
+                    ng-pattern="/^(([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)|_)\/([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)$/i"
                     required
+                    data-toggle="tooltip"
+                    title="Docker Image Registry path."
                     placeholder="e.g. cancercollaboratory/dockstore-tool-liftover" />
               </div>
               <div
@@ -181,6 +189,8 @@
                   ng-model="containerObj.toolname"
                   ng-maxlength="256"
                   ng-pattern="/^[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*$/i"
+                  data-toggle="tooltip"
+                  title="Dockstore Image path toolname suffix."
                   placeholder="e.g. liftover-fast (optional)" />
               <div
                   class="form-error-messages"

@@ -26,29 +26,41 @@
   </div>
 </div>
 <div class="row" ng-show="containerObj">
-  <div class="col-md-8">
+  <div ng-class="editMode ? 'col-md-7' : 'col-md-8'">
     <h3>
       <span class="glyphicon glyphicon-lock" ng-if="!containerObj.is_public"></span>
-      {{containerObj.namespace + '/' + containerObj.name + (containerObj.toolname ? ' (' + containerObj.toolname + ')' : '')}}
+      {{
+        (containerObj.namespace !== '_' ? containerObj.namespace + '/' : '') +
+        containerObj.name +
+        (containerObj.toolname ? ' (' + containerObj.toolname + ')' : '')
+      }}
     </h3>
     <p class="update">
       Last build:
       {{ containerObj.lastBuild ? getDaysAgoString(containerObj.lastBuild) : 'n/a' }} 
     </p>
   </div>
-  <div class="col-md-4"
+  <div class="col-md-5"
       ng-if="editMode">
     <h3>
       <div class="pull-right">
-        <button uib-btn-checkbox
-            type="button"
-            class="btn btn-primary"
-            ng-click="setContainerRegistration(containerObj.id, containerEditData.isRegistered)"
-            ng-model="containerEditData.isRegistered"
-            ng-class="containerEditData.isRegistered ? 'btn-primary' : 'btn-warning'"
-            ng-disabled="refreshingContainer">
-          {{ containerEditData.isRegistered ? 'Unpublish' : 'Publish' }}
-        </button>
+        <div class="btn-group" role="group">
+          <button uib-btn-checkbox
+              type="button"
+              class="btn btn-primary"
+              ng-click="setContainerRegistration(containerObj.id, containerEditData.isRegistered)"
+              ng-model="containerEditData.isRegistered"
+              ng-class="containerEditData.isRegistered ? 'btn-primary' : 'btn-warning'"
+              ng-disabled="refreshingContainer">
+            {{ containerEditData.isRegistered ? 'Unpublish' : 'Publish' }}
+          </button>
+          <button type="button"
+              class="btn btn-danger"
+              ng-click="deregisterContainer(containerObj.id)"
+              ng-if="containerObj.mode === 'MANUAL_IMAGE_PATH'">
+            Deregister
+          </button>
+        </div>
         <button type="button"
             class="btn btn-primary"
             ng-click="refreshContainer(containerObj.id)"
@@ -58,7 +70,28 @@
       </div>
     </h3>
   </div>
-  <!--div class="col-md-4">
+  <div class="col-md-4"
+      ng-if="containerObj.email">
+    <h3 class="pull-right">
+      <div class="btn-group" role="group">
+        <button type="button"
+            class="btn btn-primary contact-button"
+            ng-if="!editMode && !containerObj.is_public">
+          <a href="mailto:{{containerObj.email}}?subject=Dockstore Request for Access to {{containerObj.path}}&body=I would like to request access to your Docker image {{containerObj.path}} housed on {{gitReposProviderName}}.  My username on {{gitReposProviderName}} is <username>.">
+            Request Access
+          </a>
+        </button>
+        <button type="button"
+            class="btn btn-info contact-button"
+            ng-if="!editMode">
+          <a href="mailto:{{containerObj.email}}?subject=Dockstore Contact Request About: {{containerObj.path}}">
+            Contact Author
+          </a>
+        </button>
+      </div>
+    </h3>
+  </div>
+  <!--div class="col-md-2">
     <span class="starRating">
       <input id="rating5" type="radio" name="rating" value="5">
       <label for="rating5">5</label>
@@ -90,6 +123,14 @@
           <li>
             <strong>Author</strong>:
             {{ containerObj.author ? containerObj.author : 'n/a' }}
+          </li>
+          <li>
+            <strong>E-mail</strong>:
+            <span ng-if="!containerObj.email">n/a</span>
+            <a href="mailto:{{containerObj.email}}"
+                ng-if="containerObj.email">
+              {{containerObj.email}}
+            </a>
           </li>
           <li ng-if="gitReposProvider">
             <strong>{{gitReposProviderName}}</strong>:

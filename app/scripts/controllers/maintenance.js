@@ -9,9 +9,7 @@
  */
 angular.module('dockstore.ui')
   .controller('MaintenanceCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+    
+    // ...
+    
   });

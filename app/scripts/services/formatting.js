@@ -114,7 +114,7 @@ angular.module('dockstore.ui')
 
       this.getImageReposWebUrl = function(path, imageReposProvider) {
         if (!path) return null;
-        var imageReposRegExp = /^.*\/(.*)\/(.*)\/?$/i;
+        var imageReposRegExp = /^(.*)\/(.*)\/(.*)\/?$/i;
         var matchRes = imageReposRegExp.exec(path);
         if (!matchRes) return null;
         var imageReposWebUrl = '';
@@ -124,21 +124,23 @@ angular.module('dockstore.ui')
             imageReposWebUrl = 'https://quay.io/repository/';
             break;
           case 'DOCKER_HUB':
-            imageReposWebUrl = 'https://hub.docker.com/r/';
+            imageReposWebUrl = 'https://hub.docker.com/' +
+                ((matchRes[2] !== '_') ? 'r/' : '');
             suffix = '/';
             break;
           default:
             return null;
         }
-        imageReposWebUrl += matchRes[1] + '/' + matchRes[2] + suffix;
+        imageReposWebUrl += matchRes[2] + '/' + matchRes[3] + suffix;
         return imageReposWebUrl;
       };
 
       this.getFilteredDockerPullCmd = function(path, tagName) {
         var dockerPullCmd = 'docker pull ';
         var prefix = 'registry.hub.docker.com/';
-        dockerPullCmd += (path.indexOf(prefix) === -1) ?
-            path : path.replace(prefix, '');
+        if (path.indexOf(prefix) !== -1) path = path.replace(prefix, '');
+        if (path.indexOf('_/') !== -1) path = path.replace('_/', '');
+        dockerPullCmd += path;
         if (tagName) dockerPullCmd += ':' + tagName;
         return dockerPullCmd;
       };
