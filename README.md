@@ -89,10 +89,11 @@ Dockstore currently integrates with GitHub and Quay.io, in the following steps, 
 
 ### Running the Dockstore UI (Development)
 
-1. The Dockstore web service and database should be running, and the API accessible on `http://localhost:8080`.
-2. All the configuration in the JavaScript and on GitHub/Quay.io should be set to use `http://localhost:9000`.
+1. The Dockstore web service and database should be running, and the API accessible on `http://<LOCAL_IP_ADDRESS>:8080`.
+2. All the configuration in the JavaScript and on GitHub/Quay.io should be set to use `http://<LOCAL_IP_ADDRESS>:9000`.
 3. In the dockstore-ui repository root directory, run `grunt serve`.
-4. You should be automatically navigated to `http://localhost:9000` in a web browser.
+4. You should be automatically navigated to `http://<LOCAL_IP_ADDRESS>:9000` in a web browser. (You may also be navigated to `http://0.0.0.0:9000` instead, which may not necessarily work depending on your setup). 
+
 
 ### Deploying the Dockstore UI (Production)
 1. The Dockstore web service and database should be running, and the API accessible on `https://www.dockstore.org:8080` (the API may use a different server name if desired).
