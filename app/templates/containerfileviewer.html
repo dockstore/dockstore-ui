@@ -8,6 +8,16 @@
     </option>
   </select>
 </div>
+<div class="ds-version-selector" ng-hide="isDockerfile()">
+  <strong>Descriptor Type</strong>:
+  <select class="ds-version" ng-model="selDescriptorName">
+    <option
+      ng-repeat="descriptor in descriptors"
+      value="{{descriptor}}">
+      {{descriptor}}
+    </option>
+  </select>
+</div>
 
 <div class="alert alert-warning" role="alert"
     ng-show="fileLoaded && !fileContents">

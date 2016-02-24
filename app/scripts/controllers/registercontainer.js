@@ -13,7 +13,7 @@ angular.module('dockstore.ui')
     '$q',
     'ContainerService',
     function ($scope, $q, ContainerService) {
-    
+
       $scope.registerContainer = function() {
         $scope.setContainerEditError(null);
         var containerObj = $scope.getNormalizedContainerObj($scope.containerObj);
@@ -123,6 +123,7 @@ angular.module('dockstore.ui')
           gitUrl: $scope.getGitUrl(containerObj.gitPath),
           default_dockerfile_path: containerObj.default_dockerfile_path,
           default_cwl_path: containerObj.default_cwl_path,
+          default_wdl_path: containerObj.default_wdl_path,
           is_public: containerObj.is_public,
           is_registered: containerObj.is_registered
         };

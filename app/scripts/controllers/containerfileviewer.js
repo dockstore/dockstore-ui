@@ -15,9 +15,19 @@ angular.module('dockstore.ui')
     'NotificationService',
   	function ($scope, $q, ContainerService, NtfnService) {
 
+      var descriptors = ["cwl", "wdl"];
+
       $scope.fileLoaded = false;
       $scope.fileContents = null;
-    
+
+      $scope.isDockerfile = function() {
+        if ($scope.type === 'dockerfile'){
+          return true;
+        } else {
+          return false;
+        }
+      };
+
       $scope.getContainerTags = function() {
         var sortedTagObjs = $scope.containerObj.tags;
         sortedTagObjs.sort(function(a, b) {
@@ -52,8 +62,8 @@ angular.module('dockstore.ui')
           );
       };
 
-      $scope.getDescriptorFile = function(containerId, tagName) {
-        return ContainerService.getDescriptorFile(containerId, tagName)
+      $scope.getDescriptorFile = function(containerId, tagName, type) {
+        return ContainerService.getDescriptorFile(containerId, tagName, type)
           .then(
             function(descriptorFile) {
               $scope.fileContents = descriptorFile;
@@ -70,6 +80,8 @@ angular.module('dockstore.ui')
       $scope.setDocument = function() {
         $scope.containerTags = $scope.getContainerTags();
         $scope.selTagName = $scope.containerTags[0];
+        $scope.descriptors = descriptors;
+        $scope.selDescriptorName = descriptors[0];
       };
 
       $scope.refreshDocument = function() {
@@ -81,8 +93,8 @@ angular.module('dockstore.ui')
             $scope.getDockerFile($scope.containerObj.id, $scope.selTagName);
             break;
           case 'descriptor':
-            $scope.expectedFilename = '*.cwl descriptor';
-            $scope.getDescriptorFile($scope.containerObj.id, $scope.selTagName);
+            $scope.expectedFilename = 'Descriptor';
+            $scope.getDescriptorFile($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName);
             break;
           default:
             // ...

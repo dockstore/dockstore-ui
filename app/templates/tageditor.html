@@ -26,7 +26,7 @@
         </span>
         Please wait, retrieving Quay.io and/or Docker Hub container...
       </div>
-      <form name="tagEditorForm" 
+      <form name="tagEditorForm"
           class="form-horizontal"
           ng-submit="tagObj.create ? createTag() : saveTagChanges()"
           novalidate>
@@ -159,6 +159,33 @@
                   class="form-error-messages"
                   ng-messages="tagEditorForm.cwl_path.$error"
                   ng-if="tagEditorForm.cwl_path.$touched">
+                <div ng-messages-include="templates/validation/tags/descriptorpath.html">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              WD Descriptor:
+            </label>
+            <div class="col-sm-9">
+              <input
+                type="text"
+                class="form-control"
+                name="wdl_path"
+                ng-model="tagObj.wdl_path"
+                ng-minlength="3"
+                ng-maxlength="128"
+                ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.wdl$/i"
+                required
+                data-toggle="tooltip"
+                title="Relative path to the WDL Descriptor in the Git repository."
+                placeholder="e.g. /Dockstore.wdl"
+                ng-disabled="!editMode" />
+              <div
+                class="form-error-messages"
+                ng-messages="tagEditorForm.wdl_path.$error"
+                ng-if="tagEditorForm.wdl_path.$touched">
                 <div ng-messages-include="templates/validation/tags/descriptorpath.html">
                 </div>
               </div>

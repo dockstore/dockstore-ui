@@ -22,7 +22,7 @@ angular.module('dockstore.ui')
           if (newValue) scope.setDocument();
         });
         scope.$watchGroup(
-          ['selTagName', 'containerObj.id'],
+          ['selTagName', 'containerObj.id', 'selDescriptorName'],
           function(newValues, oldValues) {
             scope.refreshDocument();
         });
