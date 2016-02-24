@@ -34,6 +34,7 @@
     }
   },
   "resolutions": {
-    "showdown": "~1.3.0"
+    "showdown": "~1.3.0",
+    "angular": "^1.3.0"
   }
 }
