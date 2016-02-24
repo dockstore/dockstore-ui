@@ -29,9 +29,8 @@
     "jit-grunt": "^0.9.1",
     "jshint-stylish": "^1.0.0",
     "karma-jasmine": "*",
-    "karma-phantomjs-launcher": "*",
+    "karma-phantomjs-launcher": "0.2.2",
     "time-grunt": "^1.0.0",
-    "phantomjs-prebuilt": "2.1.4"
   },
   "engines": {
     "node": ">=0.10.0"
