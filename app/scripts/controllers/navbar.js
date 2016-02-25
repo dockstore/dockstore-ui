@@ -49,5 +49,5 @@ angular.module('dockstore.ui')
       } else {
         return string;
       }
-    }
+    };
   });
