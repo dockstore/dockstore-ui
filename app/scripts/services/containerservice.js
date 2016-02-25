@@ -45,7 +45,7 @@ angular.module('dockstore.ui')
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/containers/path/' + containerPathEncoded + 
+          url: WebService.API_URI + '/containers/path/' + containerPathEncoded +
                 '/registered/'
         }).then(function(response) {
           resolve(response.data);
@@ -60,7 +60,7 @@ angular.module('dockstore.ui')
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/containers/path/tool/' + containerPathEncoded + 
+          url: WebService.API_URI + '/containers/path/tool/' + containerPathEncoded +
                 '/registered/'
         }).then(function(response) {
           resolve(response.data);
@@ -255,11 +255,11 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.getDescriptorFile = function(containerId, tagName) {
+    this.getDescriptorFile = function(containerId, tagName, type) {
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/containers/' + containerId + '/cwl',
+          url: WebService.API_URI + '/containers/' + containerId + '/' + type,
           params: {
             tag: tagName
           }

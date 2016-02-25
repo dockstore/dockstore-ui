@@ -318,8 +318,23 @@ form.edit-container {
   }
 }
 
+div.ds-holder {
+  display: table;
+  table-layout: fixed;
+  width:100%;
+  margin-bottom: 5px;
+}
+
+div.ds-descriptor-selector {
+  display: table-cell;
+}
+
+select.ds-descriptor {
+  width: 120px;
+}
+
 div.ds-version-selector {
-  margin-bottom: 4px;  
+  display: table-cell;
 }
 
 select.ds-version {

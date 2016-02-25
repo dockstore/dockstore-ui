@@ -1,12 +1,24 @@
-<div class="ds-version-selector">
-  <strong>Container Version</strong>:
-  <select class="ds-version" ng-model="selTagName">
-    <option
+<div class="ds-holder">
+  <div class="ds-version-selector">
+    <strong>Container Version</strong>:
+    <select class="ds-version" ng-model="selTagName">
+      <option
         ng-repeat="tag in containerTags"
         value="{{tag}}">
-      {{tag}}
-    </option>
-  </select>
+        {{tag}}
+      </option>
+    </select>
+  </div>
+  <div class="ds-descriptor-selector" ng-hide="isDockerfile()">
+    <strong>Descriptor Type</strong>:
+    <select class="ds-descriptor" ng-model="selDescriptorName">
+      <option
+        ng-repeat="descriptor in descriptors"
+        value="{{descriptor}}">
+        {{descriptor}}
+      </option>
+    </select>
+  </div>
 </div>
 
 <div class="alert alert-warning" role="alert"

@@ -15,7 +15,7 @@ angular.module('dockstore.ui')
     'FormattingService',
     'NotificationService',
     function ($scope, $q, ContainerService, FrmttSrvc, NtfnService) {
-      
+
       $scope.containers = [];
       $scope.sortColumn = 'name';
       $scope.sortReverse = false;
@@ -86,6 +86,7 @@ angular.module('dockstore.ui')
           image_id: '',
           dockerfile_path: $scope.containerObj.default_dockerfile_path,
           cwl_path: $scope.containerObj.default_cwl_path,
+          wdl_path: $scope.containerObj.default_wdl_path,
           hidden: true,
           automated: false
         };

@@ -246,6 +246,7 @@ angular.module('dockstore.ui')
           gitUrl: '',
           default_dockerfile_path: '/Dockerfile',
           default_cwl_path: '/Dockstore.cwl',
+          default_wdl_path: '/Dockstore.wdl',
           is_public: true,
           is_registered: false,
           scrProvider: 'GitHub',

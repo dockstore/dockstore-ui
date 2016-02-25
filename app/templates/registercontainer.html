@@ -26,7 +26,7 @@
         </span>
         Please wait, retrieving Quay.io and/or Docker Hub container...
       </div>
-      <form name="registerContainerForm" 
+      <form name="registerContainerForm"
           class="form-horizontal"
           ng-submit="registerContainer()"
           novalidate>
@@ -125,6 +125,32 @@
                   class="form-error-messages"
                   ng-messages="registerContainerForm.default_cwl_path.$error"
                   ng-if="registerContainerForm.default_cwl_path.$touched">
+                <div ng-messages-include="templates/validation/containers/descriptorpath.html">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              WDL Descriptor Path:
+            </label>
+            <div class="col-sm-9">
+              <input
+                type="text"
+                class="form-control"
+                name="default_wdl_path"
+                ng-model="containerObj.default_wdl_path"
+                ng-minlength="3"
+                ng-maxlength="256"
+                ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.wdl$/i"
+                required
+                data-toggle="tooltip"
+                title="Default relative path to the WDL Descriptor in the Git repository."
+                placeholder="e.g. /Dockstore.wdl" />
+              <div
+                class="form-error-messages"
+                ng-messages="registerContainerForm.default_wdl_path.$error"
+                ng-if="registerContainerForm.default_wdl_path.$touched">
                 <div ng-messages-include="templates/validation/containers/descriptorpath.html">
                 </div>
               </div>
