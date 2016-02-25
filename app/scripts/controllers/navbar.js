@@ -17,7 +17,7 @@ angular.module('dockstore.ui')
     'NotificationService',
     function ($scope, $rootScope, $auth, $location,
                 UserService, NtfnService) {
-    
+
       $scope.userObj = UserService.getUserObj();
 
       $scope.isAuthenticated = function() {
@@ -42,4 +42,12 @@ angular.module('dockstore.ui')
         }
       });
 
-  }]);
+  }]).filter('shortenString', function() {
+    return function (string, scope) {
+      if (string.length > 10) {
+        return string.substring(0,9) + '...';
+      } else {
+        return string;
+      }
+    }
+  });
