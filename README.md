@@ -94,6 +94,13 @@ Dockstore currently integrates with GitHub and Quay.io, in the following steps, 
 3. In the dockstore-ui repository root directory, run `grunt serve`.
 4. You should be automatically navigated to `http://<LOCAL_IP_ADDRESS>:9000` in a web browser. (You may also be navigated to `http://0.0.0.0:9000` instead, which may not necessarily work depending on your setup). 
 
+### Deploying the Dockstore UI (Staging)
+1. The Dockstore web service and database should be running.
+2. `cd` into the dockstore-ui directory.
+3. `git branch` to check that you are on the right branch (should be develop)
+4. `git pull` to pull changes from Github.
+5. `nvm use stable` to ensure you are using the latest stable version of Node.
+6. `grunt` to run (must be done from the dockstore-ui dir!)
 
 ### Deploying the Dockstore UI (Production)
 1. The Dockstore web service and database should be running, and the API accessible on `https://www.dockstore.org:8080` (the API may use a different server name if desired).
