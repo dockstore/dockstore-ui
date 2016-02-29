@@ -18,7 +18,7 @@ much of the infrastructure we need.  They allow users build, publish,
 and share both public and private Docker images.  However, the services lack standardized ways of
 describing how to invoke tools contained within Docker containers.  The CWL
 standard has defined a way to define the inputs, parameterizations, and outputs
-of tools using a YAML-formated file.  Together, these resources provide the
+of tools using a YAML-formatted file.  Together, these resources provide the
 necessary tools to share analytical tools in a highly portable way, a key
 concern for the scientific community.
 
