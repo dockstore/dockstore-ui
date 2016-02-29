@@ -22,7 +22,7 @@ angular.module('dockstore.ui')
     GITHUB_CLIENT_ID: 'a70739297a7d67f915de',
     GITHUB_REDIRECT_URI: 'http://localhost:9000/login',
     GITHUB_SCOPE: 'read:org',
-    
+
     QUAYIO_AUTH_URL: 'https://quay.io/oauth/authorize',
     QUAYIO_CLIENT_ID: 'RWCBI3Y6QUNXDPYKNLMC',
     QUAYIO_REDIRECT_URI: 'http://localhost:9000/auth/quay.io',
@@ -31,6 +31,6 @@ angular.module('dockstore.ui')
     BITBUCKET_AUTH_URL: 'https://bitbucket.org/site/oauth2/authorize',
     BITBUCKET_CLIENT_ID: 'K9VxydpaXKCgxxVpbx',
 
-    DSCLI_RELEASE_URL: 'https://github.com/CancerCollaboratory/dockstore/' +
-                        'releases/download/0.2.1/dockstore'
+    DSCLI_RELEASE_URL: 'https://github.com/ga4gh/dockstore/' +
+                        'releases/download/0.3-alpha.0/dockstore'
   });
