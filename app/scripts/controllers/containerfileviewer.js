@@ -41,7 +41,9 @@ angular.module('dockstore.ui')
         });
         var tags = [];
         for (var i = 0; i < sortedTagObjs.length; i++) {
-          tags.push(sortedTagObjs[i].name);
+          if (!sortedTagObjs[i].hidden) {
+            tags.push(sortedTagObjs[i].name);
+          }
         }
         return tags;
       };
