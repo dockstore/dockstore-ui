@@ -101,6 +101,7 @@ Dockstore currently integrates with GitHub and Quay.io, in the following steps, 
 4. `git pull` to pull changes from Github.
 5. `nvm use stable` to ensure you are using the latest stable version of Node.
 6. `grunt` to run (must be done from the dockstore-ui dir!)
+7. `sudo service nginx restart` to restart nginx service.
 
 ### Deploying the Dockstore UI (Production)
 1. The Dockstore web service and database should be running, and the API accessible on `https://www.dockstore.org:8080` (the API may use a different server name if desired).
