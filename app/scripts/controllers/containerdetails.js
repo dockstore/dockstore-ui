@@ -26,7 +26,7 @@ angular.module('dockstore.ui')
 
       $scope.loadContainerDetails = function(containerPath) {
         $scope.setContainerDetailsError(null);
-        return ContainerService.getRegisteredContainerByToolPath(containerPath)
+        return ContainerService.getPublishedContainerByToolPath(containerPath)
           .then(
             function(containerObj) {
               $scope.containerObj = containerObj;
@@ -35,7 +35,7 @@ angular.module('dockstore.ui')
               $scope.setContainerDetailsError(
                 'The webservice encountered an error trying to retrieve this ' +
                 'container, please ensure that the container exists and is ' +
-                'registered for public access.',
+                'published for public access.',
                 '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
                 response.data
               );
@@ -44,12 +44,12 @@ angular.module('dockstore.ui')
           );
       };
 
-      $scope.setContainerRegistration = function(containerId, isRegistered) {
+      $scope.setContainerRegistration = function(containerId, isPublished) {
         $scope.setContainerDetailsError(null);
-        return ContainerService.setContainerRegistration(containerId, isRegistered)
+        return ContainerService.setContainerRegistration(containerId, isPublished)
           .then(
             function(containerObj) {
-              $scope.containerObj.is_registered = containerObj.is_registered;
+              $scope.containerObj.is_published = containerObj.is_published;
               $scope.updateContainerObj();
               return containerObj;
             },
@@ -64,7 +64,7 @@ angular.module('dockstore.ui')
               return $q.reject(response);
             }
           ).finally(function(response) {
-            $scope.containerEditData.isRegistered = $scope.containerObj.is_registered;
+            $scope.containerEditData.isPublished = $scope.containerObj.is_published;
           });
       };
 
@@ -155,7 +155,7 @@ angular.module('dockstore.ui')
 
         $scope.containerEditData = {
           labels: labels,
-          isRegistered: containerObj.is_registered
+          is_published: containerObj.is_published
         };
       };
 

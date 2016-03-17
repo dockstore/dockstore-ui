@@ -79,7 +79,8 @@ body {
 
 .three-lines {
   line-height: 1.5em;
-  height:1.5em;
+  min-height:0em;
+  max-height:4.5em;
   overflow: hidden;
 }
 

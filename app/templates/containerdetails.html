@@ -28,7 +28,7 @@
 <div class="row" ng-show="containerObj">
   <div ng-class="editMode ? 'col-md-7' : 'col-md-8'">
     <h3>
-      <span class="glyphicon glyphicon-lock" ng-if="!containerObj.is_public"></span>
+      <span class="glyphicon glyphicon-lock" ng-if="!containerObj.is_published"></span>
       {{
         (containerObj.namespace !== '_' ? containerObj.namespace + '/' : '') +
         containerObj.name +
@@ -58,11 +58,11 @@
           <button uib-btn-checkbox
               type="button"
               class="btn btn-primary"
-              ng-click="setContainerRegistration(containerObj.id, containerEditData.isRegistered)"
-              ng-model="containerEditData.isRegistered"
-              ng-class="containerEditData.isRegistered ? 'btn-primary' : 'btn-warning'"
+              ng-click="setContainerRegistration(containerObj.id, containerEditData.isPublished)"
+              ng-model="containerEditData.isPublished"
+              ng-class="containerEditData.isPublished ? 'btn-primary' : 'btn-warning'"
               ng-disabled="refreshingContainer">
-            {{ containerEditData.isRegistered ? 'Unpublish' : 'Publish' }}
+            {{ containerEditData.isPublished ? 'Unpublish' : 'Publish' }}
           </button>
           <button type="button"
               class="btn btn-danger"
@@ -86,7 +86,7 @@
       <div class="btn-group" role="group">
         <button type="button"
             class="btn btn-primary contact-button"
-            ng-if="!editMode && !containerObj.is_public">
+            ng-if="!editMode && !containerObj.is_published">
           <a href="mailto:{{containerObj.email}}?subject=Dockstore Request for Access to {{containerObj.path}}&body=I would like to request access to your Docker image {{containerObj.path}} housed on {{gitReposProviderName}}.  My username on {{gitReposProviderName}} is <username>.">
             Request Access
           </a>
@@ -270,14 +270,14 @@
         <uib-tab-heading>Sharing</uib-tab-heading>
         <h5>Container Registration:</h5>
         <button class="btn btn-sm"
-            ng-class="!containerObj.is_registered ? 'btn-primary' : 'btn-warning' ">
+            ng-class="!containerObj.is_published ? 'btn-primary' : 'btn-warning' ">
           <a href
-              ng-if="!containerObj.is_registered"
+              ng-if="!containerObj.is_published"
               ng-click="setContainerRegistration(containerObj.id, true)">
             Register
           </a>
           <a href
-              ng-if="containerObj.is_registered"
+              ng-if="containerObj.is_published"
               ng-click="setContainerRegistration(containerObj.id, false)">
             Unregister
           </a>

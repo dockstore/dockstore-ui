@@ -157,11 +157,11 @@ angular.module('dockstore.ui')
         }
       };
 
-      $scope.updateNSContainersRegistered = function(containerObj) {
+      $scope.updateNSContainersPublished = function(containerObj) {
         for (var i = 0; i < $scope.nsContainers.length; i++) {
           for (var j = 0; j < $scope.nsContainers[i].containers.length; j++) {
             if ($scope.nsContainers[i].containers[j].id === containerObj.id) {
-              $scope.nsContainers[i].containers[j].is_registered = containerObj.is_registered;
+              $scope.nsContainers[i].containers[j].is_published = containerObj.is_published;
               return;
             }
           }
@@ -231,7 +231,7 @@ angular.module('dockstore.ui')
           $scope.replaceContainer(containerObj, activeTabIndex);
         } else {
           /* 'Real-time' */
-          $scope.updateNSContainersRegistered($scope.selContainerObj);
+          $scope.updateNSContainersPublished($scope.selContainerObj);
         }
       };
 
@@ -247,8 +247,7 @@ angular.module('dockstore.ui')
           default_dockerfile_path: '/Dockerfile',
           default_cwl_path: '/Dockstore.cwl',
           default_wdl_path: '/Dockstore.wdl',
-          is_public: true,
-          is_registered: false,
+          is_published: false,
           scrProvider: 'GitHub',
           irProvider: 'Quay.io'
         };

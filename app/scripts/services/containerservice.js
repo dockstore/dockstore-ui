@@ -14,11 +14,11 @@ angular.module('dockstore.ui')
       'WebService',
       function ($q, $http, WebService) {
 
-    this.getRegisteredContainerList = function() {
+    this.getPublishedContainerList = function() {
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/containers/registered'
+          url: WebService.API_URI + '/containers/published'
         }).then(function(response) {
           resolve(response.data);
         }, function(response) {
@@ -27,11 +27,11 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.getRegisteredContainerById = function(containerId) {
+    this.getPublishedContainerById = function(containerId) {
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/containers/registered/' + containerId
+          url: WebService.API_URI + '/containers/published/' + containerId
         }).then(function(response) {
           resolve(response.data);
         }, function(response) {
@@ -40,13 +40,13 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.getRegisteredContainerByPath = function(containerPath) {
+    this.getPublishedContainerByPath = function(containerPath) {
       var containerPathEncoded = containerPath.replace(/\//g, '%2F');
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
           url: WebService.API_URI + '/containers/path/' + containerPathEncoded +
-                '/registered/'
+                '/published/'
         }).then(function(response) {
           resolve(response.data);
         }, function(response) {
@@ -55,13 +55,13 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.getRegisteredContainerByToolPath = function(containerPath) {
+    this.getPublishedContainerByToolPath = function(containerPath) {
       var containerPathEncoded = containerPath.replace(/\//g, '%2F');
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
           url: WebService.API_URI + '/containers/path/tool/' + containerPathEncoded +
-                '/registered/'
+                '/published/'
         }).then(function(response) {
           resolve(response.data);
         }, function(response) {
@@ -104,7 +104,7 @@ angular.module('dockstore.ui')
       return $q(function(resolve, reject) {
         $http({
           method: 'POST',
-          url: WebService.API_URI + '/containers/registered',
+          url: WebService.API_URI + '/containers/published',
           headers: {
             'Content-Type': 'application/json'
           },
@@ -143,16 +143,16 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.setContainerRegistration = function(containerId, isRegistered) {
+    this.setContainerRegistration = function(containerId, isPublished) {
       return $q(function(resolve, reject) {
         $http({
           method: 'POST',
-          url: WebService.API_URI + '/containers/' + containerId + '/register',
+          url: WebService.API_URI + '/containers/' + containerId + '/publish',
           headers: {
             'Content-Type': 'application/json'
           },
           data: {
-            register: isRegistered
+            publish: isPublished
           }
         }).then(function(response) {
           resolve(response.data);
