@@ -125,7 +125,6 @@ angular.module('dockstore.ui')
           default_cwl_path: containerObj.default_cwl_path,
           default_wdl_path: containerObj.default_wdl_path,
           is_published: containerObj.is_published,
-          is_registered: containerObj.is_registered
         };
         if (normContainerObj.toolname === normContainerObj.name) {
           delete normContainerObj.toolname;
