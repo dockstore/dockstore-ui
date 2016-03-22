@@ -62,11 +62,11 @@
           <button uib-btn-checkbox
               type="button"
               class="btn btn-primary"
-              ng-click="setContainerRegistration(containerObj.id, containerEditData.isPublished)"
-              ng-model="containerEditData.isPublished"
-              ng-class="containerEditData.isPublished ? 'btn-primary' : 'btn-warning'"
+              ng-click="setContainerRegistration(containerObj.id, containerEditData.is_published)"
+              ng-model="containerEditData.is_published"
+              ng-class="containerEditData.is_published ? 'btn-primary' : 'btn-warning'"
               ng-disabled="refreshingContainer">
-            {{ containerEditData.isPublished ? 'Unpublish' : 'Publish' }}
+            {{ containerEditData.is_published ? 'Unpublish' : 'Publish' }}
           </button>
           <button type="button"
               class="btn btn-danger"
@@ -270,23 +270,6 @@
             ng-if="containerObj">
         </div>
       </uib-tab>
-      <!--uib-tab ng-if="editMode" active="activeTabs[5]">
-        <uib-tab-heading>Sharing</uib-tab-heading>
-        <h5>Container Registration:</h5>
-        <button class="btn btn-sm"
-            ng-class="!containerObj.is_published ? 'btn-primary' : 'btn-warning' ">
-          <a href
-              ng-if="!containerObj.is_published"
-              ng-click="setContainerRegistration(containerObj.id, true)">
-            Register
-          </a>
-          <a href
-              ng-if="containerObj.is_published"
-              ng-click="setContainerRegistration(containerObj.id, false)">
-            Unregister
-          </a>
-        </button>
-      </uib-tab-->
     </uib-tabset>
   </div>
   <div class="side-block col-md-3" ng-if="!editMode">
