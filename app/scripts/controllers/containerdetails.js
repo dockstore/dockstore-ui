@@ -230,9 +230,17 @@ angular.module('dockstore.ui')
         });
         var labelStrings = [];
         for (var i = 0; i < sortedLabels.length; i++) {
-          labelStrings.push(sortedLabels[i].value);
+            labelStrings.push(sortedLabels[i].value);
         }
         return labelStrings;
+      };
+
+      $scope.checkOverflow = function() {
+        if ($('#labelCollection')[0].scrollHeight > 21) {
+           return true;
+        } else {
+          return false;
+        }
       };
 
       $scope.toggleLabelsEditMode = function() {

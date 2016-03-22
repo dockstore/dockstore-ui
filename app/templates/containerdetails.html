@@ -35,16 +35,20 @@
         (containerObj.toolname ? ' (' + containerObj.toolname + ')' : '')
       }}
     </h3>
-    <ul class="list-unstyled container-info" ng-show="!labelsEditMode">
-      <li ng-if="containerObj" class="three-lines">
-            <span class="label label-default container-label"
-                  ng-repeat="label in getContainerLabelStrings(containerObj.labels)">
-              <a ng-href="/search/{{label}}">
-                {{label}}
-              </a>
-            </span>
-      </li>
-    </ul>
+    <div ng-if="containerObj" class="three-lines" id="labelCollection">
+      <div class="ellipsis" ng-show="checkOverflow()">
+        <button type="button" class="btn btn-primary btn-xs" id="label-button" ng-click="activeTabs[1] = true">
+          <span>...</span>
+      </button>
+      </div>
+      <span class="label label-default container-label"
+            ng-repeat="label in getContainerLabelStrings(containerObj.labels)">
+        <a ng-href="/search/{{label}}">
+          {{label}}
+        </a>
+      </span>
+    </div>
+
     <p class="update">
       Last build:
       {{ containerObj.lastBuild ? getDaysAgoString(containerObj.lastBuild) : 'n/a' }}
