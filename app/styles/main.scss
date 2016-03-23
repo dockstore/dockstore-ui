@@ -678,20 +678,6 @@ div.tabs > div:target > div, :target #info > div, #info > div {
   line-height: 1.5em;
   min-height:0em;
   overflow: hidden;
-
-  &.show-overflow {
-    max-height: unset;
-
-  }
-
-  .ellipsis {
-    position: absolute;
-    display: block;
-    height: 2em;
-    width: 3em;
-    bottom: -0.5em;
-    right: 0em;
-  }
 }
 
 #label-button {
