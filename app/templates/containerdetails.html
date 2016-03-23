@@ -36,15 +36,19 @@
       }}
     </h3>
     <div ng-if="containerObj" id="label-holder">
-      <span class="ellipsis" ng-show="checkOverflow()">
-        <button type="button" class="btn btn-primary btn-xs" id="label-button" ng-click="selectLabelTab()">...</button>
-      </span>
       <div id="label-values">
+        <span ng-show="checkOverflow()" class="label label-default container-label" id="label-button" ng-click="selectLabelTab()">View All</span>
+
       <span class="label label-default container-label"
-            ng-repeat="label in getContainerLabelStrings(containerObj.labels)">
+            ng-repeat="label in getContainerLabelStrings(containerObj.labels)" id="{{label}}">
         <a ng-href="/search/{{label}}">
           {{label}}
         </a>
+        <span ng-if="$first">
+        <span ng-show="false">
+          {{moveToStart(label)}}
+          </span>
+        </span>
       </span>
         </div>
     </div>

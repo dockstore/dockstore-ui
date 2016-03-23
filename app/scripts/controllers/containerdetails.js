@@ -236,12 +236,18 @@ angular.module('dockstore.ui')
       };
 
       $scope.checkOverflow = function() {
+
         if ($('#label-values')[0].scrollHeight > $('#label-holder').height()) {
            return true;
         } else {
           return false;
         }
       };
+
+       $scope.moveToStart = function(element) {
+            $('#label-button-holder').insertBefore($('#' + element));
+
+            };
 
       $scope.selectLabelTab = function() {
        for (var i = 0; i < 4; i++) $scope.activeTabs[i] = false;

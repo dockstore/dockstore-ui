@@ -673,7 +673,6 @@ div.tabs > div:target > div, :target #info > div, #info > div {
 }
 
 #label-holder {
-  position: relative;
   padding-right: 0em;
   max-height: 1.5em;
   line-height: 1.5em;
@@ -696,8 +695,9 @@ div.tabs > div:target > div, :target #info > div, #info > div {
 }
 
 #label-button {
-  line-height:1;
   font-weight:bold;
+  background-color:#337AB7;
+  border-color:#2E6DA4;
 }
 
 /* End Temporary Styles - Need to Refactor Later */
