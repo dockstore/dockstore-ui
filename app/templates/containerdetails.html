@@ -28,13 +28,31 @@
 <div class="row" ng-show="containerObj">
   <div ng-class="editMode ? 'col-md-7' : 'col-md-8'">
     <h3>
-      <span class="glyphicon glyphicon-lock" ng-if="!containerObj.is_public"></span>
+      <!--<span class="glyphicon glyphicon-lock" ng-if="!containerObj.is_public"></span>-->
       {{
         (containerObj.namespace !== '_' ? containerObj.namespace + '/' : '') +
         containerObj.name +
         (containerObj.toolname ? ' (' + containerObj.toolname + ')' : '')
       }}
     </h3>
+    <div ng-if="containerObj" id="label-holder">
+      <div id="label-values">
+        <span ng-show="checkOverflow()" class="label label-default container-label" id="label-button" ng-click="selectLabelTab()">View All</span>
+
+      <span class="label label-default container-label"
+            ng-repeat="label in getContainerLabelStrings(containerObj.labels)" id="{{label}}">
+        <a ng-href="/search/{{label}}">
+          {{label}}
+        </a>
+        <span ng-if="$first">
+        <span ng-show="false">
+          {{moveToStart(label)}}
+          </span>
+        </span>
+      </span>
+        </div>
+    </div>
+
     <p class="update">
       Last build:
       {{ containerObj.lastBuild ? getDaysAgoString(containerObj.lastBuild) : 'n/a' }}
@@ -48,11 +66,11 @@
           <button uib-btn-checkbox
               type="button"
               class="btn btn-primary"
-              ng-click="setContainerRegistration(containerObj.id, containerEditData.isRegistered)"
-              ng-model="containerEditData.isRegistered"
-              ng-class="containerEditData.isRegistered ? 'btn-primary' : 'btn-warning'"
+              ng-click="setContainerRegistration(containerObj.id, containerEditData.is_published)"
+              ng-model="containerEditData.is_published"
+              ng-class="containerEditData.is_published ? 'btn-primary' : 'btn-warning'"
               ng-disabled="refreshingContainer">
-            {{ containerEditData.isRegistered ? 'Unpublish' : 'Publish' }}
+            {{ containerEditData.is_published ? 'Unpublish' : 'Publish' }}
           </button>
           <button type="button"
               class="btn btn-danger"
@@ -76,7 +94,7 @@
       <div class="btn-group" role="group">
         <button type="button"
             class="btn btn-primary contact-button"
-            ng-if="!editMode && !containerObj.is_public">
+            ng-if="!editMode && !containerObj.is_published">
           <a href="mailto:{{containerObj.email}}?subject=Dockstore Request for Access to {{containerObj.path}}&body=I would like to request access to your Docker image {{containerObj.path}} housed on {{gitReposProviderName}}.  My username on {{gitReposProviderName}} is <username>.">
             Request Access
           </a>
@@ -256,23 +274,6 @@
             ng-if="containerObj">
         </div>
       </uib-tab>
-      <!--uib-tab ng-if="editMode" active="activeTabs[5]">
-        <uib-tab-heading>Sharing</uib-tab-heading>
-        <h5>Container Registration:</h5>
-        <button class="btn btn-sm"
-            ng-class="!containerObj.is_registered ? 'btn-primary' : 'btn-warning' ">
-          <a href
-              ng-if="!containerObj.is_registered"
-              ng-click="setContainerRegistration(containerObj.id, true)">
-            Register
-          </a>
-          <a href
-              ng-if="containerObj.is_registered"
-              ng-click="setContainerRegistration(containerObj.id, false)">
-            Unregister
-          </a>
-        </button>
-      </uib-tab-->
     </uib-tabset>
   </div>
   <div class="side-block col-md-3" ng-if="!editMode">
@@ -321,26 +322,7 @@
         </tr>
       </tbody>
     </table>
-    <table ng-if="containerObj">
-      <thead>
-        <th>
-          <h3>Container Labels</h3>
-        </th>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <span ng-show="containerObj.labels.length === 0">n/a</span>
-            <span class="label label-default container-label"
-                  ng-repeat="label in getContainerLabelStrings(containerObj.labels)">
-              <a ng-href="/search/label%3A{{label}}">
-                {{label}}
-              </a>
-            </span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+
     <table ng-if="containerObj">
       <thead>
         <th>

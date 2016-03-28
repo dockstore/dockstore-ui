@@ -226,7 +226,7 @@ ul.more li a {
   text-decoration: none;
 }
 
-/* SEARCH BAR - - - - - - - - - - - - */ 
+/* SEARCH BAR - - - - - - - - - - - - */
 .rounded {
     -webkit-border-radius:8px;
     -moz-border-radius:8px;
@@ -519,19 +519,19 @@ div.side-block code{
 
 div.tabs {
   min-height: 600px;
-  position: relative;   
-  line-height: 1;   
+  position: relative;
+  line-height: 1;
   z-index: 0;
   border: solid 1px #cfd1d7;
   max-width: 802px;
-}     
+}
 div.tabs > div {
   display: inline-block;
   padding: 12px 0px 12px 0px;
   min-width: 156px;
   border-bottom: solid 1px #cfd1d7;
   text-align: center;
-  }   
+  }
 #info, #versions, #dockerfile, #descriptor, #sharing {
     border-right: solid 1px #cfd1d7;
 }
@@ -540,40 +540,40 @@ div.tabs > div {
  }
 div.tabs > div > a {
     text-decoration: none;
-  } 
+  }
 div.tabs > div > div {
     text-align: left;
     padding: 25px;
     line-height: 2;
-  } 
+  }
 div.tabs > div:not(:target){
   background: #FFF;
-}   
-div.tabs > div:target,  
-:target #info, div.tabs > div:hover{    
-  background-color: #7987AA;
-} 
-div.tabs > div:target > a, 
-:target #info > a, div.tabs > div:hover >a{    
-  color: #fff;
-}   
-div.tabs > div > div {
-  background-color: #ffffff; 
-  z-index: -2;
-  left: 0; top: 30px; 
-  bottom: 0; right: 0;
-  overflow: auto;   
 }
-div.tabs > div:not(:target) > div { 
+div.tabs > div:target,
+:target #info, div.tabs > div:hover{
+  background-color: #7987AA;
+}
+div.tabs > div:target > a,
+:target #info > a, div.tabs > div:hover >a{
+  color: #fff;
+}
+div.tabs > div > div {
+  background-color: #ffffff;
+  z-index: -2;
+  left: 0; top: 30px;
+  bottom: 0; right: 0;
+  overflow: auto;
+}
+div.tabs > div:not(:target) > div {
   position: absolute }
 div.tabs > div:target > div, :target #info > div, #info > div {
-  position: absolute;   
-  z-index: -1}  
+  position: absolute;
+  z-index: -1}
 
 .starRating{
   float: right;
   margin-top: 35px;
- } 
+ }
 
 .starRating:not(old){
   display        : inline-block;
@@ -671,4 +671,19 @@ div.tabs > div:target > div, :target #info > div, #info > div {
   color: #fff;
   background-color: #303030;
 }
+
+#label-holder {
+  padding-right: 0em;
+  max-height: 1.5em;
+  line-height: 1.5em;
+  min-height:0em;
+  overflow: hidden;
+}
+
+#label-button {
+  font-weight:bold;
+  background-color:#337AB7;
+  border-color:#2E6DA4;
+}
+
 /* End Temporary Styles - Need to Refactor Later */

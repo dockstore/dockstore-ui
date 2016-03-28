@@ -25,8 +25,8 @@ angular.module('dockstore.ui')
 
       $scope.userObj = UserService.getUserObj();
 
-      $scope.listRegisteredContainers = function() {
-        return ContainerService.getRegisteredContainerList()
+      $scope.listPublishedContainers = function() {
+        return ContainerService.getPublishedContainerList()
           .then(
             function(containers) {
               $scope.containers = containers;
@@ -34,7 +34,7 @@ angular.module('dockstore.ui')
             function(response) {
               var message = '[HTTP ' + response.status + '] ' +
                   response.statusText + ': ' + response.data;
-              NtfnService.popError('List Registered Containers', message);
+              NtfnService.popError('List Published Containers', message);
               return $q.reject(response);
             }
           );
@@ -56,6 +56,6 @@ angular.module('dockstore.ui')
         $rootScope.searchQuery = $routeParams.searchQuery;
       }
 
-      $scope.listRegisteredContainers();
-      
+      $scope.listPublishedContainers();
+
   }]);

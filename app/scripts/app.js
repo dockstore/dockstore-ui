@@ -69,7 +69,7 @@ angular
           controller: 'ContainerEditorCtrl',
           controllerAs: 'ContainerEditor'
         })
-        .when('/my-containers/register', {
+        .when('/my-containers/publish', {
           templateUrl: 'views/registercontainer.html',
           controller: 'RegisterContainerCtrl',
           controllerAs: 'RegisterContainer'
@@ -170,7 +170,7 @@ angular
       $rootScope.$on('$routeChangeStart', function(event, next, current) {
         if ($location.url() === '/') return;
         var public_views = [
-          '/search', '/containers', '/docs', '/login', '/register', 'maintenance'
+          '/search', '/containers', '/docs', '/login', '/publish', 'maintenance'
         ];
         var isViewPublic = function(path) {
           for (var i = 0; i < public_views.length; i++) {
