@@ -48,11 +48,11 @@
           <button uib-btn-checkbox
               type="button"
               class="btn btn-primary"
-              ng-click="setContainerRegistration(containerObj.id, containerObj.is_published)"
-              ng-model="containerObj.is_published"
-              ng-class="containerObj.is_published ? 'btn-primary' : 'btn-warning'"
+              ng-click="setContainerRegistration(containerObj.id, containerObj.is_registered)"
+              ng-model="containerObj.is_registered"
+              ng-class="containerObj.is_registered ? 'btn-primary' : 'btn-warning'"
               ng-disabled="refreshingContainer">
-            {{ containerObj.is_published ? 'Unpublish' : 'Publish' }}
+            {{ containerObj.is_registered ? 'Unpublish' : 'Publish' }}
           </button>
           <button type="button"
               class="btn btn-danger"
