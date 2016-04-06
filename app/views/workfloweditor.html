@@ -1,0 +1,161 @@
+<div id="container-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h3 class="available-containers">
+          My Workflows
+        </h3>
+        <div class="button back-to-containers pull-right">
+          <p>
+            <a href ng-click="refreshUserWorkflows(userObj.id)">
+              Refresh All Workflows
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container view-content ns-containers" style="margin-top: 12px;">
+  <div class="row"  ng-if="workflowEditorError || refreshingWorkflows || orgWorkflows.length === 0">
+    <div class="col-md-12">
+      <div class="alert alert-danger alert-dismissable"
+           role="alert"
+           ng-if="workflowEditorError">
+        <button type="button"
+                class="close"
+                data-dismiss="alert"
+                ng-click="setWorkflowEditorError(null)">
+          &times;
+        </button>
+        <p>
+          <span class="glyphicon glyphicon-warning-sign"></span>
+          {{workflowEditorError.message}}
+        </p>
+        <p class="error-output">{{workflowEditorError.errorDetails}}</p>
+      </div>
+      <div class="alert alert-info"
+           role="alert"
+           ng-if="refreshingWorkflows">
+        <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
+        </span>
+        Please wait, retrieving Github and Bitbucket workflows...
+      </div>
+      <div class="alert alert-info"
+           role="alert"
+           ng-if="nsWorkflows.length === 0">
+        <p>
+          <span class="glyphicon glyphicon-info-sign"></span>
+          There are currently no workflows registered under this account, to add your first workflow, do one of the following:
+        </p>
+        <ul>
+          <li>
+            Go to 'Accounts' and link a Github or Bitbucket account. Workflows will be synchronized in the linking process.
+          </li>
+          <li>
+            Press the 'Add Workflow' button to manually add Github or Bitbucket workflow.
+          </li>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 containers-rsb">
+      <div class="ns-containers-accordion">
+        <uib-accordion ng-repeat="orgObj in orgWorkflows" close-others="true">
+          <uib-accordion-group is-open="orgWorkflows[$index].isOpen">
+            <uib-accordion-heading>
+              <div class="container-namespace-label-oflw"
+                   title="{{orgObj.organization}}"
+                   data-toggle="tooltip">
+                {{orgObj.organization}}
+              </div>
+            </uib-accordion-heading>
+            <div
+              class="container-label"
+              ng-class="{selected: selWorkflowObj.id === workflowObj.id}"
+              ng-repeat="workflowObj in orgObj.workflows">
+              <div class="container-name-oflw pull-left"
+                   title="{{workflowObj.repository + (workflowObj.workflowName ? ' (' + workflowObj.workflowName + ')' : '')}}"
+                   data-toggle="tooltip">
+                <a href ng-click="selectWorkflow(workflowObj.id)">
+                  {{workflowObj.repository + (workflowObj.workflowName ? ' (' + workflowObj.workflowName + ')' : '')}}
+                </a>
+              </div>
+              <div class="pull-right">
+                <span class="label"
+                      ng-class="workflowObj.is_published ? 'label-primary' : 'label-warning'"
+                      title="{{ workflowObj.is_published ? 'Published' : 'Unpublished' }}"
+                      data-toggle="tooltip">
+                  {{ workflowObj.is_published ? 'PUB' : 'UNPUB' }}
+                </span>
+              </div>
+            </div>
+            <button type="button"
+                    class="btn btn-primary btn-xs pull-right add-container-ns"
+                    data-toggle="modal"
+                    data-target="#registerWorkflowModal"
+                    ng-click="WorkflowEditor.editWorkflowObj = getCreateWorkflowObj(orgObj.organization)">
+              <span class="glyphicon glyphicon-plus"></span>
+            </button>
+          </uib-accordion-group>
+        </uib-accordion>
+      </div>
+      <button type="button"
+              class="btn btn-primary btn-sm"
+              ng-class="(orgWorkflows.length === 0) ? '' : 'pull-right'"
+              data-toggle="modal"
+              data-target="#registerWorkflowModal"
+              ng-click="WorkflowEditor.editWorkflowObj = getCreateWorkflowObj(null)">
+        <span>Add Workflow</span>
+      </button>
+      <div register-workflow
+           workflow-obj="WorkflowEditor.editWorkflowObj"
+           add-workflow="addWorkflow">
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div workflow-details
+           workflow-path="selWorkflowObj.path"
+           workflow-workflowname="selWorkflowObj.workflowname"
+           workflow-obj="selWorkflowObj"
+           edit-mode="true"
+           active-tabs="activeTabs"
+           update-workflow-obj="updateWorkflowObj(workflowObj, activeTabIndex)"
+           ng-if="selWorkflowObj">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="our-sponsors">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="our-sponsors">
+          <li>In Affiliation With:</li>
+          <li>
+            <a href="https://www.cancercollaboratory.org/" target="_blank">
+              <img src="images/collaboratory.png" />
+            </a>
+          </li>
+          <li>
+            <a href="https://oicr.on.ca/" target="_blank">
+              <img src="images/oicr.png" />
+            </a>
+          </li>
+          <li>
+            <a href="https://genomicsandhealth.org/" target="_blank">
+              <img src="images/ga4gh.png" />
+            </a>
+          </li>
+          <li>
+            <a href="http://www.commonwl.org/" target="_blank">
+              <img src="images/cwl.png" />
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

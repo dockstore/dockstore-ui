@@ -59,6 +59,11 @@ angular
           controller: 'SearchCtrl',
           controllerAs: 'Search'
         })
+        .when('/search/workflows/:searchQuery?', {
+          templateUrl: 'views/searchworkflow.html',
+          controller: 'SearchWorkflowCtrl',
+          controllerAs: 'SearchWorkflow'
+        })
         .when('/containers/:containerPath*', {
           templateUrl: 'views/containerviewer.html',
           controller: 'ContainerViewerCtrl',
@@ -73,6 +78,16 @@ angular
           templateUrl: 'views/registercontainer.html',
           controller: 'RegisterContainerCtrl',
           controllerAs: 'RegisterContainer'
+        })
+        .when('/my-workflows', {
+          templateUrl: 'views/workfloweditor.html',
+          controller: 'WorkflowEditorCtrl',
+          controllerAs: 'WorkflowEditor'
+        })
+        .when('/my-containers/publish', {
+          templateUrl: 'views/registerworkflow.html',
+          controller: 'RegisterWorkflowCtrl',
+          controllerAs: 'RegisterWorkflow'
         })
         .when('/docs', {
           templateUrl: 'views/documentation.html',

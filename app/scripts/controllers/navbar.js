@@ -44,7 +44,7 @@ angular.module('dockstore.ui')
 
   }]).filter('shortenString', function() {
     return function (string, scope) {
-      if (string != null && string.length > 10) {
+      if (string !== null && string.length > 10) {
         return string.substring(0,9) + '...';
       } else {
         return string;
