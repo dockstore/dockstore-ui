@@ -19,6 +19,7 @@ angular.module('dockstore.ui')
                 UserService, NtfnService) {
 
       $scope.userObj = UserService.getUserObj();
+      $scope.searchMode = 'Container';
 
       $scope.isAuthenticated = function() {
         return $auth.isAuthenticated();
@@ -32,13 +33,32 @@ angular.module('dockstore.ui')
         UserService.logout();
       };
 
-      $scope.$watch('searchQuery', function(newValue, oldValue) {
-        $rootScope.searchQuery = newValue;
+      $scope.changeMode = function() {
+        if ($scope.searchMode === 'Container') {
+          $scope.searchMode = 'Workflow';
+        } else if ($scope.searchMode === 'Workflow') {
+          $scope.searchMode = 'Container';
+        }
+      };
+
+
+      $scope.$watch('searchQueryContainer', function(newValue, oldValue) {
+        $rootScope.searchQueryContainer = newValue;
+      });
+
+      $scope.$watch('searchQueryWorkflow', function(newValue, oldValue) {
+        $rootScope.searchQueryWorkflow = newValue;
       });
 
       $scope.$on('$routeChangeStart', function(event, next, current) {
-        if ($location.url().indexOf('/search') === -1) {
-          $scope.searchQuery = '';
+        if ($location.url().indexOf('/search-containers') === -1) {
+          $scope.searchQueryContainer = '';
+        }
+      });
+
+      $scope.$on('$routeChangeStart', function(event, next, current) {
+        if ($location.url().indexOf('/search-workflows') === -1) {
+          $scope.searchQueryWorkflow = '';
         }
       });
 

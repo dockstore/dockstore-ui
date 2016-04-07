@@ -2,23 +2,23 @@
 
 /**
  * @ngdoc directive
- * @name dockstore.ui.directive:containersGrid
+ * @name dockstore.ui.directive:workflowsGrid
  * @description
- * # containersGrid
+ * # workflowsGrid
  */
 angular.module('dockstore.ui')
-  .directive('containersGrid', function () {
+  .directive('workflowsGrid', function () {
     return {
       restrict: 'AE',
-      controller: 'ContainersGridCtrl',
+      controller: 'WorkflowsGridCtrl',
       scope: {
-        containers: '=',
+        workflows: '=',
         previewMode: '=',
-        searchQueryContainer: '='
+        searchQueryWorkflow: '='
       },
-      templateUrl: 'templates/containersgrid.html',
+      templateUrl: 'templates/workflowsgrid.html',
       link: function postLink(scope, element, attrs) {
-        scope.$watchCollection('filteredContainers',
+        scope.$watchCollection('filteredWorkflows',
           function(newVal, oldVal, scope) {
             if (newVal) {
               scope.currPage = 1;

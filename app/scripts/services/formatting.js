@@ -10,7 +10,7 @@
 angular.module('dockstore.ui')
   .service('FormattingService', [
     function () {
-    
+
       this.getHRSize = function(size) {
         if (!size) return 'n/a';
         var hrSize = '';
@@ -88,6 +88,23 @@ angular.module('dockstore.ui')
             return null;
         }
         gitWebUrl += matchRes[1] + '/' + matchRes[2];
+        return gitWebUrl;
+      };
+
+      this.getGitReposWebUrlFromPath = function(gitOrg, gitRepo, gitProvider) {
+        if (!gitOrg && !gitRepo) return null;
+        var gitWebUrl = '';
+        switch (gitProvider) {
+          case 'GITHUB':
+            gitWebUrl = 'https://github.com/';
+            break;
+          case 'BITBUCKET':
+            gitWebUrl = 'https://bitbucket.org/';
+            break;
+          default:
+            return null;
+        }
+        gitWebUrl += gitOrg + "/" + gitRepo;
         return gitWebUrl;
       };
 

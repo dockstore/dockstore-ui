@@ -8,7 +8,7 @@
  * Controller of the dockstore.ui
  */
 angular.module('dockstore.ui')
-  .controller('SearchCtrl', [
+  .controller('SearchWorkflowCtrl', [
     '$scope',
     '$rootScope',
     '$q',
@@ -52,8 +52,8 @@ angular.module('dockstore.ui')
           );
       }
 
-      if ($routeParams.searchQuery) {
-        $rootScope.searchQuery = $routeParams.searchQuery;
+      if ($routeParams.searchQueryWorkflow) {
+        $rootScope.searchQueryWorkflow = $routeParams.searchQueryWorkflow;
       }
 
       $scope.listPublishedWorkflows();

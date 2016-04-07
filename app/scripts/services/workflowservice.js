@@ -40,6 +40,34 @@ angular.module('dockstore.ui')
           });
         };
 
+    this.getPublishedWorkflowById = function(workflowId) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: WebService.API_URI + '/workflows/published/' + workflowId
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.getPublishedWorkflowByPath = function(workflowPath) {
+      var workflowPathEncoded = workflowPath.replace(/\//g, '%2F');
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: WebService.API_URI + '/workflows/path/workflow/' + workflowPathEncoded +
+                '/published/'
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
     this.refreshWorkflow = function(workflowId) {
       return $q(function(resolve, reject) {
         $http({

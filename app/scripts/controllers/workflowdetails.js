@@ -17,7 +17,6 @@ angular.module('dockstore.ui')
     function ($scope, $q, WorkflowService, FrmttSrvc, NtfnService) {
 
       $scope.labelsEditMode = false;
-      $scope.dockerfileEnabled = false;
       $scope.descriptorEnabled = false;
       if (!$scope.activeTabs) {
         $scope.activeTabs = [true];
@@ -26,7 +25,7 @@ angular.module('dockstore.ui')
 
       $scope.loadWorkflowDetails = function(workflowPath) {
         $scope.setWorkflowDetailsError(null);
-        return WorkflowService.getPublishedWorkflowByToolPath(workflowPath)
+        return WorkflowService.getPublishedWorkflowByPath(workflowPath)
           .then(
             function(workflowObj) {
               $scope.workflowObj = workflowObj;
@@ -56,8 +55,8 @@ angular.module('dockstore.ui')
             function(response) {
               $scope.setWorkflowDetailsError(
                 'The webservice encountered an error trying to register this ' +
-                'workflow, please ensure that the associated Dockerfile and ' +
-                'Dockstore.cwl descriptor are valid and accessible.',
+                'workflow, please ensure that the associated ' +
+                'descriptor is valid and accessible.',
                 '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
                 response.data
               );
@@ -66,27 +65,6 @@ angular.module('dockstore.ui')
           ).finally(function(response) {
             $scope.workflowEditData.isPublished = $scope.workflowObj.is_published;
           });
-      };
-
-      $scope.deregisterWorkflow = function(workflowId) {
-        $scope.setWorkflowDetailsError(null);
-        return WorkflowService.deleteWorkflow(workflowId)
-          .then(
-            function(response) {
-              $scope.$emit('deregisterWorkflow', workflowId);
-              return workflowId;
-            },
-            function(response) {
-              $scope.setWorkflowDetailsError(
-                'The webservice encountered an error trying to delete this ' +
-                'workflow, please ensure that the workflow exists, and is ' +
-                'set to manual build mode.',
-                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
-                response.data
-              );
-              return $q.reject(response);
-            }
-          );
       };
 
       $scope.refreshWorkflow = function(workflowId, activeTabIndex) {
@@ -107,8 +85,8 @@ angular.module('dockstore.ui')
             function(response) {
               $scope.setWorkflowDetailsError(
                 'The webservice encountered an error trying to refresh this ' +
-                'workflow, please ensure that the associated Dockerfile and ' +
-                'Dockstore.cwl descriptor are valid and accessible.',
+                'workflow, please ensure that the associated ' +
+                'descriptor is valid and accessible.',
                 '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
                 response.data
               );
@@ -170,19 +148,6 @@ angular.module('dockstore.ui')
         }
       };
 
-      $scope.getWorkflowModeString = function(mode) {
-        switch (mode) {
-          case 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS':
-            return 'Fully-Automated';
-          case 'AUTO_DETECT_QUAY_TAGS_WITH_MIXED':
-            return 'Partially-Automated';
-          case 'MANUAL_IMAGE_PATH':
-            return 'Manual';
-          default:
-            return 'Unknown';
-        }
-      };
-
       $scope.getDaysAgo = function(timestamp) {
         var timeDiff = (new Date()).getTime() - timestamp;
         return Math.floor(timeDiff / (1000 * 60 * 60 * 24));
@@ -196,10 +161,7 @@ angular.module('dockstore.ui')
 
       $scope.getGitReposProvider = FrmttSrvc.getGitReposProvider;
       $scope.getGitReposProviderName = FrmttSrvc.getGitReposProviderName;
-      $scope.getGitReposWebUrl = FrmttSrvc.getGitReposWebUrl;
-      $scope.getImageReposProvider = FrmttSrvc.getImageReposProvider;
-      $scope.getImageReposProviderName = FrmttSrvc.getImageReposProviderName;
-      $scope.getImageReposWebUrl = FrmttSrvc.getImageReposWebUrl;
+      $scope.getGitReposWebUrlFromPath = FrmttSrvc.getGitReposWebUrlFromPath;
 
       $scope.updateInfoURLs = function() {
         /* Git Repository */
@@ -207,17 +169,10 @@ angular.module('dockstore.ui')
             $scope.workflowObj.gitUrl);
         $scope.gitReposProviderName = $scope.getGitReposProviderName(
             $scope.gitReposProvider);
-        $scope.gitReposWebUrl = $scope.getGitReposWebUrl(
-            $scope.workflowObj.gitUrl,
+        $scope.gitReposWebUrlFromPath = $scope.getGitReposWebUrlFromPath(
+            $scope.workflowObj.organization,
+            $scope.workflowObj.repository,
             $scope.gitReposProvider);
-        /* Image Repository */
-        $scope.imageReposProvider = $scope.getImageReposProvider(
-            $scope.workflowObj.path);
-        $scope.imageReposProviderName = $scope.getImageReposProviderName(
-            $scope.imageReposProvider);
-        $scope.imageReposWebUrl = $scope.getImageReposWebUrl(
-            $scope.workflowObj.path,
-            $scope.imageReposProvider);
       };
 
       $scope.getDateTimeString = FrmttSrvc.getDateTimeString;
@@ -292,10 +247,6 @@ angular.module('dockstore.ui')
             $scope.updateInfoURLs();
           }
         }
-      });
-
-      $scope.$watch('workflowToolname', function(newValue, oldValue) {
-        if (newValue) $scope.updateInfoURLs();
       });
 
   }]);

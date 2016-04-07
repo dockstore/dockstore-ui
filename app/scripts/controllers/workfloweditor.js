@@ -169,7 +169,7 @@ angular.module('dockstore.ui')
         );
         $scope.updateWorkflowTooltips();
         $scope.selectWorkflow(workflowObj.id);
-        $scope.activeTabs[2] = true;
+        $scope.activeTabs[0] = true;
       };
 
       $scope.removeWorkflow = function(workflowId) {
@@ -220,6 +220,40 @@ angular.module('dockstore.ui')
           ).finally(function(response) {
             $scope.refreshingWorkflows = false;
           });
+      };
+
+    $scope.updateORGWorkflowsPublished = function(workflowObj) {
+        for (var i = 0; i < $scope.orgWorkflows.length; i++) {
+          for (var j = 0; j < $scope.orgWorkflows[i].workflows.length; j++) {
+            if ($scope.orgWorkflows[i].workflows[j].id === workflowObj.id) {
+              $scope.orgWorkflows[i].workflows[j].is_published = workflowObj.is_published;
+              return;
+            }
+          }
+        }
+      };
+
+    $scope.updateWorkflowObj = function(workflowObj, activeTabIndex) {
+        if (workflowObj) {
+          $scope.replaceWorkflow(workflowObj, activeTabIndex);
+        } else {
+          /* 'Real-time' */
+          $scope.updateORGWorkflowsPublished($scope.selWorkflowObj);
+        }
+      };
+
+    $scope.replaceWorkflow = function(workflowObj, activeTabIndex) {
+        for (var i = 0; i < $scope.workflows.length; i++) {
+          if ($scope.workflows[i].id === workflowObj.id) break;
+        }
+        $scope.workflows[i] = workflowObj;
+        $scope.orgWorkflows = $scope.sortORGWorkflows(
+          $scope.workflows,
+          $scope.userObj.username
+        );
+        $scope.updateWorkflowTooltips();
+        $scope.selectWorkflow(workflowObj.id);
+        $scope.activeTabs[activeTabIndex ? activeTabIndex : 0] = true;
       };
 
       $scope.listUserWorkflows($scope.userObj.id).then(

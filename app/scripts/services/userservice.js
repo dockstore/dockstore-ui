@@ -19,7 +19,7 @@ angular.module('dockstore.ui')
     'NotificationService',
     function ($rootScope, $auth, $q, $http, $location, localStorageService,
                 WebService, NtfnService) {
-    
+
       this.getUserById = function(userId) {
         return $q(function(resolve, reject) {
           $http({
@@ -69,7 +69,7 @@ angular.module('dockstore.ui')
               NtfnService.popInfo(infoMsg.title, infoMsg.content);
               $location.path('/login');
             } else {
-              $location.path('/search');
+              $location.path('/search-containers');
             }
           });
       };

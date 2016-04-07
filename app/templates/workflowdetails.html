@@ -21,7 +21,7 @@
          ng-if="refreshingWorkflow">
       <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
       </span>
-      Please wait, retrieving {{imageReposProviderName}} workflow...
+      Please wait, retrieving workflow...
     </div>
   </div>
 </div>
@@ -39,7 +39,7 @@
 
       <span class="label label-default container-label"
             ng-repeat="label in getWorkflowLabelStrings(workflowObj.labels)" id="{{label}}">
-        <a ng-href="/search/workflow/{{label}}">
+        <a ng-href="/search-workflows/{{label}}">
           {{label}}
         </a>
         <span ng-if="$first">
@@ -109,10 +109,6 @@
         <uib-tab-heading>Info</uib-tab-heading>
         <ul class="list-unstyled container-info">
           <li>
-            <strong>Name</strong>:
-            {{ workflowObj.workflowName ? workflowObj.workflowName : 'n/a' }}
-          </li>
-          <li>
             <strong>Path</strong>:
             {{workflowObj.path}}
           </li>
@@ -168,7 +164,7 @@
             <span ng-show="workflowObj.labels.length === 0">n/a</span>
             <span class="label label-default container-label"
                   ng-repeat="label in getWorkflowLabelStrings(workflowObj.labels)">
-              <a ng-href="/search/workflows/{{label}}">
+              <a ng-href="/search-workflows/{{label}}">
                 {{label}}
               </a>
             </span>
@@ -247,7 +243,7 @@
           <div class="container-source-repos">
             <p>
                 <span ng-if="gitReposProvider">
-                  <a ng-href="{{gitReposWebUrl}}" target="_blank">
+                  <a ng-href="{{gitReposWebUrlFromPath}}" target="_blank">
                     {{gitReposProviderName}}
                     <span class="glyphicon glyphicon-new-window"></span>
                   </a>

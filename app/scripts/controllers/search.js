@@ -52,8 +52,8 @@ angular.module('dockstore.ui')
           );
       }
 
-      if ($routeParams.searchQuery) {
-        $rootScope.searchQuery = $routeParams.searchQuery;
+      if ($routeParams.searchQueryContainer) {
+        $rootScope.searchQueryContainer = $routeParams.searchQueryContainer;
       }
 
       $scope.listPublishedContainers();

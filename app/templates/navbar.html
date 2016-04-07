@@ -6,11 +6,11 @@
           <a href="/"><img class="site-logo" src="images/logo.png"></a>
         </li>
         <li>
-          <a href="/search">Containers</a>
-          <!--<a href="/search/containers">Containers</a>-->
+          <a href="/search-containers">Containers</a>
+          <!--<a href="/searchcontainers">Containers</a>-->
         </li>
         <li>
-          <a href="/search/workflows">Workflows</a>
+          <a href="/search-workflows">Workflows</a>
         </li>
         <li ng-show="isAuthenticated()">
           <a href="/my-containers">My Containers</a>
@@ -27,14 +27,6 @@
         <!--li ng-show="!isAuthenticated()">
           <a href="/register">Sign Up</a>
         </li-->
-        <li class="ds-nav-search-pr">
-          <span class="left rounded">
-            <input type="text"
-                    class="search left rounded"
-                    placeholder="Search Containers"
-                    ng-model="searchQuery" />
-          </span>
-        </li>
         <li ng-show="!isAuthenticated()">
           <div class="button login">
             <p><a href="/login">Login</a></p>
@@ -75,6 +67,22 @@
               </a>
             </li>
           </ul>
+        </li>
+        <li class="ds-nav-search-pr">
+          <div class="input-group">
+            <span class="input-group-btn">
+            <button class="btn btn-default" type="button" ng-click="changeMode()">{{searchMode}}</button>
+            </span>
+            <input type="text"
+                   placeholder="Search Containers"
+                   ng-model="searchQueryContainer"
+                   ng-if="searchMode === 'Container'">
+            <input type="text"
+                   placeholder="Search Workflows"
+                   ng-model="searchQueryWorkflow"
+                   ng-if="searchMode === 'Workflow'">
+            </span>
+          </div>
         </li>
       </ul>
     </div>

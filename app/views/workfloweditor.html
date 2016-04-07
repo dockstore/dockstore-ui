@@ -40,11 +40,11 @@
            ng-if="refreshingWorkflows">
         <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
         </span>
-        Please wait, retrieving Github and Bitbucket workflows...
+        Please wait, retrieving Github and/or Bitbucket workflows...
       </div>
       <div class="alert alert-info"
            role="alert"
-           ng-if="nsWorkflows.length === 0">
+           ng-if="orgWorkflows.length === 0">
         <p>
           <span class="glyphicon glyphicon-info-sign"></span>
           There are currently no workflows registered under this account, to add your first workflow, do one of the following:
@@ -107,7 +107,7 @@
               data-toggle="modal"
               data-target="#registerWorkflowModal"
               ng-click="WorkflowEditor.editWorkflowObj = getCreateWorkflowObj(null)">
-        <span>Add Workflow</span>
+        <span>Register Workflow</span>
       </button>
       <div register-workflow
            workflow-obj="WorkflowEditor.editWorkflowObj"

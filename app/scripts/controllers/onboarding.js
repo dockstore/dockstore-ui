@@ -39,7 +39,7 @@ angular.module('dockstore.ui')
             $scope.owStep++;
             break;
           default:
-            $location.path('/search');
+            $location.path('/search-containers');
         }
       };
 
