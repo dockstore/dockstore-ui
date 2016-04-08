@@ -51,7 +51,7 @@
       </div>
     </div>
 
-    <p class="update">
+    <p class="update" title="{{ workflowObj.lastUpdated ? getDateTimeString(workflowObj.lastUpdated) : 'n/a' }}">
       Last Modified:
       {{ workflowObj.lastUpdated ? getDaysAgoString(workflowObj.lastUpdated) : 'n/a' }}
     </p>
@@ -64,10 +64,11 @@
           <button uib-btn-checkbox
                   type="button"
                   class="btn btn-primary"
+                  ng-class="!refreshingWorkflow && isWorkflowValid() ? 'active' : 'disabled'"
                   ng-click="setWorkflowRegistration(workflowObj.id, workflowObj.is_published)"
                   ng-model="workflowObj.is_published"
                   ng-class="workflowObj.is_published ? 'btn-primary' : 'btn-warning'"
-                  ng-disabled="refreshingWorkflow">
+                  ng-disabled="refreshingWorkflow || !isWorkflowValid()">
             {{ workflowObj.is_published ? 'Unpublish' : 'Publish' }}
           </button>
         </div>
@@ -109,8 +110,14 @@
         <uib-tab-heading>Info</uib-tab-heading>
         <ul class="list-unstyled container-info">
           <li>
-            <strong>Path</strong>:
+            <strong>Name</strong>:
             {{workflowObj.path}}
+          </li>
+          <li>
+            <strong>{{getRegistry(workflowObj.gitUrl)}}</strong>:
+            <a href="{{getRepoUrl(workflowObj.organization, workflowObj.repository, getRegistry(workflowObj.gitUrl))}}">
+              {{getRepoUrl(workflowObj.organization, workflowObj.repository, getRegistry(workflowObj.gitUrl))}}
+            </a>
           </li>
           <li>
             <strong>Author</strong>:
@@ -124,13 +131,9 @@
               {{workflowObj.email}}
             </a>
           </li>
-          <li>
+          <li ng-if="editMode">
             <strong>Mode</strong>:
             {{workflowObj.mode}}
-          </li>
-          <li>
-            <strong>Last Update</strong>:
-            {{ workflowObj.lastUpdated ? getDateTimeString(workflowObj.lastUpdated) : 'n/a' }}
           </li>
           <li>
             <strong>Description</strong>:
@@ -202,7 +205,7 @@
           </div>
         </form>
       </uib-tab>
-      <uib-tab  active="activeTabs[2]">
+      <uib-tab  active="activeTabs[2]"  disable="!isWorkflowFull()">
         <uib-tab-heading>Versions</uib-tab-heading>
         <div workflow-versions-grid
              workflow-obj="workflowObj"
@@ -210,7 +213,7 @@
              set-error="setWorkflowDetailsError">
         </div>
       </uib-tab>
-      <uib-tab active="activeTabs[3]">
+      <uib-tab active="activeTabs[3]" disable="!isWorkflowFull()">
         <uib-tab-heading>Descriptor</uib-tab-heading>
         <div workflow-file-viewer
              type="descriptor"

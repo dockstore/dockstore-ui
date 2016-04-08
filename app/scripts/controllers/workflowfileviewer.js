@@ -23,7 +23,7 @@ angular.module('dockstore.ui')
       $scope.getWorkflowVersions = function() {
         var sortedVersionObjs = $scope.workflowObj.workflowVersions;
         sortedVersionObjs.sort(function(a, b) {
-          if (a.name === 'latest') return -1;
+          if (a.name === 'master') return -1;
           if ((new RegExp(/[a-zA-Z]/i).test(a.name.slice(0, 1))) &&
                 (new RegExp(/[^a-zA-Z]/i).test(b.name.slice(0, 1)))) return -1;
           /* Lexicographic Sorting */

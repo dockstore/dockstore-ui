@@ -21,7 +21,7 @@ angular.module('dockstore.ui')
       },
       templateUrl: 'templates/workflowdetails.html',
       link: function postLink(scope, element, attrs) {
-        scope.$on('tagEditorRefreshWorkflow', function(event, workflowId) {
+        scope.$on('versionTagEditorRefreshWorkflow', function(event, workflowId) {
           scope.refreshWorkflow(workflowId, 2);
         });
       }

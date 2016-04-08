@@ -20,7 +20,7 @@ angular.module('dockstore.ui')
       $scope.descriptorEnabled = false;
       if (!$scope.activeTabs) {
         $scope.activeTabs = [true];
-        for (var i = 0; i < 4; i++) $scope.activeTabs.push(false);
+        for (var i = 0; i < 3; i++) $scope.activeTabs.push(false);
       }
 
       $scope.loadWorkflowDetails = function(workflowPath) {
@@ -97,7 +97,6 @@ angular.module('dockstore.ui')
           });
       };
 
-      /* Editing entire workflows is not possible yet... */
       $scope.setWorkflowLabels = function(workflowId, labels) {
         $scope.setWorkflowDetailsError(null);
         return WorkflowService.setWorkflowLabels(workflowId, labels)
@@ -200,9 +199,9 @@ angular.module('dockstore.ui')
       };
 
        $scope.moveToStart = function(element) {
-            $('#label-button-holder').insertBefore($('#' + element));
+         $('#label-button-holder').insertBefore($('#' + element));
 
-            };
+       };
 
       $scope.selectLabelTab = function() {
        for (var i = 0; i < 4; i++) $scope.activeTabs[i] = false;
@@ -211,10 +210,6 @@ angular.module('dockstore.ui')
 
       $scope.toggleLabelsEditMode = function() {
         $scope.labelsEditMode = !$scope.labelsEditMode;
-      };
-
-      $scope.getDockerPullCmd = function(path) {
-        return FrmttSrvc.getFilteredDockerPullCmd(path);
       };
 
       $scope.submitWorkflowEdits = function() {
@@ -233,6 +228,32 @@ angular.module('dockstore.ui')
         }
       };
 
+      $scope.isWorkflowValid = function() {
+        if ($scope.workflowObj.is_published) {
+          return true;
+        }
+
+        var versionTags = $scope.workflowObj.workflowVersions;
+
+        if (versionTags == null) {
+          return false
+        }
+
+        for (var i = 0; i < versionTags.length; i++) {
+          if (versionTags[i].valid) {
+            return true;
+          }
+        }
+        return false;
+      };
+
+      $scope.isWorkflowFull = function() {
+        if ($scope.workflowObj.mode === 'FULL') {
+          return true;
+        }
+        return false;
+      }
+
       $scope.$watch('workflowPath', function(newValue, oldValue) {
         if (newValue) {
           $scope.setWorkflowDetailsError(null);
@@ -248,5 +269,25 @@ angular.module('dockstore.ui')
           }
         }
       });
+
+      $scope.getRegistry = function(gitUrl) {
+      if (gitUrl.indexOf('github.com') !== -1) {
+          return 'GitHub';
+        } else if (gitUrl.indexOf('bitbucket.org') !== -1) {
+          return 'Bitbucket';
+        } else {
+          return null;
+        }
+      }
+
+     $scope.getRepoUrl = function(organization, repository, registry) {
+      if (registry.toLowerCase() === "github") {
+          return 'https://github.com/' + organization + '/' + repository;
+        } else if (registry.toLowerCase() === "bitbucket") {
+          return 'https://bitbucket.org/' + organization + '/' + repository;
+        } else {
+          return null;
+        }
+      }
 
   }]);

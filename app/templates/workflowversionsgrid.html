@@ -61,15 +61,15 @@
         <td class="tag-actions">
           <a href
              data-toggle="modal"
-             data-target="#tagEditorModal"
-             ng-click="WorkflowVersionsGrid.editTagObj = versionTag"
+             data-target="#versionTagEditorModal"
+             ng-click="WorkflowVersionsGrid.editVersionTagObj = versionTag"
              ng-if="!editMode">
             View
           </a>
           <a href
              data-toggle="modal"
-             data-target="#tagEditorModal"
-             ng-click="WorkflowVersionsGrid.editTagObj = versionTag"
+             data-target="#versionTagEditorModal"
+             ng-click="WorkflowVersionsGrid.editVersionTagObj = versionTag"
              ng-if="editMode">
             Edit
           </a>
@@ -77,22 +77,12 @@
       </tr>
       </tbody>
     </table>
-    <!--<button type="button"-->
-            <!--class="btn btn-primary btn-sm pull-right"-->
-            <!--ng-if="editMode && containerObj.mode === 'MANUAL_IMAGE_PATH'">-->
-      <!--<a href-->
-         <!--data-toggle="modal"-->
-         <!--data-target="#tagEditorModal"-->
-         <!--ng-click="VersionsGrid.editTagObj = getCreateTagObj()">-->
-        <!--Add Tag-->
-      <!--</a>-->
-    <!--</button>-->
-    <!--<div tag-editor-->
-         <!--tag-obj="VersionsGrid.editTagObj"-->
-         <!--container-id="{{containerObj.id}}"-->
-         <!--container-path="{{containerObj.path}}"-->
-         <!--edit-mode="editMode"-->
-         <!--add-version-tag="addVersionTag">-->
-    <!--</div>-->
+    <div version-tag-editor
+         version-tag-obj="WorkflowVersionsGrid.editVersionTagObj"
+         workflow-id="{{workflowObj.id}}"
+         workflow-path="{{workflowObj.path}}"
+         edit-mode="editMode"
+         add-version-tag="addVersionTag">
+    </div>
   </div>
 </div>

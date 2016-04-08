@@ -40,4 +40,9 @@ angular.module('dockstore.ui')
         }
       };
 
+      $scope.addVersionTag = function(tagObj) {
+        $scope.versionTags.push(tagObj);
+      };
+
+
   }]);

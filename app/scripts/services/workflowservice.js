@@ -166,4 +166,21 @@ angular.module('dockstore.ui')
         });
       });
     };
+
+    this.updateWorkflowVersionTag = function(workflowId, tagObj) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'PUT',
+          url: WebService.API_URI + '/workflows/' + workflowId + '/workflowVersions',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          data: [tagObj]
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
   }]);

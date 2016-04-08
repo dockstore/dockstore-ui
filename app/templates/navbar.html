@@ -7,7 +7,6 @@
         </li>
         <li>
           <a href="/search-containers">Containers</a>
-          <!--<a href="/searchcontainers">Containers</a>-->
         </li>
         <li>
           <a href="/search-workflows">Workflows</a>
@@ -68,19 +67,26 @@
             </li>
           </ul>
         </li>
-        <li class="ds-nav-search-pr">
+
+      </ul>
+    </div>
+    <div class="row" style="float:right;margin: 0 auto;">
+      <ul>
+        <li class="ds-nav-search-pr input-group">
           <div class="input-group">
-            <span class="input-group-btn">
-            <button class="btn btn-default" type="button" ng-click="changeMode()">{{searchMode}}</button>
+            <span class="input-group-btn left">
+            <button class="btn btn-primary" type="button" ng-click="changeMode()">{{searchMode}}</button>
             </span>
             <input type="text"
-                   placeholder="Search Containers"
+                   placeholder="Search..."
                    ng-model="searchQueryContainer"
-                   ng-if="searchMode === 'Container'">
+                   class="search left rounded"
+                   ng-show="searchMode === 'Container'">
             <input type="text"
-                   placeholder="Search Workflows"
+                   placeholder="Search..."
                    ng-model="searchQueryWorkflow"
-                   ng-if="searchMode === 'Workflow'">
+                   class="search left rounded"
+                   ng-show="searchMode === 'Workflow'">
             </span>
           </div>
         </li>
