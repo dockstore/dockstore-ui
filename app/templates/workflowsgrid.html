@@ -1,0 +1,87 @@
+<div id="container-table">
+  <div class="container" ng-class="{'ds-page-mh' : !previewMode}">
+    <div class="row">
+      <div class="col-md-12">
+        <table class="homepage-container containers-grid">
+          <thead>
+          <tr>
+            <th>
+              Name
+                <span class="glyphicon"
+                      ng-class="getIconClass('name')"
+                      ng-click="clickSortColumn('name')">
+                </span>
+            </th>
+            <th>
+              Author
+                <span class="glyphicon"
+                      ng-class="getIconClass('author')"
+                      ng-click="clickSortColumn('author')">
+                </span>
+            </th>
+            <th>
+              Format
+            </th>
+            <th>
+              Project Links
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-show="filteredWorkflows.length === 0">
+            <td colspan="4">
+              <div class="text-center">No Records Found</div>
+            </td>
+          </tr>
+          <!-- need a to write a 'smart search' filter -->
+          <tr ng-repeat="workflow in ((filteredWorkflows = (workflows | PreviewFilter:contLimit | filter: searchQueryWorkflow)) | orderBy:sortColumn:sortReverse | PaginationFilter:getListRange())">
+            <td>
+              <a href="/workflows/{{workflow.path}}">{{workflow.repository + (workflow.workflowName ? ' (' + workflow.workflowName + ')' : '')}}</a>
+            </td>
+            <td>
+              {{ workflow.author ? workflow.author : 'n/a' }}
+            </td>
+            <td>
+              <div>{{getDescriptorType(workflow)}}</div>
+            </td>
+            <td ng-init="gitReposProvider = getGitReposProvider(workflow.gitUrl);">
+                <span
+                  ng-init="gitReposWebUrl = getGitReposWebUrlFromPath(workflow.organization, workflow.repository, gitReposProvider)">
+                  <a ng-href="{{gitReposWebUrl}}"
+                     target="_blank"
+                     ng-if="gitReposWebUrl">
+                    {{getGitReposProviderName(gitReposProvider)}}</a>
+                </span>
+            </td>
+          </tr>
+          <tr ng-show="previewMode && filteredWorkflows.length !== 0">
+            <td colspan="4" class="browse-all">
+              <div class="button">
+                <p><a href="/search-workflows">Browse All Workflows &raquo;</a></p>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="container-pagination" ng-show="!previewMode">
+  <div class="container">
+    <div class="row-center">
+      <ul class="pagination">
+        <li>{{getListRangeString()}}</li>
+        <li>
+          <div class="button" ng-hide="currPage <= getFirstPage()">
+            <p><a href ng-click="changePage(false)">&laquo; Previous</a></p>
+          </div>
+          <div class="button" ng-hide="currPage >= getLastPage()">
+            <p><a href ng-click="changePage(true)">Next &raquo;</a></p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

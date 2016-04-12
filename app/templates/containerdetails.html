@@ -41,7 +41,7 @@
 
       <span class="label label-default container-label"
             ng-repeat="label in getContainerLabelStrings(containerObj.labels)" id="{{label}}">
-        <a ng-href="/search/{{label}}">
+        <a ng-href="/search-containers/{{label}}">
           {{label}}
         </a>
         <span ng-if="$first">
@@ -83,7 +83,7 @@
             class="btn btn-primary"
             ng-click="refreshContainer(containerObj.id)"
             ng-disabled="refreshingContainer">
-          Re-sync
+          Refresh
         </button>
       </div>
     </h3>
@@ -212,7 +212,7 @@
             <span ng-show="containerObj.labels.length === 0">n/a</span>
             <span class="label label-default container-label"
                   ng-repeat="label in getContainerLabelStrings(containerObj.labels)">
-              <a ng-href="/search/{{label}}">
+              <a ng-href="/search-containers/{{label}}">
                 {{label}}
               </a>
             </span>

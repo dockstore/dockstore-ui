@@ -1,0 +1,148 @@
+<div class="modal fade" id="registerWorkflowModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Register Workflow</h4>
+      </div>
+      <div class="alert alert-danger alert-dismissable"
+           role="alert"
+           ng-if="workflowEditError">
+        <button type="button"
+                class="close"
+                data-dismiss="alert"
+                ng-click="setWorkflowEditError(null)">
+          &times;
+        </button>
+        <p>
+          <span class="glyphicon glyphicon-warning-sign"></span>
+          {{workflowEditError.message}}
+        </p>
+        <p class="error-output">{{workflowEditError.errorDetails}}</p>
+      </div>
+      <div class="alert alert-info"
+           role="alert"
+           ng-if="refreshingWorkflow">
+        <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
+        </span>
+        Please wait, retrieving Bitbucket and/or Github Workflows...
+      </div>
+      <form name="registerWorkflowForm"
+            class="form-horizontal"
+            ng-submit="registerWorkflow()"
+            novalidate>
+        <div class="modal-body">
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Source Code Repository:
+            </label>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <div class="input-group-btn">
+                  <button type="button"
+                          class="btn btn-default btn-sm dropdown-toggle"
+                          data-toggle="dropdown">
+                    {{workflowObj.scrProvider}} <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href ng-click="workflowObj.scrProvider = 'GitHub'">
+                        GitHub
+                      </a>
+                    </li>
+                    <li>
+                      <a href ng-click="workflowObj.scrProvider = 'Bitbucket'">
+                        Bitbucket
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="gitPath"
+                  ng-model="workflowObj.gitPath"
+                  ng-minlength="3"
+                  ng-maxlength="128"
+                  ng-pattern="/^([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)\/([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)$/i"
+                  required
+                  data-toggle="tooltip"
+                  title="Git Repository path."
+                  placeholder="e.g. CancerCollaboratory/dockstore-tool-liftover" />
+              </div>
+              <div
+                class="form-error-messages"
+                ng-messages="registerWorkflowForm.gitPath.$error"
+                ng-if="registerWorkflowForm.gitPath.$touched">
+                <div ng-messages-include="templates/validation/workflows/gitpath.html">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Workflow Path:
+            </label>
+            <div class="col-sm-9">
+              <input
+                type="text"
+                class="form-control"
+                name="default_workflow_path"
+                ng-model="workflowObj.default_workflow_path"
+                ng-minlength="3"
+                ng-maxlength="256"
+                ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(cwl|wdl)$/i"
+                required
+                data-toggle="tooltip"
+                title="Default relative path to the Descriptor in the Git repository."
+                placeholder="e.g. /Dockstore.cwl" />
+              <div
+                class="form-error-messages"
+                ng-messages="registerWorkflowForm.default_workflow_path.$error"
+                ng-if="registerWorkflowForm.default_workflow_path.$touched">
+                <div ng-messages-include="templates/validation/workflows/descriptorpath.html">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Workflow Name:
+            </label>
+            <div class="col-sm-9">
+              <input
+                type="text"
+                class="form-control"
+                name="toolname"
+                ng-model="workflowObj.workflow_name"
+                ng-maxlength="256"
+                ng-pattern="/^[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*$/i"
+                data-toggle="tooltip"
+                title="Workflow name for given workflow."
+                placeholder="e.g. liftover-fast (optional)" />
+              <div
+                class="form-error-messages"
+                ng-messages="registerWorkflowForm.workflow_name.$error"
+                ng-if="registerWorkflowForm.workflow_name.$touched">
+                <div ng-messages-include="templates/validation/workflows/workflowname.html">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button"
+                  class="btn btn-default"
+                  ng-click="closeRegisterWorkflowModal(true)">
+            Close
+          </button>
+          <button type="submit"
+                  class="btn btn-primary"
+                  ng-disabled="registerWorkflowForm.$invalid || savingActive || refreshingWorkflow">
+            Add Workflow
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

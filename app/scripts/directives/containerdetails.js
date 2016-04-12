@@ -26,4 +26,4 @@ angular.module('dockstore.ui')
         });
       }
     };
-  })
+  });

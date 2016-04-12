@@ -1,0 +1,88 @@
+<div class="row">
+  <div class="col-md-12">
+    <table class="table versions-grid table-bordered table-condensed table-striped">
+      <thead>
+      <tr>
+        <th>
+          Tag
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('name')"
+                  ng-click="clickSortColumn('name')">
+            </span>
+        </th>
+        <th>
+          Git Reference
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('reference')"
+                  ng-click="clickSortColumn('reference')">
+            </span>
+        </th>
+        <th>
+          Date Modified
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('last_modified')"
+                  ng-click="clickSortColumn('last_modified')">
+            </span>
+        </th>
+        <th>
+          Valid
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('valid')"
+                  ng-click="clickSortColumn('valid')">
+            </span>
+        </th>
+        <th>
+          Actions
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-show="filteredVersionTags.length === 0">
+        <td colspan="7">
+          <div class="text-center">No Records Found</div>
+        </td>
+      </tr>
+      <tr ng-repeat="versionTag in (filteredVersionTags = (versionTags | HiddenTagsFilter:editMode | orderBy:sortColumn:sortReverse))" ng-hide="!editMode && versionTag.hidden">
+        <td>
+          {{versionTag.name}}
+        </td>
+        <td>
+          <div class="git-ref">
+            {{versionTag.reference ? versionTag.reference : 'n/a'}}
+            </span>
+          </div>
+        </td>
+        <td>
+          {{getDateModified(versionTag.last_modified)}}
+        </td>
+        <td>
+          {{versionTag.valid ? 'Yes' : 'No'}}
+        </td>
+        <td class="tag-actions">
+          <a href
+             data-toggle="modal"
+             data-target="#versionTagEditorModal"
+             ng-click="WorkflowVersionsGrid.editVersionTagObj = versionTag"
+             ng-if="!editMode">
+            View
+          </a>
+          <a href
+             data-toggle="modal"
+             data-target="#versionTagEditorModal"
+             ng-click="WorkflowVersionsGrid.editVersionTagObj = versionTag"
+             ng-if="editMode">
+            Edit
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div version-tag-editor
+         version-tag-obj="WorkflowVersionsGrid.editVersionTagObj"
+         workflow-id="{{workflowObj.id}}"
+         workflow-path="{{workflowObj.path}}"
+         edit-mode="editMode"
+         add-version-tag="addVersionTag">
+    </div>
+  </div>
+</div>

@@ -1,0 +1,285 @@
+<div class="row" ng-if="workflowDetailsError || refreshingWorkflow">
+  <div class="col-md-12">
+    <div class="alert alert-danger alert-dismissable"
+         ng-class="!editMode ? 'push-top' : ''"
+         role="alert"
+         ng-if="workflowDetailsError">
+      <button type="button"
+              class="close"
+              data-dismiss="alert"
+              ng-click="setWorkflowDetailsError(null)">
+        &times;
+      </button>
+      <p>
+        <span class="glyphicon glyphicon-warning-sign"></span>
+        {{workflowDetailsError.message}}
+      </p>
+      <p class="error-output">{{workflowDetailsError.errorDetails}}</p>
+    </div>
+    <div class="alert alert-info"
+         role="alert"
+         ng-if="refreshingWorkflow">
+      <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
+      </span>
+      Please wait, retrieving workflow...
+    </div>
+  </div>
+</div>
+<div class="row" ng-show="workflowObj">
+  <div ng-class="editMode ? 'col-md-7' : 'col-md-8'">
+    <h3>
+      {{
+      (workflowObj.organization !== '_' ? workflowObj.organization + '/' : '') +
+      workflowObj.repository
+      }}
+    </h3>
+    <div ng-if="workflowObj" id="label-holder">
+      <div id="label-values">
+        <span ng-show="checkOverflow()" class="label label-default container-label" id="label-button" ng-click="selectLabelTab()">View All</span>
+
+      <span class="label label-default container-label"
+            ng-repeat="label in getWorkflowLabelStrings(workflowObj.labels)" id="{{label}}">
+        <a ng-href="/search-workflows/{{label}}">
+          {{label}}
+        </a>
+        <span ng-if="$first">
+        <span ng-show="false">
+          {{moveToStart(label)}}
+          </span>
+        </span>
+      </span>
+      </div>
+    </div>
+
+    <p class="update" title="{{ workflowObj.lastUpdated ? getDateTimeString(workflowObj.lastUpdated) : 'n/a' }}">
+      Last Modified:
+      {{ workflowObj.lastUpdated ? getDaysAgoString(workflowObj.lastUpdated) : 'n/a' }}
+    </p>
+  </div>
+  <div class="col-md-5"
+       ng-if="editMode">
+    <h3>
+      <div class="pull-right">
+        <div class="btn-group" role="group">
+          <button uib-btn-checkbox
+                  type="button"
+                  class="btn btn-primary"
+                  ng-class="!refreshingWorkflow && isWorkflowValid() ? '' : 'disabled'"
+                  ng-click="setWorkflowRegistration(workflowObj.id, workflowObj.is_published)"
+                  ng-model="workflowObj.is_published"
+                  ng-class="workflowObj.is_published ? 'btn-primary' : 'btn-warning'"
+                  ng-disabled="refreshingWorkflow || !isWorkflowValid()">
+            {{ workflowObj.is_published ? 'Unpublish' : 'Publish' }}
+          </button>
+        </div>
+        <button type="button"
+                class="btn btn-primary"
+                ng-click="refreshWorkflow(workflowObj.id)"
+                ng-disabled="refreshingWorkflow">
+          Refresh
+        </button>
+      </div>
+    </h3>
+  </div>
+  <div class="col-md-4"
+       ng-if="workflowObj.email">
+    <h3 class="pull-right">
+      <div class="btn-group" role="group">
+        <button type="button"
+                class="btn btn-primary contact-button"
+                ng-if="!editMode && !workflowObj.is_published">
+          <a href="mailto:{{workflowObj.email}}?subject=Dockstore Request for Access to {{workflowObj.path}}&body=I would like to request access to your Docker image {{workflowObj.path}} housed on {{gitReposProviderName}}.  My username on {{gitReposProviderName}} is <username>.">
+            Request Access
+          </a>
+        </button>
+        <button type="button"
+                class="btn btn-info contact-button"
+                ng-if="!editMode">
+          <a href="mailto:{{workflowObj.email}}?subject=Dockstore Contact Request About: {{workflowObj.path}}">
+            Contact Author
+          </a>
+        </button>
+      </div>
+    </h3>
+  </div>
+</div>
+<div class="row" ng-show="workflowObj">
+  <div class="ds-tabs" ng-class="editMode ? 'col-md-12' : 'col-md-9'">
+    <uib-tabset>
+      <uib-tab active="activeTabs[0]">
+        <uib-tab-heading>Info</uib-tab-heading>
+        <ul class="list-unstyled container-info">
+          <li>
+            <strong>Name</strong>:
+            {{workflowObj.path}}
+          </li>
+          <li>
+            <strong>{{getRegistry(workflowObj.gitUrl)}}</strong>:
+            <a href="{{getRepoUrl(workflowObj.organization, workflowObj.repository, getRegistry(workflowObj.gitUrl))}}">
+              {{getRepoUrl(workflowObj.organization, workflowObj.repository, getRegistry(workflowObj.gitUrl))}}
+            </a>
+          </li>
+          <li>
+            <strong>Author</strong>:
+            {{ workflowObj.author ? workflowObj.author : 'n/a' }}
+          </li>
+          <li>
+            <strong>E-mail</strong>:
+            <span ng-if="!workflowObj.email">n/a</span>
+            <a href="mailto:{{workflowObj.email}}"
+               ng-if="workflowObj.email">
+              {{workflowObj.email}}
+            </a>
+          </li>
+          <li ng-if="editMode">
+            <strong>Mode</strong>:
+            {{workflowObj.mode | lowercase}}
+          </li>
+          <li>
+            <strong>Description</strong>:
+            <div class="well well-sm">
+              <div
+                ng-show="workflowObj.description"
+                marked="workflowObj.description">
+              </div>
+              <span ng-show="!workflowObj.description">
+                No description associated with this workflow.
+              </span>
+            </div>
+          </li>
+        </ul>
+        <div ng-if="!editMode">
+          <hr />
+          <div disqus-comments class="comments" ng-if="!editMode"></div>
+        </div>
+      </uib-tab>
+      <uib-tab active="activeTabs[1]">
+        <uib-tab-heading>Labels</uib-tab-heading>
+        <button type="sbutton"
+                class="btn btn-link pull-right"
+                ng-if="editMode && !labelsEditMode"
+                ng-click="toggleLabelsEditMode()">
+          <span class="glyphicon glyphicon-edit"></span>Edit
+        </button>
+        <ul class="list-unstyled container-info" ng-show="!labelsEditMode">
+          <li ng-if="workflowObj">
+            <strong>Labels:</strong>
+            <span ng-show="workflowObj.labels.length === 0">n/a</span>
+            <span class="label label-default container-label"
+                  ng-repeat="label in getWorkflowLabelStrings(workflowObj.labels)">
+              <a ng-href="/search-workflows/{{label}}">
+                {{label}}
+              </a>
+            </span>
+          </li>
+        </ul>
+        <form name="editWorkflowForm"
+              class="edit-container form-inline"
+              ng-submit="submitWorkflowEdits()"
+              novalidate>
+          <button type="submit"
+                  class="btn btn-link pull-right"
+                  ng-disabled="editWorkflowForm.$invalid"
+                  ng-if="editMode && labelsEditMode">
+            <span class="glyphicon glyphicon-floppy-save"></span>Save
+          </button>
+          <div ng-show="labelsEditMode">
+            <div class="form-group">
+              <label>Workflow Labels:</label>
+              <input
+                type="text"
+                class="input-sm form-control"
+                name="contLabels"
+                ng-model="workflowEditData.labels"
+                ng-pattern="/^(|\s*([a-zA-Z0-9]+(-[a-zA-Z0-9]+)*)(\s*,\s*([a-zA-Z0-9]+(-[a-zA-Z0-9]+)*))*\s*)$/i"
+                ng-maxlength="512"
+                placeholder="e.g. dockstore, oicr-icgc, pancancer" />
+              <div
+                class="form-error-messages"
+                ng-messages="editWorkflowForm.contLabels.$error"
+                ng-if="editWorkflowForm.contLabels.$touched">
+                <div ng-messages-include="templates/validation/workflows/labels.html">
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </uib-tab>
+      <uib-tab  active="activeTabs[2]"  disable="!isWorkflowFull()">
+        <uib-tab-heading>Versions</uib-tab-heading>
+        <div workflow-versions-grid
+             workflow-obj="workflowObj"
+             edit-mode="editMode"
+             set-error="setWorkflowDetailsError">
+        </div>
+      </uib-tab>
+      <uib-tab active="activeTabs[3]" disable="!isWorkflowFull()">
+        <uib-tab-heading>Descriptor</uib-tab-heading>
+        <div workflow-file-viewer
+             type="descriptor"
+             workflow-obj="workflowObj"
+             ng-if="workflowObj">
+        </div>
+      </uib-tab>
+      <!--<uib-tab active="activeTabs[4]">-->
+        <!--<uib-tab-heading>Tools</uib-tab-heading>-->
+        <!--<div>-->
+        <!--</div>-->
+      <!--</uib-tab>-->
+      <!--<uib-tab active="activeTabs[5]">-->
+        <!--<uib-tab-heading>DAG</uib-tab-heading>-->
+        <!--<div>-->
+        <!--</div>-->
+      <!--</uib-tab>-->
+    </uib-tabset>
+  </div>
+  <div class="side-block col-md-3" ng-if="!editMode">
+    <table>
+      <thead>
+      <th>
+        <h3>Source Repositories</h3>
+      </th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>
+          <div class="container-source-repos">
+            <p>
+                <span ng-if="gitReposProvider">
+                  <a ng-href="{{gitReposWebUrlFromPath}}" target="_blank">
+                    {{gitReposProviderName}}
+                    <span class="glyphicon glyphicon-new-window"></span>
+                  </a>
+                </span>
+            </p>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <table ng-if="workflowObj">
+      <thead>
+      <th>
+        <h3>Sharing</h3>
+      </th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>
+          <div class="container-sharing">
+            <sn-addthis-toolbox
+              class="addthis_toolbox addthis_default_style addthis_32x32_style">
+              <a href class="addthis_button_twitter"></a>
+              <a href class="addthis_button_facebook"></a>
+              <a href class="addthis_button_google_plusone_share"></a>
+              <a href class="addthis_button_evernote"></a>
+              <a href class="addthis_button_email"></a>
+            </sn-addthis-toolbox>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

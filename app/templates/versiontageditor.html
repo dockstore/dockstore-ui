@@ -1,0 +1,165 @@
+<div class="modal fade" id="versionTagEditorModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{!editMode ? 'View' : (versionTagObj.create ? 'Add' : 'Edit')}} Version Tag</h4>
+      </div>
+      <div class="alert alert-danger alert-dismissable"
+           role="alert"
+           ng-if="versionTagEditError">
+        <button type="button"
+                class="close"
+                data-dismiss="alert"
+                ng-click="setVersionTagEditError(null)">
+          &times;
+        </button>
+        <p>
+          <span class="glyphicon glyphicon-warning-sign"></span>
+          {{versionTagEditError.message}}
+        </p>
+        <p class="error-output">{{versionTagEditError.errorDetails}}</p>
+      </div>
+      <div class="alert alert-info"
+           role="alert"
+           ng-if="refreshingWorkflow">
+        <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
+        </span>
+        Please wait, retrieving Github and/or Bitbucket workflow...
+      </div>
+      <form name="versionTagEditorForm"
+            class="form-horizontal"
+            ng-submit="versionTagObj.create ? createTag() : saveVersionTagChanges()"
+            novalidate>
+        <div class="modal-body">
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Version Tag:
+            </label>
+            <div class="col-sm-9">
+              <input
+                type="text"
+                class="form-control"
+                name="name"
+                ng-model="versionTagObj.name"
+                ng-maxlength="128"
+                ng-pattern="/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*$/i"
+                required
+                data-toggle="tooltip"
+                title="Docker Image tag name."
+                placeholder="e.g. develop"
+                ng-disabled="!versionTagObj.create" />
+              <div
+                class="form-error-messages"
+                ng-messages="versionTagEditorForm.name.$error"
+                ng-if="versionTagEditorForm.name.$touched">
+                <div ng-messages-include="templates/validation/tags/name.html">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Git Reference:
+            </label>
+            <div class="col-sm-9">
+              <input
+                type="text"
+                class="form-control"
+                name="reference"
+                ng-model="versionTagObj.reference"
+                ng-minlength="3"
+                ng-maxlength="128"
+                ng-pattern="/^[\w-]+((\/|\.)[\w-]+)*$/i"
+                data-toggle="tooltip"
+                title="Git branch or tag name."
+                placeholder="e.g. develop"
+                ng-disabled="!versionTagObj.create"  />
+              <div
+                class="form-error-messages"
+                ng-messages="versionTagEditorForm.reference.$error"
+                ng-if="versionTagEditorForm.reference.$touched">
+                <div ng-messages-include="templates/validation/tags/reference.html">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              Workflow Descriptor:
+            </label>
+            <div class="col-sm-9">
+              <input
+                type="text"
+                class="form-control"
+                name="workflow_path"
+                ng-model="versionTagObj.workflow_path"
+                ng-minlength="3"
+                ng-maxlength="128"
+                ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(cwl|wdl)$/i"
+                required
+                data-toggle="tooltip"
+                title="Relative path to the Descriptor in the Git repository."
+                placeholder="e.g. /Dockstore.cwl"
+                ng-disabled="!editMode" />
+              <div
+                class="form-error-messages"
+                ng-messages="versionTagEditorForm.workflow_path.$error"
+                ng-if="versionTagEditorForm.workflow_path.$touched">
+                <div ng-messages-include="templates/validation/tags/descriptorpath.html">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm" ng-if="editMode">
+            <label class="col-sm-3 control-label">
+              Hidden:
+            </label>
+            <div class="col-sm-9">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox"
+                         ng-model="versionTagObj.hidden"
+                         data-toggle="tooltip"
+                         title="Hide workflow version from public view." />
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm" ng-if="!versionTagObj.create">
+            <label class="col-sm-3 control-label">
+              Last Modified:
+            </label>
+            <div class="col-sm-9">
+              <div class="label-value">
+                {{getDateTimeString(versionTagObj.last_modified)}}
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm" ng-if="!versionTagObj.create">
+            <label class="col-sm-3 control-label">
+              Valid:
+            </label>
+            <div class="col-sm-9">
+              <div class="label-value">
+                {{versionTagObj.valid ? 'Yes' : 'No'}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button"
+                  class="btn btn-default"
+                  ng-click="closeEditVersionTagModal(true)">
+            Close
+          </button>
+          <button type="submit"
+                  class="btn btn-primary"
+                  ng-show="editMode && !versionTagObj.create"
+                  ng-disabled="versionTagEditorForm.$invalid">
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

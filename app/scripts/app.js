@@ -54,15 +54,25 @@ angular
           controller: 'LoginCtrl',
           controllerAs: 'Login'
         })
-        .when('/search/:searchQuery?', {
+        .when('/search-containers/:searchQueryContainer?', {
           templateUrl: 'views/search.html',
           controller: 'SearchCtrl',
           controllerAs: 'Search'
+        })
+        .when('/search-workflows/:searchQueryWorkflow?', {
+          templateUrl: 'views/searchworkflow.html',
+          controller: 'SearchWorkflowCtrl',
+          controllerAs: 'SearchWorkflow'
         })
         .when('/containers/:containerPath*', {
           templateUrl: 'views/containerviewer.html',
           controller: 'ContainerViewerCtrl',
           controllerAs: 'ContainerViewer'
+        })
+        .when('/workflows/:workflowPath*', {
+          templateUrl: 'views/workflowviewer.html',
+          controller: 'WorkflowViewerCtrl',
+          controllerAs: 'WorkflowViewer'
         })
         .when('/my-containers', {
           templateUrl: 'views/containereditor.html',
@@ -73,6 +83,16 @@ angular
           templateUrl: 'views/registercontainer.html',
           controller: 'RegisterContainerCtrl',
           controllerAs: 'RegisterContainer'
+        })
+        .when('/my-workflows', {
+          templateUrl: 'views/workfloweditor.html',
+          controller: 'WorkflowEditorCtrl',
+          controllerAs: 'WorkflowEditor'
+        })
+        .when('/my-containers/publish', {
+          templateUrl: 'views/registerworkflow.html',
+          controller: 'RegisterWorkflowCtrl',
+          controllerAs: 'RegisterWorkflow'
         })
         .when('/docs', {
           templateUrl: 'views/documentation.html',
@@ -164,13 +184,16 @@ angular
           content: 'Invalid token or authorization denied, please sign in again.'
         });
       });
-      $rootScope.$watch('searchQuery', function(newValue, oldValue) {
-        if (newValue) $location.path('/search');
+      $rootScope.$watch('searchQueryContainer', function(newValue, oldValue) {
+        if (newValue) $location.path('/search-containers');
+      });
+      $rootScope.$watch('searchQueryWorkflow', function(newValue, oldValue) {
+        if (newValue) $location.path('/search-workflows');
       });
       $rootScope.$on('$routeChangeStart', function(event, next, current) {
         if ($location.url() === '/') return;
         var public_views = [
-          '/search', '/containers', '/docs', '/login', '/publish', 'maintenance'
+          '/search-containers', '/containers', '/docs', '/login', '/publish', 'maintenance', '/workflows', '/search-workflows'
         ];
         var isViewPublic = function(path) {
           for (var i = 0; i < public_views.length; i++) {

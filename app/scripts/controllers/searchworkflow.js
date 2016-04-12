@@ -8,7 +8,7 @@
  * Controller of the dockstore.ui
  */
 angular.module('dockstore.ui')
-  .controller('SearchCtrl', [
+  .controller('SearchWorkflowCtrl', [
     '$scope',
     '$rootScope',
     '$q',
@@ -16,25 +16,25 @@ angular.module('dockstore.ui')
     '$location',
     '$auth',
     '$routeParams',
-    'ContainerService',
+    'WorkflowService',
     'UserService',
     'TokenService',
     'NotificationService',
     function ($scope, $rootScope, $q, $window, $location, $auth, $routeParams,
-        ContainerService, UserService, TokenService, NtfnService) {
+        WorkflowService, UserService, TokenService, NtfnService) {
 
       $scope.userObj = UserService.getUserObj();
 
-      $scope.listPublishedContainers = function() {
-        return ContainerService.getPublishedContainerList()
+      $scope.listPublishedWorkflows = function() {
+        return WorkflowService.getPublishedWorkflowList()
           .then(
-            function(containers) {
-              $scope.containers = containers;
+            function(workflows) {
+              $scope.workflows = workflows;
             },
             function(response) {
               var message = '[HTTP ' + response.status + '] ' +
                   response.statusText + ': ' + response.data;
-              NtfnService.popError('List Published Containers', message);
+              NtfnService.popError('List Published Workflows', message);
               return $q.reject(response);
             }
           );
@@ -52,10 +52,10 @@ angular.module('dockstore.ui')
           );
       }
 
-      if ($routeParams.searchQueryContainer) {
-        $rootScope.searchQueryContainer = $routeParams.searchQueryContainer;
+      if ($routeParams.searchQueryWorkflow) {
+        $rootScope.searchQueryWorkflow = $routeParams.searchQueryWorkflow;
       }
 
-      $scope.listPublishedContainers();
+      $scope.listPublishedWorkflows();
 
   }]);

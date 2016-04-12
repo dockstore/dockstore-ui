@@ -228,23 +228,27 @@ ul.more li a {
 
 /* SEARCH BAR - - - - - - - - - - - - */
 .rounded {
-    -webkit-border-radius:8px;
-    -moz-border-radius:8px;
-    border-radius:8px;
+    -webkit-border-top-right-radius:8px;
+    -webkit-border-bottom-right-radius:8px;
+    -moz-border-radius-topright:8px;
+    -moz-border-radius-bottomright:8px;
+    border-top-right-radius:8px;
+    border-bottom-right-radius:8px;
 }
 
 .button.login p {
   line-height: 2.2em;
 }
 .search {
-  width:250px;
+  width:200px;
   position:relative;
   padding-left:30px;
+  padding-top:3px;
+  padding-bottom:3px;
   border:none;
   line-height: 2em;
   background:white url(../images/search-button.png) left center no-repeat;
   background-position: 5px;
-  margin-right: 10px;
   outline:none;
 }
 input[type=text]:focus, textarea:focus {
