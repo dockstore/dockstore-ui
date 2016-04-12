@@ -19,7 +19,7 @@ angular.module('dockstore.ui')
                 UserService, NtfnService) {
 
       $scope.userObj = UserService.getUserObj();
-      $scope.searchMode = 'Container';
+      $scope.searchMode = 'Tool';
 
       $scope.isAuthenticated = function() {
         return $auth.isAuthenticated();
@@ -34,10 +34,10 @@ angular.module('dockstore.ui')
       };
 
       $scope.changeMode = function() {
-        if ($scope.searchMode === 'Container') {
+        if ($scope.searchMode === 'Tool') {
           $scope.searchMode = 'Workflow';
         } else if ($scope.searchMode === 'Workflow') {
-          $scope.searchMode = 'Container';
+          $scope.searchMode = 'Tool';
         }
       };
 

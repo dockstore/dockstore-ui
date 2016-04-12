@@ -90,7 +90,7 @@
                 ng-model="workflowObj.default_workflow_path"
                 ng-minlength="3"
                 ng-maxlength="256"
-                ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.cwl$/i"
+                ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(cwl|wdl)$/i"
                 required
                 data-toggle="tooltip"
                 title="Default relative path to the Descriptor in the Git repository."
@@ -139,7 +139,7 @@
           <button type="submit"
                   class="btn btn-primary"
                   ng-disabled="registerWorkflowForm.$invalid || savingActive || refreshingWorkflow">
-            Add Container
+            Add Workflow
           </button>
         </div>
       </form>

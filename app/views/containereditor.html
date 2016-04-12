@@ -3,12 +3,12 @@
     <div class="row">
       <div class="col-md-12">
         <h3 class="available-containers">
-          My Containers
+          My Tools
         </h3>
         <div class="button back-to-containers pull-right">
           <p>
             <a href ng-click="refreshUserContainers(userObj.id)">
-              Refresh All Containers
+              Refresh All Tools
             </a>
           </p>
         </div>
@@ -54,7 +54,7 @@
             Go to 'Accounts' and link a Quay.io account that is set up to build Docker images from GitHub or Bitbucket. Containers will be synchronized in the linking process.
           </li>
           <li>
-            Press the 'Add Container' button to manually add a Quay.io or Docker Hub container.
+            Press the 'Add Tool' button to manually add a Quay.io or Docker Hub container.
           </li>
       </div>
     </div>
@@ -107,7 +107,7 @@
           data-toggle="modal"
           data-target="#registerContainerModal"
           ng-click="ContainerEditor.editContainerObj = getCreateContainerObj(null)">
-        <span>Add Container</span>
+        <span>Add Tool</span>
       </button>
       <div register-container
           container-obj="ContainerEditor.editContainerObj"

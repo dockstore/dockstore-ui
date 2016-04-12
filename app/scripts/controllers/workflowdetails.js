@@ -235,8 +235,8 @@ angular.module('dockstore.ui')
 
         var versionTags = $scope.workflowObj.workflowVersions;
 
-        if (versionTags == null) {
-          return false
+        if (versionTags === null) {
+          return false;
         }
 
         for (var i = 0; i < versionTags.length; i++) {
@@ -252,7 +252,7 @@ angular.module('dockstore.ui')
           return true;
         }
         return false;
-      }
+      };
 
       $scope.$watch('workflowPath', function(newValue, oldValue) {
         if (newValue) {
@@ -278,7 +278,7 @@ angular.module('dockstore.ui')
         } else {
           return null;
         }
-      }
+      };
 
      $scope.getRepoUrl = function(organization, repository, registry) {
       if (registry.toLowerCase() === "github") {
@@ -288,6 +288,6 @@ angular.module('dockstore.ui')
         } else {
           return null;
         }
-      }
+      };
 
   }]);
