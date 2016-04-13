@@ -13,7 +13,6 @@ angular.module('dockstore.ui')
     '$q',
     'WorkflowService',
     function ($scope, $q, WorkflowService) {
-
       $scope.registerWorkflow = function() {
         $scope.setWorkflowEditError(null);
         var workflowObj = $scope.getNormalizedWorkflowObj($scope.workflowObj);
@@ -28,7 +27,7 @@ angular.module('dockstore.ui')
       $scope.createWorkflow = function(workflowObj) {
         if ($scope.savingActive) return;
         $scope.savingActive = true;
-        return WorkflowService.createWorkflow($scope.workflowObj.scrProvider, workflowObj.gitUrl, workflowObj.default_workflow_path, workflowObj.workflowName)
+        return WorkflowService.createWorkflow($scope.workflowObj.scrProvider, workflowObj.gitUrl, workflowObj.default_workflow_path, workflowObj.workflowName, $scope.workflowObj.descriptorType)
           .then(
             function(workflowObj) {
               return workflowObj;

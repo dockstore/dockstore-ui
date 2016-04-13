@@ -42,7 +42,7 @@
               {{ workflow.author ? workflow.author : 'n/a' }}
             </td>
             <td>
-              <div>{{getDescriptorType(workflow)}}</div>
+              <div>{{workflow.descriptorType | uppercase}}</div>
             </td>
             <td ng-init="gitReposProvider = getGitReposProvider(workflow.gitUrl);">
                 <span

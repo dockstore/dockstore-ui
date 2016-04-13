@@ -158,6 +158,7 @@ angular.module('dockstore.ui')
           default_workflow_path: '/Dockstore.cwl',
           is_published: false,
           scrProvider: 'GitHub',
+          descriptorType: 'cwl'
         };
       };
 

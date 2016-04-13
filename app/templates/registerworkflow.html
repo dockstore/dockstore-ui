@@ -82,7 +82,26 @@
             <label class="col-sm-3 control-label">
               Workflow Path:
             </label>
-            <div class="col-sm-9">
+            <div class="col-sm-9"><div class="input-group">
+              <div class="input-group-btn">
+                <button type="button"
+                        class="btn btn-default btn-sm dropdown-toggle"
+                        data-toggle="dropdown">
+                  {{workflowObj.descriptorType}} <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href ng-click="workflowObj.descriptorType = 'cwl'">
+                      cwl
+                    </a>
+                  </li>
+                  <li>
+                    <a href ng-click="workflowObj.descriptorType = 'wdl'">
+                      wdl
+                    </a>
+                  </li>
+                </ul>
+              </div>
               <input
                 type="text"
                 class="form-control"
@@ -95,6 +114,8 @@
                 data-toggle="tooltip"
                 title="Default relative path to the Descriptor in the Git repository."
                 placeholder="e.g. /Dockstore.cwl" />
+            </div>
+
               <div
                 class="form-error-messages"
                 ng-messages="registerWorkflowForm.default_workflow_path.$error"
