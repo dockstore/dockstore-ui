@@ -759,4 +759,36 @@ div.tabs > div:target > div, :target #info > div, #info > div {
   padding-top:8px;
 }
 
+.tool-tab-selected {
+  padding-left:20px;
+  padding-right:40px;
+  margin-left:-15px;
+  width:200px;
+}
+
+.tool-tab-not-selected {
+  padding-left:20px;
+  padding-right:40px;
+  margin-left:-15px;
+  width:200px;
+  margin-bottom:-5px;
+  padding-bottom:5px;
+}
+
+.workflow-tab-selected {
+  padding-left:20px;
+  padding-right:40px;
+  margin-left:-15px;
+  width:200px;
+}
+
+.workflow-tab-not-selected {
+  padding-left:20px;
+  padding-right:40px;
+  margin-left:-15px;
+  width:200px;
+  margin-bottom:-5px;
+  padding-bottom:5px;
+}
+
 /* End Temporary Styles - Need to Refactor Later */

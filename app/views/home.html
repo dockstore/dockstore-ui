@@ -69,18 +69,15 @@
 </div>
 
 <div class="container" style="padding-top:30px;">
-  <button style="padding-left:20px;padding-right:40px;margin-left:-15px;width:200px;margin-bottom:-5px; padding-bottom:5px;" class="btn btn-default" ng-click="selectToolTab()" ng-disabled="tabMode === 'Tool'"><img class="site-icons-medium" src="images/dockstore-tools-blue.png"> Browse Tools</button>
-  <button style="padding-left:20px;padding-right:40px;width:215px;margin-bottom:-5px; padding-bottom:5px;" class="btn btn-default" ng-click="selectWorkflowTab()" ng-disabled="tabMode === 'Workflow'"><img class="site-icons-medium" src="images/dockstore-workflows-green.png"> Browse Workflows</button>
+  <button ng-class="tabMode === 'Tool' ? : 'tool-tab-selected' : 'tool-tab-not-selected'" class="btn btn-default" ng-click="selectToolTab()" ng-disabled="tabMode === 'Tool'"><img class="site-icons-medium" src="images/dockstore-tools-blue.png"> Browse Tools</button>
+  <button ng-class="tabMode === 'Workflow' ? : 'workflow-tab-selected' : 'workflow-tab-not-selected'"  class="btn btn-default" ng-click="selectWorkflowTab()" ng-disabled="tabMode === 'Workflow'"><img class="site-icons-medium" src="images/dockstore-workflows-green.png"> Browse Workflows</button>
   <div style="border: 1px solid #CFD1D7;border-radius: 15px;padding-top:30px; padding-bottom:20px;" class="row">
     <p class="pull-left" style="padding-left:20px;" ng-show="tabMode === 'Tool'">A tool is a docker container with an associated descriptor describing how to run them.</p>
     <p class="pull-left" style="padding-left:20px;" ng-show="tabMode === 'Workflow'">A workflow is a series of tools strung together, with an associated descriptor describing how to run them.</p>
-    <div containers-grid containers="containers" preview-mode="true" ng-if="tabMode === 'Tool'"></div>
-    <div workflows-grid workflows="workflows" preview-mode="true" ng-if="tabMode === 'Workflow'"></div>
+    <div containers-grid containers="containers" preview-mode="true" ng-show="tabMode === 'Tool'"></div>
+    <div workflows-grid workflows="workflows" preview-mode="true" ng-show="tabMode === 'Workflow'"></div>
   </div>
 </div>
-
-<div containers-grid containers="containers" preview-mode="true"></div>
-<div workflows-grid workflows="workflows" preview-mode="true"></div>
 
 <!-- Documentation Footer (Footer should be in its own directive) -->
 <div id="documentation">

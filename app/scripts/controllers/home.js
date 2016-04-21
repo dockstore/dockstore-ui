@@ -14,9 +14,10 @@ angular.module('dockstore.ui')
     '$q',
     '$location',
     'ContainerService',
+    'WorkflowService',
     'UserService',
     'NotificationService',
-    function ($scope, $rootScope, $q, $location, ContainerService, UserService, NtfnService) {
+    function ($scope, $rootScope, $q, $location, ContainerService, WorkflowService, UserService, NtfnService) {
 
       $scope.userObj = UserService.getUserObj();
       $scope.searchMode = 'Tool';
@@ -75,6 +76,22 @@ angular.module('dockstore.ui')
           );
       };
 
+       $scope.listPublishedWorkflows = function() {
+              return WorkflowService.getPublishedWorkflowList()
+                .then(
+                  function(workflows) {
+                    $scope.workflows = workflows;
+                  },
+                  function(response) {
+                    var message = '[HTTP ' + response.status + '] ' +
+                        response.statusText + ': ' + response.data;
+                    NtfnService.popError('List Published Workflows', message);
+                    return $q.reject(response);
+                  }
+                );
+            };
+
       $scope.listPublishedContainers();
+      $scope.listPublishedWorkflows();
 
   }]);
