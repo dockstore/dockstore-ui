@@ -56,28 +56,31 @@
   </div>
 </div>
 
-<div id="container-header">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <h3 class="available-containers">
-          <img class="site-icons-medium" src="images/dockstore-tools-blue.png"> Available Tools
-        </h3>
-      </div>
-    </div>
-  </div>
-</div>
+<!--<div id="container-header">-->
+  <!--<div class="container">-->
+    <!--<div class="row">-->
+      <!--<div class="col-md-12">-->
+        <!--<h3 ng-if="tabMode === 'Tool'" class="available-containers">-->
+          <!--<img class="site-icons-medium" src="images/dockstore-tools-blue.png"> Available Tools-->
+        <!--</h3>-->
+        <!--<h3 ng-if="tabMode === 'Workflow'" class="available-containers">-->
+          <!--<img class="site-icons-medium" src="images/dockstore-workflows-green.png"> Available Workflows-->
+        <!--</h3>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
 
 <div class="container" style="padding-top:30px;">
-  <button ng-class="tabMode === 'Tool' ? : 'tool-tab-selected' : 'tool-tab-not-selected'" class="btn btn-default" ng-click="selectToolTab()" ng-disabled="tabMode === 'Tool'"><img class="site-icons-medium" src="images/dockstore-tools-blue.png"> Browse Tools</button>
-  <button ng-class="tabMode === 'Workflow' ? : 'workflow-tab-selected' : 'workflow-tab-not-selected'"  class="btn btn-default" ng-click="selectWorkflowTab()" ng-disabled="tabMode === 'Workflow'"><img class="site-icons-medium" src="images/dockstore-workflows-green.png"> Browse Workflows</button>
-  <div style="border: 1px solid #CFD1D7;border-radius: 15px;padding-top:30px; padding-bottom:20px;" class="row">
-    <p class="pull-left" style="padding-left:20px;" ng-show="tabMode === 'Tool'">A tool is a docker container with an associated descriptor describing how to run them.</p>
-    <p class="pull-left" style="padding-left:20px;" ng-show="tabMode === 'Workflow'">A workflow is a series of tools strung together, with an associated descriptor describing how to run them.</p>
+  <button ng-class="tabMode == 'Tool' ? 'tool-tab-selected' : 'tool-tab-not-selected'" ng-click="selectToolTab()" ng-disabled="tabMode === 'Tool'" class="tool-tab"><img class="site-icons-tab" src="images/dockstore-tools-blue.png"> <span class="tab-text">Browse Tools</span></button>
+  <button ng-class="tabMode == 'Workflow' ? 'workflow-tab-selected' : 'workflow-tab-not-selected'"  ng-click="selectWorkflowTab()" ng-disabled="tabMode === 'Workflow'" class="workflow-tab"><img class="site-icons-tab" src="images/dockstore-workflows-green.png"> <span class="tab-text">Browse Workflows</span></button>
+  <div class="row tab-holder">
+    <p class="pull-left tab-info" ng-show="tabMode === 'Tool'">A tool is a docker container with an associated descriptor describing how to run it.</p>
+    <p class="pull-left tab-info" ng-show="tabMode === 'Workflow'">A workflow is a series of tools strung together, with an associated descriptor describing how to run it.</p>
     <div containers-grid containers="containers" preview-mode="true" ng-show="tabMode === 'Tool'"></div>
     <div workflows-grid workflows="workflows" preview-mode="true" ng-show="tabMode === 'Workflow'"></div>
   </div>
-</div>
+</div> 
 
 <!-- Documentation Footer (Footer should be in its own directive) -->
 <div id="documentation">
