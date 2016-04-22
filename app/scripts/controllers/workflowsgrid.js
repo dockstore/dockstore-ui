@@ -92,16 +92,6 @@ angular.module('dockstore.ui')
         return start + ' to ' + end + ' of ' + $scope.filteredWorkflows.length;
       };
 
-      $scope.getDescriptorType = function(workflowObj) {
-        var workflowVersions = workflowObj.workflowVersions;
-        for (var i = 0; i < workflowVersions.length; i++) {
-          if (workflowVersions[i].sourceFiles.length > 0) {
-            return $scope.getHumanReadableDescriptor(workflowVersions[i].sourceFiles[0].type);
-          }
-        }
-        return 'n/a';
-      };
-
       $scope.getHumanReadableDescriptor = function(descriptor) {
         switch(descriptor) {
           case 'DOCKSTORE_CWL':

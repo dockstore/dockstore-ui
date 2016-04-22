@@ -19,7 +19,6 @@ angular.module('dockstore.ui')
                 UserService, NtfnService) {
 
       $scope.userObj = UserService.getUserObj();
-      $scope.searchMode = 'Tool';
 
       $scope.isAuthenticated = function() {
         return $auth.isAuthenticated();
@@ -40,27 +39,6 @@ angular.module('dockstore.ui')
           $scope.searchMode = 'Tool';
         }
       };
-
-
-      $scope.$watch('searchQueryContainer', function(newValue, oldValue) {
-        $rootScope.searchQueryContainer = newValue;
-      });
-
-      $scope.$watch('searchQueryWorkflow', function(newValue, oldValue) {
-        $rootScope.searchQueryWorkflow = newValue;
-      });
-
-      $scope.$on('$routeChangeStart', function(event, next, current) {
-        if ($location.url().indexOf('/search-containers') === -1) {
-          $scope.searchQueryContainer = '';
-        }
-      });
-
-      $scope.$on('$routeChangeStart', function(event, next, current) {
-        if ($location.url().indexOf('/search-workflows') === -1) {
-          $scope.searchQueryWorkflow = '';
-        }
-      });
 
   }]).filter('shortenString', function() {
     return function (string, scope) {

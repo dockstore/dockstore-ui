@@ -145,7 +145,7 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.createWorkflow = function(workflowRegistry, workflowPath, workflowDescriptorPath, workflowName) {
+    this.createWorkflow = function(workflowRegistry, workflowPath, workflowDescriptorPath, workflowName, descriptorType) {
       return $q(function(resolve, reject) {
         $http({
           method: 'POST',
@@ -157,7 +157,8 @@ angular.module('dockstore.ui')
             workflowRegistry : workflowRegistry,
             workflowPath : workflowPath,
             defaultWorkflowPath : workflowDescriptorPath,
-            workflowName : workflowName
+            workflowName : workflowName,
+            descriptorType : descriptorType
           }
         }).then(function(response) {
           resolve(response.data);

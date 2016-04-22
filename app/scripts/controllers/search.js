@@ -56,6 +56,28 @@ angular.module('dockstore.ui')
         $rootScope.searchQueryContainer = $routeParams.searchQueryContainer;
       }
 
+      $scope.$watch('searchQueryContainer', function(newValue, oldValue) {
+              $rootScope.searchQueryContainer = newValue;
+            });
+
+            $scope.$watch('searchQueryWorkflow', function(newValue, oldValue) {
+              $rootScope.searchQueryWorkflow = newValue;
+            });
+
+            $scope.$on('$routeChangeStart', function(event, next, current) {
+              if ($location.url().indexOf('/search-containers') === -1) {
+                $scope.searchQueryContainer = '';
+              }
+            });
+
+            $scope.$on('$routeChangeStart', function(event, next, current) {
+              if ($location.url().indexOf('/search-workflows') === -1) {
+                $scope.searchQueryWorkflow = '';
+              }
+            });
+
       $scope.listPublishedContainers();
+
+      $("#toolSearch").focus();
 
   }]);

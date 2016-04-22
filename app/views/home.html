@@ -3,7 +3,27 @@
     <div class="row header1">
       <div class="col-md-6 splash">
         <h1 class="title">Create, Share, Use</h1>
-        <h2 class="title caption">Docker Containers for the Sciences</h2>
+        <h2 class="title caption">Search Docker Tools and Workflows for the Sciences:</h2>
+        <div class="btn-group">
+          <button id="homeSearch" type="button" class="btn btn-default dropdown-toggle rounded-left" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{searchMode}} <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu search-dropdown">
+            <li><a href="#" ng-click="selectTool()">Tool</a></li>
+            <li><a href="#" ng-click="selectWorkflow()">Workflow</a></li>
+          </ul>
+          <input type="text"
+                 placeholder="Enter Keyword..."
+                 ng-model="searchQueryContainer"
+                 class="search left rounded search-home"
+                 ng-show="searchMode === 'Tool'">
+          <input type="text"
+                 placeholder="Enter Keyword..."
+                 ng-model="searchQueryWorkflow"
+                 class="search left rounded search-home"
+                 ng-show="searchMode === 'Workflow'">
+        </div>
+
       </div>
       <div class="col-md-3">
         <img id="ship" src="images/ship.png">
@@ -19,7 +39,7 @@
     <img class="blue-rectangle" src="images/rectangle.png">
     <div class="row header-lower">
       <div class="col-md-6">
-        <h4 class="title caption">DockStore, developed by the <a href="https://www.cancercollaboratory.org/" target="_blank">Cancer Genome Collaboratory</a>, is an open platform for sharing Docker-based tools described with the <a href="http://www.commonwl.org/" target="_blank">Common Workflow Language</a> used by the <a href="https://genomicsandhealth.org/" target="_blank">GA4GH</a>.</h4>
+        <h4 class="title caption">DockStore, developed by the <a class="white-link" href="https://www.cancercollaboratory.org/" target="_blank">Cancer Genome Collaboratory</a>, is an open platform for sharing Docker-based tools described with the <a class="white-link" href="http://www.commonwl.org/" target="_blank">Common Workflow Language</a> used by the <a class="white-link" href="https://genomicsandhealth.org/" target="_blank">GA4GH</a>.</h4>
       </div>
       <div class="col-md-3 row-center"
           ng-if="!userObj">
@@ -27,7 +47,7 @@
           <p><a href="/login">Sign up to Contribute &raquo;</a></p>
         </div>
       </div>
-      <div class="col-md-3 row-center">
+      <div class="col-md-3 row-center"  ng-class="userObj ? 'col-md-offset-3' : ''">
         <div class="button">
           <p><a href="/docs/about">About DockStore &raquo;</a></p>
         </div>
@@ -36,19 +56,31 @@
   </div>
 </div>
 
-<div id="container-header">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <h3 class="available-containers">
-          Available Tools
-        </h3>
-      </div>
-    </div>
-  </div>
-</div>
+<!--<div id="container-header">-->
+  <!--<div class="container">-->
+    <!--<div class="row">-->
+      <!--<div class="col-md-12">-->
+        <!--<h3 ng-if="tabMode === 'Tool'" class="available-containers">-->
+          <!--<img class="site-icons-medium" src="images/dockstore-tools-blue.png"> Available Tools-->
+        <!--</h3>-->
+        <!--<h3 ng-if="tabMode === 'Workflow'" class="available-containers">-->
+          <!--<img class="site-icons-medium" src="images/dockstore-workflows-green.png"> Available Workflows-->
+        <!--</h3>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
 
-<div containers-grid containers="containers" preview-mode="true"></div>
+<div class="container" style="padding-top:30px;">
+  <button ng-class="tabMode == 'Tool' ? 'tool-tab-selected' : 'tool-tab-not-selected'" ng-click="selectToolTab()" ng-disabled="tabMode === 'Tool'" class="tool-tab"><img class="site-icons-tab" src="images/dockstore-tools-blue.png"> <span class="tab-text">Browse Tools</span></button>
+  <button ng-class="tabMode == 'Workflow' ? 'workflow-tab-selected' : 'workflow-tab-not-selected'"  ng-click="selectWorkflowTab()" ng-disabled="tabMode === 'Workflow'" class="workflow-tab"><img class="site-icons-tab" src="images/dockstore-workflows-green.png"> <span class="tab-text">Browse Workflows</span></button>
+  <div class="row tab-holder">
+    <p class="pull-left tab-info" ng-show="tabMode === 'Tool'">A tool is a docker container with an associated descriptor describing how to run it.</p>
+    <p class="pull-left tab-info" ng-show="tabMode === 'Workflow'">A workflow is a series of tools strung together, with an associated descriptor describing how to run it.</p>
+    <div containers-grid containers="containers" preview-mode="true" ng-show="tabMode === 'Tool'"></div>
+    <div workflows-grid workflows="workflows" preview-mode="true" ng-show="tabMode === 'Workflow'"></div>
+  </div>
+</div> 
 
 <!-- Documentation Footer (Footer should be in its own directive) -->
 <div id="documentation">

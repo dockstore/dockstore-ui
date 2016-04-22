@@ -89,9 +89,8 @@ body {
 
 #navigation ul.nav li {
   display: inline;
-  margin: 32px;
+  margin: 32px 16px 32px 16px;
   /*white-space: nowrap;*/
-
 }
 
 #navigation ul.nav li a{
@@ -125,11 +124,11 @@ h1.title {
   font-size: 56px;
   color: white;
   font-weight: normal;
-  padding-top: 100px;
+  padding-top: 50px;
   line-height: 56px;
 }
 h2.title.caption {
-  font-size: 26px;
+  font-size: 20px;
   color: #dad4d4;
   font-weight: normal;
   padding-bottom: 20px;
@@ -166,7 +165,7 @@ table.homepage-container {
 }
 @media (min-width: 1200px) {
   .container {
-    width: 1100px;
+    width: 1200px;
   }
 }
 
@@ -222,8 +221,33 @@ a {
   color: #487980;
 }
 
+a.white-link {
+  color: #FFFFFF;
+}
+
 ul.more li a {
   text-decoration: none;
+}
+
+img.site-icons-small {
+  width: 16px;
+  height: 16px;
+}
+
+img.site-icons-medium {
+  width: 32px;
+  height: 32px;
+}
+
+img.site-icons-tab {
+  width: 24px;
+  height: 24px;
+}
+
+#homeSearch {
+  background-color:#487980;
+  color:#FFFFFF;
+  width:100px;
 }
 
 /* SEARCH BAR - - - - - - - - - - - - */
@@ -234,6 +258,28 @@ ul.more li a {
     -moz-border-radius-bottomright:8px;
     border-top-right-radius:8px;
     border-bottom-right-radius:8px;
+}
+.rounded-left {
+    -webkit-border-top-left-radius:8px;
+    -webkit-border-bottom-left-radius:8px;
+    -moz-border-radius-topleft:8px;
+    -moz-border-radius-bottomleft:8px;
+    border-top-left-radius:8px;
+    border-bottom-left-radius:8px;
+    -webkit-border-top-right-radius:0px;
+    -webkit-border-bottom-right-radius:0px;
+    -moz-border-radius-topright:0px;
+    -moz-border-radius-bottomright:0px;
+    border-top-right-radius:0px;
+    border-bottom-right-radius:0px;
+}
+
+
+.fully-rounded {
+    -webkit-border-radius:8px;
+    -moz-border-radius:8px;
+    border-radius:8px;
+    margin-top: 8px;
 }
 
 .button.login p {
@@ -251,6 +297,11 @@ ul.more li a {
   background-position: 5px;
   outline:none;
 }
+
+.search-home {
+  width: 430px;
+}
+
 input[type=text]:focus, textarea:focus {
   border: 1px solid rgba(81, 203, 238, 1);
 }
@@ -276,6 +327,13 @@ input[type=text]:focus, textarea:focus {
     -moz-border-bottom-left-radius: 4px !important;
     border-top-left-radius: 4px !important;
     border-bottom-left-radius: 4px !important;
+}
+
+.account-dropdown {
+  padding-left: 15px;
+  padding-right: 15px;
+  line-height: 2.5em;
+  margin: 0;
 }
 
 /* BUTTONS - - - - - - - - - - - - - */
@@ -688,6 +746,118 @@ div.tabs > div:target > div, :target #info > div, #info > div {
   font-weight:bold;
   background-color:#337AB7;
   border-color:#2E6DA4;
+}
+
+.search-dropdown {
+  top: 100%;
+}
+
+.nav-item {
+  height:50px;
+}
+
+.nav-item-text {
+  padding-top:10px;
+}
+
+.nav-item-button {
+  padding-top:8px;
+}
+
+/* Todo - can simplify these into more general tabs */
+.tool-tab-selected {
+  padding-right:40px;
+  margin-left:-15px;
+  border: 1px solid #CFD1D7;
+  border-bottom:1px solid #FFFFFF;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  background-color: #FFFFFF;
+  -webkit-border-top-left-radius:8px;
+  -moz-border-radius-topleft:8px;
+  border-top-left-radius:8px;
+  border-top:6px solid #51aad8;
+  margin-bottom:-5px;
+  padding-bottom:10px;
+  color:#51aad8;
+}
+
+.tool-tab-not-selected {
+  padding-right:40px;
+  margin-left:-15px;
+  border: 1px solid #CFD1D7;
+  border-bottom: 3px #FFFFFF;
+  padding-top: 13px;
+  padding-bottom: 7px;
+  background-color: #F4F4F4;
+  -webkit-border-top-left-radius:8px;
+  -moz-border-radius-topleft:8px;
+  border-top-left-radius:8px;
+  margin-top:5px;
+  padding-bottom:10px;
+  color: #a0adcc;
+}
+
+.workflow-tab-selected {
+  padding-left:10px;
+  padding-right:40px;
+  border-bottom:1px solid #FFFFFF;
+  border: 1px solid #CFD1D7;
+  border-bottom:1px solid #FFFFFF;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  background-color: #FFFFFF;
+  -webkit-border-top-right-radius:8px;
+  -moz-border-radius-topright:8px;
+  border-top-right-radius:8px;
+  border-top:6px solid #4ab4a9;
+  margin-left:-5px;
+  margin-bottom:-5px;
+  padding-bottom:10px;
+  color:#4ab4a9;
+}
+
+.workflow-tab-not-selected {
+  padding-right:40px;
+  border: 1px solid #CFD1D7;
+  border-bottom: 3px #FFFFFF;
+  padding-top: 13px;
+  padding-bottom: 7px;
+  background-color: #F4F4F4;
+  -webkit-border-top-right-radius:8px;
+  -moz-border-radius-topright:8px;
+  border-top-right-radius:8px;
+  margin-left:-5px;
+  margin-top:5px;
+  padding-bottom:10px;
+  color: #a0adcc;
+}
+
+.tool-tab {
+  width:250px;
+}
+
+.workflow-tab {
+  width:250px;
+}
+
+.tab-holder {
+  border: 1px solid #CFD1D7;
+  border-radius: 15px;
+  padding-top:30px;
+  padding-bottom:20px;
+  -webkit-border-top-left-radius:0px;
+  -moz-border-radius-topleft:0px;
+  border-top-left-radius:0px;
+}
+
+.tab-info {
+  padding-left:20px;
+}
+
+.tab-text {
+  font-size: 16px;
+  font-weight: bold;
 }
 
 /* End Temporary Styles - Need to Refactor Later */
