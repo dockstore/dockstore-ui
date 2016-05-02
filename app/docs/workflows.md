@@ -1,6 +1,6 @@
-# Getting Started
+# Workflows
 
-The quick brown fox jumps over the lazy dog.
+This tutorial wwalks through the process of registering and sharing more complex workflows which are comprised of multiple tools (registered or not).
 
 ## Sign Up for Accounts
 
@@ -145,4 +145,4 @@ You can find tools on the Dockstore website or also through the `dockstore searc
 
 ## Next Steps
 
-You can follow this basic pattern for each of your Docker-based tools.  Once registered, you can send links to your tools on Dockstore to colleagues and use it as a public platform for sharing your tools.  You can also use it in your own work by executing tools using the [Launcher](https://github.com/CancerCollaboratory/dockstore-descriptor#dockstore-descriptor) above.  If you want to scale up analysis with these tools you can use cloud orchestration frameworks like [Consonance](https://github.com/Consonance/) to run many tools in parallel in cloud environments.
+Find out how to launch your tools and workflows at [Launching Tools and Workflows](/docs/launch).

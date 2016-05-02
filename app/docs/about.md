@@ -66,3 +66,6 @@ tools in the system.
 
 We plan on expanding the Dockstore in several ways over the coming months.  Please see our [https://github.com/CancerCollaboratory/dockstore/issues](issues page) for details and discussions.
 
+## Next Steps
+
+Find out how to register more complex workflows at [Workflows](/docs/workflows).
