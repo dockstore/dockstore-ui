@@ -1,8 +1,6 @@
 # Getting Started
 
-In this guide we will start with creating a simple Docker-based tool, sharing it through the Dockstore, and calling the container yourself to process some sample data.
-
-For more background information on the Dockstore project please see the [About](/docs/about) page.
+The quick brown fox jumps over the lazy dog.
 
 ## Sign Up for Accounts
 
