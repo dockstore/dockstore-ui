@@ -1,82 +1,42 @@
 # Workflows
 
-This tutorial wwalks through the process of registering and sharing more complex workflows which are comprised of multiple tools (registered or not).
+This tutorial walks through the process of registering and sharing more complex workflows which are comprised of multiple tools (registered or not).
 
-## Sign Up for Accounts
+## Create Your Workflow
 
-Dockstore is powered by [Quay.io](https://quay.io/) and [Docker Hub](https://hub.docker.com/), for storing Docker images, and [GitHub](https://github.com/) and [Bitbucket](https://bitbucket.org/) for storing the build file (`Dockerfile`) and metadata descriptor file (`Dockstore.cwl`) that are used by this site.  Since the Dockstore does not permanently store your Docker images, your Dockerfile, or your Dockstore.cwl metadata file, you are free to use all the excellent features of Quay.io/Docker Hub and GitHub/Bitbucket.  If you are already using these services then you will appreciate the fact that registering your Docker images on Dockstore is extremely easy and requires very little interruption to the way you work already.  For those of you that use [Docker Hub](https://hub.docker.com/), an extremely popular Docker registry, we are planning on adding enhanced support for features in the near future.  For now, we recommend users of Dockstore sign up for both Quay.io and GitHub/Bitbucket accounts to host their Docker images and build/metadata files respectively.  Partial support for Docker Hub is available, but it requires manual entry of image and tag data on Dockstore. If you are already building your Docker images on Docker Hub automatically it takes just minutes to setup a comparable build on Quay.io.
+The combination of light-weight Docker containers to run your tools and programmatic descriptors takes us part of the way there. 
+However, the next step is to chain together these containers in order to call tools in a particular sequence or in a particular patterm in order to create larger workflows. 
+Dockstore provides a few simple tools to share workflows, similar to how Dockstore shares command-line tools. 
 
-* [Sign up for an account on GitHub...](https://github.com/) (Required for authentication.)
-* [Sign up for an account on Bitbucket...](https://bitbucket.org/)
-* [Sign up for an account on Quay.io...](https://quay.io/)
-* [Sign up for an account on Docker Hub...](https://hub.docker.com/)
-
-## Create Your Tool
-
-Docker is a fantastic tool for creating light-weight containers to run your tools.  What this means is it gives you a fast VM-like environment for Linux where you can automatically install dependencies, make configurations, and setup your tool exactly the way you want, as you would on a "normal" Linux host.  You can then quickly and easily share these Docker images with the world using registries like Docker Hub and Quay.io (indexed by Dockstore).  The full details on how to make new Docker images is beyond the scope of this site but the first place to look is in the excellent documentation on Docker's site.  See Docker's [documentation](https://docs.docker.com/), which will walk you through installing Docker on your computer and making your own images.  The goal is to create a Dockerfile for your tool, stored in a supported Git repository.  The steps, at a high level, are:
+The steps to accomplish this task, at a high level, are:
 
 0. create a new repository on GitHub or Bitbucket
-0. create a `Dockerfile` in that repository that conforms to that described in the guide above
-0. use the Docker tools to build and test your Docker image
+0. describe your workflow as either a [CWL workflow](http://www.commonwl.org/draft-3/Workflow.html) or a [WDL workflow](https://github.com/broadinstitute/wdl/blob/develop/SPEC.md#workflow-definition)
+0. test your workflow using an environment that supports full CWL workflows or WDL
 0. use the release process on GitHub or Bitbucket to make distinct release tags, we like the  [HubFlow](https://datasift.github.io/gitflow/) process in our group for managing releases in git
-0. setup Quay.io to automatically build your Docker image or manually register public images if you are using Docker Hub
+0. create an entry on Dockstore and then publish it
 
-For an example, see the [dockstore-tool-bamstats](https://github.com/briandoconnor/dockstore-tool-bamstats) repository on GitHub which we created as an example.  The [README](https://github.com/briandoconnor/dockstore-tool-bamstats/blob/develop/README.md) has more information which you may find helpful.  Here is the Dockerfile for this tool:
+<!-- insert a good example here -->
 
-![Dockerfile](docs/dockerfile.png)
+## Create Workflow Stubs from GitHub and Bitbucket
 
-Read more on the development process at [https://docs.docker.com...](https://docs.docker.com/). For information on building your Docker image on Quay.io we recommend their [tutorial](https://quay.io/tutorial/).
+The first step is to create a CWL or WDL workflow descriptor for your workflow and then check it into GitHub or Bitbucket in a repo, we recommend the filename `Dockstore.cwl` at the root of your repository for simplicity but anything else with a consistent extension should work as well. 
 
-## Describe Your Tool
+<!-- this following markdown link/anchor does not seem to work properly -->
 
-Now that you have a git repository that includes a `Dockerfile`, you have tested it, and are satisfied that your tool works in Docker, the next step is to create a [CWL tool definition file](http://common-workflow-language.github.io/). This YAML file describes the inputs, outputs, and Docker image dependencies for your tool.
+The second step is to log in to the Dockstore. Make sure that you properly [link bitbucket](docs/getting-started#Linking-services) to your account if you are using workflows hosted on bitbucket. After successfully linking your GitHub and Bitbucket credentials (if applicable), you will be able to refresh your account on dockstore and list your available repos on GitHub and Bitbucket. 
 
-It is recommended that you have the following minimum fields:
+![My Workflows](docs/workflow_ui.png)
 
-    description: <description>
-    id: <id>
-    label: <label>
-    
-    dct:creator:
-      foaf:name: <name>
+The above image shows the general structure of the UI that you should see after visiting "My Workflows." You can hit "Refresh All Workflows" in order to update information on published workflows or create new stubs for repos that you are about to publish. Workflows are a bit different from tools in that we create a stub entry for all your GitHub repos (and bitbucket repos). You can then promote these to full entries by publishing and editing them. It is only at this point that the Dockstore will reach out and populate information such as available tags and source files. Workflows are handled differently from Tools in this regard since users may often have many more tags and repos on GitHub than Docker images on Quay.io. 
 
-Again, we provide an example from the [dockstore-tool-bamstats](https://github.com/briandoconnor/dockstore-tool-bamstats) repository:
+## Register Your Workflow in Dockstore
 
-![Dockstore.cwl](docs/cwl.png)
-
-You can see this tool takes two inputs, a parameter to control memory usage and a BAM file (binary sequence alignment file).  It produces one output, a zip file, that contains various HTML reports that BamStats creates.
-
-The [CWL standard](http://common-workflow-language.github.io/) is continuing to evolve and hopefully we will see new features, like support for [EDAM ontology](http://edamontology.org/page) terms, in future releases.  In the mean time the [Gitter chat](https://gitter.im/common-workflow-language/common-workflow-language) is an active community to help drive the development in positive directions and we recommend tool authors make their voices heard.
-
-## Linking GitHub, Bitbucket and Quay.io
-
-The first step is to log in to the Dockstore which will link your accounts for GitHub, Bitbucket and Quay.io along with providing you the command line tool we will use for most of the tasks in this tutorial.  Make sure you have your GitHub, Bitbucket and/or Quay.io accounts established and follow the onboarding wizard:
-
-https://www.dockstore.org/login
-
-Your link to GitHub is established on login and you will then be prompted to link your other accounts.
-
-![Link accounts](docs/linking1.png)
-
-Linking a supported image repository service (e.g. Quay.io) will automatically trigger a synchronization order to retrieve information about the account's containers
-
-![Refresh containers](docs/linking2.png)
-
-Below, GitHub, BitBucket and Quay.io accounts have been linked, it is necessary for at least the GitHub account be linked in order to perform regular account activities.
-
-![Link accounts completed](docs/linking3.png)
-
-Next, the wizard will instruct you to setup the `dockstore` command line tool after linking your accounts, and upon completetion you will be ready to use Dockstore.
-
-![Link accounts](docs/linking4.png)
-
-## Register Your Tool in Dockstore
-
-Now that you have your `Dockerfile` and `Dockstore.cwl` in GitHub, have setup Quay.io to automatically build your Docker image, and have linked your accounts to Dockstore, it is time to register your tool.
+Now that you have linked your credentials and refreshed, there should be one stub per repo that you are the owner of or have rights to see in GitHub.   
 
 ### Quick Registration via the Web UI 
 
-In the authenticated Web UI, navigate to 'My Containers' to begin managing Docker images imported through your linked account(s). These pages will allow you to quickly register containers that follow a particularly simple format (look below to manual registration for more complex formats). For quick registration, we look through your quay.io images and see if any are setup as [automated builds](https://docs.quay.io/guides/building.html). Using those to track back to your github or bitbucket accounts, we list all pairs of Docker images with git repositories that contain a `Dockstore.cwl` and a `Dockerfile`. When we discover both of these, we create an unregistered entry in the interface below. 
+In the authenticated Web UI, navigate to 'My Workflows' to begin managing workflows imported through your linked account(s). These pages will allow you to quickly register workflows that follow a particularly simple format (look below to manual registration for more complex formats). For quick registration, we look through your GitHub and Bitbucket accounts and create a stub for each one. You can publish each repo that you identify as a real workflow in order to get additional information such as available versions.  
 
 ![My Containers](docs/register_ui.png)
 
@@ -84,7 +44,7 @@ The left side menu is a list of all image repositories associated with the user,
 
 A container is not visible on the public 'Containers' listing unless it is published. To publish a container, press the yellow 'Register' button in the top-right corner.
 
-#### Manual Registration of Containers
+#### Manual Registration of Workflows
 
 In certain cases, it is not possible for Dockstore to perquisition every existing container, especially those with unusual project structures. Most notably, Docker Hub images can not be automatically detected by Dockstore. The second possibility is that you have multiple CWL documents in a GitHub repository associated with multiple images. For those cases, it is necessary to manually register their details to Dockstore.
 
@@ -108,40 +68,19 @@ The fields in the form should correspond to the actual values on GitHub/Bitbucke
 
 ### CLI Client
 
-The `dockstore` command line has several options.  We recommend you first `dockstore refresh` to ensure the latest GitHub, Bitbucket and Quay.io information is indexed properly.
+The `dockstore` command line has several options. When working with workflows, use `dockstore workflow` to get a full list of options. We recommend you first use `dockstore workflow refresh` to ensure the latest GitHub, Bitbucket and Quay.io information is indexed properly.
 
-![command](docs/cmd1_xliu.png)
-
-You can then use `dockstore publish` to see the list of available Docker images you can register with Dockstore. This is for you to publish containers that are auto-detected from Quay.io. The key is that Docker images you wish to (quick) publish have the following qualities:
+You can then use `dockstore publish` to see the list of available workflows you can register with Dockstore and then register them. This is for you to publish workflows with the simplest structure. For now, use manual registration if your workflow has a different structure. The key is that workflows you wish to (simply) publish have the following qualities:
 
 0. public
 0. at least one valid tag. In order to be valid, a tag has to:
-    * be automated from a GitHub or Bitbucket reference
-    * have the reference be linked to the `Dockerfile`
-    * have the reference be linked a corresponding `Dockstore.cwl`
+    * have the reference be linked a corresponding `Dockstore.cwl` or `Dockstore.wdl` hosted at the root of the repository 
 
-![command](docs/cmd2.png)
+The `dockstore manual_publish` command can be used to manually register a workflow on Docker Hub. Its usage is outlined in the publish_manual help menu. This will allow you to register entries that do not follow the qualities above (non-automated builds and Docker Hub images). 
 
-You can see in the above, the tool (identified with `quay.io/briandoconnor/dockstore-tool-bamstats` in Dockstore and Quay.io) was successfully registered and can be seen by anyone on the Dockstore site.
+## Find Other Workflows
 
-The `dockstore manual_publish` command can be used to manually register a container on Docker Hub. Its usage is outlined in the publish_manual help menu. This will allow you to register entries that do not follow the qualities above (non-automated builds and Docker Hub images). 
-
-![command](docs/cmd3_xliu.png)
-
-## Run Tools
-
-Now that you have a tool registered on Dockstore you may want to call it yourself for your own work. We created the [Launcher](https://github.com/CancerCollaboratory/dockstore-descriptor#dockstore-descriptor) to aid in this process.  In the near future this will be rolled into the `dockstore` command line but for now you can use the Launcher to do several useful things:
-
-0. read a JSON file that describes all the inputs and outputs for a given run of the tool
-0. automatically copy inputs from remote URLs if HTTP, FTP, S3 or other remote URLs are specified
-0. call the `cwltool` command line to execute your tool using the CWL from the Dockstore and the JSON for inputs/outputs
-0. if outputs are specified as remote URLs, copy the results to these locations
-
-Alternatively, you have the option of simply working with any tools that understand CWL. The `dockstore` command line has a simple way to download the CWL file for use with other tools.
-
-## Find Other Tools
-
-You can find tools on the Dockstore website or also through the `dockstore search` command line option.
+You can find tools on the Dockstore website or also through the `dockstore workflow search` command line option.
 
 ## Next Steps
 

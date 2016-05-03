@@ -71,7 +71,7 @@ We provide a hello world example as follows:
 
 We are currently monitoring WDL to see how metadata like that provided for CWL will be integrated into WDL.
 
-## Linking GitHub, Bitbucket and Quay.io
+## [Linking GitHub, Bitbucket and Quay.io](#Linking-services)
 
 The first step is to log in to the Dockstore which will link your accounts for GitHub, Bitbucket and Quay.io along with providing you the command line tool we will use for most of the tasks in this tutorial.  Make sure you have your GitHub, Bitbucket and/or Quay.io accounts established and follow the onboarding wizard:
 
