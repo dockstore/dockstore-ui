@@ -6,7 +6,9 @@ This enables scientists, for example, to share analytical tools in a way that ma
 machine readable and runnable in a variety of environments.  While the Dockstore is focused
 on serving researchers in the biosciences the combination of Docker + CWL can be used
 by anyone to describe the tools and services in their Docker images in a standardized,
-machine-readable way.
+machine-readable way. 
+
+Dockstore also attempts to work with new and alternative languages/standards such as [WDL](https://github.com/broadinstitute/wdl) as an alternative to CWL and the [GA4GH Tool Registry](https://github.com/ga4gh/tool-registry-schemas) standard. We are also working on the task and workflow standards developing at the GA4GH.  
 
 ## Built with Quay.io and GitHub
 
@@ -22,7 +24,7 @@ of tools using a YAML-formatted file.  Together, these resources provide the
 necessary tools to share analytical tools in a highly portable way, a key
 concern for the scientific community.
 
-![Overview](docs/dockstore_logos.png)
+![Overview](dockstore_logos.png)
 
 ## Best Practices
 
@@ -31,7 +33,9 @@ First and foremost, the Dockstore has no requirements for what you register prov
 0. you can host the Docker image on Quay.io (and others in the future) which is linked to [GitHub](http://github.com) for automated building
 0. you have a corresponding `Dockstore.cwl` in CWL format that describes how to call the tools inside your Docker image
 
-Over time, we find "skinny" Docker, those with single tools installed in them,
+You can also mix and match, substituting WDL for CWL, or Docker Hub for Quay.io. 
+
+Over time, we find "skinny" Docker images, those with single tools installed in them,
 are more helpful for extending and building new workflows with.  That being said,
 "fat" Docker containers, which include multiple tools and even full workflows
 with frameworks like [SeqWare](http://seqware.io) or [Galaxy](https://galaxyproject.org/),
@@ -47,7 +51,7 @@ for most things).
 
 ## Promoting Standards
 
-We hope Dockstore provides a reference implementation for Container sharing
+We hope Dockstore provides a reference implementation for tool sharing
 in the sciences.  The Dockstore is essentially a proof of concept designed
 as a starting point for two activities that we hope can results in community
 standards within the GA4GH:
@@ -64,5 +68,8 @@ tools in the system.
 
 ## Future Plans
 
-We plan on expanding the Dockstore in several ways over the coming months.  Please see our [https://github.com/CancerCollaboratory/dockstore/issues](issues page) for details and discussions.
+We plan on expanding the Dockstore in several ways over the coming months.  Please see our [issues page](https://github.com/CancerCollaboratory/dockstore/issues) for details and discussions.
 
+## Next Steps
+
+Find out how to register more complex workflows at [Workflows](workflows.md).

@@ -13,10 +13,23 @@
 <div class="container view-content">
   <div class="row">
     <div class="col-md-12">
+      <h3>Introduction</h3>
+
+      <p>The goal for the Dockstore is to bring together tools in Docker containers with a standardized, programmatic method of describing how to call them.
+      Coupled with registration at <a ng-href="https://www.dockstore.org/">Dockstore</a>, this process makes it much easier to use Docker-based tools to build larger analytical systems.</p>
+
+
+      <p>A typical use case for the sciences is to create complex workflows with multiple tools to process large datasets.
+      We also provide functionality to register, display, and share workflows.</p>
+
+      <p>If you are new to Dockstore, please start with
+        <a href="/docs/getting-started">Getting Started</a>
+      </p>
+
       <h3>Table of Contents</h3>
       <ol>
         <li ng-repeat="docObj in docObjs">
-          <a ng-href="/docs/{{docObj.slug}}">{{docObj.name}}</a>
+          <a ng-href="/docs/{{docObj.slug}}">{{docObj.name}}</a> {{docObj.description}}
         </li>
       </ol>
     </div>
