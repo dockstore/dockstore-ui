@@ -149,4 +149,4 @@ You can find tools on the Dockstore website or also through the `dockstore searc
 
 ## Next Steps
 
-You can follow this basic pattern for each of your Docker-based tools.  Once registered, you can send links to your tools on Dockstore to colleagues and use it as a public platform for sharing your tools.  You can also use it in your own work by executing tools using `dockstore tool launch` command.  If you want to scale up analysis with these tools you can use cloud orchestration frameworks like [Consonance](https://github.com/Consonance/) to run many tools in parallel in cloud environments.
+You can follow this basic pattern for each of your Docker-based tools.  Once registered, you can send links to your tools on Dockstore to colleagues and use it as a public platform for sharing your tools.  You can also use it in your own work by executing tools using the [Launcher](https://github.com/CancerCollaboratory/dockstore-descriptor#dockstore-descriptor) above.  If you want to scale up analysis with these tools you can use cloud orchestration frameworks like [Consonance](https://github.com/Consonance/) to run many tools in parallel in cloud environments.
