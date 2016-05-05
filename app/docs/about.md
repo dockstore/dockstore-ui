@@ -8,7 +8,7 @@ on serving researchers in the biosciences the combination of Docker + CWL can be
 by anyone to describe the tools and services in their Docker images in a standardized,
 machine-readable way. 
 
-Dockstore also attempts to work with new and alternative languages/standards such as [https://github.com/broadinstitute/wdl](WDL) as an alternative to CWL and the [https://github.com/ga4gh/tool-registry-schemas](GA4GH Tool Registry) standard. We are also working on the task and workflow standards developing at the GA4GH.  
+Dockstore also attempts to work with new and alternative languages/standards such as [WDL](https://github.com/broadinstitute/wdl) as an alternative to CWL and the [GA4GH Tool Registry](https://github.com/ga4gh/tool-registry-schemas) standard. We are also working on the task and workflow standards developing at the GA4GH.  
 
 ## Built with Quay.io and GitHub
 
@@ -68,7 +68,7 @@ tools in the system.
 
 ## Future Plans
 
-We plan on expanding the Dockstore in several ways over the coming months.  Please see our [https://github.com/CancerCollaboratory/dockstore/issues](issues page) for details and discussions.
+We plan on expanding the Dockstore in several ways over the coming months.  Please see our [issues page](https://github.com/CancerCollaboratory/dockstore/issues) for details and discussions.
 
 ## Next Steps
 
