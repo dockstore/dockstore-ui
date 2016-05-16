@@ -25,19 +25,19 @@ angular.module('dockstore.ui')
 
       $scope.selectWorkflow = function() {
         $scope.searchMode = 'Workflow';
-      }
+      };
 
       $scope.selectTool = function() {
         $scope.searchMode = 'Tool';
-      }
+      };
 
       $scope.selectWorkflowTab = function() {
         $scope.tabMode = 'Workflow';
-      }
+      };
 
       $scope.selectToolTab = function() {
         $scope.tabMode = 'Tool';
-      }
+      };
 
 
 
