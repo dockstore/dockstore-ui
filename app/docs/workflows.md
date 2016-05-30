@@ -24,7 +24,7 @@ The first step is to create a CWL or WDL workflow descriptor for your workflow a
 
 <!-- this following markdown link/anchor does not seem to work properly -->
 
-The second step is to log in to the Dockstore. Make sure that you properly [link bitbucket](getting-started.md#Linking-services) to your account if you are using workflows hosted on bitbucket. After successfully linking your GitHub and Bitbucket credentials (if applicable), you will be able to refresh your account on dockstore and list your available repos on GitHub and Bitbucket. 
+The second step is to log in to the Dockstore. Make sure that you properly [link bitbucket](docs/getting-started#Linking-services) to your account if you are using workflows hosted on bitbucket. After successfully linking your GitHub and Bitbucket credentials (if applicable), you will be able to refresh your account on dockstore and list your available repos on GitHub and Bitbucket. 
 
 ![My Workflows](docs/workflow_ui.png)
 
