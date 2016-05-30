@@ -24,7 +24,7 @@ of tools using a YAML-formatted file.  Together, these resources provide the
 necessary tools to share analytical tools in a highly portable way, a key
 concern for the scientific community.
 
-![Overview](dockstore_logos.png)
+![Overview](docs/dockstore_logos.png)
 
 ## Best Practices
 
@@ -72,4 +72,4 @@ We plan on expanding the Dockstore in several ways over the coming months.  Plea
 
 ## Next Steps
 
-Find out how to register more complex workflows at [Workflows](workflows.md).
+Find out how to register more complex workflows at [Workflows](docs/workflows).

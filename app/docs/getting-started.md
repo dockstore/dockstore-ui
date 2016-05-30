@@ -23,7 +23,7 @@ Docker is a fantastic tool for creating light-weight containers to run your tool
 
 For an example, see the [dockstore-tool-bamstats](https://github.com/briandoconnor/dockstore-tool-bamstats) repository on GitHub which we created as an example.  The [README](https://github.com/briandoconnor/dockstore-tool-bamstats/blob/develop/README.md) has more information which you may find helpful.  Here is the Dockerfile for this tool:
 
-![Dockerfile](dockerfile.png)
+![Dockerfile](docs/dockerfile.png)
 
 Read more on the development process at [https://docs.docker.com...](https://docs.docker.com/). For information on building your Docker image on Quay.io we recommend their [tutorial](https://quay.io/tutorial/).
 
@@ -42,7 +42,7 @@ It is recommended that you have the following minimum fields:
 
 Again, we provide an example from the [dockstore-tool-bamstats](https://github.com/briandoconnor/dockstore-tool-bamstats) repository:
 
-![Dockstore.cwl](cwl.png)
+![Dockstore.cwl](docs/cwl.png)
 
 You can see this tool takes two inputs, a parameter to control memory usage and a BAM file (binary sequence alignment file).  It produces one output, a zip file, that contains various HTML reports that BamStats creates.
 
@@ -79,19 +79,19 @@ https://www.dockstore.org/login
 
 Your link to GitHub is established on login and you will then be prompted to link your other accounts.
 
-![Link accounts](linking1.png)
+![Link accounts](docs/linking1.png)
 
 Linking a supported image repository service (e.g. Quay.io) will automatically trigger a synchronization order to retrieve information about the account's containers
 
-![Refresh containers](linking2.png)
+![Refresh containers](docs/linking2.png)
 
 Below, GitHub, BitBucket and Quay.io accounts have been linked, it is necessary for at least the GitHub account be linked in order to perform regular account activities.
 
-![Link accounts completed](linking3.png)
+![Link accounts completed](docs/linking3.png)
 
 Next, the wizard will instruct you to setup the `dockstore` command line tool after linking your accounts, and upon completetion you will be ready to use Dockstore.
 
-![Link accounts](linking4.png)
+![Link accounts](docs/linking4.png)
 
 ## Register Your Tool in Dockstore
 
@@ -101,7 +101,7 @@ Now that you have your `Dockerfile` and `Dockstore.cwl` in GitHub, have setup Qu
 
 In the authenticated Web UI, navigate to 'My Containers' to begin managing Docker images imported through your linked account(s). These pages will allow you to quickly register containers that follow a particularly simple format (look below to manual registration for more complex formats). For quick registration, we look through your quay.io images and see if any are setup as [automated builds](https://docs.quay.io/guides/building.html). Using those to track back to your github or bitbucket accounts, we list all pairs of Docker images with git repositories that contain a `Dockstore.cwl` and a `Dockerfile`. When we discover both of these, we create an unregistered entry in the interface below. 
 
-![My Containers](register_ui.png)
+![My Containers](docs/register_ui.png)
 
 The left side menu is a list of all image repositories associated with the user, grouped lexicographically by namespace. Words encapsulated in parentheses denotes the toolname. Detailed information and links for each container is located on the 'Info' tab. The 'Labels' tab allows editing of keywords to be associated with a container for efficient searching and grouping. Settings such as the path to the Dockerfile and CWL Descriptor can be modified on a per-tag basis in the 'Versions' tab. The Dockerfile and CWL/WDL Descriptor may be viewed in the last two tabs, by the Version tag (corresponding to a Git tag/branch).
 
@@ -113,7 +113,7 @@ In certain cases, it is not possible for Dockstore to register every existing co
 
 Containers can be registered manually from the 'My Containers' page by pressing the 'Add Container' button at the bottom of the right side bar, or any of the '+' buttons in each accordion namespace group. A modal will appear as below:
 
-![Register Container Manual](register_container_manual.png)
+![Register Container Manual](docs/register_container_manual.png)
 
 The Source Code Repository and Image Registry fields must be filled out, they are in the format `namespace/name` (the two paths may differ). The Dockerfile Path and CWL/WDL Descriptor Paths are relative to the root of the Source Code Repository (and must begin with '/'), these will be the default locations to find their corresponding files, unless specified otherwise in the tags. The toolname is an optional 'suffix' appended to the Dockstore path, it allows for two repositories to share the same Git and Image Registry paths; the image registry path and the toolname uniquely distinguishes image repositories in Dockstore.
 
@@ -121,11 +121,11 @@ Upon successful submission and registration of the container, a resynchronizatio
 
 The user will then be taken to the 'Versions' tab of the new container, where tags (corresponding to GitHub/Bitbucket tag names) may be added.
 
-![Versions Grid](version_tags.png)
+![Versions Grid](docs/version_tags.png)
 
 Press the 'Add Tag' button to begin creating tags for the different versions of the image. The tag creation modal will appear:
 
-![Edit Version Tag Dialogue](tageditor_modal.png)
+![Edit Version Tag Dialogue](docs/tageditor_modal.png)
 
 The fields in the form should correspond to the actual values on GitHub/Bitbucket and Quay.io/Docker Hub in order for the information to be useful to other users. Selecting `Hidden` will prevent the tag from appearing in the public listing of tags for the image.
 
@@ -292,4 +292,4 @@ You can find tools on the Dockstore website or also through the `dockstore tool 
 
 You can follow this basic pattern for each of your Docker-based tools.  Once registered, you can send links to your tools on Dockstore to colleagues and use it as a public platform for sharing your tools.  
 
-Read up on background information on the Dockstore project at [About](about.md) page.
+Read up on background information on the Dockstore project at [About](/docs/about) page.
