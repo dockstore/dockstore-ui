@@ -91,29 +91,31 @@
                 </button>
                 <ul class="dropdown-menu">
                   <li>
-                    <a href ng-click="workflowObj.descriptorType = 'cwl'">
+                    <a href ng-click="workflowObj.descriptorType = 'cwl';workflowObj.default_workflow_path = changeExt(workflowObj.default_workflow_path,'cwl')">
                       cwl
                     </a>
                   </li>
                   <li>
-                    <a href ng-click="workflowObj.descriptorType = 'wdl'">
+                    <a href ng-click="workflowObj.descriptorType = 'wdl';workflowObj.default_workflow_path = changeExt(workflowObj.default_workflow_path,'wdl')">
                       wdl
                     </a>
                   </li>
                 </ul>
               </div>
-              <input
-                type="text"
-                class="form-control"
-                name="default_workflow_path"
-                ng-model="workflowObj.default_workflow_path"
-                ng-minlength="3"
-                ng-maxlength="256"
-                ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(cwl|wdl)$/i"
-                required
-                data-toggle="tooltip"
-                title="Default relative path to the Descriptor in the Git repository."
-                placeholder="e.g. /Dockstore.cwl" />
+                <input
+                  type="text"
+                  id="workflow_path"
+                  class="form-control"
+                  name="default_workflow_path"
+                  ng-model="workflowObj.default_workflow_path"
+                  value="{{workflowObj.default_workflow_path}}"
+                  ng-minlength="3"
+                  ng-maxlength="256"
+                  ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(cwl|wdl)$/i"
+                  required
+                  data-toggle="tooltip"
+                  title="Default relative path to the Descriptor in the Git repository."
+                  placeholder="{{workflowObj.descriptorType === 'cwl' ? 'e.g. /Dockstore.cwl' : 'e.g. /Dockstore.wdl'}}"/>
             </div>
 
               <div

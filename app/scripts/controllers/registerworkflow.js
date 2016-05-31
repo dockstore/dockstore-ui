@@ -47,6 +47,26 @@ angular.module('dockstore.ui')
           });
       };
 
+      $scope.changeExt = function(name, extension){
+        // 'name' will be undefined if it does not pass the ng-pattern for ng-model
+        // ng-pattern will check if there is an extension or not. If there is, it'll check if the extension is cwl/wdl
+        var nameNoExt="";
+        var indexPeriod=-1;
+        if(name === undefined){
+          name = document.getElementById("workflow_path").value;
+          indexPeriod = name.indexOf('.');
+          if(indexPeriod != -1){ //there is an extension in the filename given, but the filename is invalid
+            nameNoExt = name.substring(0,indexPeriod);
+            return nameNoExt+'.'+extension;
+          }
+          return name+'.'+extension;
+        }else{
+          indexPeriod = name.indexOf('.');
+          nameNoExt = name.substring(0,indexPeriod);
+          return nameNoExt+'.'+extension;
+        }
+      };
+
       $scope.getWorkflowPath = function(workflowPath, part) {
         var path = workflowPath.split("/");
         return (part === 'organization') ? path[0] : path[1];
