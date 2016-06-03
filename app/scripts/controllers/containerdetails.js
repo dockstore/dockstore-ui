@@ -190,6 +190,9 @@ angular.module('dockstore.ui')
 
       $scope.getDaysAgoString = function(timestamp) {
         var daysAgo = $scope.getDaysAgo(timestamp);
+        if(daysAgo < 0){
+          daysAgo = 0;
+        }
         return daysAgo.toString() +
                 ((daysAgo === 1) ? ' day ago' : ' days ago');
       };
