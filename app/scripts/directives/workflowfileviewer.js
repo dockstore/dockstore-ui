@@ -19,7 +19,10 @@ angular.module('dockstore.ui')
       templateUrl: 'templates/workflowfileviewer.html',
       link: function postLink(scope, element, attrs) {
         scope.$watch('workflowObj.path', function(newValue, oldValue) {
-          if (newValue) scope.setDocument();
+          if (newValue) {
+            scope.setDocument();
+            scope.checkDescriptor();
+          }
         });
         scope.$watchGroup(
           ['selVersionName', 'workflowObj.id', 'selDescriptorName'],
@@ -29,6 +32,9 @@ angular.module('dockstore.ui')
         scope.$on('refreshFiles', function(event) {
           scope.setDocument();
           scope.refreshDocument();
+        });
+        scope.$on('checkDescPageType', function(event) {
+          scope.checkDescriptor();
         });
       }
     };

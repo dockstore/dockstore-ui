@@ -218,7 +218,7 @@
         </div>
       </uib-tab>
       <uib-tab active="activeTabs[3]" disable="!isWorkflowFull()">
-        <uib-tab-heading>Descriptor</uib-tab-heading>
+        <uib-tab-heading ng-click="checkPage()">Descriptor</uib-tab-heading>
         <div workflow-file-viewer
              type="descriptor"
              workflow-obj="workflowObj"

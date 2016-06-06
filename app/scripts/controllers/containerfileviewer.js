@@ -19,6 +19,81 @@ angular.module('dockstore.ui')
 
       $scope.fileLoaded = false;
       $scope.fileContents = null;
+      $scope.successContent = [];
+
+      $scope.checkDescriptor = function() {
+        $scope.containerTags = $scope.getContainerTags();
+        $scope.successContent = [];
+        var accumulator = [];
+        var index = 0;
+        for (var i=0; i<$scope.containerTags.length; i++) {
+          for (var j=0; j<descriptors.length; j++) {
+            accumulator[index] = {tag: $scope.containerTags[i], desc: descriptors[j]};
+            index++;
+          };
+        };
+
+        var checkSuccess = function(acc) {
+          var makePromises = function(acc, start) {
+            var vd = acc[start];
+            function filePromise(vd){
+              return $scope.getDescriptorFile($scope.containerObj.id, vd.tag, vd.desc).then(
+                function(s){
+                  $scope.successContent.push({tag:vd.tag,descriptor:vd.desc});
+                  if(start+1 === acc.length) {
+                    return {success: true, index:start};
+                  } else{
+                    start++;
+                    return filePromise(acc[start]);
+                  }
+                },
+                function(e){
+                  if (start+1 === acc.length) {
+                    return {success: false, index:start};
+                  } else {
+                    start++;
+                    return filePromise(acc[start]);
+                  };
+                });
+            }
+            return filePromise(vd);
+          };
+          return makePromises(acc,0);
+        }
+
+        var successResult = checkSuccess(accumulator);
+        successResult.then(
+          function(result){
+            $scope.selTagName = $scope.successContent[0].tag;
+            $scope.selDescriptorName = $scope.successContent[0].descriptor;
+          },
+          function(e){console.log("error",e)}
+        );
+      };
+
+      $scope.filterDescriptor = function(element) {
+        for(var i=0;i<$scope.successContent.length;i++){
+          if($scope.successContent[i].descriptor === element){
+            return true;
+          } else{
+            if(i===$scope.successContent.length -1){
+              return false;
+            }
+          }
+        }
+      };
+
+      $scope.filterVersion = function(element) {
+        for(var i=0;i<$scope.successContent.length;i++){
+          if($scope.successContent[i].tag === element){
+            return true;
+          } else{
+            if(i===$scope.successContent.length -1){
+              return false;
+            }
+          }
+        }
+      };
 
       $scope.isDockerfile = function() {
         if ($scope.type === 'dockerfile'){

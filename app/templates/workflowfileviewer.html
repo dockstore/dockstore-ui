@@ -3,7 +3,7 @@
     <strong>Workflow Version</strong>:
     <select class="ds-version" ng-model="selVersionName">
       <option
-        ng-repeat="version in workflowVersions"
+        ng-repeat="version in workflowVersions | filter: filterVersion"
         value="{{version}}">
         {{version}}
       </option>
@@ -13,7 +13,7 @@
     <strong>Descriptor Type</strong>:
     <select class="ds-descriptor" ng-model="selDescriptorName">
       <option
-        ng-repeat="descriptor in descriptors"
+        ng-repeat="descriptor in descriptors | filter: filterDescriptor"
         value="{{descriptor}}">
         {{descriptor}}
       </option>

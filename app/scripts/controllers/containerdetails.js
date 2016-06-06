@@ -24,6 +24,10 @@ angular.module('dockstore.ui')
         for (var i = 0; i < 4; i++) $scope.activeTabs.push(false);
       }
 
+      $scope.checkPage = function(){
+        $scope.$broadcast('checkDescPageType');
+      }
+
       $scope.loadContainerDetails = function(containerPath) {
         $scope.setContainerDetailsError(null);
         return ContainerService.getPublishedContainerByToolPath(containerPath)

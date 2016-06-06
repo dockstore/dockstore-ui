@@ -23,6 +23,10 @@ angular.module('dockstore.ui')
         for (var i = 0; i < 3; i++) $scope.activeTabs.push(false);
       }
 
+      $scope.checkPage = function(){
+        $scope.$broadcast('checkDescPageType');
+      }
+
       $scope.loadWorkflowDetails = function(workflowPath) {
         $scope.setWorkflowDetailsError(null);
         return WorkflowService.getPublishedWorkflowByPath(workflowPath)

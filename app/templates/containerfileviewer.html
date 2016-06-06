@@ -3,7 +3,7 @@
     <strong>Container Version</strong>:
     <select class="ds-version" ng-model="selTagName">
       <option
-        ng-repeat="tag in containerTags"
+        ng-repeat="tag in containerTags | filter: filterVersion"
         value="{{tag}}">
         {{tag}}
       </option>
@@ -13,7 +13,7 @@
     <strong>Descriptor Type</strong>:
     <select class="ds-descriptor" ng-model="selDescriptorName">
       <option
-        ng-repeat="descriptor in descriptors"
+        ng-repeat="descriptor in descriptors | filter: filterDescriptor"
         value="{{descriptor}}">
         {{descriptor}}
       </option>
