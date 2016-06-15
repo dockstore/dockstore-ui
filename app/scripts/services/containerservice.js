@@ -239,6 +239,68 @@ angular.module('dockstore.ui')
       });
     };
 
+    // this is actually a partial update, see https://github.com/ga4gh/dockstore/issues/274 
+    this.setDefaultCWLPath = function(containerId,cwlPath,wdlPath,dfPath,toolname,giturl){
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'PUT',
+          url: WebService.API_URI + '/containers/' + containerId,
+          data: {
+            default_cwl_path: cwlPath,
+            default_wdl_path: wdlPath,
+            default_dockerfile_path: dfPath,
+            toolname: toolname,
+            gitUrl: giturl
+          }
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    // this is actually a partial update, see https://github.com/ga4gh/dockstore/issues/274 
+    this.setDefaultWDLPath = function(containerId,cwlPath,wdlPath,dfPath,toolname,giturl){
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'PUT',
+          url: WebService.API_URI + '/containers/' + containerId,
+          data: {
+            default_cwl_path: cwlPath,
+            default_wdl_path: wdlPath,
+            default_dockerfile_path: dfPath,
+            toolname: toolname,
+            gitUrl: giturl
+          }
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.setDefaultDockerfilePath = function(containerId,cwlPath,wdlPath,dfPath,toolname,giturl){
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'PUT',
+          url: WebService.API_URI + '/containers/' + containerId,
+          data: {
+            default_cwl_path: cwlPath,
+            default_wdl_path: wdlPath,
+            default_dockerfile_path: dfPath,
+            toolname: toolname,
+            gitUrl: giturl
+          }
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
     this.getDockerFile = function(containerId, tagName) {
       return $q(function(resolve, reject) {
         $http({

@@ -131,6 +131,49 @@
               {{workflowObj.email}}
             </a>
           </li>
+          <li>
+            <div ng-show="editMode && !labelsEditMode">
+              <strong>Workflow Path</strong>:
+              {{workflowObj.workflow_path}}
+              <button type="sbutton"
+                  class="btn btn-link pull-right"
+                  ng-click="toggleLabelsEditMode()">
+                <span class="glyphicon glyphicon-edit"></span>Edit
+              </button>
+            </div>
+            <form name="editContainerForm"
+                  class="edit-container form-inline"
+                  ng-show="editMode && labelsEditMode"
+                  ng-submit="submitWorkflowPathEdits()">
+              <button type="submit"
+                      class="btn btn-link pull-right"
+                      ng-click="toggleLabelsEditMode()"
+                      ng-disabled="editContainerForm.$invalid">
+                <span class="glyphicon glyphicon-floppy-save"></span>Save
+              </button>
+              <div ng-show="labelsEditMode">
+              <strong>Workflow Path</strong>:
+                <div class="form-group">
+                  <input
+                      type="text"
+                      class="input-default form-control"
+                      name="contDescPath"
+                      ng-model="workflowObj.workflow_path"
+                      ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(cwl|wdl)$/i"
+                      ng-minlength="3"
+                      ng-maxlength="256"
+                      placeholder="e.g. /Dockstore.cwl" />
+                  <div
+                      class="form-error-messages"
+                      ng-messages="editContainerForm.contLabels.$error"
+                      ng-if="editContainerForm.contLabels.$touched">
+                    <div ng-messages-include="templates/validation/containers/descriptorpath.html">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </li>
           <li ng-if="editMode">
             <strong>Mode</strong>:
             {{workflowObj.mode | lowercase}}

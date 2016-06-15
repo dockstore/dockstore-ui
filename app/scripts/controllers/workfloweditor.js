@@ -136,15 +136,15 @@ angular.module('dockstore.ui')
       };
 
       $scope.setWorkflowEditorError = function(message, errorDetails) {
-             if (message) {
-               $scope.workflowEditorError = {
-                 message: message,
-                 errorDetails: errorDetails
-               };
-             } else {
-               $scope.workflowEditorError = null;
-             }
+         if (message) {
+           $scope.workflowEditorError = {
+             message: message,
+             errorDetails: errorDetails
            };
+         } else {
+           $scope.workflowEditorError = null;
+         }
+       };
 
       $scope.getCreateWorkflowObj = function(organization) {
         return {

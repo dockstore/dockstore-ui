@@ -101,6 +101,29 @@ angular.module('dockstore.ui')
           });
       };
 
+      $scope.setDefaultWorkflowPath = function(workflowId, path){
+        return WorkflowService.setDefaultWorkflowPath(workflowId, path, $scope.workflowObj.workflowName, $scope.workflowObj.descriptorType, 
+          $scope.workflowObj.path, $scope.workflowObj.gitUrl)
+          .then(
+            function(workflowObj){
+              $scope.workflowObj.workflow_path = workflowObj.workflow_path;
+              $scope.updateWorkflowObj();
+              return workflowObj;
+            },
+            function(response) {
+              $scope.setWorkflowDetailsError(
+                'The webservice encountered an error trying to modify default path ' +
+                'for this workflow, please ensure that the path is valid, ' +
+                'properly-formatted and does not contain prohibited ' +
+                'characters of words.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
+              return $q.reject(response);
+            }
+          );
+      };
+
       $scope.setWorkflowLabels = function(workflowId, labels) {
         $scope.setWorkflowDetailsError(null);
         return WorkflowService.setWorkflowLabels(workflowId, labels)
@@ -217,6 +240,16 @@ angular.module('dockstore.ui')
 
       $scope.toggleLabelsEditMode = function() {
         $scope.labelsEditMode = !$scope.labelsEditMode;
+      };
+
+      $scope.submitWorkflowPathEdits = function(type){
+        if($scope.workflowObj.workflow_path !== 'undefined'){
+          $scope.setDefaultWorkflowPath($scope.workflowObj.id,
+            $scope.workflowObj.workflow_path)
+          .then(function(workflowObj) {
+            $scope.labelsEditMode = false;
+          });
+        }
       };
 
       $scope.submitWorkflowEdits = function() {
