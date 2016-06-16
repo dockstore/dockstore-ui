@@ -132,26 +132,35 @@
             </a>
           </li>
           <li>
-            <div ng-show="editMode && !labelsEditMode">
+          <!-- for when it's not edit mode-->
+            <div ng-show="!editMode">
+              <strong>Workflow Path</strong>:
+              {{workflowObj.workflow_path}}
+            </div>
+            
+          <!-- for when it's edit mode and Edit button not clicked-->
+            <div ng-show="editMode && showEditWorkflowPath">
               <strong>Workflow Path</strong>:
               {{workflowObj.workflow_path}}
               <button type="sbutton"
                   class="btn btn-link pull-right"
-                  ng-click="toggleLabelsEditMode()">
+                  ng-click="showEditWorkflowPath = false">
                 <span class="glyphicon glyphicon-edit"></span>Edit
               </button>
             </div>
+
+            <!-- for when it's edit mode and Edit button clicked-->
             <form name="editContainerForm"
                   class="edit-container form-inline"
-                  ng-show="editMode && labelsEditMode"
+                  ng-show="editMode && !showEditWorkflowPath"
                   ng-submit="submitWorkflowPathEdits()">
               <button type="submit"
                       class="btn btn-link pull-right"
-                      ng-click="toggleLabelsEditMode()"
+                      ng-click="showEditWorkflowPath = true"
                       ng-disabled="editContainerForm.$invalid">
                 <span class="glyphicon glyphicon-floppy-save"></span>Save
               </button>
-              <div ng-show="labelsEditMode">
+              <div ng-show="!showEditWorkflowPath">
               <strong>Workflow Path</strong>:
                 <div class="form-group">
                   <input
@@ -174,13 +183,44 @@
               </div>
             </form>
           </li>
-          <li ng-if="editMode">
+          <li ng-show="editMode">
             <strong>Mode</strong>:
             {{workflowObj.mode | lowercase}}
           </li>
           <li>
+          <!-- when not in edit mode-->
+            <div ng-show="!editMode">
+              <Strong>Descriptor Type</Strong>:
+              {{workflowObj.descriptorType | lowercase}}
+            </div>
+          <!-- when in edit mode and Edit button for descriptor not clicked-->
+            <div ng-show="editMode && showEditDescriptorType">
             <Strong>Descriptor Type</Strong>:
             {{workflowObj.descriptorType | lowercase}}
+            <button type="sbutton"
+                  class="btn btn-link pull-right"
+                  style="padding: 3px 12px!important;"
+                  ng-click="showEditDescriptorType = false">
+                <span class="glyphicon glyphicon-edit"></span>Edit
+              </button>
+            </div>
+          <!-- when in edit mode and Edit button for descriptor is clicked-->
+            <div ng-show="editMode && !showEditDescriptorType">
+            <Strong>Descriptor Type</Strong>:
+              <select
+                ng-model="workflowObj.descriptorType"
+                ng-change="submitDescriptorEdit()">
+              <option value="cwl">cwl</option>
+              <option value="wdl">wdl</option>
+              </select>
+              <button type="submit"
+                      class="btn btn-link pull-right"
+                      style="padding: 3px 12px!important;"
+                      ng-click="showEditDescriptorType = true"
+                      ng-disabled="editContainerForm.$invalid">
+                <span class="glyphicon glyphicon-floppy-save"></span>Save
+              </button>
+            </div>
           </li>
           <li>
             <strong>Description</strong>:

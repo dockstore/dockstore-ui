@@ -150,7 +150,6 @@ angular.module('dockstore.ui')
       });
     }
 
-    // this is actually a partial update, see https://github.com/ga4gh/dockstore/issues/274 
     this.setWorkflowLabels = function(workflowId, labels) {
       return $q(function(resolve, reject) {
         $http({

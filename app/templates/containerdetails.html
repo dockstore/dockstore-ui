@@ -169,6 +169,64 @@
             </span>
           </li>
           <li>
+          <!-- for when it's not edit mode-->
+            <div ng-show="!editMode">
+              <strong>Dockerfile Path</strong>:
+              {{containerObj.default_dockerfile_path}}
+            </div>
+          <!-- for when it's edit mode and Edit button not clicked-->
+            <div ng-show="editMode && showEditDockerfile">
+              <strong>Dockerfile Path</strong>:
+              {{containerObj.default_dockerfile_path}}
+              <button type="sbutton"
+                  class="btn btn-link pull-right"
+                  style="padding: 3px 12px!important;"
+                  ng-click="showEditDockerfile = false">
+                <span class="glyphicon glyphicon-edit"></span>Edit
+              </button>
+            </div>
+          <!-- for when it's edit mode and Edit button clicked-->
+            <form name="editContainerForm"
+                  class="edit-container form-inline"
+                  ng-show="editMode && !showEditDockerfile"
+                  ng-submit="submitDescriptorEdits('dockerfile')">
+              <button type="submit"
+                      class="btn btn-link pull-right"
+                      style="padding: 3px 12px!important;"
+                      ng-click="showEditDockerfile = true"
+                      ng-disabled="editContainerForm.$invalid">
+                <span class="glyphicon glyphicon-floppy-save"></span>Save
+              </button>
+              <div ng-show="!showEditDockerfile">
+              <strong>Dockerfile Path</strong>:
+                <div class="form-group">
+                  <input
+                      type="text"
+                      class="input-default form-control"
+                      name="contDescPath"
+                      ng-model="containerObj.default_dockerfile_path"
+                      ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*Dockerfile$/i"
+                      ng-minlength="3"
+                      ng-maxlength="256"
+                      placeholder="e.g. /Dockerfile" />
+                  <div
+                      class="form-error-messages"
+                      ng-messages="editContainerForm.contLabels.$error"
+                      ng-if="editContainerForm.contLabels.$touched">
+                    <div ng-messages-include="templates/validation/containers/dockerfilepath.html">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </li>
+          <li>
+          <!-- for when it's not edit mode-->
+            <div ng-show="!editMode">
+              <strong>CWL Path</strong>:
+              {{containerObj.default_cwl_path}}
+            </div>
+          <!-- for when it's edit mode and Edit button not clicked-->
             <div ng-show="editMode && showEditCWL">
               <strong>CWL Path</strong>:
               {{containerObj.default_cwl_path}}
@@ -179,6 +237,7 @@
                 <span class="glyphicon glyphicon-edit"></span>Edit
               </button>
             </div>
+            <!-- for when it's edit mode and Edit button clicked-->
             <form name="editContainerForm"
                   class="edit-container form-inline"
                   ng-show="editMode && !showEditCWL"
@@ -214,6 +273,12 @@
             </form>
           </li>
           <li>
+          <!-- for when it's not edit mode-->
+            <div ng-show="!editMode">
+              <strong>WDL Path</strong>:
+              {{containerObj.default_wdl_path}}
+            </div>
+          <!-- for when it's edit mode and Edit button not clicked-->
             <div ng-show="editMode && showEditWDL">
               <strong>WDL Path</strong>:
               {{containerObj.default_wdl_path}}
@@ -224,6 +289,7 @@
                 <span class="glyphicon glyphicon-edit"></span>Edit
               </button>
             </div>
+            <!-- for when it's edit mode and Edit button clicked-->
             <form name="editContainerForm"
                   class="edit-container form-inline"
                   ng-show="editMode && !showEditWDL"
@@ -252,51 +318,6 @@
                       ng-messages="editContainerForm.contLabels.$error"
                       ng-if="editContainerForm.contLabels.$touched">
                     <div ng-messages-include="templates/validation/containers/descriptorpath.html">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </li>
-          <li>
-            <div ng-show="editMode && showEditDockerfile">
-              <strong>Dockerfile Path</strong>:
-              {{containerObj.default_dockerfile_path}}
-              <button type="sbutton"
-                  class="btn btn-link pull-right"
-                  style="padding: 3px 12px!important;"
-                  ng-click="showEditDockerfile = false">
-                <span class="glyphicon glyphicon-edit"></span>Edit
-              </button>
-            </div>
-            <form name="editContainerForm"
-                  class="edit-container form-inline"
-                  ng-show="editMode && !showEditDockerfile"
-                  ng-submit="submitDescriptorEdits('dockerfile')">
-              <button type="submit"
-                      class="btn btn-link pull-right"
-                      style="padding: 3px 12px!important;"
-                      ng-click="showEditDockerfile = true"
-                      ng-disabled="editContainerForm.$invalid">
-                <span class="glyphicon glyphicon-floppy-save"></span>Save
-              </button>
-              <div ng-show="!showEditDockerfile">
-              <strong>Dockerfile Path</strong>:
-                <div class="form-group">
-                  <input
-                      type="text"
-                      class="input-default form-control"
-                      name="contDescPath"
-                      ng-model="containerObj.default_dockerfile_path"
-                      ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*Dockerfile$/i"
-                      ng-minlength="3"
-                      ng-maxlength="256"
-                      placeholder="e.g. /Dockerfile" />
-                  <div
-                      class="form-error-messages"
-                      ng-messages="editContainerForm.contLabels.$error"
-                      ng-if="editContainerForm.contLabels.$touched">
-                    <div ng-messages-include="templates/validation/containers/dockerfilepath.html">
                     </div>
                   </div>
                 </div>
