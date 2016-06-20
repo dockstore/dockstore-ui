@@ -9,16 +9,18 @@
       </option>
     </select>
   </div>
+
   <div class="ds-descriptor-selector">
-    <strong>Descriptor Type</strong>:
-    <select class="ds-descriptor" ng-model="selDescriptorName">
+    <strong>File</strong>:
+    <select class="ds-wide-descriptor" ng-model="selSecondaryDescriptorName">
       <option
-        ng-repeat="descriptor in descriptors | filter: filterDescriptor"
-        value="{{descriptor}}">
-        {{descriptor}}
+        ng-repeat="secondaryDescriptorPath in secondaryDescriptors"
+        value="{{secondaryDescriptorPath}}">
+        {{secondaryDescriptorPath}}
       </option>
     </select>
   </div>
+</div>
 </div>
 
 <div class="alert alert-warning" role="alert"

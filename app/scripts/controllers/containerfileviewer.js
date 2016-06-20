@@ -143,6 +143,38 @@ angular.module('dockstore.ui')
         return ContainerService.getDescriptorFile(containerId, tagName, type)
           .then(
             function(descriptorFile) {
+              // this seems to cause flickr when loading
+              // $scope.fileContents = descriptorFile;
+              return descriptorFile;
+            },
+            function(response) {
+              return $q.reject(response);
+            }
+          ).finally(
+            function() { $scope.fileLoaded = true; }
+          );
+      };
+
+      $scope.getDescriptorFilePath = function(containerId, tagName, type) {
+        return ContainerService.getDescriptorFilePath(containerId, tagName, type)
+          .then(
+            function(descriptorFile) {
+              $scope.secondaryDescriptors = $scope.secondaryDescriptors.concat(descriptorFile);
+              $scope.secondaryDescriptors = $scope.secondaryDescriptors.filter(function(elem, index, self){return index == self.indexOf(elem)})
+              return $scope.secondaryDescriptors;
+            },
+            function(response) {
+              return $q.reject(response);
+            }
+          ).finally(
+            function() { $scope.fileLoaded = true; }
+          );
+      };
+
+      $scope.getSecondaryDescriptorFile = function(containerId, tagName, type, secondaryDescriptorPath) {
+        return ContainerService.getSecondaryDescriptorFile(containerId, tagName, type, encodeURIComponent(secondaryDescriptorPath))
+          .then(
+            function(descriptorFile) {
               $scope.fileContents = descriptorFile;
               return descriptorFile;
             },
@@ -154,11 +186,40 @@ angular.module('dockstore.ui')
           );
       };
 
+      function extracted(){
+        return $scope.containerObj.tags.filter(function(a) {return a.name === $scope.selTagName;})[0].sourceFiles.filter(function(a) {return a.type === 'DOCKSTORE_'+$scope.selDescriptorName.toUpperCase();}).map(function(a) {return a.path;}).sort();
+      }
+
       $scope.setDocument = function() {
+        // prepare Container Version drop-down
         $scope.containerTags = $scope.getContainerTags();
         $scope.selTagName = $scope.containerTags[0];
+        // prepare Descriptor Type drop-down
         $scope.descriptors = descriptors;
         $scope.selDescriptorName = descriptors[0];
+        // prepare Descriptor Imports drop-down
+        $scope.secondaryDescriptors = extracted();
+        $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
+      };
+
+      $scope.refreshDocumentType = function() {
+        $scope.fileLoaded = false;
+        $scope.fileContents = null;
+        switch ($scope.type) {
+          case 'dockerfile':
+            $scope.expectedFilename = 'Dockerfile';
+            $scope.getDockerFile($scope.containerObj.id, $scope.selTagName);
+            break;
+          case 'descriptor':
+            $scope.expectedFilename = 'Descriptor';
+            // prepare Descriptor Imports drop-down
+            $scope.secondaryDescriptors = extracted();
+            $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
+            $scope.getSecondaryDescriptorFile($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName, $scope.selSecondaryDescriptorName);
+            break;
+          default:
+          // ...
+        }
       };
 
       $scope.refreshDocument = function() {
@@ -171,7 +232,7 @@ angular.module('dockstore.ui')
             break;
           case 'descriptor':
             $scope.expectedFilename = 'Descriptor';
-            $scope.getDescriptorFile($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName);
+            $scope.getSecondaryDescriptorFile($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName, $scope.selSecondaryDescriptorName);
             break;
           default:
             // ...

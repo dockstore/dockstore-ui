@@ -19,6 +19,17 @@
       </option>
     </select>
   </div>
+
+  <div class="ds-descriptor-selector" ng-hide="isDockerfile()">
+    <strong>File</strong>:
+    <select class="ds-wide-descriptor" ng-model="selSecondaryDescriptorName">
+      <option
+        ng-repeat="secondaryDescriptorPath in secondaryDescriptors"
+        value="{{secondaryDescriptorPath}}">
+        {{secondaryDescriptorPath}}
+      </option>
+    </select>
+  </div>
 </div>
 
 <div class="alert alert-warning" role="alert"

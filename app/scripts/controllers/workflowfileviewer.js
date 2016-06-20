@@ -15,7 +15,7 @@ angular.module('dockstore.ui')
     'NotificationService',
   	function ($scope, $q, WorkflowService, NtfnService) {
 
-      var descriptors = ["cwl", "wdl"];
+      $scope.descriptor = $scope.workflowObj.descriptorType;
 
       $scope.fileLoaded = false;
       $scope.fileContents = null;
@@ -23,23 +23,24 @@ angular.module('dockstore.ui')
 
       $scope.checkDescriptor = function() {
         $scope.workflowVersions = $scope.getWorkflowVersions();
+        if ($scope.workflowVersions.length === 0){
+          return;
+        }
         $scope.successContent = [];
         var accumulator = [];
         var index = 0;
         for (var i=0; i<$scope.workflowVersions.length; i++) {
-          for (var j=0; j<descriptors.length; j++) {
-            accumulator[index] = {ver: $scope.workflowVersions[i], desc: descriptors[j]};
+            accumulator[index] = {ver: $scope.workflowVersions[i]};
             index++;
-          };
-        };
+        }
 
         var checkSuccess = function(acc) {
           var makePromises = function(acc, start) {
             var vd = acc[start];
             function filePromise(vd){
-              return $scope.getDescriptorFile($scope.workflowObj.id, vd.ver, vd.desc).then(
+              return $scope.getDescriptorFile($scope.workflowObj.id, vd.ver, $scope.descriptor).then(
                 function(s){
-                  $scope.successContent.push({version:vd.ver,descriptor:vd.desc});
+                  $scope.successContent.push({version:vd.ver});
                   if(start+1 === acc.length) {
                     return {success: true, index:start};
                   } else{
@@ -53,19 +54,18 @@ angular.module('dockstore.ui')
                   } else {
                     start++;
                     return filePromise(acc[start]);
-                  };
+                  }
                 });
             }
             return filePromise(vd);
           };
           return makePromises(acc,0);
-        }
+        };
 
         var successResult = checkSuccess(accumulator);
         successResult.then(
           function(result){
             $scope.selVersionName = $scope.successContent[0].version;
-            $scope.selDescriptorName = $scope.successContent[0].descriptor;
           },
           function(e){console.log("error",e)}
         );
@@ -119,7 +119,8 @@ angular.module('dockstore.ui')
         return WorkflowService.getDescriptorFile(workflowId, versionName, type)
           .then(
             function(descriptorFile) {
-              $scope.fileContents = descriptorFile;
+              // this causes flicker when loading
+              //$scope.fileContents = descriptorFile;
               return descriptorFile;
             },
             function(response) {
@@ -130,20 +131,82 @@ angular.module('dockstore.ui')
           );
       };
 
+      $scope.getDescriptorFilePath = function(containerId, tagName, type) {
+        return WorkflowService.getDescriptorFilePath(containerId, tagName, type)
+          .then(
+            function(descriptorFile) {
+              $scope.secondaryDescriptors = $scope.secondaryDescriptors.concat(descriptorFile);
+              $scope.secondaryDescriptors = $scope.secondaryDescriptors.filter(function(elem, index, self){return index == self.indexOf(elem)})
+              return $scope.secondaryDescriptors;
+            },
+            function(response) {
+              return $q.reject(response);
+            }
+          ).finally(
+            function() { $scope.fileLoaded = true; }
+          );
+      };
+
+      $scope.getSecondaryDescriptorFile = function(containerId, tagName, type, secondaryDescriptorPath) {
+        if(typeof $scope.selVersionName === 'undefined' || typeof $scope.selSecondaryDescriptorName === 'undefined'){
+          return;
+        }
+        return WorkflowService.getSecondaryDescriptorFile(containerId, tagName, type, encodeURIComponent(secondaryDescriptorPath))
+          .then(
+            function (descriptorFile) {
+              $scope.fileContents = descriptorFile;
+              return descriptorFile;
+            },
+            function (response) {
+              return $q.reject(response);
+            }
+          ).finally(
+            function () {
+              $scope.fileLoaded = true;
+            }
+          );
+      };
+
+      function extracted(){
+        try {
+          return $scope.workflowObj.workflowVersions.filter(function (a) {
+            return a.name === $scope.selVersionName;
+          })[0].sourceFiles.filter(function (a) {
+            return a.type === 'DOCKSTORE_' + $scope.descriptor.toUpperCase();
+          }).map(function (a) {
+            return a.path;
+          }).sort();
+        } catch(err){
+          return [];
+        }
+      }
+
       $scope.setDocument = function() {
-        $scope.workflowVersions = $scope.getWorkflowVersions();
+        $scope.descriptor = $scope.workflowObj.descriptorType;
+        // prepare Workflow Version drop-down
+        $scope.workflowVersions = $scope.workflowObj.workflowVersions.map(function(a) {return a.name;}).sort();
         $scope.selVersionName = $scope.workflowVersions[0];
-        $scope.descriptors = descriptors;
-        $scope.selDescriptorName = descriptors[0];
+        // prepare Descriptor Imports drop-down
+        $scope.secondaryDescriptors = extracted();
+        $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
+      };
+
+      $scope.refreshDocumentType = function() {
+        $scope.fileLoaded = false;
+        $scope.fileContents = null;
+        $scope.expectedFilename = 'Descriptor';
+        $scope.secondaryDescriptors = extracted();
+        $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
+        $scope.getSecondaryDescriptorFile($scope.workflowObj.id, $scope.selVersionName, $scope.descriptor, $scope.selSecondaryDescriptorName);
       };
 
       $scope.refreshDocument = function() {
         $scope.fileLoaded = false;
         $scope.fileContents = null;
         $scope.expectedFilename = 'Descriptor';
-        $scope.getDescriptorFile($scope.workflowObj.id, $scope.selVersionName, $scope.selDescriptorName);
-      };    
-      
+        $scope.getSecondaryDescriptorFile($scope.workflowObj.id, $scope.selVersionName, $scope.descriptor, $scope.selSecondaryDescriptorName);
+      };
+
       $scope.setDocument();
 
   }]);

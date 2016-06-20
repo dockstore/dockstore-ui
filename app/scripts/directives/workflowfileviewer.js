@@ -24,11 +24,6 @@ angular.module('dockstore.ui')
             scope.checkDescriptor();
           }
         });
-        scope.$watchGroup(
-          ['selVersionName', 'workflowObj.id', 'selDescriptorName'],
-          function(newValues, oldValues) {
-            scope.refreshDocument();
-        });
         scope.$on('refreshFiles', function(event) {
           scope.setDocument();
           scope.refreshDocument();
@@ -36,6 +31,16 @@ angular.module('dockstore.ui')
         scope.$on('checkDescPageType', function(event) {
           scope.checkDescriptor();
         });
+        scope.$watchGroup(
+          ['selVersionName','descriptor'],
+          function(newValues, oldValues) {
+            scope.refreshDocumentType();
+          });
+        scope.$watchGroup(
+          ['workflowObj.id', 'selSecondaryDescriptorName'],
+          function(newValues, oldValues) {
+            scope.refreshDocument();
+          });
       }
     };
   });

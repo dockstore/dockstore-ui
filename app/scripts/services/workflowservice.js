@@ -128,8 +128,8 @@ angular.module('dockstore.ui')
         });
       });
     };
-    
-    // this is actually a partial update, see https://github.com/ga4gh/dockstore/issues/274 
+
+    // this is actually a partial update, see https://github.com/ga4gh/dockstore/issues/274
     this.setDefaultWorkflowPath = function(workflowId, workflowpath, workflowname, descType,path, giturl) {
       return $q(function(resolve, reject) {
         $http({
@@ -205,4 +205,38 @@ angular.module('dockstore.ui')
         });
       });
     };
+
+
+        this.getDescriptorFilePath = function(containerId, tagName, type) {
+          return $q(function(resolve, reject) {
+            $http({
+              method: 'GET',
+              url: WebService.API_URI + '/workflows/' + containerId + '/' + type,
+              params: {
+                tag: tagName
+              }
+            }).then(function(response) {
+              resolve(response.data.path);
+            }, function(response) {
+              reject(response);
+            });
+          });
+        };
+
+        this.getSecondaryDescriptorFile = function (containerId, tagName, type, secondaryDescriptorPath) {
+          return $q(function (resolve, reject) {
+            $http({
+              method: 'GET',
+              url: WebService.API_URI + '/workflows/' + containerId + '/' + type + '/' + secondaryDescriptorPath,
+              params: {
+                tag: tagName
+              }
+            }).then(function (response) {
+              resolve(response.data.content);
+            }, function (response) {
+              reject(response);
+            });
+          });
+        };
+
   }]);
