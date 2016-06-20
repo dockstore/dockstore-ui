@@ -148,7 +148,7 @@ angular.module('dockstore.ui')
           reject(response);
         });
       });
-    }
+    };
 
     this.setWorkflowLabels = function(workflowId, labels) {
       return $q(function(resolve, reject) {

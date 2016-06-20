@@ -19,6 +19,10 @@ angular.module('dockstore.ui')
       $scope.labelsEditMode = false;
       $scope.dockerfileEnabled = false;
       $scope.descriptorEnabled = false;
+      $scope.validContent = true;
+      $scope.missingContent = [];
+      $scope.missingWarning = false;
+      $scope.invalidClass = false;
       $scope.showEditCWL = true;
       $scope.showEditWDL = true;
       $scope.showEditDockerfile = true;
@@ -124,6 +128,52 @@ angular.module('dockstore.ui')
           ).finally(function(response) {
             $scope.refreshingContainer = false;
           });
+      };
+
+      $scope.checkContentValid = function(){
+        //will print this when the 'Publish' button is clicked
+        var message = 'The file is missing some required fields. Please make sure the file has all the required fields. ';
+        var missingMessage = 'The missing field(s):'
+        if($scope.validContent){
+          if($scope.missingContent.length !== 0){
+            $scope.missingWarning = true;
+          }
+          return true;
+
+        } else{
+            if($scope.missingContent.length !== 0){
+              $scope.missingWarning = false;
+              for(var i=0;i<$scope.missingContent.length;i++){
+                missingMessage += ' \''+$scope.missingContent[i]+'\'';
+                if(i!=$scope.missingContent.length -1){
+                  missingMessage+=',';
+                }
+              }
+              if(!$scope.refreshingWorkflow){
+                if($scope.containerObj.descriptorType === 'wdl'){
+                  $scope.setContainerDetailsError(
+                    message+missingMessage +
+                    '. Required fields in WDL file: \'task\', \'workflow\', \'call\', \'command\', and \'output\'',''
+                  );
+                }else{
+                  $scope.setContainerDetailsError(
+                    message+missingMessage +
+                    '. Required fields in CWL Tool file: \'inputs\', \'outputs\', \'class: CommandLineTool\', and \'baseCommand\'',''
+                  );
+                }
+              }
+            }
+
+            if($scope.invalidClass){
+              //file is invalid because class is workflow instead of commandlinetool
+              $scope.setContainerDetailsError(
+                'This CWL file is not a CommandLineTool'+
+                '. Required fields in CWL Tool file: \'inputs\', \'outputs\', \'class: CommandLineTool\', and \'baseCommand\'',''
+              );
+            }
+
+          return false;
+        }
       };
 
       $scope.setDefaultCWLPath = function(containerId, cwlpath){
@@ -391,6 +441,25 @@ angular.module('dockstore.ui')
               $scope.labelsEditMode = false;
             });
         }
+      };
+
+      $scope.isContainerValid = function() {
+        if ($scope.containerObj.is_published) {
+          return true;
+        }
+
+        var versionTags = $scope.containerObj.tags;
+
+        if (versionTags === null) {
+          return false;
+        }
+
+        for (var i = 0; i < versionTags.length; i++) {
+          if (versionTags[i].valid) {
+            return true;
+          }
+        }
+        return false;
       };
 
       $scope.$watch('containerPath', function(newValue, oldValue) {

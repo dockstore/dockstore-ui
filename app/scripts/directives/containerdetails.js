@@ -24,6 +24,16 @@ angular.module('dockstore.ui')
         scope.$on('tagEditorRefreshContainer', function(event, containerId) {
           scope.refreshContainer(containerId, 2);
         });
+        scope.$on('returnValid', function(event, valid){
+          scope.validContent = valid;
+          scope.checkContentValid();
+        });
+        scope.$on('returnMissing', function(event,missing){
+          scope.missingContent = missing;
+        });
+        scope.$on('invalidClass', function(event, invalid){
+          scope.invalidClass = invalid;
+        });
       }
     };
   });

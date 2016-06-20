@@ -1,4 +1,4 @@
-<div class="row" ng-if="containerDetailsError || refreshingContainer">
+<div class="row" ng-if="containerDetailsError || refreshingContainer || missingWarning">
   <div class="col-md-12">
     <div class="alert alert-danger alert-dismissable"
         ng-class="!editMode ? 'push-top' : ''"
@@ -23,6 +23,23 @@
       </span>
       Please wait, retrieving {{imageReposProviderName}} container...
     </div>
+    <div class="alert alert-warning"
+         ng-class="!editMode ? 'push-top' : ''"
+         role="alert"
+         ng-if="missingWarning"
+         >
+      <button type="button"
+              class="close"
+              data-dismiss="alert"
+              ng-click="missingWarning = false">
+        &times;
+      </button>
+      <span class="glyphicon glyphicon-warning-sign">
+      </span>
+      {{ missingContent.length === 1 ? 'Field that is missing from file: ' : 'Fields that are missing from file: '}}
+      {{missingContent}}
+    </div>
+  </div>
   </div>
 </div>
 <div class="row" ng-show="containerObj">
@@ -66,10 +83,11 @@
           <button uib-btn-checkbox
               type="button"
               class="btn btn-primary"
-              ng-click="setContainerRegistration(containerObj.id, containerObj.is_published)"
+              ng-class="!refreshingContainer && isContainerValid()? '' : 'disabled'"
+              ng-click="setContainerRegistration(containerObj.id, containerObj.is_published); checkContentValid()"
               ng-model="containerObj.is_published"
               ng-class="containerObj.is_published ? 'btn-primary' : 'btn-warning'"
-              ng-disabled="refreshingContainer">
+              ng-disabled="refreshingContainer || !isContainerValid() || !validContent">
             {{ containerObj.is_published ? 'Unpublish' : 'Publish' }}
           </button>
           <button type="button"
@@ -81,7 +99,7 @@
         </div>
         <button type="button"
             class="btn btn-primary"
-            ng-click="refreshContainer(containerObj.id)"
+            ng-click="refreshContainer(containerObj.id);checkPage()"
             ng-disabled="refreshingContainer">
           Refresh
         </button>

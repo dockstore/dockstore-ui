@@ -18,6 +18,9 @@ angular.module('dockstore.ui')
 
       $scope.labelsEditMode = false;
       $scope.descriptorEnabled = false;
+      $scope.validContent = true;
+      $scope.missingWarning = false;
+      $scope.invalidClass = false;
       $scope.showEditWorkflowPath = true;
       $scope.showEditDescriptorType = true;
       if (!$scope.activeTabs) {
@@ -101,6 +104,52 @@ angular.module('dockstore.ui')
           ).finally(function(response) {
             $scope.refreshingWorkflow = false;
           });
+      };
+
+      $scope.checkContentValid = function(){
+        //will print this when the 'Publish' button is clicked
+        var message = 'The file is missing some required fields. Please make sure the file has all the required fields. ';
+        var missingMessage = 'The missing field(s):'
+        if($scope.validContent){
+          if($scope.missingContent.length !== 0){
+            $scope.missingWarning = true;
+          }
+          return true;
+
+        } else{
+            if($scope.missingContent.length !== 0){
+              $scope.missingWarning = false;
+              for(var i=0;i<$scope.missingContent.length;i++){
+                missingMessage += ' \''+$scope.missingContent[i]+'\'';
+                if(i!=$scope.missingContent.length -1){
+                  missingMessage+=',';
+                }
+              }
+              if(!$scope.refreshingWorkflow){
+                if($scope.workflowObj.descriptorType === 'wdl'){
+                  $scope.setWorkflowDetailsError(
+                    message+missingMessage +
+                    '. Required fields in WDL file: \'task\', \'workflow\', \'call\', \'command\', and \'output\'',''
+                  );
+                }else{
+                  $scope.setWorkflowDetailsError(
+                    message+missingMessage +
+                    '. Required fields in CWL Workflow file: \'inputs\', \'outputs\', \'class: Workflow\', and \'steps\'',''
+                  );
+                }
+              }
+            }
+
+            if($scope.invalidClass){
+              //file is invalid because class is commandLineTool instead of Workflow
+              $scope.setContainerDetailsError(
+                'This CWL file is not a Workflow'+
+                '. Required fields in CWL Workflow file: \'inputs\', \'outputs\', \'class: Workflow\', and \'steps\'',''
+              );
+            }
+
+          return false;
+        }
       };
 
       $scope.setDefaultWorkflowPath = function(workflowId, path){
@@ -267,7 +316,7 @@ angular.module('dockstore.ui')
         $scope.labelsEditMode = !$scope.labelsEditMode;
       };
 
-      $scope.submitWorkflowPathEdits = function(type){
+      $scope.submitWorkflowPathEdits = function(){
         if($scope.workflowObj.workflow_path !== 'undefined'){
           $scope.setDefaultWorkflowPath($scope.workflowObj.id,
             $scope.workflowObj.workflow_path)

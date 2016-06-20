@@ -1,4 +1,4 @@
-<div class="row" ng-if="workflowDetailsError || refreshingWorkflow">
+<div class="row" ng-if="workflowDetailsError || refreshingWorkflow || missingWarning">
   <div class="col-md-12">
     <div class="alert alert-danger alert-dismissable"
          ng-class="!editMode ? 'push-top' : ''"
@@ -22,6 +22,22 @@
       <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
       </span>
       Please wait, retrieving workflow...
+    </div>
+    <div class="alert alert-warning"
+         ng-class="!editMode ? 'push-top' : ''"
+         role="alert"
+         ng-if="missingWarning"
+         >
+      <button type="button"
+              class="close"
+              data-dismiss="alert"
+              ng-click="missingWarning = false">
+        &times;
+      </button>
+      <span class="glyphicon glyphicon-warning-sign">
+      </span>
+      {{ missingContent.length === 1 ? 'Field that is missing from file: ' : 'Fields that are missing from file: '}}
+      {{missingContent}}
     </div>
   </div>
 </div>
@@ -64,20 +80,22 @@
           <button uib-btn-checkbox
                   type="button"
                   class="btn btn-primary"
-                  ng-class="!refreshingWorkflow && isWorkflowValid() ? '' : 'disabled'"
-                  ng-click="setWorkflowRegistration(workflowObj.id, workflowObj.is_published)"
+                  ng-class="!refreshingWorkflow && isWorkflowValid()? '' : 'disabled'"
+                  ng-click="setWorkflowRegistration(workflowObj.id, workflowObj.is_published); checkContentValid()"
                   ng-model="workflowObj.is_published"
-                  ng-class="workflowObj.is_published ? 'btn-primary' : 'btn-warning'"
-                  ng-disabled="refreshingWorkflow || !isWorkflowValid()">
+                  ng-class="workflowObj.is_published? 'btn-primary' : 'btn-warning'"
+                  ng-disabled="refreshingWorkflow || !isWorkflowValid() || workflowObj.mode === 'STUB' || !validContent">
             {{ workflowObj.is_published ? 'Unpublish' : 'Publish' }}
           </button>
         </div>
+
         <button type="button"
                 class="btn btn-primary"
-                ng-click="refreshWorkflow(workflowObj.id)"
+                ng-click="refreshWorkflow(workflowObj.id); checkPage()"
                 ng-disabled="refreshingWorkflow">
           Refresh
         </button>
+
       </div>
     </h3>
   </div>
