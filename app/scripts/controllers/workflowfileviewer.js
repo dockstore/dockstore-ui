@@ -135,6 +135,18 @@ angular.module('dockstore.ui')
         );
       };
 
+      $scope.filterVersion = function(element) {
+        for(var i=0;i<$scope.successContent.length;i++){
+          if($scope.successContent[i].version === element){
+            return true;
+          } else{
+            if(i===$scope.successContent.length -1){
+              return false;
+            }
+          }
+        }
+      };
+
       $scope.getWorkflowVersions = function() {
         var sortedVersionObjs = $scope.workflowObj.workflowVersions;
         sortedVersionObjs.sort(function(a, b) {
