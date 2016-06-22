@@ -42,8 +42,8 @@ angular.module('dockstore.ui')
               content: null
             };
             index++;
-          };
-        };
+          }
+        }
 
         var checkSuccess = function(acc) {
           var makePromises = function(acc, start) {
@@ -69,13 +69,13 @@ angular.module('dockstore.ui')
                   } else {
                     start++;
                     return filePromise(acc[start]);
-                  };
+                  }
                 });
             }
             return filePromise(vd);
           };
           return makePromises(acc,0);
-        }
+        };
 
         var successResult = checkSuccess(accumulator);
         successResult.then(
@@ -129,6 +129,7 @@ angular.module('dockstore.ui')
             }
             $scope.$emit('returnMissing',m);
             $scope.$emit('returnValid',v);
+            $scope.refreshDocumentType();
           },
           function(e){console.log("error",e)}
         );
@@ -235,6 +236,9 @@ angular.module('dockstore.ui')
       };
 
       $scope.getSecondaryDescriptorFile = function(containerId, tagName, type, secondaryDescriptorPath) {
+        if(typeof tagName === 'undefined' || typeof secondaryDescriptorPath === 'undefined'){
+          return;
+        }
         return ContainerService.getSecondaryDescriptorFile(containerId, tagName, type, encodeURIComponent(secondaryDescriptorPath))
           .then(
             function(descriptorFile) {
