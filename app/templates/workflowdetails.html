@@ -156,7 +156,7 @@
               <strong>Workflow Path</strong>:
               {{workflowObj.workflow_path}}
             </div>
-            
+
           <!-- for when it's edit mode and Edit button not clicked-->
             <div ng-show="editMode && showEditWorkflowPath">
               <strong>Workflow Path</strong>:
@@ -187,7 +187,7 @@
                       class="input-default form-control"
                       name="contDescPath"
                       ng-model="workflowObj.workflow_path"
-                      ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(cwl|wdl)$/i"
+                      ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(cwl|wdl|yaml|yml)$/i"
                       ng-minlength="3"
                       ng-maxlength="256"
                       placeholder="e.g. /Dockstore.cwl" />

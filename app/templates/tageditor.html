@@ -149,7 +149,7 @@
                   ng-model="tagObj.cwl_path"
                   ng-minlength="3"
                   ng-maxlength="128"
-                  ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.cwl$/i"
+                  ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(cwl|yaml|yml)/i"
                   required
                   data-toggle="tooltip"
                   title="Relative path to the CWL Descriptor in the Git repository."

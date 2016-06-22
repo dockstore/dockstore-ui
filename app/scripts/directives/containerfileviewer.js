@@ -32,12 +32,12 @@ angular.module('dockstore.ui')
           scope.checkDescriptor();
         });
         scope.$watchGroup(
-          ['selDescriptorName'],
+          ['selTagName', 'selDescriptorName'],
           function(newValues, oldValues) {
             scope.refreshDocumentType();
           });
         scope.$watchGroup(
-          ['selTagName', 'containerObj.id', 'selSecondaryDescriptorName'],
+          ['containerObj.id', 'selSecondaryDescriptorName'],
           function(newValues, oldValues) {
             scope.refreshDocument();
           });

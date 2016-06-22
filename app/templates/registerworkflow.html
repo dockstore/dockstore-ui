@@ -111,7 +111,7 @@
                   value="{{workflowObj.default_workflow_path}}"
                   ng-minlength="3"
                   ng-maxlength="256"
-                  ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(cwl|wdl)$/i"
+                  ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(cwl|wdl|yaml|yml)$/i"
                   required
                   data-toggle="tooltip"
                   title="Default relative path to the Descriptor in the Git repository."

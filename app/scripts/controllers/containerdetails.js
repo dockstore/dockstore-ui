@@ -133,7 +133,7 @@ angular.module('dockstore.ui')
       $scope.checkContentValid = function(){
         //will print this when the 'Publish' button is clicked
         var message = 'The file is missing some required fields. Please make sure the file has all the required fields. ';
-        var missingMessage = 'The missing field(s):'
+        var missingMessage = 'The missing field(s):';
         if($scope.validContent){
           if($scope.missingContent.length !== 0){
             $scope.missingWarning = true;
