@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="ds-holder">
+      <div class="ds-version-selector">
+        <strong>Workflow Version</strong>:
+        <select class="ds-version" ng-model="selVersionName">
+          <option
+            ng-repeat="version in workflowVersions"
+            value="{{version}}">
+            {{version}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <table class="table versions-grid table-bordered table-condensed table-striped">
+      <thead>
+      <tr>
+        <th>
+          Workflow Excerpt
+            <span class="glyphicon pull-right">
+            </span>
+        </th>
+        <th>
+          Task/Tool Excerpt
+            <span class="glyphicon pull-right">
+            </span>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td colspan="7">
+          <div class="text-center">No Records Found</div>
+        </td>
+      </tr>
+      <!-- Here is where you would need to set up the table content.  See workflowdagview for help on calling
+       dag json for the given workflow and version.  Then write a function in the workflowtoolsgrid.js controller
+       to store to an array that you will ng-repeat over-->
+      <!--<tr ng-repeat="" ng-hide="">-->
+        <!--<td>-->
+        <!--</td>-->
+      <!--</tr>-->
+      </tbody>
+    </table>
+  </div>
+</div>

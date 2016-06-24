@@ -36,7 +36,7 @@
           <!-- need a to write a 'smart search' filter -->
           <tr ng-repeat="workflow in ((filteredWorkflows = (workflows | PreviewFilter:contLimit | filter: searchQueryWorkflow)) | orderBy:sortColumn:sortReverse | PaginationFilter:getListRange())">
             <td>
-              <a href="/workflows/{{workflow.path}}">{{workflow.repository + (workflow.workflowName ? ' (' + workflow.workflowName + ')' : '')}}</a>
+              <a ng-href="/workflows/{{workflow.path}}">{{workflow.repository + (workflow.workflowName ? ' (' + workflow.workflowName + ')' : '')}}</a>
             </td>
             <td>
               {{ workflow.author ? workflow.author : 'n/a' }}

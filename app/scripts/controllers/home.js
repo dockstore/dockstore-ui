@@ -39,8 +39,6 @@ angular.module('dockstore.ui')
         $scope.tabMode = 'Tool';
       };
 
-
-
       $scope.$watch('searchQueryContainer', function(newValue, oldValue) {
         $rootScope.searchQueryContainer = newValue;
       });

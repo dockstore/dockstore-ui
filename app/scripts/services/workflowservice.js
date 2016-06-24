@@ -150,6 +150,19 @@ angular.module('dockstore.ui')
       });
     };
 
+  this.getWorkflowDag = function(workflowId, workflowVersionId) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: WebService.API_URI + '/workflows/' + workflowId + '/dag/' + workflowVersionId
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
     this.setWorkflowLabels = function(workflowId, labels) {
       return $q(function(resolve, reject) {
         $http({

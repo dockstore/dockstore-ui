@@ -82,8 +82,6 @@ angular.module('dockstore.ui')
         successResult.then(
           function(result){
             $scope.selVersionName = $scope.successContent[0].version;
-
-            //$scope.selDescriptorName = $scope.successContent[0].descriptor;
             $scope.fileContent = $scope.successContent[0].content;
             var result = $scope.fileContent;
             m = [];

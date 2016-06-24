@@ -14,7 +14,8 @@ angular.module('dockstore.ui')
     'WorkflowService',
     'FormattingService',
     'NotificationService',
-    function ($scope, $q, WorkflowService, FrmttSrvc, NtfnService) {
+    '$location',
+    function ($scope, $q, WorkflowService, FrmttSrvc, NtfnService, $location) {
 
       $scope.labelsEditMode = false;
       $scope.descriptorEnabled = false;
@@ -30,7 +31,11 @@ angular.module('dockstore.ui')
 
       $scope.checkPage = function(){
         $scope.$broadcast('checkDescPageType');
-      }
+      };
+
+      $scope.openDAG = function() {
+        $scope.$broadcast('refreshFiles');
+      };
 
       $scope.loadWorkflowDetails = function(workflowPath) {
         $scope.setWorkflowDetailsError(null);

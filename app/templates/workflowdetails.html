@@ -125,7 +125,7 @@
 <div class="row" ng-show="workflowObj">
   <div class="ds-tabs" ng-class="editMode ? 'col-md-12' : 'col-md-9'">
     <uib-tabset>
-      <uib-tab active="activeTabs[0]">
+      <uib-tab active="activeTabs[0]" style="min-width: 144px !important;">
         <uib-tab-heading>Info</uib-tab-heading>
         <ul class="list-unstyled container-info">
           <li>
@@ -259,7 +259,7 @@
           <div disqus-comments class="comments" ng-if="!editMode"></div>
         </div>
       </uib-tab>
-      <uib-tab active="activeTabs[1]">
+      <uib-tab active="activeTabs[1]" style="min-width: 144px !important;">
         <uib-tab-heading>Labels</uib-tab-heading>
         <button type="sbutton"
                 class="btn btn-link pull-right"
@@ -311,7 +311,7 @@
           </div>
         </form>
       </uib-tab>
-      <uib-tab  active="activeTabs[2]"  disable="!isWorkflowFull()">
+      <uib-tab  active="activeTabs[2]"  disable="!isWorkflowFull()" style="min-width: 145px !important;">
         <uib-tab-heading>Versions</uib-tab-heading>
         <div workflow-versions-grid
              workflow-obj="workflowObj"
@@ -319,7 +319,7 @@
              set-error="setWorkflowDetailsError">
         </div>
       </uib-tab>
-      <uib-tab active="activeTabs[3]" disable="!isWorkflowFull()">
+      <uib-tab active="activeTabs[3]" disable="!isWorkflowFull()" style="min-width: 145px !important;">
         <uib-tab-heading ng-click="checkPage()">Descriptor</uib-tab-heading>
         <div workflow-file-viewer
              type="descriptor"
@@ -327,16 +327,21 @@
              ng-if="workflowObj">
         </div>
       </uib-tab>
-      <!--<uib-tab active="activeTabs[4]">-->
-        <!--<uib-tab-heading>Tools</uib-tab-heading>-->
-        <!--<div>-->
-        <!--</div>-->
-      <!--</uib-tab>-->
-      <!--<uib-tab active="activeTabs[5]">-->
-        <!--<uib-tab-heading>DAG</uib-tab-heading>-->
-        <!--<div>-->
-        <!--</div>-->
-      <!--</uib-tab>-->
+      <!--<uib-tab active="activeTabs[4]" disable="!isWorkflowFull()" style="min-width: 145px !important;">
+        <uib-tab-heading>Tools</uib-tab-heading>
+        <div workflow-tools-grid
+             workflow-obj="workflowObj">
+        </div>
+      </uib-tab>-->
+      <uib-tab active="activeTabs[5]" disable="!isWorkflowFull()" style="min-width: 145px !important;">
+        <uib-tab-heading ng-click="openDAG()">DAG</uib-tab-heading>
+        <div workflow-dag-view
+             ng-if="workflowObj"
+             workflow-obj="workflowObj">
+        </div>
+        <div>
+        </div>
+      </uib-tab>
     </uib-tabset>
   </div>
   <div class="side-block col-md-3" ng-if="!editMode">
