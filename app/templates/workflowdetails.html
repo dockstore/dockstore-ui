@@ -3,6 +3,7 @@
     <div class="alert alert-danger alert-dismissable"
          ng-class="!editMode ? 'push-top' : ''"
          role="alert"
+         ng-show="editMode"
          ng-if="workflowDetailsError">
       <button type="button"
               class="close"
@@ -27,8 +28,7 @@
          ng-class="!editMode ? 'push-top' : ''"
          role="alert"
          ng-show="editMode"
-         ng-if="missingWarning"
-         >
+         ng-if="missingWarning">
       <button type="button"
               class="close"
               data-dismiss="alert"
