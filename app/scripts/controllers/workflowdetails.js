@@ -34,6 +34,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.openDAG = function() {
+        $scope.$broadcast('checkVersion');
         $scope.$broadcast('refreshFiles');
       };
 

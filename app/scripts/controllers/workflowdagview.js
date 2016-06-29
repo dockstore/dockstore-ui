@@ -18,6 +18,7 @@ angular.module('dockstore.ui')
       var cy;
       $scope.successContent = [];
       $scope.missingTool = false;
+      $scope.notFound = false;
 
       $scope.getWorkflowVersions = function() {
         var sortedVersionObjs = $scope.workflowObj.workflowVersions;
@@ -40,20 +41,22 @@ angular.module('dockstore.ui')
       };
 
       $scope.nodesAndEdges = function(workflowId, workflowVersions) {
-      var workflowVersionId;
-      if (workflowVersions.length == 0) {
-        return null;
-      }
-      for (var i = 0; i < workflowVersions.length; i++) {
-        if (workflowVersions[i].name === $scope.selVersionName) {
-          if (workflowVersions[i].valid) {
-            workflowVersionId = workflowVersions[i].id;
-            break;
-          } else {
-            return null;
+        var workflowVersionId;
+        if (workflowVersions.length == 0) {
+          return null;
+        }
+
+        for (var i = 0; i < workflowVersions.length; i++) {
+          if (workflowVersions[i].name === $scope.selVersionName) {
+            if (workflowVersions[i].valid) {
+              workflowVersionId = workflowVersions[i].id;
+              break;
+            } else {
+              return null;
+            }
           }
         }
-      }
+
         return WorkflowService.getWorkflowDag(workflowId, workflowVersionId)
           .then(
             function(dagJson) {
@@ -63,6 +66,16 @@ angular.module('dockstore.ui')
             function(response) {
               return $q.reject(response);
             });
+
+      };
+
+      $scope.checkVersion = function() {
+        $scope.successContent = [];
+        for(var i=0;i<$scope.workflowObj.workflowVersions.length;i++){
+          if($scope.workflowObj.workflowVersions[i].valid){
+            $scope.successContent.push($scope.workflowObj.workflowVersions[i].name);
+          }
+        }
       };
 
       $scope.filterVersion = function(element) {
@@ -79,13 +92,32 @@ angular.module('dockstore.ui')
 
       $scope.setDocument = function() {
         $scope.workflowVersions = $scope.getWorkflowVersions();
-        $scope.selVersionName = $scope.workflowVersions[0];
+        $scope.selVersionName = $scope.successContent[0];
 
       };
 
       $scope.refreshDocument = function() {
         $scope.dagJson = $scope.nodesAndEdges($scope.workflowObj.id, $scope.workflowObj.workflowVersions);
+        //$scope.dagJson is a promise returned by the web service from nodesAndEdges function
         if ($scope.dagJson !== null){
+          $scope.dagJson.then(
+          function(s){
+            if(s.nodes.length === 0 && s.edges.length === 0){
+              //DAG has no nodes and edges even though file is valid
+              //some inputs needed from file are missing from Github repo
+              $scope.missingTool = true;
+            }else{
+              //DAG has nodes and edges
+              $scope.missingTool = false;
+            }
+            $scope.notFound = false;
+          },
+          function(e){
+            console.log("dagJSON error");
+            $scope.notFound = true;
+            $scope.missingTool = false;
+          }
+        );
           cy = window.cy = cytoscape({
         	  container: document.getElementById('cy'),
 
@@ -134,6 +166,7 @@ angular.module('dockstore.ui')
               }
             }
           });
+
         } else {
           cy = window.cy = null;
         }

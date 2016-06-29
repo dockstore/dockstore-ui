@@ -17,7 +17,10 @@ angular.module('dockstore.ui')
       templateUrl: 'templates/workflowdagview.html',
       link: function postLink(scope, element, attrs) {
         scope.$watch('workflowObj.path', function(newValue, oldValue) {
-          if (newValue) scope.setDocument();
+          if (newValue) {
+            scope.checkVersion();
+            scope.setDocument();
+          }
         });
         scope.$watchGroup(
           ['selVersionName', 'workflowObj.id'],
@@ -27,6 +30,9 @@ angular.module('dockstore.ui')
         scope.$on('refreshFiles', function(event) {
           scope.setDocument();
           scope.refreshDocument();
+        });
+        scope.$on('checkVersion', function(event){
+          scope.checkVersion();
         });
 
       }
