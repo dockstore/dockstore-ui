@@ -79,7 +79,7 @@ angular.module('dockstore.ui')
 
         var successResult = checkSuccess(accumulator);
         successResult.then(
-          function(result){
+          function(r){
             $scope.selTagName = $scope.successContent[0].tag;
             $scope.selDescriptorName = $scope.successContent[0].descriptor;
             $scope.fileContent = $scope.successContent[0].content;
@@ -115,11 +115,11 @@ angular.module('dockstore.ui')
               $scope.$emit('invalidClass', invalidClass); //only for CWL
             } else{
               //Descriptor: WDL
-              for(var i=0;i<wdlFields.length;i++){
-                if(result.search(wdlFields[i]) !==-1){
+              for(var w=0;w<wdlFields.length;w++){
+                if(result.search(wdlFields[w]) !==-1){
                   count++;
                 } else{
-                  m.push(wdlFields[i]);
+                  m.push(wdlFields[w]);
                 }
               }
 
@@ -131,8 +131,9 @@ angular.module('dockstore.ui')
             $scope.$emit('returnValid',v);
             $scope.refreshDocumentType();
           },
-          function(e){console.log("error",e)}
-        );
+          function(e){
+            console.log("error",e);
+          });
       };
 
       $scope.filterDescriptor = function(element) {
@@ -224,7 +225,10 @@ angular.module('dockstore.ui')
           .then(
             function(descriptorFile) {
               $scope.secondaryDescriptors = $scope.secondaryDescriptors.concat(descriptorFile);
-              $scope.secondaryDescriptors = $scope.secondaryDescriptors.filter(function(elem, index, self){return index == self.indexOf(elem)})
+              $scope.secondaryDescriptors = $scope.secondaryDescriptors.filter(
+                function(elem, index, self){
+                  return index === self.indexOf(elem);
+              });
               return $scope.secondaryDescriptors;
             },
             function(response) {

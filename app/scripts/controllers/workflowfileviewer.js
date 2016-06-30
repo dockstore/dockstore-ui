@@ -80,7 +80,7 @@ angular.module('dockstore.ui')
 
         var successResult = checkSuccess(accumulator);
         successResult.then(
-          function(result){
+          function(r){
             $scope.selVersionName = $scope.successContent[0].version;
             $scope.fileContent = $scope.successContent[0].content;
             var result = $scope.fileContent;
@@ -114,11 +114,11 @@ angular.module('dockstore.ui')
               $scope.$emit('invalidClass', invalidClass); //only for CWL
             } else{
               //Descriptor: WDL
-              for(var i=0;i<wdlFields.length;i++){
-                if(result.search(wdlFields[i]) !==-1){
+              for(var w=0;w<wdlFields.length;w++){
+                if(result.search(wdlFields[w]) !==-1){
                   count++;
                 } else{
-                  m.push(wdlFields[i]);
+                  m.push(wdlFields[w]);
                 }
               }
 
@@ -129,8 +129,9 @@ angular.module('dockstore.ui')
             $scope.$emit('returnMissing',m);
             $scope.$emit('returnValid',v);
           },
-          function(e){console.log("error",e)}
-        );
+          function(e){
+            console.log("error",e);
+          });
       };
 
       $scope.filterVersion = function(element) {
@@ -186,7 +187,10 @@ angular.module('dockstore.ui')
           .then(
             function(descriptorFile) {
               $scope.secondaryDescriptors = $scope.secondaryDescriptors.concat(descriptorFile);
-              $scope.secondaryDescriptors = $scope.secondaryDescriptors.filter(function(elem, index, self){return index == self.indexOf(elem)})
+              $scope.secondaryDescriptors = $scope.secondaryDescriptors.filter(
+                function(elem, index, self){
+                  return index === self.indexOf(elem);
+                });
               return $scope.secondaryDescriptors;
             },
             function(response) {

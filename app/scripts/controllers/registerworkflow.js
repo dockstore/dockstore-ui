@@ -55,7 +55,7 @@ angular.module('dockstore.ui')
         if(name === undefined){
           name = document.getElementById("workflow_path").value;
           indexPeriod = name.indexOf('.');
-          if(indexPeriod != -1){ //there is an extension in the filename given, but the filename is invalid
+          if(indexPeriod !== -1){ //there is an extension in the filename given, but the filename is invalid
             nameNoExt = name.substring(0,indexPeriod);
             return nameNoExt+'.'+extension;
           }

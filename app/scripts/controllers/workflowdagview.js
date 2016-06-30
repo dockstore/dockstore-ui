@@ -42,7 +42,7 @@ angular.module('dockstore.ui')
 
       $scope.nodesAndEdges = function(workflowId, workflowVersions) {
         var workflowVersionId;
-        if (workflowVersions.length == 0) {
+        if (workflowVersions.length === 0) {
           return null;
         }
 

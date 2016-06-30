@@ -33,7 +33,7 @@ angular.module('dockstore.ui')
 
       $scope.checkPage = function(){
         $scope.$broadcast('checkDescPageType');
-      }
+      };
 
       $scope.loadContainerDetails = function(containerPath) {
         $scope.setContainerDetailsError(null);
@@ -145,7 +145,7 @@ angular.module('dockstore.ui')
               $scope.missingWarning = false;
               for(var i=0;i<$scope.missingContent.length;i++){
                 missingMessage += ' \''+$scope.missingContent[i]+'\'';
-                if(i!=$scope.missingContent.length -1){
+                if(i !== $scope.missingContent.length -1){
                   missingMessage+=',';
                 }
               }

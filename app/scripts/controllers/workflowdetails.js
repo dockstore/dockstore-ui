@@ -115,7 +115,7 @@ angular.module('dockstore.ui')
       $scope.checkContentValid = function(){
         //will print this when the 'Publish' button is clicked
         var message = 'The file is missing some required fields. Please make sure the file has all the required fields. ';
-        var missingMessage = 'The missing field(s):'
+        var missingMessage = 'The missing field(s):';
         if($scope.validContent){
           if($scope.missingContent.length !== 0){
             $scope.missingWarning = true;
@@ -127,7 +127,7 @@ angular.module('dockstore.ui')
               $scope.missingWarning = false;
               for(var i=0;i<$scope.missingContent.length;i++){
                 missingMessage += ' \''+$scope.missingContent[i]+'\'';
-                if(i!=$scope.missingContent.length -1){
+                if(i !== $scope.missingContent.length -1){
                   missingMessage+=',';
                 }
               }
@@ -334,7 +334,10 @@ angular.module('dockstore.ui')
 
       $scope.submitDescriptorEdit = function() {
         $scope.setDescriptorType($scope.workflowObj.id)
-          .then(function(workflowObj){console.log("success submit descriptor edit")});
+          .then(
+            function(workflowObj){
+              console.log("success submit descriptor edit");
+            });
       };
 
       $scope.submitWorkflowEdits = function() {
