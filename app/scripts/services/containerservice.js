@@ -27,6 +27,20 @@ angular.module('dockstore.ui')
       });
     };
 
+    this.getCrossSitePublishedContainerList = function() {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: 'http://0.0.0.0:32779/'
+          // url: 'https://www.dockstore.org:8443' + '/containers/published'
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
     this.getPublishedContainerById = function(containerId) {
       return $q(function(resolve, reject) {
         $http({
@@ -239,7 +253,7 @@ angular.module('dockstore.ui')
       });
     };
 
-    // this is actually a partial update, see https://github.com/ga4gh/dockstore/issues/274 
+    // this is actually a partial update, see https://github.com/ga4gh/dockstore/issues/274
     this.setDefaultCWLPath = function(containerId,cwlPath,wdlPath,dfPath,toolname,giturl){
       return $q(function(resolve, reject) {
         $http({
@@ -260,7 +274,7 @@ angular.module('dockstore.ui')
       });
     };
 
-    // this is actually a partial update, see https://github.com/ga4gh/dockstore/issues/274 
+    // this is actually a partial update, see https://github.com/ga4gh/dockstore/issues/274
     this.setDefaultWDLPath = function(containerId,cwlPath,wdlPath,dfPath,toolname,giturl){
       return $q(function(resolve, reject) {
         $http({

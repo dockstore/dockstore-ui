@@ -36,7 +36,10 @@
             <!-- need a to write a 'smart search' filter -->
             <tr ng-repeat="container in ((filteredContainers = (containers | PreviewFilter:contLimit | filter: searchQueryContainer)) | orderBy:sortColumn:sortReverse | PaginationFilter:getListRange())">
               <td>
-                <a href="/containers/{{container.path + (container.toolname ? '/' + container.toolname : '')}}">{{container.name + (container.toolname ? ' (' + container.toolname + ')' : '')}}</a>
+                <!-- <a href="/containers/{{container.path + (container.toolname ? '/' + container.toolname : '')}}">{{container.name + (container.toolname ? ' (' + container.toolname + ')' : '')}}</a> -->
+                <a ng-show="container.isRemoteTool === false" href="/containers/{{container.path + (container.toolname ? '/' + container.toolname : '')}}">{{container.name + (container.toolname ? ' (' + container.toolname + ')' : '')}}</a>
+                <span ng-show="container.isRemoteTool === true" class="glyphicon glyphicon-cloud" aria-hidden="true"></span>
+                <a ng-show="container.isRemoteTool === true" href="https://dockstore.org/containers/{{container.path + (container.toolname ? '/' + container.toolname : '')}}">{{container.name + (container.toolname ? ' (' + container.toolname + ')' : '')}}</a>
               </td>
               <td>
                 {{ container.author ? container.author : 'n/a' }}

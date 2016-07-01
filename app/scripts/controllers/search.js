@@ -77,6 +77,7 @@ angular.module('dockstore.ui')
             });
 
       $scope.listPublishedContainers();
+      $scope.listCrossSitePublishedContainers();
 
       $("#toolSearch").focus();
 
