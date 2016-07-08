@@ -220,36 +220,49 @@ angular.module('dockstore.ui')
     };
 
 
-        this.getDescriptorFilePath = function(containerId, tagName, type) {
-          return $q(function(resolve, reject) {
-            $http({
-              method: 'GET',
-              url: WebService.API_URI + '/workflows/' + containerId + '/' + type,
-              params: {
-                tag: tagName
-              }
-            }).then(function(response) {
-              resolve(response.data.path);
-            }, function(response) {
-              reject(response);
-            });
-          });
-        };
+    this.getDescriptorFilePath = function(containerId, tagName, type) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: WebService.API_URI + '/workflows/' + containerId + '/' + type,
+          params: {
+            tag: tagName
+          }
+        }).then(function(response) {
+          resolve(response.data.path);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
 
-        this.getSecondaryDescriptorFile = function (containerId, tagName, type, secondaryDescriptorPath) {
-          return $q(function (resolve, reject) {
-            $http({
-              method: 'GET',
-              url: WebService.API_URI + '/workflows/' + containerId + '/' + type + '/' + secondaryDescriptorPath,
-              params: {
-                tag: tagName
-              }
-            }).then(function (response) {
-              resolve(response.data.content);
-            }, function (response) {
-              reject(response);
-            });
-          });
-        };
+    this.getSecondaryDescriptorFile = function (containerId, tagName, type, secondaryDescriptorPath) {
+      return $q(function (resolve, reject) {
+        $http({
+          method: 'GET',
+          url: WebService.API_URI + '/workflows/' + containerId + '/' + type + '/' + secondaryDescriptorPath,
+          params: {
+            tag: tagName
+          }
+        }).then(function (response) {
+          resolve(response.data.content);
+        }, function (response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.getTableToolContent = function(workflowId, workflowVersionId){
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: WebService.API_URI + '/workflows/' + workflowId + '/tools/' + workflowVersionId
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
 
   }]);

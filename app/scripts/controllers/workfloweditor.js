@@ -208,7 +208,7 @@ angular.module('dockstore.ui')
               return workflows;
             },
             function(response) {
-              $scope.setContainerEditorError(
+              $scope.setWorkflowEditorError(
                 'The webservice encountered an error trying to refresh ' +
                 'containers for User: ' + $scope.userObj.username + '. If the ' +
                 'problem persists after 60 min. has passed, try re-linking ' +

@@ -38,6 +38,11 @@ angular.module('dockstore.ui')
         $scope.$broadcast('refreshFiles');
       };
 
+      $scope.getTools = function() {
+        $scope.$broadcast('checkToolVersion');
+        $scope.$broadcast('refreshTools');
+      };
+
       $scope.loadWorkflowDetails = function(workflowPath) {
         $scope.setWorkflowDetailsError(null);
         return WorkflowService.getPublishedWorkflowByPath(workflowPath)

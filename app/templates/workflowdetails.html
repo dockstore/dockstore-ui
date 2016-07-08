@@ -134,7 +134,7 @@
           </li>
           <li>
             <strong>{{getRegistry(workflowObj.gitUrl)}}</strong>:
-            <a href="{{getRepoUrl(workflowObj.organization, workflowObj.repository, getRegistry(workflowObj.gitUrl))}}">
+            <a href="{{getRepoUrl(workflowObj.organization, workflowObj.repository, getRegistry(workflowObj.gitUrl))}}" target="_blank">
               {{getRepoUrl(workflowObj.organization, workflowObj.repository, getRegistry(workflowObj.gitUrl))}}
             </a>
           </li>
@@ -327,12 +327,13 @@
              ng-if="workflowObj">
         </div>
       </uib-tab>
-      <!--<uib-tab active="activeTabs[4]" disable="!isWorkflowFull()" style="min-width: 145px !important;">
-        <uib-tab-heading>Tools</uib-tab-heading>
+      <uib-tab active="activeTabs[4]" disable="!isWorkflowFull()" style="min-width: 145px !important;">
+        <uib-tab-heading ng-click="getTools()">Tools</uib-tab-heading>
         <div workflow-tools-grid
-             workflow-obj="workflowObj">
+            ng-if="workflowObj"
+            workflow-obj="workflowObj">
         </div>
-      </uib-tab>-->
+      </uib-tab>
       <uib-tab active="activeTabs[5]" disable="!isWorkflowFull()" style="min-width: 145px !important;">
         <uib-tab-heading ng-click="openDAG()">DAG</uib-tab-heading>
         <div workflow-dag-view
