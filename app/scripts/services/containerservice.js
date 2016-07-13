@@ -31,8 +31,7 @@ angular.module('dockstore.ui')
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: 'http://0.0.0.0:32779/'
-          // url: 'https://www.dockstore.org:8443' + '/containers/published'
+          url: WebService.API_CROSS_URI
         }).then(function(response) {
           resolve(response.data);
         }, function(response) {

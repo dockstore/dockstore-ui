@@ -40,6 +40,24 @@ angular.module('dockstore.ui')
           );
       };
 
+      $scope.listCrossSitePublishedContainers = function() {
+        return ContainerService.getCrossSitePublishedContainerList()
+          .then(
+            function(containers) {
+              for(var i = 0; i < containers.length; i++) {
+                containers[i]["isRemoteTool"] = true;
+              }
+              $scope.containers = $.merge($scope.containers, containers);
+            },
+            function(response) {
+              var message = '[HTTP ' + response.status + '] ' +
+                response.statusText + ': ' + response.data;
+              NtfnService.popError('List Published Containers', message);
+              return $q.reject(response);
+            }
+          );
+      };
+
       if ($auth.isAuthenticated()) {
         TokenService.getUserTokenStatusSet($scope.userObj.id)
           .then(

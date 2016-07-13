@@ -15,6 +15,7 @@
 
 angular.module('dockstore.ui')
   .constant('WebService', {
+    API_CROSS_URI: '<fill me in>',
     API_URI: 'http://localhost:8080',
     API_URI_DEBUG: 'http://localhost:9000/tests/dummy-data',
 
