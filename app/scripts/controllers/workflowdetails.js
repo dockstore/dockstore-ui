@@ -24,9 +24,14 @@ angular.module('dockstore.ui')
       $scope.invalidClass = false;
       $scope.showEditWorkflowPath = true;
       $scope.showEditDescriptorType = true;
+      $scope.pathExtensions = ['cwl','wdl','yml','yaml'];
+
+      //there are 6 tabs, and only 1 tab can be active
+      //so there are 5 tabs that are not active
+      var notActiveTabs = 5;
       if (!$scope.activeTabs) {
         $scope.activeTabs = [true];
-        for (var i = 0; i < 3; i++) $scope.activeTabs.push(false);
+        for (var i = 0; i < notActiveTabs; i++) $scope.activeTabs.push(false);
       }
 
       $scope.checkPage = function(){
@@ -209,6 +214,29 @@ angular.module('dockstore.ui')
           );
       };
 
+      $scope.updateWorkflowPathVersion = function(workflowId, path){
+        return WorkflowService.updateWorkflowPathVersion(workflowId, path, $scope.workflowObj.workflowName, $scope.workflowObj.descriptorType, 
+          $scope.workflowObj.path, $scope.workflowObj.gitUrl)
+          .then(
+            function(workflowObj){
+              $scope.workflowObj.workflow_path = workflowObj.workflow_path;
+              $scope.updateWorkflowObj();
+              return workflowObj;
+            },
+            function(response) {
+              $scope.setWorkflowDetailsError(
+                'The webservice encountered an error trying to modify default path ' +
+                'for this workflow, please ensure that the path is valid, ' +
+                'properly-formatted and does not contain prohibited ' +
+                'characters of words.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
+              return $q.reject(response);
+            }
+          );
+      };
+
       $scope.setWorkflowLabels = function(workflowId, labels) {
         $scope.setWorkflowDetailsError(null);
         return WorkflowService.setWorkflowLabels(workflowId, labels)
@@ -319,7 +347,7 @@ angular.module('dockstore.ui')
        };
 
       $scope.selectLabelTab = function() {
-       for (var i = 0; i < 4; i++) $scope.activeTabs[i] = false;
+       for (var i = 0; i < notActiveTabs; i++) $scope.activeTabs[i] = false;
        $scope.activeTabs[1] = true;
       };
 
@@ -329,19 +357,33 @@ angular.module('dockstore.ui')
 
       $scope.submitWorkflowPathEdits = function(){
         if($scope.workflowObj.workflow_path !== 'undefined'){
-          $scope.setDefaultWorkflowPath($scope.workflowObj.id,
-            $scope.workflowObj.workflow_path)
-          .then(function(workflowObj) {
-            $scope.labelsEditMode = false;
-          });
+          //get the extension of the workflow path and check if it's within the extensions array
+          $scope.checkExtension($scope.workflowObj.workflow_path, 'path');
+
+          //change on the webservice
+          $scope.setDefaultWorkflowPath($scope.workflowObj.id, $scope.workflowObj.workflow_path)
+            .then(function(workflowObj) {
+              $scope.updateWorkflowPathVersion($scope.workflowObj.id, $scope.workflowObj.workflow_path)
+                .then(function(workflowObj) {
+                  $scope.labelsEditMode = false;
+                  $scope.refreshWorkflow($scope.workflowObj.id,0);
+                });
+            });
         }
       };
 
       $scope.submitDescriptorEdit = function() {
+        //check and change path if required
+        $scope.checkExtension($scope.workflowObj.workflow_path, 'dropdown');
+
+        //change on the webservice
         $scope.setDescriptorType($scope.workflowObj.id)
           .then(
             function(workflowObj){
-              console.log("success submit descriptor edit");
+              $scope.updateWorkflowPathVersion($scope.workflowObj.id, $scope.workflowObj.workflow_path)
+              .then(function(workflowObj) {
+                $scope.refreshWorkflow($scope.workflowObj.id,0);
+              });
             });
       };
 
@@ -360,6 +402,49 @@ angular.module('dockstore.ui')
             });
         }
       };
+
+      $scope.checkExtension = function(path, type){
+        // will never have indexPeriod = -1 because by default save button 
+        // is disabled when there is no extension provided in workflow path
+        // and this function is called only when save button is clicked
+        var indexPeriod = path.indexOf('.');
+        var ext = path.substring(indexPeriod+1,path.length);
+        if($scope.pathExtensions.indexOf(ext) !== -1){
+          //extension is one of [cwl,wdl,yaml,yml]
+          if(ext !== $scope.workflowObj.descriptorType && type === 'path'){
+            //changed made on the path, need to change dropdown
+            if(ext !== 'wdl'){
+              $scope.workflowObj.descriptorType = 'cwl';
+            }else{
+              $scope.workflowObj.descriptorType = 'wdl';
+            }
+          }else if(ext !== $scope.workflowObj.descriptorType && type === 'dropdown'){
+            //changes made on the dropdown, need to change the path
+            $scope.changeExt(path,$scope.workflowObj.descriptorType);
+          }
+        }else if(path === ""){
+          //path is empty, should by default put "/Dockstore."+descriptorType
+           $scope.workflowObj.workflow_path = '/Dockstore.'+$scope.workflowObj.descriptorType;
+        }
+      };
+
+      $scope.changeExt = function(path, desc){
+        var indexPeriod = path.indexOf('.');
+        var nameNoExt = path.substring(0,indexPeriod);
+        var ext = path.substring(indexPeriod+1,path.length).toLowerCase();
+        if(desc === ""){
+          //change extension from uppercase to lowercase(not because of changes in dropdown)
+          $scope.workflowObj.workflow_path = nameNoExt+'.'+ ext;
+          if(ext !== 'wdl'){
+            $scope.workflowObj.descriptorType = 'cwl';
+          }else{
+            $scope.workflowObj.descriptorType = 'wdl';
+          }
+        }else{
+          //change path based on changed on descriptor type
+          $scope.workflowObj.workflow_path = nameNoExt+'.'+desc;
+        }
+      }
 
       $scope.isWorkflowValid = function() {
         if ($scope.workflowObj.is_published) {

@@ -23,7 +23,10 @@ angular.module('dockstore.ui')
 
       $scope.userObj = UserService.getUserObj();
       $scope.activeTabs = [true];
-      for (var i = 0; i < 4; i++) $scope.activeTabs.push(false);
+      //there are 6 tabs, and only 1 tab can be active
+      //so there are 5 tabs that are not active
+      var notActiveTabs = 5;
+      for (var i = 0; i < notActiveTabs; i++) $scope.activeTabs.push(false);
 
       $scope.listUserWorkflows = function(userId) {
         $scope.setWorkflowEditorError(null);
