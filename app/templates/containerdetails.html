@@ -205,15 +205,22 @@
               </button>
             </div>
           <!-- for when it's edit mode and Edit button clicked-->
-            <form name="editContainerForm"
+            <form name="editDockerfilePath"
                   class="edit-container form-inline"
                   ng-show="editMode && !showEditDockerfile"
                   ng-submit="submitDescriptorEdits('dockerfile')">
+              <div
+                  class="form-error-messages"
+                  ng-messages="editDockerfilePath.contDockerfilePath.$error"
+                  ng-if="editDockerfilePath.contDockerfilePath.$touched">
+                <div ng-messages-include="templates/validation/containers/dockerfilepath.html">
+                </div>
+              </div>
               <button type="submit"
                       class="btn btn-link pull-right"
                       style="padding: 3px 12px!important;"
                       ng-click="showEditDockerfile = true"
-                      ng-disabled="editContainerForm.$invalid">
+                      ng-disabled="editDockerfilePath.contDockerfilePath.$invalid || refreshingContainer">
                 <span class="glyphicon glyphicon-floppy-save"></span>Save
               </button>
               <div ng-show="!showEditDockerfile">
@@ -222,19 +229,12 @@
                   <input
                       type="text"
                       class="input-default form-control"
-                      name="contDescPath"
+                      name="contDockerfilePath"
                       ng-model="containerObj.default_dockerfile_path"
                       ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*Dockerfile$/i"
                       ng-minlength="3"
                       ng-maxlength="256"
                       placeholder="e.g. /Dockerfile" />
-                  <div
-                      class="form-error-messages"
-                      ng-messages="editContainerForm.contLabels.$error"
-                      ng-if="editContainerForm.contLabels.$touched">
-                    <div ng-messages-include="templates/validation/containers/dockerfilepath.html">
-                    </div>
-                  </div>
                 </div>
               </div>
             </form>
@@ -257,15 +257,22 @@
               </button>
             </div>
             <!-- for when it's edit mode and Edit button clicked-->
-            <form name="editContainerForm"
+            <form name="editCWLPath"
                   class="edit-container form-inline"
                   ng-show="editMode && !showEditCWL"
                   ng-submit="submitDescriptorEdits('cwl')">
+              <div
+                  class="form-error-messages"
+                  ng-messages="editCWLPath.contCWLPath.$error"
+                  ng-if="editCWLPath.contCWLPath.$touched">
+                <div ng-messages-include="templates/validation/containers/cwlpath.html">
+                </div>
+              </div>
               <button type="submit"
                       class="btn btn-link pull-right"
                       style="padding: 3px 12px!important;"
                       ng-click="showEditCWL = true"
-                      ng-disabled="editContainerForm.$invalid">
+                      ng-disabled="editCWLPath.contCWLPath.$invalid || refreshingContainer">
                 <span class="glyphicon glyphicon-floppy-save"></span>Save
               </button>
               <div ng-show="!showEditCWL">
@@ -274,19 +281,12 @@
                   <input
                       type="text"
                       class="input-default form-control"
-                      name="contDescPath"
+                      name="contCWLPath"
                       ng-model="containerObj.default_cwl_path"
-                      ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.cwl$/i"
+                      ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(cwl|yaml|yml)$/i"
                       ng-minlength="3"
                       ng-maxlength="256"
                       placeholder="e.g. /Dockstore.cwl" />
-                  <div
-                      class="form-error-messages"
-                      ng-messages="editContainerForm.contLabels.$error"
-                      ng-if="editContainerForm.contLabels.$touched">
-                    <div ng-messages-include="templates/validation/containers/descriptorpath.html">
-                    </div>
-                  </div>
                 </div>
               </div>
             </form>
@@ -309,15 +309,22 @@
               </button>
             </div>
             <!-- for when it's edit mode and Edit button clicked-->
-            <form name="editContainerForm"
+            <form name="editWDLPath"
                   class="edit-container form-inline"
                   ng-show="editMode && !showEditWDL"
                   ng-submit="submitDescriptorEdits('wdl')">
+              <div
+                  class="form-error-messages"
+                  ng-messages="editWDLPath.contWDLPath.$error"
+                  ng-if="editWDLPath.contWDLPath.$touched">
+                <div ng-messages-include="templates/validation/containers/descriptorpath.html">
+                </div>
+              </div>
               <button type="submit"
                       class="btn btn-link pull-right"
                       style="padding: 3px 12px!important;"
                       ng-click="showEditWDL = true"
-                      ng-disabled="editContainerForm.$invalid">
+                      ng-disabled="editWDLPath.contWDLPath.$invalid || refreshingContainer">
                 <span class="glyphicon glyphicon-floppy-save"></span>Save
               </button>
               <div ng-show="!showEditWDL">
@@ -326,19 +333,12 @@
                   <input
                       type="text"
                       class="input-default form-control"
-                      name="contDescPath"
+                      name="contWDLPath"
                       ng-model="containerObj.default_wdl_path"
                       ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.wdl$/i"
                       ng-minlength="3"
                       ng-maxlength="256"
                       placeholder="e.g. /Dockstore.wdl" />
-                  <div
-                      class="form-error-messages"
-                      ng-messages="editContainerForm.contLabels.$error"
-                      ng-if="editContainerForm.contLabels.$touched">
-                    <div ng-messages-include="templates/validation/containers/descriptorpath.html">
-                    </div>
-                  </div>
                 </div>
               </div>
             </form>
