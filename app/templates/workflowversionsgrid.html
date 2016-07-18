@@ -18,6 +18,13 @@
             </span>
         </th>
         <th>
+          Workflow Path
+            <span class="glyphicon pull-right"
+                  ng-class="getIconClass('workflow_path')"
+                  ng-click="clickSortColumn('workflow_path')">
+            </span>
+        </th>
+        <th>
           Date Modified
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('last_modified')"
@@ -51,6 +58,9 @@
             {{versionTag.reference ? versionTag.reference : 'n/a'}}
             </span>
           </div>
+        </td>
+        <td>
+          {{versionTag.workflow_path}}
         </td>
         <td>
           {{getDateModified(versionTag.last_modified)}}

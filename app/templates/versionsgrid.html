@@ -3,35 +3,35 @@
     <table class="table versions-grid table-bordered table-condensed table-striped">
       <thead>
         <tr>
-          <th>
+          <th style="width:7.5% !important">
             Tag
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('name')"
                   ng-click="clickSortColumn('name')">
             </span>
           </th>
-          <th>
+          <th style="width:14.5% !important">
             Git Reference
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('reference')"
                   ng-click="clickSortColumn('reference')">
             </span>
           </th>
-          <th>
-            Size
+          <th style="width:21.5% !important">
+            Tool Path
             <span class="glyphicon pull-right"
-                  ng-class="getIconClass('size')"
-                  ng-click="clickSortColumn('size')">
+                  ng-class="getIconClass('name')"
+                  ng-click="clickSortColumn('name')">
             </span>
           </th>
-          <th>
+          <th style="width:16.5% !important">
             Date Modified
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('last_modified')"
                   ng-click="clickSortColumn('last_modified')">
             </span>
           </th>
-          <th>
+          <th style="width:9.5% !important">
             Valid
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('valid')"
@@ -54,7 +54,7 @@
         </tr>
         <tr ng-repeat="versionTag in (filteredVersionTags = (versionTags | HiddenTagsFilter:editMode | orderBy:sortColumn:sortReverse))" ng-hide="!editMode && versionTag.hidden">
           <td>
-            {{versionTag.name}}
+            <span>{{versionTag.name}}</span>
           </td>
           <td>
             <div class="git-ref">
@@ -62,7 +62,15 @@
             </span>
           </td>
           <td>
-            {{getHRSize(versionTag.size)}}
+            <div style="border-bottom:1.5px solid #ddd;margin-bottom:6px;">
+              {{versionTag.cwl_path}}
+            </div>
+            <div style="border-bottom:1.5px solid #ddd;margin-bottom:6px;">
+              {{versionTag.wdl_path}}
+            </div>
+            <div>
+              {{versionTag.dockerfile_path}}
+            </div>
           </td>
           <td>
             {{getDateModified(versionTag.last_modified)}}
