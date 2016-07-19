@@ -41,6 +41,9 @@ Replace <LOCAL_IP_ADDRESS> with the workstation's IP address in the LAN, if `loc
   BITBUCKET_CLIENT_ID: '<BITBUCKET_DEV_APPLICATION_CLIENT_ID>,
   ```
 
+4. Cross Site Indexing Setup
+In file webservice.js, replace the API_CROSS_URI with the URI API, which is started by the [dockstore-remote-sync](https://github.com/ga4gh/dockstore/tree/feature/cross-site-shizhou/dockstore-remote-sync). 
+
 ### Third-Party API Integration
 
 Dockstore currently integrates with GitHub and Quay.io, in the following steps, replace `http://<LOCAL_IP_ADDRESS>:9000` with a fully-qualified domain name on a production environment.
@@ -92,7 +95,7 @@ Dockstore currently integrates with GitHub and Quay.io, in the following steps, 
 1. The Dockstore web service and database should be running, and the API accessible on `http://<LOCAL_IP_ADDRESS>:8080`.
 2. All the configuration in the JavaScript and on GitHub/Quay.io should be set to use `http://<LOCAL_IP_ADDRESS>:9000`.
 3. In the dockstore-ui repository root directory, run `grunt serve`.
-4. You should be automatically navigated to `http://<LOCAL_IP_ADDRESS>:9000` in a web browser. (You may also be navigated to `http://0.0.0.0:9000` instead, which may not necessarily work depending on your setup). 
+4. You should be automatically navigated to `http://<LOCAL_IP_ADDRESS>:9000` in a web browser. (You may also be navigated to `http://0.0.0.0:9000` instead, which may not necessarily work depending on your setup).
 
 ### Deploying the Dockstore UI (Staging)
 1. The Dockstore web service and database should be running.
