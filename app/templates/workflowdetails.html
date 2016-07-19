@@ -134,7 +134,7 @@
           </li>
           <li>
             <strong>{{getRegistry(workflowObj.gitUrl)}}</strong>:
-            <a href="{{getRepoUrl(workflowObj.organization, workflowObj.repository, getRegistry(workflowObj.gitUrl))}}">
+            <a href="{{getRepoUrl(workflowObj.organization, workflowObj.repository, getRegistry(workflowObj.gitUrl))}}" target="_blank">
               {{getRepoUrl(workflowObj.organization, workflowObj.repository, getRegistry(workflowObj.gitUrl))}}
             </a>
           </li>
@@ -169,14 +169,20 @@
             </div>
 
             <!-- for when it's edit mode and Edit button clicked-->
-            <form name="editContainerForm"
+            <form name="editWorkflowPath"
                   class="edit-container form-inline"
                   ng-show="editMode && !showEditWorkflowPath"
                   ng-submit="submitWorkflowPathEdits()">
+              <div class="form-error-messages"
+                  ng-messages="editWorkflowPath.contDescPath.$error"
+                  ng-if="editWorkflowPath.contDescPath.$touched">
+                <div ng-messages-include="templates/validation/workflows/descriptorpath.html">
+                </div>
+              </div>
               <button type="submit"
                       class="btn btn-link pull-right"
                       ng-click="showEditWorkflowPath = true"
-                      ng-disabled="editContainerForm.$invalid">
+                      ng-disabled="editWorkflowPath.contDescPath.$invalid || refreshingWorkflow">
                 <span class="glyphicon glyphicon-floppy-save"></span>Save
               </button>
               <div ng-show="!showEditWorkflowPath">
@@ -191,13 +197,6 @@
                       ng-minlength="3"
                       ng-maxlength="256"
                       placeholder="e.g. /Dockstore.cwl" />
-                  <div
-                      class="form-error-messages"
-                      ng-messages="editContainerForm.contLabels.$error"
-                      ng-if="editContainerForm.contLabels.$touched">
-                    <div ng-messages-include="templates/validation/containers/descriptorpath.html">
-                    </div>
-                  </div>
                 </div>
               </div>
             </form>
@@ -226,17 +225,14 @@
           <!-- when in edit mode and Edit button for descriptor is clicked-->
             <div ng-show="editMode && !showEditDescriptorType">
             <Strong>Descriptor Type</Strong>:
-              <select
-                ng-model="workflowObj.descriptorType"
-                ng-change="submitDescriptorEdit()">
+              <select ng-model="workflowObj.descriptorType">
               <option value="cwl">cwl</option>
               <option value="wdl">wdl</option>
               </select>
               <button type="submit"
                       class="btn btn-link pull-right"
                       style="padding: 3px 12px!important;"
-                      ng-click="showEditDescriptorType = true"
-                      ng-disabled="editContainerForm.$invalid">
+                      ng-click="showEditDescriptorType = true;submitDescriptorEdit()">
                 <span class="glyphicon glyphicon-floppy-save"></span>Save
               </button>
             </div>
@@ -327,12 +323,13 @@
              ng-if="workflowObj">
         </div>
       </uib-tab>
-      <!--<uib-tab active="activeTabs[4]" disable="!isWorkflowFull()" style="min-width: 145px !important;">
-        <uib-tab-heading>Tools</uib-tab-heading>
+      <uib-tab active="activeTabs[4]" disable="!isWorkflowFull()" style="min-width: 145px !important;">
+        <uib-tab-heading ng-click="getTools()">Tools</uib-tab-heading>
         <div workflow-tools-grid
-             workflow-obj="workflowObj">
+            ng-if="workflowObj"
+            workflow-obj="workflowObj">
         </div>
-      </uib-tab>-->
+      </uib-tab>
       <uib-tab active="activeTabs[5]" disable="!isWorkflowFull()" style="min-width: 145px !important;">
         <uib-tab-heading ng-click="openDAG()">DAG</uib-tab-heading>
         <div workflow-dag-view

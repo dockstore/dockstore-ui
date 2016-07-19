@@ -26,9 +26,13 @@ angular.module('dockstore.ui')
       $scope.showEditCWL = true;
       $scope.showEditWDL = true;
       $scope.showEditDockerfile = true;
+      //There are 5 tabs, and only 1 can be active
+      // so there are 4 other tabs that are not active
+      var notActiveTabs = 4;
+
       if (!$scope.activeTabs) {
         $scope.activeTabs = [true];
-        for (var i = 0; i < 4; i++) $scope.activeTabs.push(false);
+        for (var i = 0; i < notActiveTabs; i++) $scope.activeTabs.push(false);
       }
 
       $scope.checkPage = function(){
@@ -176,15 +180,20 @@ angular.module('dockstore.ui')
         }
       };
 
-      $scope.setDefaultCWLPath = function(containerId, cwlpath){
-        var wdlpath = $scope.containerObj.default_wdl_path;
-        var dfpath = $scope.containerObj.default_dockerfile_path;
+      $scope.updateToolTagPaths = function(containerId, cwlpath, wdlpath, dfpath) {
         var toolname = $scope.containerToolname;
         var giturl = $scope.containerObj.gitUrl;
-        return ContainerService.setDefaultCWLPath(containerId, cwlpath,wdlpath,dfpath,toolname,giturl)
+
+        return ContainerService.updateToolPathTag(containerId, cwlpath, wdlpath, dfpath,toolname, giturl)
           .then(
             function(containerObj){
-              $scope.containerObj.default_cwl_path = containerObj.default_cwl_path;
+              if($scope.containerObj.default_cwl_path !== containerObj.default_cwl_path){
+                $scope.containerObj.default_cwl_path = containerObj.default_cwl_path;
+              } else if($scope.containerObj.default_wdl_path !== containerObj.default_wdl_path){
+                $scope.containerObj.default_wdl_path = containerObj.default_wdl_path;
+              } else if($scope.containerObj.default_dockerfile_path !== containerObj.default_dockerfile_path){
+                $scope.containerObj.default_dockerfile_path = containerObj.default_dockerfile_path;
+              }
               $scope.updateContainerObj();
               return containerObj;
             },
@@ -202,41 +211,21 @@ angular.module('dockstore.ui')
           );
       };
 
-      $scope.setDefaultWDLPath = function(containerId, wdlpath){
-        var cwlpath = $scope.containerObj.default_cwl_path;
-        var dfpath = $scope.containerObj.default_dockerfile_path;
+      $scope.setDefaultToolPath = function(containerId, cwlpath, wdlpath, dfpath){
         var toolname = $scope.containerToolname;
         var giturl = $scope.containerObj.gitUrl;
-        return ContainerService.setDefaultWDLPath(containerId, cwlpath,wdlpath,dfpath,toolname,giturl)
-          .then(
-            function(containerObj){
-              $scope.containerObj.default_wdl_path = containerObj.default_wdl_path;
-              $scope.updateContainerObj();
-              return containerObj;
-            },
-            function(response) {
-              $scope.setContainerDetailsError(
-                'The webservice encountered an error trying to modify default path ' +
-                'for this container, please ensure that the path is valid, ' +
-                'properly-formatted and does not contain prohibited ' +
-                'characters of words.',
-                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
-                response.data
-              );
-              return $q.reject(response);
-            }
-          );
-      };
 
-      $scope.setDefaultDockerfilePath = function(containerId, dfpath){
-        var cwlpath = $scope.containerObj.default_cwl_path;
-        var wdlpath = $scope.containerObj.default_wdl_path;
-        var toolname = $scope.containerToolname;
-        var giturl = $scope.containerObj.gitUrl;
-        return ContainerService.setDefaultDockerfilePath(containerId, cwlpath,wdlpath,dfpath,toolname,giturl)
+        return ContainerService.setDefaultToolPath(containerId, cwlpath, wdlpath, dfpath,toolname, giturl)
           .then(
             function(containerObj){
-              $scope.containerObj.default_dockerfile_path = containerObj.default_dockerfile_path;
+
+              if($scope.containerObj.default_cwl_path !== containerObj.default_cwl_path){
+                $scope.containerObj.default_cwl_path = containerObj.default_cwl_path;
+              } else if($scope.containerObj.default_wdl_path !== containerObj.default_wdl_path){
+                $scope.containerObj.default_wdl_path = containerObj.default_wdl_path;
+              } else if($scope.containerObj.default_dockerfile_path !== containerObj.default_dockerfile_path){
+                $scope.containerObj.default_dockerfile_path = containerObj.default_dockerfile_path;
+              }
               $scope.updateContainerObj();
               return containerObj;
             },
@@ -382,13 +371,13 @@ angular.module('dockstore.ui')
         }
       };
 
-       $scope.moveToStart = function(element) {
-            $('#label-button-holder').insertBefore($('#' + element));
+      $scope.moveToStart = function(element) {
+        $('#label-button-holder').insertBefore($('#' + element));
 
-            };
+      };
 
       $scope.selectLabelTab = function() {
-       for (var i = 0; i < 4; i++) $scope.activeTabs[i] = false;
+       for (var i = 0; i < notActiveTabs; i++) $scope.activeTabs[i] = false;
        $scope.activeTabs[1] = true;
       };
 
@@ -401,31 +390,36 @@ angular.module('dockstore.ui')
       };
 
       $scope.submitDescriptorEdits = function(type){
-        if (type === 'cwl') {
-          if($scope.containerObj.default_cwl_path !== 'undefined'){
-            $scope.setDefaultCWLPath($scope.containerObj.id,
-              $scope.containerObj.default_cwl_path)
-            .then(function(containerObj) {
-              $scope.labelsEditMode = false;
-            });
+        var cwlpath = $scope.containerObj.default_cwl_path;
+        var wdlpath = $scope.containerObj.default_wdl_path;
+        var dfpath = $scope.containerObj.default_dockerfile_path;
+
+
+        if(type === 'cwl' && cwlpath === ''){
+          if(wdlpath === ''){
+            cwlpath = '/Dockstore.cwl';
           }
-        } else if(type === 'wdl'){
-          if($scope.containerObj.default_wdl_path !== 'undefined'){
-            $scope.setDefaultWDLPath($scope.containerObj.id,
-              $scope.containerObj.default_wdl_path)
-            .then(function(containerObj) {
-              $scope.labelsEditMode = false;
-            });
+        } else if(type === 'wdl' && wdlpath === ''){
+          if(cwlpath === ''){
+            wdlpath = '/Dockstore.wdl';
           }
-        } else if(type === 'dockerfile'){
-          if($scope.containerObj.default_dockerfile_path !== 'undefined'){
-            $scope.setDefaultDockerfilePath($scope.containerObj.id,
-              $scope.containerObj.default_dockerfile_path)
-            .then(function(containerObj) {
-              $scope.labelsEditMode = false;
-            });
-          }
+        } else if(type === 'dockerfile' && dfpath === ''){
+            dfpath = '/Dockerfile';
         }
+
+        if($scope.containerObj.default_cwl_path !== 'undefined' || $scope.containerObj.default_wdl_path !== 'undefined' 
+            || $scope.containerObj.default_dockerfile_path !== 'undefined'){
+          $scope.setDefaultToolPath($scope.containerObj.id,
+            cwlpath, wdlpath, dfpath)
+          .then(function(containerObj) {
+            $scope.updateToolTagPaths($scope.containerObj.id, cwlpath, wdlpath, dfpath)
+              .then(function(containerObj){
+                $scope.labelsEditMode = false;
+                $scope.refreshContainer($scope.containerObj.id,0);
+              });
+          });
+        }
+
       };
 
       $scope.submitContainerEdits = function() {

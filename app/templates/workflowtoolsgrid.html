@@ -5,7 +5,7 @@
         <strong>Workflow Version</strong>:
         <select class="ds-version" ng-model="selVersionName">
           <option
-            ng-repeat="version in workflowVersions"
+            ng-repeat="version in workflowVersions | filter: filterVersion"
             value="{{version}}">
             {{version}}
           </option>
@@ -20,26 +20,56 @@
             <span class="glyphicon pull-right">
             </span>
         </th>
-        <th>
-          Task/Tool Excerpt
+        <th ng-if="workflowObj.descriptorType === 'cwl'">
+          Tool Excerpt
+            <span class="glyphicon pull-right">
+            </span>
+        </th>
+        <th ng-if="workflowObj.descriptorType === 'wdl'">
+          Task Excerpt
             <span class="glyphicon pull-right">
             </span>
         </th>
       </tr>
       </thead>
       <tbody>
-      <tr>
+      <tr ng-show="toolJson === null">
         <td colspan="7">
           <div class="text-center">No Records Found</div>
         </td>
       </tr>
-      <!-- Here is where you would need to set up the table content.  See workflowdagview for help on calling
-       dag json for the given workflow and version.  Then write a function in the workflowtoolsgrid.js controller
-       to store to an array that you will ng-repeat over-->
-      <!--<tr ng-repeat="" ng-hide="">-->
-        <!--<td>-->
-        <!--</td>-->
-      <!--</tr>-->
+      <tr ng-show="toolJson !== null && missingTool">
+        <td colspan="7">
+          <div class="text-center">Some tools associated with this workflow are missing from Github repo.</div>
+        </td>
+      </tr>
+      <tr
+        ng-repeat="tool in toolsContent" 
+        ng-if="toolJson !== null && workflowObj.descriptorType === 'cwl'">
+        <td>
+          <strong>tool&nbspID</strong>:&nbsp{{tool.id}}<br>
+        </td>
+        <td>
+          <strong>run</strong>:&nbsp{{tool.file}}<br>
+          <strong>docker</strong>:&nbsp{{tool.docker}}<br>
+          <strong>link</strong>:&nbsp
+            <a href="{{tool.link}}" target="_blank" ng-if="tool.link !== 'Not Specified'">{{tool.link}}</a>
+            <span ng-if="tool.link === 'Not Specified'">Not Specified</span>
+        </td>
+      </tr>
+      <tr
+        ng-repeat="tool in toolsContent" 
+        ng-if="toolJson !== null && workflowObj.descriptorType === 'wdl'">
+        <td>
+          <strong>task&nbspID</strong>:&nbsp{{tool.id}}<br>
+        </td>
+        <td>
+          <strong>docker</strong>:&nbsp{{tool.docker}}<br>
+          <strong>link</strong>:&nbsp
+            <a href="{{tool.link}}" target="_blank" ng-if="tool.link !== 'Not Specified'">{{tool.link}}</a>
+            <span ng-if="tool.link === 'Not Specified'">Not Specified</span>
+        </td>
+      </tr>
       </tbody>
     </table>
   </div>

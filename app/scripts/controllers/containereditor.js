@@ -23,7 +23,10 @@ angular.module('dockstore.ui')
 
       $scope.userObj = UserService.getUserObj();
       $scope.activeTabs = [true];
-      for (var i = 0; i < 4; i++) $scope.activeTabs.push(false);
+      //there are 5 tabs, and only 1 tab can be active
+      //so there are 4 tabs that are not active
+      var notActiveTabs = 4;
+      for (var i = 0; i < notActiveTabs; i++) $scope.activeTabs.push(false);
 
       $scope.listUserContainers = function(userId) {
         $scope.setContainerEditorError(null);
