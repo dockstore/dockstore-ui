@@ -5,8 +5,6 @@ This is an AngularJS UI for the Dockstore [Web Service](https://github.com/ga4gh
 
 The Dockstore brings together tools in Docker images with CWL-based descriptors.  We hope to use this project as motivation to create a GA4GH API standard for container registries and intend on making Dockstore fully compliant.
 
-For a live demo see https://dockstore.org
-
 ### Configuration Parameters
 
 All configuration settings for the Web UI is done in the `app/scripts/services/webservice.js` file. This file is compiled along with the rest of the application, it must be set before running `grunt`.
