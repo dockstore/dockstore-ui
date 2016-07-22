@@ -8,6 +8,10 @@
 // 'test/spec/**/*.js'
 
 var modRewrite = require('connect-modrewrite');
+var execSync = require("child_process").execSync;
+var serveStatic = require('serve-static');
+var gitRev = execSync("git rev-parse --verify --short HEAD  | xargs echo -n");
+var gitTag = execSync("git describe --tags");
 
 module.exports = function (grunt) {
 
@@ -18,6 +22,7 @@ module.exports = function (grunt) {
   require('jit-grunt')(grunt, {
     useminPrepare: 'grunt-usemin',
     ngtemplates: 'grunt-angular-templates',
+    insert: 'grunt-insert',
     cdnify: 'grunt-google-cdn'
   });
 
@@ -30,8 +35,22 @@ module.exports = function (grunt) {
   // Define the configuration for all the tasks
   grunt.initConfig({
 
+    branch: execSync("git rev-parse --abbrev-ref HEAD  | xargs echo -n"),
+    banner: "/*!\n <%= grunt.template.today('dddd, mmmm dS, yyyy, h:MM:ss TT') %>\n branch: <%= branch %>\n revision: "+gitRev+"\n */\n",
+
     // Project settings
     yeoman: appConfig,
+
+    cache_control: {
+      dist: {
+        source: "<%= yeoman.dist %>/index.html",
+        options: {
+          version: gitRev,
+          links: true,
+          scripts: true
+        }
+      }
+    },
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
@@ -86,18 +105,18 @@ module.exports = function (grunt) {
               modRewrite([
                 '^[^\\.]*$ /index.html [L]',
                 '^/containers/(.*)$ /index.html [L]',
-                '^/auth/(.*)$ /index.html [L]',
+                '^/auth/(.*)$ /index.html [L]'
               ]),
-              connect.static('.tmp'),
+              serveStatic('.tmp'),
               connect().use(
                 '/bower_components',
-                connect.static('./bower_components')
+                serveStatic('./bower_components')
               ),
               connect().use(
                 '/app/styles',
-                connect.static('./app/styles')
+                serveStatic('./app/styles')
               ),
-              connect.static(appConfig.app)
+              serveStatic(appConfig.app)
             ];
           }
         }
@@ -107,13 +126,13 @@ module.exports = function (grunt) {
           port: 9001,
           middleware: function (connect) {
             return [
-              connect.static('.tmp'),
-              connect.static('test'),
+              serveStatic('.tmp'),
+              serveStatic('test'),
               connect().use(
                 '/bower_components',
-                connect.static('./bower_components')
+                serveStatic('./bower_components')
               ),
-              connect.static(appConfig.app)
+              serveStatic(appConfig.app)
             ];
           }
         }
@@ -121,7 +140,26 @@ module.exports = function (grunt) {
       dist: {
         options: {
           open: true,
-          base: '<%= yeoman.dist %>'
+          base: '<%= yeoman.dist %>',
+          middleware: function (connect) {
+            return [
+              modRewrite([
+                '^[^\\.]*$ /index.html [L]',
+                '^/containers/(.*)$ /index.html [L]',
+                '^/auth/(.*)$ /index.html [L]'
+              ]),
+              serveStatic('.tmp'),
+              connect().use(
+                '/bower_components',
+                serveStatic('./bower_components')
+              ),
+              connect().use(
+                '/dist/styles',
+                serveStatic('./dist/styles')
+              ),
+              serveStatic(appConfig.dist)
+            ];
+          }
         }
       }
     },
@@ -168,7 +206,7 @@ module.exports = function (grunt) {
       },
       server: {
         options: {
-          map: true,
+          map: true
         },
         files: [{
           expand: true,
@@ -269,7 +307,17 @@ module.exports = function (grunt) {
               js: ['concat', 'uglifyjs'],
               css: ['cssmin']
             },
-            post: {}
+            post: {
+              js: [{
+                name: 'uglify',
+                createConfig: function (context, block) {
+                  var generated = context.options.generated;
+                  generated.options = {
+                    banner: "<%= banner %>"
+                  };
+                }
+              }]
+            }
           }
         }
       }
@@ -357,6 +405,7 @@ module.exports = function (grunt) {
       }
     },
 
+    //minify, combine and automatically cache html template
     ngtemplates: {
       dist: {
         options: {
@@ -446,6 +495,16 @@ module.exports = function (grunt) {
       ]
     },
 
+    //insert into index.html
+    insert: {
+      options:{},
+       main: {
+          src: "<%= yeoman.app %>/gitVersion.htm",
+          dest: "<%= yeoman.dist %>/index.html",
+          match: "<!-- git version -->"
+      }
+    },
+
     // Test settings
     karma: {
       unit: {
@@ -458,6 +517,10 @@ module.exports = function (grunt) {
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
+      grunt.log.write("revision: "+gitRev);
+      grunt.file.write('./app/gitVersion.htm',"<br>DockstoreUI&nbsp-&nbsp"+gitTag+
+        "-&nbsp<a href=\"https://github.com/ga4gh/dockstore-ui/commit/"+gitRev+"\" target=\"_blank\" style=\"color:white\">"+
+        gitRev+"</a>");
       return grunt.task.run(['build', 'connect:dist:keepalive']);
     }
 
@@ -495,12 +558,14 @@ module.exports = function (grunt) {
     'concat',
     'ngAnnotate',
     'copy:dist',
+    'insert',
     'cdnify',
     'cssmin',
     'uglify',
     'filerev',
     'usemin',
-    'htmlmin'
+    'htmlmin',
+    'cache_control'
   ]);
 
   grunt.registerTask('default', [

@@ -43,6 +43,9 @@
           <img src="images/github.png"><a href="https://github.com/ga4gh/dockstore">Github Repository</a>
           <img src="images/twitter.png"><a href="https://twitter.com/DockstoreOrg">Follow Us</a>
         </span>
+        <span style="font-size: 12px;">
+	   <!-- git version -->
+        </span>
       </div>
     </div>
   </div>
@@ -56,8 +59,8 @@
 
   <!-- build:js(.) scripts/vendor.js -->
   <!-- bower:js -->
-  <script src="bower_components/jquery/dist/jquery.js"></script>
   <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/jquery/dist/jquery.js"></script>
   <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
   <script src="bower_components/angular-animate/angular-animate.js"></script>
   <script src="bower_components/angular-cookies/angular-cookies.js"></script>
@@ -69,6 +72,11 @@
   <script src="bower_components/AngularJS-Toaster/toaster.js"></script>
   <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
   <script src="bower_components/lodash/lodash.js"></script>
+  <script src="bower_components/graphlib/dist/graphlib.core.js"></script>
+  <script src="bower_components/cytoscape/dist/cytoscape.js"></script>
+  <script src="bower_components/dagre/dist/dagre.core.js"></script>
+  <script src="bower_components/dagre/dist/dagre.core.min.js"></script>
+  <script src="bower_components/cytoscape-dagre/cytoscape-dagre.js"></script>
   <script src="bower_components/angular-highlightjs/build/angular-highlightjs.js"></script>
   <script src="bower_components/marked/lib/marked.js"></script>
   <script src="bower_components/angular-marked/angular-marked.js"></script>
@@ -154,8 +162,8 @@
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', 'UA-34523087-3', 'auto');
-    ga('send', 'pageview');
+    ga('create', 'UA-80319775-2', 'auto');
+    ga('send', 'pageview', { page: location.pathname });
   </script>
 </body>
 </html>

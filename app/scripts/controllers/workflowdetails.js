@@ -444,7 +444,7 @@ angular.module('dockstore.ui')
           //change path based on changed on descriptor type
           $scope.workflowObj.workflow_path = nameNoExt+'.'+desc;
         }
-      }
+      };
 
       $scope.isWorkflowValid = function() {
         if ($scope.workflowObj.is_published) {

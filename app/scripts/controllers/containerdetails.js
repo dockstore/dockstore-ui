@@ -407,8 +407,8 @@ angular.module('dockstore.ui')
             dfpath = '/Dockerfile';
         }
 
-        if($scope.containerObj.default_cwl_path !== 'undefined' || $scope.containerObj.default_wdl_path !== 'undefined' 
-            || $scope.containerObj.default_dockerfile_path !== 'undefined'){
+        if($scope.containerObj.default_cwl_path !== 'undefined' || $scope.containerObj.default_wdl_path !== 'undefined' ||
+            $scope.containerObj.default_dockerfile_path !== 'undefined'){
           $scope.setDefaultToolPath($scope.containerObj.id,
             cwlpath, wdlpath, dfpath)
           .then(function(containerObj) {
