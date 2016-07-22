@@ -70,16 +70,17 @@
         <h3>Step 2: Download CLI Client</h3>
         <hr />
 
-        <h4>First Part</h4>
+        <h4>Part 1</h4>
         <ol>
           <li>
-            Download the CLI bash script (works on Linux and Mac OS X).
+            Download the CLI bash script (works on Linux and Mac OS X). <br>
+            We recommend Linux. The rest of these instructions focus on Ubuntu, although the setup for other distributions should be fairly similar.
           </li>
           <li>
-            Make it executable and ensure that it is in your <code>$PATH</code>.
+            The Dockstore CLI uses Java, please <a href="https://launchpad.net/~webupd8team/+archive/ubuntu/java">install it</a> if you have not already.
           </li>
           <li>
-            Run the script, and follow the interactive prompts.
+            Make the CLI executable and ensure that both Java and it are in your <code>$PATH</code>.
           </li>
         </ol>
         <a
@@ -89,8 +90,8 @@
           Download CLI
         </a>
 
-        <h4>Second Part</h4>
-        <p>Put these settings in the file <code>~/.dockstore/config</code>:</p>
+        <h4>Part 2</h4>
+        <p>Create the folder <code>~/.dockstore</code> and put these settings in the file <code>~/.dockstore/config</code>:</p>
         <div copy-text type="textarea" length="very-long">token: {{dsToken}}
 server-url: {{dsServerURI}}</div>
 
@@ -105,29 +106,42 @@ server-url: {{dsServerURI}}</div>
       export PATH="$PATH:$HOME/bin" && \
       dockstore;</pre!-->
 
-        <h4>Third Part</h4>
+        <h4>Part 3</h4>
         <p>If you want to launch CWL tools and workflows, Dockstore relies upon <a
           href="https://github.com/common-workflow-language/cwltool">cwltool</a> being available on your PATH. You may also need
         to install <a href="https://pip.pypa.io/en/latest/installing/">pip</a> if it is not already installed.</p>
-        <p>You can install the latest version of cwltool that we've tested for use with Dockstore using the following command:</p>
+        <p>You will also need to install Docker if you have not already</p>
+        <p>You can install the version of cwltool that we've tested for use with Dockstore using the following command:</p>
         <ol>
           <li>
             Run this to verify that pip has been installed
             <code>pip --version</code>
           </li>
           <li>
-            Run this to install cwltool <code>pip install cwl-runner cwltool==1.0.20160316150250 schema-salad==1.7.20160316150109 avro==1.7.7</code>
+            Run these commands to install cwltool <code>pip install setuptools==24.0.3</code><br><code>pip install cwl-runner cwltool==1.0.20160316150250 schema-salad==1.7.20160316150109 avro==1.7.7</code>
           </li>
           <li>
             Run this to verify that cwltool has been installed properly
             <code>cwltool --version</code>
+          </li>
+          <li>
+            Install Docker following the instructions on <a href="https://docs.docker.com/v1.8/installation/ubuntulinux/">Docker's website</a>.
+          </li>
+        </ol>
+
+        <h4>Part 4</h4>
+        <p></p>
+        <ol>
+          <li>
+            Run the Dockstore CLI to ensure that Dockstore has been setup (and follow any interactive prompts if prompted)
+            <code>dockstore</code>
           </li>
         </ol>
 
       </div>
 
       <div class="document" ng-show="owStep === 3">
-        <h3>Step 3: Setup Complete</h3>
+        <h3>Step 4: Setup Complete</h3>
         <hr />
 
         <marked src="'docs/getting-started.md'"></marked>
