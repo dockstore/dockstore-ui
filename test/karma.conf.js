@@ -42,7 +42,7 @@ module.exports = function(config) {
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",
-      "test/mock/**/*.js",
+      //"test/mock/**/*.js",
       "test/spec/**/*.js"
     ],
 
@@ -87,5 +87,16 @@ module.exports = function(config) {
     // },
     // URL root prevent conflicts with the site root
     // urlRoot: '_karma_'
+    
+    preprocessors: {  
+      'test/spec/**/*.js': ['coverage']
+    },
+
+    reporters: ['dots', 'coverage'],
+
+    coverageReporter: {  
+      type: 'lcov',
+      dir: 'build/coverage/'
+    }
   });
 };
