@@ -34,6 +34,12 @@ module.exports = function(config) {
       'bower_components/angular-local-storage/dist/angular-local-storage.js',
       'bower_components/AngularJS-Toaster/toaster.js',
       'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+      'bower_components/lodash/lodash.js',
+      'bower_components/graphlib/dist/graphlib.core.js',
+      'bower_components/cytoscape/dist/cytoscape.js',
+      'bower_components/dagre/dist/dagre.core.js',
+      'bower_components/dagre/dist/dagre.core.min.js',
+      'bower_components/cytoscape-dagre/cytoscape-dagre.js',
       'bower_components/angular-highlightjs/build/angular-highlightjs.js',
       'bower_components/marked/lib/marked.js',
       'bower_components/angular-marked/angular-marked.js',
@@ -42,7 +48,7 @@ module.exports = function(config) {
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",
-      "test/mock/**/*.js",
+      // "test/mock/**/*.js",
       "test/spec/**/*.js"
     ],
 
@@ -68,12 +74,13 @@ module.exports = function(config) {
     // Which plugins to enable
     plugins: [
       "karma-phantomjs-launcher",
+      "karma-coverage",
       "karma-jasmine"
     ],
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
-    singleRun: false,
+    singleRun: true,
 
     colors: true,
 
@@ -88,5 +95,15 @@ module.exports = function(config) {
     // URL root prevent conflicts with the site root
     // urlRoot: '_karma_'
 
+    preprocessors: {  
+      'app/scripts/**/*.js': ['coverage']
+    },
+
+    reporters: ['dots', 'coverage'],
+
+    coverageReporter: {  
+      type: 'lcov',
+      dir: 'build/coverage/'
+    }
   });
 };
