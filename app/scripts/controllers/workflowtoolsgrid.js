@@ -101,11 +101,11 @@ angular.module('dockstore.ui')
       };
 
       $scope.refreshDocument = function() {
+        $scope.toolsContent = [];
         $scope.toolJson = $scope.getTableContent($scope.workflowObj.id, $scope.workflowObj.workflowVersions);
         if($scope.toolJson !== null){
           $scope.toolJson.then(
             function(s){
-              $scope.toolsContent = [];
               if(s.length === 0){
                 $scope.missingTool = true;
               }else{
