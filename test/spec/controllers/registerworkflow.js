@@ -10,18 +10,34 @@ describe('Controller: RegisterWorkflowCtrl', function () {
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
+
     scope = $rootScope.$new();
+
     RegisterWorkflowCtrl = $controller('RegisterWorkflowCtrl', {
-      $scope: scope
-      // place here mocked dependencies
-    });
+       $scope: scope
+       // place here mocked dependencies
+     });
   }));
 
   it('should change the extension', function(){
-    expect(scope.changeExt('/foo.cwl','wdl')).toBe('/foo.wdl');
+    expect(scope.changeExt('/Dockstore.cwl','wdl')).toBe('/Dockstore.wdl');
   });
 
-  // it('should attach a list of awesomeThings to the scope', function () {
-  //   expect(RegisterWorkflowCtrl.awesomeThings.length).toBe(3);
-  // });
+  describe('test setWorkflowEditError', function(){
+    it('should set error message and errordetails', function(){
+      scope.setWorkflowEditError("errorMessage","errorDetails");
+      expect(scope.workflowEditError.message).toBe("errorMessage");
+      expect(scope.workflowEditError.errorDetails).toBe("errorDetails");
+    });
+
+    it('should return null', function() {
+      scope.setWorkflowEditError("","");
+      expect(scope.workflowEditError).toBeNull();
+    });
+  });
+
+  it('should get workflow path', function(){
+    expect(scope.getWorkflowPath('/Dockstore.cwl','')).toBe('Dockstore.cwl');
+  });
+
 });

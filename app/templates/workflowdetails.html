@@ -161,7 +161,7 @@
             <div ng-show="editMode && showEditWorkflowPath">
               <strong>Workflow Path</strong>:
               {{workflowObj.workflow_path}}
-              <button type="sbutton"
+              <button type="sbutton" id="editButton"
                   class="btn btn-link pull-right"
                   ng-click="showEditWorkflowPath = false">
                 <span class="glyphicon glyphicon-edit"></span>Edit
@@ -215,7 +215,7 @@
             <div ng-show="editMode && showEditDescriptorType">
             <Strong>Descriptor Type</Strong>:
             {{workflowObj.descriptorType | lowercase}}
-            <button type="sbutton"
+            <button type="sbutton" id="editButton"
                   class="btn btn-link pull-right"
                   style="padding: 3px 12px!important;"
                   ng-click="showEditDescriptorType = false">
