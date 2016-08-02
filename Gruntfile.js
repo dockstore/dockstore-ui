@@ -550,10 +550,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
-      grunt.log.write("revision: "+gitRev);
-      grunt.file.write('./app/gitVersion.htm',"<br>DockstoreUI&nbsp-&nbsp"+gitTag+
-        "-&nbsp<a href=\"https://github.com/ga4gh/dockstore-ui/commit/"+gitRev+"\" target=\"_blank\" style=\"color:white\">"+
-        gitRev+"</a>");
       return grunt.task.run(['build', 'connect:dist:keepalive']);
     }
 
@@ -582,29 +578,36 @@ module.exports = function (grunt) {
     'karma'
   ]);
 
-  grunt.registerTask('build', [
-    'clean:dist',
-    'wiredep',
-    'useminPrepare',
-    'concurrent:dist',
-    'autoprefixer',
-    'ngtemplates',
-    'concat',
-    'ngAnnotate',
-    'copy:dist',
-    'insert',
-    'cdnify',
-    'cssmin',
-    'uglify',
-    'filerev',
-    'usemin',
-    'htmlmin',
-    'cache_control'
-  ]);
+  grunt.registerTask('build', function(target){
+    
+    grunt.log.write("revision: "+gitRev);
+    grunt.file.write('./app/gitVersion.htm',"<br>DockstoreUI&nbsp-&nbsp"+gitTag+
+      "-&nbsp<a href=\"https://github.com/ga4gh/dockstore-ui/commit/"+gitRev+"\" target=\"_blank\" style=\"color:white\">"+
+      gitRev+"</a>");
+
+    grunt.task.run([
+      'clean:dist',
+      'wiredep',
+      'useminPrepare',
+      'concurrent:dist',
+      'autoprefixer',
+      'ngtemplates',
+      'concat',
+      'ngAnnotate',
+      'copy:dist',
+      'insert',
+      'cdnify',
+      'cssmin',
+      'uglify',
+      'filerev',
+      'usemin',
+      'htmlmin',
+      'cache_control'
+    ]);
+  });
 
   grunt.registerTask('default', [
     'newer:jshint',
-    'test',
     'build'
   ]);
 };
