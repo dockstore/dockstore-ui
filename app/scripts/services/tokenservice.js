@@ -16,7 +16,7 @@ angular.module('dockstore.ui')
     'NotificationService',
     function ($rootScope, $q, $http,
               WebService, NtfnService) {
-    
+
       this.getUserTokens = function(userId) {
         return $q(function(resolve, reject) {
           $http({
@@ -128,6 +128,19 @@ angular.module('dockstore.ui')
               return $q.reject(response);
             }
           );
+      };
+
+      this.getWebServiceVersion = function() {
+        return $q(function(resolve, reject) {
+          $http({
+            method: 'GET',
+            url: WebService.API_URI + '/api/ga4gh/v1/metadata'
+          }).then(function(response) {
+            resolve(response.data);
+          }, function(response) {
+            reject(response);
+          });
+        });
       };
 
   }]);

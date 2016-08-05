@@ -145,7 +145,7 @@ angular
       function($q, $window) {
         return {
           responseError: function(rejection) {
-            if (rejection.status === -1) {
+            if (rejection.status === -1 && $window.location.pathname !== '/maintenance') {
               $window.location.href = '/maintenance';
               return;
             }

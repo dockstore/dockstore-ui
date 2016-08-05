@@ -39,7 +39,7 @@
     <img class="blue-rectangle" src="images/rectangle.png">
     <div class="row header-lower">
       <div class="col-md-6">
-        <h4 class="title caption">DockStore, developed by the <a class="white-link" href="https://www.cancercollaboratory.org/" target="_blank">Cancer Genome Collaboratory</a>, is an open platform for sharing Docker-based tools described with the <a class="white-link" href="http://www.commonwl.org/" target="_blank">Common Workflow Language</a> used by the <a class="white-link" href="https://genomicsandhealth.org/" target="_blank">GA4GH</a>.</h4>
+        <h4 class="title caption">Dockstore, developed by the <a class="white-link" href="https://www.cancercollaboratory.org/" target="_blank">Cancer Genome Collaboratory</a>, is an open platform for sharing Docker-based tools described with the <a class="white-link" href="http://www.commonwl.org/" target="_blank">Common Workflow Language</a> used by the <a class="white-link" href="https://genomicsandhealth.org/" target="_blank">GA4GH</a>.</h4>
       </div>
       <div class="col-md-3 row-center"
           ng-if="!userObj">
@@ -49,7 +49,7 @@
       </div>
       <div class="col-md-3 row-center"  ng-class="userObj ? 'col-md-offset-3' : ''">
         <div class="button">
-          <p><a href="/docs/about">About DockStore &raquo;</a></p>
+          <p><a href="/docs/blog">News and Events &raquo;</a></p>
         </div>
       </div>
     </div>
@@ -80,17 +80,42 @@
     <div containers-grid containers="containers" preview-mode="true" ng-show="tabMode === 'Tool'"></div>
     <div workflows-grid workflows="workflows" preview-mode="true" ng-show="tabMode === 'Workflow'"></div>
   </div>
-</div> 
+</div>
 
 <!-- Documentation Footer (Footer should be in its own directive) -->
 <div id="documentation">
   <div class="container">
     <div class="row">
       <div class="col-md-4">
-        <h3 class="documentation">About DockStore</h3>
+        <h3 class="documentation">About Dockstore</h3>
         <ul>
           <li>
-            <a href="/docs/about#about-the-dockstore">About the DockStore</a>
+            <a href="/docs/blog">News and Events</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h3>Adding to Dockstore</h3>
+        <ul>
+          <li>
+            <a href="/docs/getting-started">Sign Up for Accounts</a>
+          </li>
+          <li>
+            <a href="/docs/getting-started-with-docker">Create Your Tool</a>
+          </li>
+          <li>
+            <a href="/docs/getting-started-with-cwl">Describe Your Tool</a>
+          </li>
+          <li>
+            <a href="/docs/getting-started-with-dockstore">Register Your Tool in Dockstore</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h3 class="documentation">About Dockstore</h3>
+        <ul>
+          <li>
+            <a href="/docs/about#about-the-dockstore">About the Dockstore</a>
           </li>
           <li>
             <a href="/docs/about#built-with-quay-io-and-github">Built with Quay.io and GitHub</a>
@@ -106,40 +131,6 @@
           </li>
           <li>
             <a href="/docs/about#future-plans">Future Plans</a>
-          </li>
-        </ul>
-      </div>
-      <div class="col-md-4">
-        <h3>Adding to DockStore</h3>
-        <ul>
-          <li>
-            <a href="/docs/getting-started#sign-up-for-accounts">Sign Up for Accounts</a>
-          </li>
-          <li>
-            <a href="/docs/getting-started#create-your-tool">Create Your Tool</a>
-          </li>
-          <li>
-            <a href="/docs/getting-started#describe-your-tool">Describe Your Tool</a>
-          </li>
-          <li>
-            <a href="/docs/getting-started#linking-github-and-quay-io">Linking GitHub and Quay.io</a>
-          </li>
-          <li>
-            <a href="/docs/getting-started#register-your-tool-in-dockstore">Register Your Tool in Dockstore</a>
-          </li>
-        </ul>
-      </div>
-      <div class="col-md-4">
-        <h3>Using DockStore</h3>
-        <ul>
-          <li>
-            <a href="/docs/getting-started#run-tools">Run Tools</a>
-          </li>
-          <li>
-            <a href="/docs/getting-started#find-other-tools">Find Other Tools</a>
-          </li>
-          <li>
-            <a href="/docs/getting-started#next-steps">Next Steps</a>
           </li>
         </ul>
       </div>

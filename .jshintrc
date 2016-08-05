@@ -12,6 +12,7 @@
   "unused": false,
   "globals": {
     "angular": false,
-    "$": false
+    "$": false,
+    "cytoscape": true
   }
 }

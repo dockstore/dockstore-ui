@@ -17,7 +17,8 @@ exports.config = {
 
 	// Capabilities to be passed to the webdriver instance.
 	capabilities: {
-		'browserName': 'phantomjs'
+		'browserName': 'phantomjs',
+		'phantomjs.binary.path' : 'node_modules/phantomjs-prebuilt/bin/phantomjs'
 	},
 
 	baseUrl: 'http://localhost:9001/', //must be 9001 because grunt-test is in port 9001
