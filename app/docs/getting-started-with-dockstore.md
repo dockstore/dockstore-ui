@@ -40,7 +40,7 @@ For the tutorial, generally, you should hit the "Refresh All Tools" button to ma
                   
  ![Refresh](docs/dockstore_refresh.png)
                   
-Now select the `briandoconnor/dockstore-tool-bamstats` repository and click "Publish".  The tool is now listed on Dockstore!
+Now select the `collaboratory/dockstore-tool-bamstats` repository and click "Publish".  The tool is now listed on Dockstore!
                   
 ![Publish](docs/publish.png)
                   

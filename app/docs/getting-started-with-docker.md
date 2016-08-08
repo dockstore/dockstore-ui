@@ -10,7 +10,7 @@ Docker is a fantastic tool for creating light-weight containers to run your tool
 0. use the release process on GitHub or Bitbucket to make distinct release tags
 0. setup Quay.io (or Docker Hub) to automatically build your Docker image
 
-See the [dockstore-tool-bamstats](https://github.com/briandoconnor/dockstore-tool-bamstats) repository on GitHub which we created as an example. This is linked to the quay.io repository at [dockstore-tool-bamstats](https://quay.io/repository/briandoconnor/dockstore-tool-bamstats).
+See the [dockstore-tool-bamstats](https://github.com/CancerCollaboratory/dockstore-tool-bamstats) repository on GitHub which we created as an example. This is linked to the quay.io repository at [dockstore-tool-bamstats](https://quay.io/repository/collaboratory/dockstore-tool-bamstats).
 
 For the rest of this tutorial, you may wish to work in your own repository with your own tool or "fork" the repository above into your own GitHub account. 
 
@@ -21,7 +21,7 @@ dependencies of BAMStats along with the executable itself.
 
 ## Creating a Dockerfile
 
-Here's my sample [Dockerfile](https://github.com/briandoconnor/dockstore-tool-bamstats/blob/develop/Dockerfile):
+Here's my sample [Dockerfile](https://github.com/CancerCollaboratory/dockstore-tool-bamstats/blob/develop/Dockerfile):
 
 
     #############################################################
@@ -117,14 +117,14 @@ An important thing to note, this `Dockerfile` just really scratches the surface.
 for a really terrific in-depth look at writing Dockerfiles.
 
 
-Read more on the development process at [https://docs.docker.com...](https://docs.docker.com/). For information on building your Docker image on Quay.io we recommend their [tutorial](https://quay.io/tutorial/).
+Read more on the development process at [https://docs.docker.com](https://docs.docker.com/). For information on building your Docker image on Quay.io we recommend their [tutorial](https://quay.io/tutorial/).
 
 ## Building Docker Images
 
 Now that you've created the `Dockerfile` the next step is to build the image.
 The docker command line is used for this:
 
-    $> docker build -t quay.io/briandoconnor/dockstore-tool-bamstats:1.25-3 .
+    $> docker build -t quay.io/collaboratory/dockstore-tool-bamstats:1.25-3 .
 
 The `.` is the path to the location of the Dockerfile, which is in the same directory here.
 The `-t` parameter is the "tag" that this Docker image will be called locally
@@ -133,8 +133,8 @@ of the tag typically denotes that this was built on Quay.io (which we will see i
 the next section).  I'm manually specifying this tag so it will match the quay.io
 built version.  This allows me to build and test locally then, eventually,
 switch over to the quay.io-built version.  The next part of the tag,
-`briandoconnor/dockstore-tool-bamstats`, denotes the name of the tool which
-is derived from the organization and repository name on GitHub.  Finally `1.25-3`
+`collaboratory/dockstore-tool-bamstats`, denotes the name of the tool which
+is derived from the organization and repository name on Quay.io.  Finally `1.25-3`
 denotes a version string, typically you want to sync that with releases on GitHub.
 In this case I'm working on release `1.25-3` so this is on a release branch.  However
 the most recent release via GitHub is the previous version `1.25-2`.  The
@@ -152,7 +152,7 @@ something like:
 Check that the tool is now in your local Docker image cache:
 
     $> docker images | grep bamstats  
-    quay.io/briandoconnor/dockstore-tool-bamstats   1.25-3  01a7ccf55063   2 minutes ago   538.3 MB
+    quay.io/collaboratory/dockstore-tool-bamstats   1.25-3  01a7ccf55063   2 minutes ago   538.3 MB
 
 Great! This looks fine!
 
@@ -167,7 +167,7 @@ a new tool there might be multiple rounds of `docker build`, followed by tesing 
 the Docker image, launching it as a container (make sure you launch on a host with
 at least 8GB of RAM and dozens of GB of disk space!):
 
-    $> docker run -it -v `pwd`:/home/ubuntu quay.io/briandoconnor/dockstore-tool-bamstats:1.25-3 /bin/bash
+    $> docker run -it -v `pwd`:/home/ubuntu quay.io/collaboratory/dockstore-tool-bamstats:1.25-3 /bin/bash
 
 You'll be dropped into a bash shell which works just like the Linux environments
 you normally work in.  I'll come back to what `-v` is doing in a bit.

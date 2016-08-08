@@ -15,28 +15,28 @@ It is recommended that you have the following minimum fields:
     dct:creator:
       foaf:name: <name>
 
-Again, we provide an example from the [dockstore-tool-bamstats](https://github.com/briandoconnor/dockstore-tool-bamstats) repository:
+Again, we provide an example from the [dockstore-tool-bamstats](https://github.com/CancerCollaboratory/dockstore-tool-bamstats) repository:
 
     #!/usr/bin/env cwl-runner
     
     class: CommandLineTool
     id: "BAMStats"
     label: "BAMStats tool"
-    cwlVersion: v1.0
+    cwlVersion: v1.0 
     description: |
-        ![build_status](https://quay.io/repository/briandoconnor/dockstore-tool-bamstats/status)
+        ![build_status](https://quay.io/repository/collaboratory/dockstore-tool-bamstats/status)
         A Docker container for the BAMStats command. See the [BAMStats](http://bamstats.sourceforge.net/) website for more information.
         ```
         Usage:
         # fetch CWL
-        $> dockstore tool cwl --entry quay.io/briandoconnor/dockstore-tool-bamstats:1.25-5 > Dockstore.cwl
+        $> dockstore tool cwl --entry quay.io/collaboratory/dockstore-tool-bamstats:1.25-5 > Dockstore.cwl
         # make a runtime JSON template and edit it (or use the content of sample_configs.json in this git repo)
         $> dockstore tool convert cwl2json --cwl Dockstore.cwl > Dockstore.json
         # run it locally with the Dockstore CLI
-        $> dockstore tool launch --entry quay.io/briandoconnor/dockstore-tool-bamstats:1.25-5 \
+        $> dockstore tool launch --entry quay.io/collaboratory/dockstore-tool-bamstats:1.25-5 \
             --json Dockstore.json
         ```
-    
+
     dct:creator:
       "@id": "http://orcid.org/0000-0002-7681-6415"
       foaf:name: Brian O'Connor
@@ -44,7 +44,7 @@ Again, we provide an example from the [dockstore-tool-bamstats](https://github.c
     
     requirements:
       - class: DockerRequirement
-        dockerPull: "quay.io/briandoconnor/dockstore-tool-bamstats:1.25-6"
+        dockerPull: "quay.io/collaboratory/dockstore-tool-bamstats:1.25-6"
     
     hints:
       - class: ResourceRequirement
@@ -109,7 +109,7 @@ This section includes the tool author referenced by Dockstore. It is open to you
 ```
 requirements:
   - class: DockerRequirement
-    dockerPull: "quay.io/briandoconnor/dockstore-tool-bamstats:1.25-3"
+    dockerPull: "quay.io/collaboratory/dockstore-tool-bamstats:1.25-3"
 ```
 
 This section links the Docker image used to this CWL.  Notice it's exactly the same as the `-t` you used when building your image.
@@ -140,7 +140,7 @@ This may or may not be honoured by the tool calling this CWL but at least it giv
         inputBinding:
           position: 2
 
-This is one of the items from the inputs section.  Notice a few things, first, the `#bam_input` matches with `bam_input` in the sample parameterization JSON.
+This is one of the items from the inputs section.  Notice a few things, first, the `bam_input:` matches with `bam_input` in the sample parameterization JSON.
 Also, you can control the position of the variable, it can have a type (int or File here), and, for tools that require a prefix (`--prefix`) before a
 parameter you can use the `prefix` key:value in the inputBindings section.
 
@@ -305,7 +305,7 @@ tag and also my CWL file.  GitHub makes it very easy to release:
 
 ![Release](docs/release.png)
 
-I click on "releases" in my GitHub project [page](https://github.com/briandoconnor/dockstore-tool-bamstats) and then follow the directions to create a new release. Simple as that!
+I click on "releases" in my GitHub project [page](https://github.com/CancerCollaboratory/dockstore-tool-bamstats) and then follow the directions to create a new release. Simple as that!
 
 **Tip:** [HubFlow](https://datasift.github.io/gitflow/) is an excellent way to manage the lifecycle of releases on GitHub.  Take a look!
 
@@ -326,13 +326,13 @@ Log onto Quay now and setup a new repository (click the "+" icon).
 
 ![New Quay Repo](docs/quay_new_repo.png)
 
-You must match the name to what I was using previously, so in this case it's `briandoconnor` / `dockstore-tool-bamstats`.  Also, Dockstore will
+You must match the name to what I was using previously, so in this case it's `CancerCollaboratory` / `dockstore-tool-bamstats`.  Also, Dockstore will
 only work with `Public` repositories currently.
 Notice I'm selecting "Link to a GitHub Repository Push", this is because we want Quay to automatically build our Docker image
 every time we update the repository on GitHub.  Very slick!
 
 It will automatically prompt you to setup a "build trigger" after GitHub authenticates you.  Here I select the GitHub repo
-for `briandoconnor/dockstore-tool-bamstats`.
+for `CancerCollaboratory/dockstore-tool-bamstats`.
 
 ![Build Trigger](docs/build_trigger.png)
 

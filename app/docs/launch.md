@@ -13,11 +13,7 @@ Now that you have a tool registered on Dockstore you may want to test it out for
   0. if outputs are specified as remote URLs, copy the results to these locations
 0. download tool descriptor files `dockstore tool cwl` and `dockstore tool wdl`
 
-Note that launching a CWL tool locally requires the cwltool to be installed. To install the version that we have tested with, run the following in Ubuntu
-
-    pip install --user cwl-runner cwltool==1.0.20160323212343 schema-salad==1.7.20160316203940 avro==1.7.7
-
-You may need to install pip as well. 
+Note that launching a CWL tool locally requires the cwltool to be installed. Check [onboarding](onboarding) if you have not already to ensure that your dependencies are correct. 
 
 ## Launch Workflows
 
