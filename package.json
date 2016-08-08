@@ -35,11 +35,9 @@
     "jit-grunt": "^0.10.0",
     "jshint-stylish": "^2.2.0",
     "karma": "^1.1.1",
-    "karma-chrome-launcher": "^1.0.1",
     "karma-coverage": "^1.1.1",
+    "karma-chrome-launcher": "^1.0.1",
     "karma-jasmine": "^1.0.2",
-    "karma-phantomjs-launcher": "^1.0.1",
-    "phantomjs-prebuilt": "^2.1.10",
     "protractor": "^4.0.2",
     "serve-static": "^1.11.1",
     "time-grunt": "^1.0.0"

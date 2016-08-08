@@ -1,4 +1,5 @@
 sudo: true
+dist: trusty
 language: node_js
 node_js:
   - 'stable'
@@ -6,9 +7,16 @@ node_js:
 before_install:
   - 'npm config get registry'
   - 'npm config set registry http://registry.npmjs.org/'
+  - 'export CHROME_BIN=/usr/bin/google-chrome'
+  - 'export DISPLAY=:99.0'
+  - 'sh -e /etc/init.d/xvfb start'
+  - 'sudo apt-get update'
+  - 'sudo apt-get install -y libappindicator1 fonts-liberation'
+  - 'wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
+  - 'sudo dpkg -i google-chrome*.deb'
 install:
   - 'npm install --global grunt-cli bower yo generator-karma generator-angular'
-  - 'npm install karma jasmine-core phantomjs'
+  - 'npm install karma jasmine-core'
   - 'sudo apt-get install -y ruby ruby-dev make'
   - 'gem install compass'
   - 'npm update'

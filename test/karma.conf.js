@@ -56,6 +56,13 @@ module.exports = function(config) {
     exclude: [
     ],
 
+    customLaunchers: {  
+      Chrome_travis_ci: {
+         base: 'Chrome',
+	 flags: ['--no-sandbox']
+      }
+    },
+
     // web server port
     port: 8080,
 
@@ -68,12 +75,12 @@ module.exports = function(config) {
     // - PhantomJS
     // - IE (only Windows)
     browsers: [
-      "PhantomJS"
+      "Chrome"
     ],
 
     // Which plugins to enable
     plugins: [
-      "karma-phantomjs-launcher",
+      "karma-chrome-launcher",
       "karma-coverage",
       "karma-jasmine"
     ],
@@ -106,4 +113,8 @@ module.exports = function(config) {
       dir: 'build/coverage/'
     }
   });
+
+  if(process.env.TRAVIS) {  
+    config.browsers = ['Chrome_travis_ci'];
+  }
 };
