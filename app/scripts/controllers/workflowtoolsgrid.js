@@ -109,6 +109,7 @@ angular.module('dockstore.ui')
               if(s.length === 0){
                 $scope.missingTool = true;
               }else{
+                $scope.toolsContent = [];
                 for(var i = 0;i<s.length;i++){
                   $scope.toolsContent.push(s[i]);
                 }
