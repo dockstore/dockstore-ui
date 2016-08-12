@@ -85,7 +85,7 @@
         </ol>
         <a
             class="btn btn-default hori-offset-12"
-            ng-href="{{dscliReleaseURL}}">
+            ng-href="https://github.com/ga4gh/dockstore/releases/download/{{ apiVersion }}/dockstore">
           <span class="glyphicon glyphicon-download"></span>
           Download CLI
         </a>
@@ -94,17 +94,6 @@
         <p>Create the folder <code>~/.dockstore</code> and put these settings in the file <code>~/.dockstore/config</code>:</p>
         <div copy-text type="textarea" length="very-long">token: {{dsToken}}
 server-url: {{dsServerURI}}</div>
-
-        <!--p>
-          You can also run the following commands to install the client in your
-          home directory:
-        </p>
-        <pre class="pre-scrollable">
-      mkdir "$HOME/bin" && \
-      wget -O "$HOME/bin/dockstore" '{{dscliReleaseURL}}' && \
-      chmod +x "$HOME/bin/dockstore" && \
-      export PATH="$PATH:$HOME/bin" && \
-      dockstore;</pre!-->
 
         <h4>Part 3</h4>
         <p>If you want to launch CWL tools and workflows, Dockstore relies upon <a
