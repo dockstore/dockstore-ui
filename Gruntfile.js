@@ -581,9 +581,9 @@ module.exports = function (grunt) {
   grunt.registerTask('build', function(target){
     
     grunt.log.write("revision: "+gitRev);
-    grunt.file.write('./app/gitVersion.htm',"<br>DockstoreUI&nbsp-&nbsp"+gitTag+
-      "-&nbsp<a href=\"https://github.com/ga4gh/dockstore-ui/commit/"+gitRev+"\" target=\"_blank\" style=\"color:white\">"+
-      gitRev+"</a>");
+    grunt.file.write('./app/gitVersion.htm',"<br>DockstoreUI&nbsp-&nbsp"+
+      "<a href=\"https://github.com/ga4gh/dockstore-ui/commit/"+gitRev+"\" target=\"_blank\" style=\"color:white\">"+
+      gitTag+"</a>");
 
     grunt.task.run([
       'clean:dist',
