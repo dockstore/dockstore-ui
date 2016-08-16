@@ -28,7 +28,45 @@
   <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
   A {{expectedFilename}} associated with this workflow could not be found.
 </div>
-<div hljs
+<style>
+  pre .line-number {
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size:inherit;
+    color:#444;
+    float:left;
+    margin:7px 2px 0 0;
+    border-right:1px solid #444;
+    text-align:left;
+    padding:0 10px 2px 0;
+  }
+
+  pre .line-number span {
+    display:block;
+  }
+
+  pre .cl {
+  display:block;
+  clear:both;
+  }
+
+  .hljs-line-numbers {
+    text-align: right;
+    border-right: 1px solid #ccc;
+    color: #999;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  pre code{
+    white-space: pre !important; 
+    /*this will create a horizontal scrollbar if the line is longer than the specified content width*/
+  }
+</style>
+<div hljs id="code"
      source="fileContents"
      hljs-language="yaml"
      ng-show="fileLoaded && fileContents">
