@@ -257,8 +257,24 @@ angular.module('dockstore.ui')
           );
       };
 
+      /**
+       * This extracts a list of valid secondary files for a given tool, filtered by the selected tag and descriptor type
+       * Returns an empty array if there are not valid tags 
+       */
       function extracted(){
-        return $scope.containerObj.tags.filter(function(a) {return a.name === $scope.selTagName;})[0].sourceFiles.filter(function(a) {return a.type === 'DOCKSTORE_'+$scope.selDescriptorName.toUpperCase();}).map(function(a) {return a.path;}).sort();
+        if($scope.containerObj.tags.length !==0){
+          return $scope.containerObj.tags.filter(
+            function(a) {
+              return a.name === $scope.selTagName;})[0].sourceFiles.filter(
+              function(a) {
+                return a.type === 'DOCKSTORE_'+$scope.selDescriptorName.toUpperCase();}).map(
+                function(a) {
+                  return a.path;
+                }).sort();
+        }else{
+          return [];
+        }
+
       }
 
       $scope.setDocument = function() {
