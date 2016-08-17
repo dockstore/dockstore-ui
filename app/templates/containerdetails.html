@@ -48,9 +48,7 @@
     <h3>
       <!--<span class="glyphicon glyphicon-lock" ng-if="!containerObj.is_public"></span>-->
       {{
-        (containerObj.namespace !== '_' ? containerObj.namespace + '/' : '') +
-        containerObj.name +
-        (containerObj.toolname ? ' (' + containerObj.toolname + ')' : '')
+        (containerObj.tool_path)
       }}
     </h3>
     <div ng-if="containerObj" id="label-holder">
@@ -149,14 +147,6 @@
       <uib-tab active="activeTabs[0]">
         <uib-tab-heading>Info</uib-tab-heading>
         <ul class="list-unstyled container-info">
-          <li>
-            <strong>Name</strong>:
-            {{containerObj.name + (containerObj.toolname ? ' (' + containerObj.toolname + ')' : '')}}
-          </li>
-          <li>
-            <strong>Path</strong>:
-            {{containerObj.path}}
-          </li>
           <li>
             <strong>Author</strong>:
             {{ containerObj.author ? containerObj.author : 'n/a' }}
@@ -367,10 +357,10 @@
               </span>
             </div>
           </li>
-          <li ng-show="showLaunchWith()">
+                 <li ng-show="showLaunchWith()">
             <strong>Launch With:</strong>
             <div class="pull-right" style="margin-left:5px">
-                <select id="descType" 
+                <select id="descType"
                 ng-model="desc"
                 ng-options="descType for descType in descAvailable"
                 ng-change="descLaunchWith(desc)">
@@ -379,17 +369,19 @@
             <div class="pull-right" style="margin-left:5px">
               <select id="tagVersion"
                 ng-model="toolTag"
-                ng-options="tag.id as tag.name for tag in validTags" 
+                ng-options="tag.id as tag.name for tag in validTags"
                 ng-change="tagLaunchWith(toolTag)">
                 </select>
             </div>
-              
+
             <div class="well well-sm">
               <div>
                 <pre>{{launchWith}}</pre>
               </div>
             </div>
           </li>
+
+
         </ul>
         <div ng-if="!editMode">
           <hr />

@@ -76,10 +76,10 @@
                 ng-class="{selected: selContainerObj.id === containerObj.id}"
                 ng-repeat="containerObj in nsObj.containers">
               <div class="container-name-oflw pull-left"
-                  title="{{containerObj.name + (containerObj.toolname ? ' (' + containerObj.toolname + ')' : '')}}"
+                  title="{{containerObj.name + (containerObj.toolname ? '/' + containerObj.toolname : '')}}"
                   data-toggle="tooltip">
                 <a href ng-click="selectContainer(containerObj.id)">
-                  {{containerObj.name + (containerObj.toolname ? ' (' + containerObj.toolname + ')' : '')}}
+                  {{containerObj.name + (containerObj.toolname ? '/' + containerObj.toolname : '')}}
                 </a>
               </div>
               <div class="pull-right">

@@ -84,10 +84,11 @@ angular.module('dockstore.ui')
           return -1;
         };
         for (var i = 0; i < containers.length; i++) {
-          var pos = getNSIndex(containers[i].namespace);
+          var prefix = containers[i].tool_path.split('/',2).join('/');
+          var pos = getNSIndex(prefix);
           if (pos < 0) {
             nsContainers.push({
-              namespace: containers[i].namespace,
+              namespace: prefix,
               containers: []
             });
             pos = nsContainers.length - 1;
@@ -244,7 +245,7 @@ angular.module('dockstore.ui')
           mode: 'MANUAL_IMAGE_PATH',
           name: '',
           toolname: '',
-          namespace: namespace ? namespace : '',
+          namespace: namespace ? namespace.split('/')[1] : '',
           registry: '',
           gitUrl: '',
           default_dockerfile_path: '/Dockerfile',
