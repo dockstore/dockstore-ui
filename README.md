@@ -1,5 +1,5 @@
 # dockstore-ui
-[![Build Status](https://travis-ci.org/ga4gh/dockstore-ui.svg?branch=develop)](https://travis-ci.org/CancerCollaboratory/dockstore-ui)
+[![Build Status](https://travis-ci.org/ga4gh/dockstore-ui.svg?branch=develop)](https://travis-ci.org/ga4gh/dockstore-ui)
 [![Coverage Status](https://coveralls.io/repos/github/ga4gh/dockstore-ui/badge.svg?branch=develop)](https://coveralls.io/github/ga4gh/dockstore-ui?branch=develop)
 
 This is an AngularJS UI for the Dockstore [Web Service](https://github.com/ga4gh/dockstore).
