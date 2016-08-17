@@ -26,6 +26,12 @@ angular.module('dockstore.ui')
       $scope.showEditCWL = true;
       $scope.showEditWDL = true;
       $scope.showEditDockerfile = true;
+      $scope.launchWith = null;
+      $scope.desc = 'cwl';
+      $scope.toolTag = '';
+      $scope.toolTagName = '';
+      $scope.validTags = [];
+      $scope.descAvailable = [];
       //There are 5 tabs, and only 1 can be active
       // so there are 4 other tabs that are not active
       var notActiveTabs = 4;
@@ -37,6 +43,149 @@ angular.module('dockstore.ui')
 
       $scope.checkPage = function(){
         $scope.$broadcast('checkDescPageType');
+      };
+
+      $scope.refreshTagLaunchWith = function() {
+        //get the tool tags that are valid
+        $scope.validTags = [];
+        for(var i=0;i<$scope.containerObj.tags.length;i++){
+          if($scope.isTagValid($scope.containerObj.tags[i])){
+            $scope.validTags.push($scope.containerObj.tags[i]);
+          }
+        }
+        if($scope.validTags.length !==0){
+          $scope.toolTag = $scope.validTags[0].id;
+          $scope.toolTagName = $scope.validTags[0].name;
+        }
+      };
+
+      $scope.refreshDescLaunchWith = function() {
+        //get the descriptor type that is available for tool version
+        $scope.descAvailable = [];
+        for(var j=0;j<$scope.validTags[0].sourceFiles.length;j++){
+          var fileType = $scope.validTags[0].sourceFiles[j].type;
+          if($scope.descAvailable.indexOf(fileType)){
+            if(fileType === 'DOCKSTORE_CWL' && $scope.descAvailable.indexOf('cwl') === -1){
+              $scope.descAvailable.push('cwl');
+            } else if(fileType === 'DOCKSTORE_WDL' && $scope.descAvailable.indexOf('wdl') === -1){
+              $scope.descAvailable.push('wdl');
+            }
+          }
+        }
+        if($scope.descAvailable.length !==0){
+          $scope.desc = $scope.descAvailable[0];
+        }
+      };
+
+      $scope.getDescriptorByTag = function(tagObject){
+        //get descriptor by tag chosen
+        $scope.descAvailable = [];
+        for(var j=0;j<tagObject.sourceFiles.length;j++){
+          var fileType = tagObject.sourceFiles[j].type;
+          if($scope.descAvailable.indexOf(fileType)){
+            if(fileType === 'DOCKSTORE_CWL' && $scope.descAvailable.indexOf('cwl') === -1){
+              $scope.descAvailable.push('cwl');
+            } else if(fileType === 'DOCKSTORE_WDL' && $scope.descAvailable.indexOf('wdl') === -1){
+              $scope.descAvailable.push('wdl');
+            }
+          }
+        }
+        if($scope.descAvailable.length !==0){
+          $scope.desc = $scope.descAvailable[0];
+        }
+      };
+
+      $scope.showLaunchWith = function() {
+        if($scope.containerObj.tags.length === 0
+          || $scope.validTags.length === 0){
+          //no tags available in the container, do not show launchWith
+          //return false immediately to get out of this method
+          return false; 
+        }
+
+        // assign default values
+        var tool_path = $scope.containerObj.path;
+        var toJson = 'cwl2json';
+
+        if($scope.desc === 'wdl'){
+          toJson = 'wdl2json';
+        }
+
+        //get the tag name from tag id
+        for(var i=0;i<$scope.validTags.length;i++){
+          if($scope.toolTag === $scope.validTags[i].id){
+            $scope.toolTagName = $scope.validTags[i].name;
+            break;
+          }
+        }
+
+        //get rid of blank option in tag dropdown if exists
+        if(document.getElementById('tagVersion')[0].value === '?' || 
+          document.getElementById('tagVersion')[0].value === ''){
+          $scope.refreshTagLaunchWith();
+          var firstElement = $scope.toolTagName;
+          var validTagsNameArray =[];
+          for(var i=0;i<$scope.validTags.length;i++){
+            validTagsNameArray.push($scope.validTags[i].name);
+          }
+
+          $("#tagVersion option").filter(function(){
+            return $(this).text() === firstElement;
+          }).attr('selected',true);
+          $("#tagVersion option").filter(function(){
+            return jQuery.inArray($(this).text(),validTagsNameArray) === -1;
+          }).remove();
+        }
+
+        //get rid of blank option in descriptor dropdown if exists
+        if(document.getElementById('descType')[0].value === '?' || 
+          document.getElementById('descType')[0].value === ''){
+          var firstElement = $scope.descAvailable[0];
+          var descriptorAvailable = $scope.descAvailable;
+
+          $("#descType option").filter(function(){
+            return $(this).text() === firstElement;
+          }).attr('selected',true);
+          $("#descType option").filter(function(){
+            return jQuery.inArray($(this).text(),descriptorAvailable) === -1;
+          }).remove();
+        }
+
+        $scope.launchWith = 
+          "dockstore tool " + $scope.desc + " --entry " + tool_path + ":" + $scope.toolTagName +" > Dockstore." + $scope.desc +
+          "\ndockstore tool convert " + toJson + " --" + $scope.desc + " Dockstore." + $scope.desc + " > Dockstore.json" +
+          "\nvim Dockstore.json"+
+          "\ndockstore tool launch --entry " + tool_path + ":" + $scope.toolTagName + " --json Dockstore.json";
+
+        return $scope.validContent; //only show LaunchWith when content is valid
+      };
+
+      $scope.tagLaunchWith = function(tag) {
+        //method is called when specific tag is selected 
+        //to change the LaunchWith commands
+        $scope.toolTag = tag;
+        for(var i=0;i<$scope.containerObj.tags.length;i++){
+          if(tag === $scope.containerObj.tags[i].id){
+            $scope.getDescriptorByTag($scope.containerObj.tags[i]);
+            break;
+          }
+        }
+        $scope.showLaunchWith();
+      };
+
+      $scope.descLaunchWith = function(descriptor) {
+        //method is called when descriptor is selected 
+        //to change the LaunchWith commands
+        $scope.desc = descriptor;
+        $scope.showLaunchWith();
+      };
+
+      $scope.isTagValid = function(element) {
+        if(element.valid){
+          return true;
+        }else{
+          return false;
+        }
       };
 
       $scope.loadContainerDetails = function(containerPath) {
@@ -459,21 +608,30 @@ angular.module('dockstore.ui')
       $scope.$watch('containerPath', function(newValue, oldValue) {
         if (newValue) {
           $scope.setContainerDetailsError(null);
+          $scope.missingContent = [];
+          $scope.missingWarning = false;
+
           if (!$scope.editMode) {
             $scope.loadContainerDetails($scope.containerPath)
               .then(function(containerObj) {
                 $scope.updateInfoURLs();
+                $scope.refreshTagLaunchWith();
+                $scope.refreshDescLaunchWith();
               });
           } else {
             $scope.labelsEditMode = false;
             $scope.resetContainerEditData($scope.containerObj);
             $scope.updateInfoURLs();
+            $scope.refreshTagLaunchWith();
+            $scope.refreshDescLaunchWith();
           }
         }
       });
 
       $scope.$watch('containerToolname', function(newValue, oldValue) {
-        if (newValue) $scope.updateInfoURLs();
+        if (newValue) {
+          $scope.updateInfoURLs();
+        }
       });
 
   }]);

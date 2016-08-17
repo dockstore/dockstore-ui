@@ -27,6 +27,8 @@ angular.module('dockstore.ui')
         scope.$on('returnValid', function(event, valid){
           scope.validContent = valid;
           scope.checkContentValid();
+          scope.refreshTagLaunchWith();
+          scope.refreshDescLaunchWith();
         });
         scope.$on('returnMissing', function(event,missing){
           scope.missingContent = missing;
