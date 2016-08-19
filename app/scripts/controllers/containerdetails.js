@@ -96,8 +96,8 @@ angular.module('dockstore.ui')
       };
 
       $scope.showLaunchWith = function() {
-        if($scope.containerObj.tags.length === 0
-          || $scope.validTags.length === 0){
+        if($scope.containerObj.tags.length === 0 || 
+          $scope.validTags.length === 0){
           //no tags available in the container, do not show launchWith
           //return false immediately to get out of this method
           return false; 
@@ -125,29 +125,29 @@ angular.module('dockstore.ui')
           $scope.refreshTagLaunchWith();
           var firstElement = $scope.toolTagName;
           var validTagsNameArray =[];
-          for(var i=0;i<$scope.validTags.length;i++){
-            validTagsNameArray.push($scope.validTags[i].name);
+          for(var j=0;j<$scope.validTags.length;j++){
+            validTagsNameArray.push($scope.validTags[j].name);
           }
 
           $("#tagVersion option").filter(function(){
             return $(this).text() === firstElement;
           }).attr('selected',true);
           $("#tagVersion option").filter(function(){
-            return jQuery.inArray($(this).text(),validTagsNameArray) === -1;
+            return window.jQuery.inArray($(this).text(),validTagsNameArray) === -1;
           }).remove();
         }
 
         //get rid of blank option in descriptor dropdown if exists
         if(document.getElementById('descType')[0].value === '?' || 
           document.getElementById('descType')[0].value === ''){
-          var firstElement = $scope.descAvailable[0];
+          var firstElementDesc = $scope.descAvailable[0];
           var descriptorAvailable = $scope.descAvailable;
 
           $("#descType option").filter(function(){
-            return $(this).text() === firstElement;
+            return $(this).text() === firstElementDesc;
           }).attr('selected',true);
           $("#descType option").filter(function(){
-            return jQuery.inArray($(this).text(),descriptorAvailable) === -1;
+            return window.jQuery.inArray($(this).text(),descriptorAvailable) === -1;
           }).remove();
         }
 
