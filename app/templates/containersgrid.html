@@ -79,11 +79,11 @@
   <div class="container">
     <div class="row-center">
         <ul class="pagination">
-          <li>{{getListRangeString()}}</li>
           <li>
             <div class="button" ng-hide="currPage <= getFirstPage()">
               <p><a href ng-click="changePage(false)">&laquo; Previous</a></p>
             </div>
+            <li>{{getListRangeString()}}</li>
             <div class="button" ng-hide="currPage >= getLastPage()">
               <p><a href ng-click="changePage(true)">Next &raquo;</a></p>
             </div>
