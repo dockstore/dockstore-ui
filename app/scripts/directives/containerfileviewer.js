@@ -20,8 +20,10 @@ angular.module('dockstore.ui')
       link: function postLink(scope, element, attrs) {
         scope.$watch('containerObj.path', function(newValue, oldValue) {
           if (newValue) {
+            console.log("changed containerObj path");
             scope.setDocument();
             scope.checkDescriptor();
+            scope.checkDockerfile();
           }
         });
         scope.$on('refreshFiles', function(event) {
@@ -30,6 +32,9 @@ angular.module('dockstore.ui')
         });
         scope.$on('checkDescPageType', function(event) {
           scope.checkDescriptor();
+        });
+        scope.$on('dockerfileTab', function(event){
+          scope.checkDockerfile();
         });
         scope.$watchGroup(
           ['selTagName', 'selDescriptorName'],

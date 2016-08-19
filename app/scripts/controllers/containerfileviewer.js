@@ -22,6 +22,106 @@ angular.module('dockstore.ui')
       $scope.successContent = [];
       $scope.fileContent = null;
 
+      $scope.addLineNumbers = function(type){
+        //get line numbers node and total line numbers
+        var lineNumNode = document.getElementsByClassName('line-number-desc');
+        var lineNumLength = $('.line-number-desc').children().length;
+        var totalLines = $scope.totalLinesDesc;
+
+        if(type === 'dockerfile'){
+          lineNumNode = document.getElementsByClassName('line-number-dockerfile');
+          lineNumLength = $('.line-number-dockerfile').children().length;
+          totalLines = $scope.totalLinesDf;
+        } 
+        //reset line numbers for new file by removing the nodes of line numbers
+        if(lineNumLength > 0){
+          while(lineNumNode[0].firstChild){
+            lineNumNode[0].removeChild(lineNumNode[0].firstChild);
+          }
+        }
+        //add the line numbers beside the descriptor file
+        for (var i = 1; i < totalLines; i++) {
+          var line = document.createElement("SPAN");
+          line.innerHTML = i;
+          $(lineNumNode).append(line);
+        }
+      };
+
+      $scope.getContentHTML = function(type) {
+        var pre = document.getElementsByTagName('pre');
+        var contentHTML = pre[1].outerHTML;
+        var firstChildNode = pre[1].firstChild;
+        var codeTag = document.getElementsByClassName('code')[0];
+ 
+        if(type === 'descriptor'){
+          $('#preCopyDesc').show();
+          contentHTML = pre[3].outerHTML;
+          firstChildNode = pre[3].firstChild;
+          codeTag = document.getElementsByClassName('code')[1];
+        }else if(type === 'dockerfile'){
+          $('#preCopyDockerfile').show();
+        }
+
+        if(contentHTML !== "<code class=\"hljs\"></code>" && contentHTML !== "<code class=\"hljs yaml\"></code>"){
+
+          if(type === 'descriptor'){
+            if($('#preCopyDesc').length === 0){
+              $('pre:not(.ng-binding)').hide();
+              var preCopy = document.createElement("PRE");
+              var lineNumSpan = document.createElement("SPAN");
+              var closeSpan = document.createElement("SPAN");
+
+              //set id and classes
+              preCopy.setAttribute("id","preCopyDesc");
+              lineNumSpan.setAttribute("class","line-number-desc");
+              closeSpan.setAttribute("class","cl");
+
+              if(firstChildNode !== null){
+                preCopy.appendChild(lineNumSpan);
+                preCopy.appendChild(firstChildNode);
+                preCopy.appendChild(closeSpan);
+              }
+              codeTag.appendChild(preCopy);
+            }
+            $scope.addLineNumbers('descriptor');
+            
+          } else if(type === 'dockerfile'){
+            if($('#preCopyDockerfile').length === 0){
+              $('pre:not(.ng-binding)').hide();
+              var preCopyDf = document.createElement("PRE");
+              var lineNumSpanDf = document.createElement("SPAN");
+              var closeSpanDf = document.createElement("SPAN");
+
+              //set id and classes
+              preCopyDf.setAttribute("id","preCopyDockerfile");
+              lineNumSpanDf.setAttribute("class","line-number-dockerfile");
+              closeSpanDf.setAttribute("class","cl");
+
+              if(firstChildNode !== null){
+                preCopyDf.appendChild(lineNumSpanDf);
+                preCopyDf.appendChild(firstChildNode);
+                preCopyDf.appendChild(closeSpanDf);
+              }
+              codeTag.appendChild(preCopyDf);
+            }
+            $scope.addLineNumbers('dockerfile');
+          }
+        }
+      };
+
+      $scope.checkDockerfile = function() {
+        var dockerfile = $scope.getDockerFile($scope.containerObj.id, $scope.selTagName);
+        if(dockerfile !== undefined){
+          dockerfile.then(function(s){
+            $scope.totalLinesDf = s.split(/\n/).length;
+            $scope.getContentHTML("dockerfile");
+          },
+          function(e){
+            console.log("error refreshDocument",e);
+          });
+        }
+      };
+
       $scope.checkDescriptor = function() {
         $scope.containerTags = $scope.getContainerTags();
         $scope.successContent = [];
@@ -127,6 +227,7 @@ angular.module('dockstore.ui')
                 v = true;
               }
             }
+            //$scope.getContentHTML('descriptor');
             $scope.$emit('returnMissing',m);
             $scope.$emit('returnValid',v);
             $scope.refreshDocumentType();
@@ -295,14 +396,32 @@ angular.module('dockstore.ui')
         switch ($scope.type) {
           case 'dockerfile':
             $scope.expectedFilename = 'Dockerfile';
-            $scope.getDockerFile($scope.containerObj.id, $scope.selTagName);
+            var dockerfile = $scope.getDockerFile($scope.containerObj.id, $scope.selTagName);
+            if(dockerfile !== undefined){
+              dockerfile.then(function(s){
+                $scope.totalLinesDf = s.split(/\n/).length;
+                $scope.getContentHTML("dockerfile");
+              },
+              function(e){
+                console.log("error refreshDocument",e);
+              });
+            }
             break;
           case 'descriptor':
             $scope.expectedFilename = 'Descriptor';
             // prepare Descriptor Imports drop-down
             $scope.secondaryDescriptors = extracted();
             $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
-            $scope.getSecondaryDescriptorFile($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName, $scope.selSecondaryDescriptorName);
+            var file = $scope.getSecondaryDescriptorFile($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName, $scope.selSecondaryDescriptorName);
+            if(file !== undefined){
+              file.then(function(s){
+                $scope.totalLinesDesc = s.split(/\n/).length;
+                $scope.getContentHTML("descriptor");
+              },
+              function(e){
+                console.log("error refreshDocument",e);
+              });
+            }
             break;
           default:
           // ...
@@ -315,11 +434,29 @@ angular.module('dockstore.ui')
         switch ($scope.type) {
           case 'dockerfile':
             $scope.expectedFilename = 'Dockerfile';
-            $scope.getDockerFile($scope.containerObj.id, $scope.selTagName);
+            var dockerfile = $scope.getDockerFile($scope.containerObj.id, $scope.selTagName);
+            if(dockerfile !== undefined){
+              dockerfile.then(function(s){
+                $scope.totalLinesDf = s.split(/\n/).length;
+                $scope.getContentHTML("dockerfile");
+              },
+              function(e){
+                console.log("error refreshDocument",e);
+              });
+            }
             break;
           case 'descriptor':
             $scope.expectedFilename = 'Descriptor';
-            $scope.getSecondaryDescriptorFile($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName, $scope.selSecondaryDescriptorName);
+            var file = $scope.getSecondaryDescriptorFile($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName, $scope.selSecondaryDescriptorName);
+            if(file !== undefined){
+              file.then(function(s){
+                $scope.totalLinesDesc = s.split(/\n/).length;
+                $scope.getContentHTML("descriptor");
+              },
+              function(e){
+                console.log("error refreshDocument",e);
+              });
+            }
             break;
           default:
             // ...

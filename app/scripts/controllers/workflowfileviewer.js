@@ -29,7 +29,7 @@ angular.module('dockstore.ui')
         var codeTag = document.getElementById('code');
         
         if(contentHTML !== "<code class=\"hljs\"></code>" && contentHTML !== "<code class=\"hljs yaml\"></code>"){
-          if(pre.length === 1){
+          if($('#preCopy').length === 0){
             $('pre').hide(); //hide the original code
             //create new elements/nodes for copy of pre
             var preCopy = document.createElement("PRE");

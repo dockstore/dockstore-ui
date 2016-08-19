@@ -45,6 +45,10 @@ angular.module('dockstore.ui')
         $scope.$broadcast('checkDescPageType');
       };
 
+      $scope.dockerfileTab = function() {
+        $scope.$broadcast('dockerfileTab');
+      };
+
       $scope.refreshTagLaunchWith = function() {
         //get the tool tags that are valid
         $scope.validTags = [];
