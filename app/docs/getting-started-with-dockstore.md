@@ -10,9 +10,9 @@ Your link to GitHub is established on login and you will then be prompted to lin
 
 ![Link accounts](docs/linking1.png)
 
-Linking a supported image repository service (e.g. Quay.io) will automatically trigger a synchronization order to retrieve information about the account's containers
+Linking a supported image repository service (e.g. Quay.io) will automatically trigger a synchronization order to retrieve information about the account's tools
 
-![Refresh containers](docs/linking2.png)
+![Refresh tools](docs/linking2.png)
 
 Below, GitHub, BitBucket and Quay.io accounts have been linked, it is necessary for at least the GitHub account be linked in order to perform regular account activities.
 
@@ -28,13 +28,13 @@ Now that you have your `Dockerfile` and `Dockstore.cwl` in GitHub, have setup Qu
 
 ### Quick Registration via the Web UI 
 
-In the authenticated Web UI, navigate to 'My Containers' to begin managing Docker images imported through your linked account(s). These pages will allow you to quickly register containers that follow a particularly simple format (look below to manual registration for more complex formats). For quick registration, we look through your quay.io images and see if any are setup as [automated builds](https://docs.quay.io/guides/building.html). Using those to track back to your github or bitbucket accounts, we list all pairs of Docker images with git repositories that contain a `Dockstore.cwl` and a `Dockerfile`. When we discover both of these, we create an unregistered entry in the interface below. 
+In the authenticated Web UI, navigate to 'My Tools' to begin managing Docker images imported through your linked account(s). These pages will allow you to quickly register tools that follow a particularly simple format (look below to manual registration for more complex formats). For quick registration, we look through your quay.io images and see if any are setup as [automated builds](https://docs.quay.io/guides/building.html). Using those to track back to your github or bitbucket accounts, we list all pairs of Docker images with git repositories that contain a `Dockstore.cwl` and a `Dockerfile`. When we discover both of these, we create an unregistered entry in the interface below. 
 
-![My Containers](docs/register_ui.png)
+![My Tools](docs/register_ui.png)
 
-The left side menu is a list of all image repositories associated with the user, grouped lexicographically by namespace. Words encapsulated in parentheses denotes the toolname. Detailed information and links for each container is located on the 'Info' tab. The 'Labels' tab allows editing of keywords to be associated with a container for efficient searching and grouping. Settings such as the path to the Dockerfile and CWL Descriptor can be modified on a per-tag basis in the 'Versions' tab. The Dockerfile and CWL/WDL Descriptor may be viewed in the last two tabs, by the Version tag (corresponding to a Git tag/branch).
+The left side menu is a list of all image repositories associated with the user, grouped lexicographically by namespace. Words encapsulated in parentheses denotes the toolname. Detailed information and links for each tool is located on the 'Info' tab. The 'Labels' tab allows editing of keywords to be associated with a tool for efficient searching and grouping. Settings such as the path to the Dockerfile and CWL Descriptor can be modified on a per-tag basis in the 'Versions' tab. The Dockerfile and CWL/WDL Descriptor may be viewed in the last two tabs, by the Version tag (corresponding to a Git tag/branch).
 
-A container is not visible on the public 'Containers' listing unless it is published. To publish a container, press the yellow 'Register' button in the top-right corner.
+A tool is not visible on the public 'Tools' listing unless it is published. To publish a tool, press the yellow 'Register' button in the top-right corner.
 
 For the tutorial, generally, you should hit the "Refresh All Tools" button to make sure Dockstore has examined your latest repositories on Quay.  Do this especially if you created a new repository like we did here.
                   
@@ -46,19 +46,19 @@ Now select the `collaboratory/dockstore-tool-bamstats` repository and click "Pub
                   
 You can also click on the "Versions" tab and should notice `1.25-3` is present and Valid=Yes.  If any versions are invalid it is likely due to a path issue to the `Dockstore.cwl`, `Dockerfile`, or `Dockstore.wdl` (if used) files.  In BAMStats I used the default value of `Dockstore.cwl` and `Dockerfile` in the root repo directory so this was not an issue.
 
-#### Manual Registration of Containers
+#### Manual Registration of Tools
 
-Outside of this tutorial, in certain cases, it is not possible for Dockstore to register every existing container, especially those with unusual project structures. Most notably, Docker Hub images can not be automatically detected by Dockstore. The second possibility is that you have multiple CWL documents in a GitHub repository associated with multiple images. For those cases, it is necessary to manually register their details to Dockstore.
+Outside of this tutorial, in certain cases, it is not possible for Dockstore to register every existing tool, especially those with unusual project structures. Most notably, Docker Hub images can not be automatically detected by Dockstore. The second possibility is that you have multiple CWL documents in a GitHub repository associated with multiple images. For those cases, it is necessary to manually register their details to Dockstore.
 
-Containers can be registered manually from the 'My Containers' page by pressing the 'Add Container' button at the bottom of the right side bar, or any of the '+' buttons in each accordion namespace group. A modal will appear as below:
+Tools can be registered manually from the 'My Tools' page by pressing the 'Add Tool' button at the bottom of the right side bar, or any of the '+' buttons in each accordion namespace group. A modal dialog will appear as below:
 
-![Register Container Manual](docs/register_container_manual.png)
+![Register Tool Manual](docs/register_container_manual.png)
 
 The Source Code Repository and Image Registry fields must be filled out, they are in the format `namespace/name` (the two paths may differ). The Dockerfile Path and CWL/WDL Descriptor Paths are relative to the root of the Source Code Repository (and must begin with '/'), these will be the default locations to find their corresponding files, unless specified otherwise in the tags. The toolname is an optional 'suffix' appended to the Dockstore path, it allows for two repositories to share the same Git and Image Registry paths; the image registry path and the toolname uniquely distinguishes image repositories in Dockstore.
 
-Upon successful submission and registration of the container, a resynchronization call will be made to fetch all available data from the given sources. If the image registry is Quay.io, existing version tags will be prepopulated for the Dockstore record.
+Upon successful submission and registration of the tool, a resynchronization call will be made to fetch all available data from the given sources. If the image registry is Quay.io, existing version tags will be prepopulated for the Dockstore record.
 
-The user will then be taken to the 'Versions' tab of the new container, where tags (corresponding to GitHub/Bitbucket tag names) may be added.
+The user will then be taken to the 'Versions' tab of the new tool, where tags (corresponding to GitHub/Bitbucket tag names) may be added.
 
 ![Versions Grid](docs/version_tags.png)
 
@@ -164,7 +164,7 @@ First, we will work in tool mode (`dockstore tool`). We recommend you first `doc
     ------------------
 
 
-You can then use `dockstore tool publish` to see the list of available Docker images you can register with Dockstore. This is for you to publish containers that are auto-detected from Quay.io. The key is that Docker images you wish to (quick) publish have the following qualities:
+You can then use `dockstore tool publish` to see the list of available Docker images you can register with Dockstore. This is for you to publish tools that are auto-detected from Quay.io. The key is that Docker images you wish to (quick) publish have the following qualities:
 
 0. public
 0. at least one valid tag. In order to be valid, a tag has to:
@@ -193,7 +193,7 @@ You can then use `dockstore tool publish` to see the list of available Docker im
 
 You can see in the above, the tool (identified with `quay.io/cancercollaboratory/dockstore-tool-snpeff` in Dockstore and Quay.io) was successfully registered and can be seen by anyone on the Dockstore site.
 
-The `dockstore tool manual_publish` command can be used to manually register a container on Docker Hub. Its usage is outlined in the publish_manual help menu. This will allow you to register entries that do not follow the qualities above (non-automated builds and Docker Hub images). 
+The `dockstore tool manual_publish` command can be used to manually register a tool on Docker Hub. Its usage is outlined in the publish_manual help menu. This will allow you to register entries that do not follow the qualities above (non-automated builds and Docker Hub images). 
 
     $ dockstore tool manual_publish
     

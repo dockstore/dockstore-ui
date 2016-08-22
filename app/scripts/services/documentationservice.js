@@ -59,6 +59,12 @@ angular.module('dockstore.ui')
           description: 'Dockstore news and events',
           name: 'News and Events',
           path: 'docs/blog.md'
+        },
+        {
+          slug: 'advanced-features',
+          description: 'This page introduces advanced features of Dockstore that may make using or developing Dockstore tools more convenient',
+          name: 'Advanced Features',
+          path: 'docs/advanced-features.md'
         }
       ];
 
