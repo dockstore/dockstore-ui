@@ -82,7 +82,7 @@ Again, we provide an example from the [dockstore-tool-bamstats](https://github.c
 You can see this tool takes two inputs, a parameter to control memory usage and a BAM file (binary sequence alignment file).  It produces one output, a zip file, that contains various HTML reports that BamStats creates.
 
 There's a lot going on here.  Let's break it down.  The CWL is actually recognized and parsed by Dockstore (when we register this later). By
-default it recognizes `Dockstore.cwl` but you can customize this if you need to.  One of the most important items below is the [CWL version](http://www.commonwl.org/v1.0/CommandLineTool.html#CWLVersion), you should label your CWL with the version you are using so CWL tools that cannot run this version can error our appropriately.  
+default it recognizes `Dockstore.cwl` but you can customize this if you need to.  One of the most important items below is the [CWL version](http://www.commonwl.org/v1.0/CommandLineTool.html#CWLVersion), you should label your CWL with the version you are using so CWL tools that cannot run this version can error out appropriately. Our tools have been tested with draft-3 and v1.0 (we recommend the latter).
 
 ```
 class: CommandLineTool
@@ -105,6 +105,8 @@ dct:creator:
 ```
 
 This section includes the tool author referenced by Dockstore. It is open to your interpretation whether that is the person that registers the tool, the person who made the Docker image, or the developer of the original tool.  I'm biased towards the person that registers the tool since that is likely to be the primary contact when asking questions about how the tool was setup.
+
+You can register for an [ORCID](http://orcid.org/) (a digital identifer for researchers) or use an email address for your id.  
 
 ```
 requirements:
@@ -141,8 +143,7 @@ This may or may not be honoured by the tool calling this CWL but at least it giv
           position: 2
 
 This is one of the items from the inputs section.  Notice a few things, first, the `bam_input:` matches with `bam_input` in the sample parameterization JSON.
-Also, you can control the position of the variable, it can have a type (int or File here), and, for tools that require a prefix (`--prefix`) before a
-parameter you can use the `prefix` key:value in the inputBindings section.
+Also, you can control the position of the variable, it can have a type (int or File here), and, for tools that require a prefix (`--prefix`) before a parameter you can use the `prefix: key` in the inputBindings section.
 
 Also, I'm using the `format` field to specify a file format via the [EDAM](http://bioportal.bioontology.org/ontologies/EDAM) ontology.
 

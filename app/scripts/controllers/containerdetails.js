@@ -100,11 +100,11 @@ angular.module('dockstore.ui')
       };
 
       $scope.showLaunchWith = function() {
-        if($scope.containerObj.tags.length === 0 || 
+        if($scope.containerObj.tags.length === 0 ||
           $scope.validTags.length === 0){
           //no tags available in the container, do not show launchWith
           //return false immediately to get out of this method
-          return false; 
+          return false;
         }
 
         // assign default values
@@ -124,7 +124,7 @@ angular.module('dockstore.ui')
         }
 
         //get rid of blank option in tag dropdown if exists
-        if(document.getElementById('tagVersion')[0].value === '?' || 
+        if(document.getElementById('tagVersion')[0].value === '?' ||
           document.getElementById('tagVersion')[0].value === ''){
           $scope.refreshTagLaunchWith();
           var firstElement = $scope.toolTagName;
@@ -142,7 +142,7 @@ angular.module('dockstore.ui')
         }
 
         //get rid of blank option in descriptor dropdown if exists
-        if(document.getElementById('descType')[0].value === '?' || 
+        if(document.getElementById('descType')[0].value === '?' ||
           document.getElementById('descType')[0].value === ''){
           var firstElementDesc = $scope.descAvailable[0];
           var descriptorAvailable = $scope.descAvailable;
@@ -155,17 +155,17 @@ angular.module('dockstore.ui')
           }).remove();
         }
 
-        $scope.launchWith = 
+        $scope.launchWith =
           "dockstore tool " + $scope.desc + " --entry " + tool_path + ":" + $scope.toolTagName +" > Dockstore." + $scope.desc +
           "\ndockstore tool convert " + toJson + " --" + $scope.desc + " Dockstore." + $scope.desc + " > Dockstore.json" +
-          "\nvim Dockstore.json"+
+          "\nvim Dockstore.json       #edit the provided json file and fill in desired inputs, outputs, and other parameters"+
           "\ndockstore tool launch --entry " + tool_path + ":" + $scope.toolTagName + " --json Dockstore.json";
 
         return $scope.validContent; //only show LaunchWith when content is valid
       };
 
       $scope.tagLaunchWith = function(tag) {
-        //method is called when specific tag is selected 
+        //method is called when specific tag is selected
         //to change the LaunchWith commands
         $scope.toolTag = tag;
         for(var i=0;i<$scope.containerObj.tags.length;i++){
@@ -178,7 +178,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.descLaunchWith = function(descriptor) {
-        //method is called when descriptor is selected 
+        //method is called when descriptor is selected
         //to change the LaunchWith commands
         $scope.desc = descriptor;
         $scope.showLaunchWith();
