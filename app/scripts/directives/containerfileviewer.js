@@ -17,8 +17,8 @@ angular.module('dockstore.ui')
         isEnabled: '='
       },
       templateUrl: 'templates/containerfileviewer.html',
-      link: function postLink(scope, element, attrs) {
-        scope.$watch('containerObj.path', function(newValue, oldValue) {
+      link: function postLink(scope) {
+        scope.$watch('containerObj.path', function(newValue) {
           if (newValue) {
             console.log("changed containerObj path");
             scope.setDocument();
@@ -26,24 +26,24 @@ angular.module('dockstore.ui')
             scope.checkDockerfile();
           }
         });
-        scope.$on('refreshFiles', function(event) {
+        scope.$on('refreshFiles', function() {
           scope.setDocument();
           scope.refreshDocument();
         });
-        scope.$on('checkDescPageType', function(event) {
+        scope.$on('checkDescPageType', function() {
           scope.checkDescriptor();
         });
-        scope.$on('dockerfileTab', function(event){
+        scope.$on('dockerfileTab', function(){
           scope.checkDockerfile();
         });
         scope.$watchGroup(
           ['selTagName', 'selDescriptorName'],
-          function(newValues, oldValues) {
+          function() {
             scope.refreshDocumentType();
           });
         scope.$watchGroup(
           ['containerObj.id', 'selSecondaryDescriptorName'],
-          function(newValues, oldValues) {
+          function() {
             scope.refreshDocument();
           });
       }

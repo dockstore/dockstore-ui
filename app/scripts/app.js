@@ -21,8 +21,8 @@ angular
     'LocalStorageModule',
     'ui.bootstrap',
     'toaster',
-    'hc.marked',
     'hljs',
+    'hc.marked',
     'sn.addthis'
   ])
   .config(['$authProvider', 'WebService',
@@ -45,6 +45,14 @@ angular
       hljsServiceProvider.setOptions({
         tabReplace: '    '
       });
+  }])
+  .config(['markedProvider', function (markedProvider) {
+    markedProvider.setOptions({
+      gfm: true,
+      tables: true,
+      breaks: true,
+      sanitize: true
+    });
   }])
   .config(['$routeProvider', '$locationProvider',
     function ($routeProvider, $locationProvider) {
@@ -178,19 +186,19 @@ angular
   }])
   .run(['$rootScope', '$auth', '$location', 'UserService',
     function($rootScope, $auth, $location, UserService) {
-      $rootScope.$on('auth401Refused', function(event) {
+      $rootScope.$on('auth401Refused', function() {
         UserService.logout({
           title: 'Dockstore Web Service',
           content: 'Invalid token or authorization denied, please sign in again.'
         });
       });
-      $rootScope.$watch('searchQueryContainer', function(newValue, oldValue) {
+      $rootScope.$watch('searchQueryContainer', function(newValue) {
         if (newValue) $location.path('/search-containers');
       });
-      $rootScope.$watch('searchQueryWorkflow', function(newValue, oldValue) {
+      $rootScope.$watch('searchQueryWorkflow', function(newValue) {
         if (newValue) $location.path('/search-workflows');
       });
-      $rootScope.$on('$routeChangeStart', function(event, next, current) {
+      $rootScope.$on('$routeChangeStart', function() {
         if ($location.url() === '/') return;
         var public_views = [
           '/search-containers', '/containers', '/docs', '/login', '/publish', 'maintenance', '/workflows', '/search-workflows'

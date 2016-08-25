@@ -347,6 +347,28 @@
             <strong>Last Update</strong>:
             {{ containerObj.lastUpdated ? getDateTimeString(containerObj.lastUpdated) : 'n/a' }}
           </li>
+          <li ng-show="showLaunchWith()">
+            <strong>Launch With:</strong>
+            <div class="pull-right" style="margin-left:5px">
+              <select id="descType"
+                      ng-model="desc"
+                      ng-options="descType for descType in descAvailable"
+                      ng-change="descLaunchWith(desc)">
+              </select>
+            </div>
+            <div class="pull-right" style="margin-left:5px">
+              <select id="tagVersion"
+                      ng-model="toolTag"
+                      ng-options="tag.id as tag.name for tag in validTags"
+                      ng-change="tagLaunchWith(toolTag)">
+              </select>
+            </div>
+            <div class="well well-sm">
+                            <div>
+                              <pre>{{launchWith}}</pre>
+                            </div>
+                          </div>
+          </li>
           <li>
             <strong>Description</strong>:
             <div class="well well-sm">
@@ -359,31 +381,6 @@
               </span>
             </div>
           </li>
-                 <li ng-show="showLaunchWith()">
-            <strong>Launch With:</strong>
-            <div class="pull-right" style="margin-left:5px">
-                <select id="descType"
-                ng-model="desc"
-                ng-options="descType for descType in descAvailable"
-                ng-change="descLaunchWith(desc)">
-                </select>
-              </div>
-            <div class="pull-right" style="margin-left:5px">
-              <select id="tagVersion"
-                ng-model="toolTag"
-                ng-options="tag.id as tag.name for tag in validTags"
-                ng-change="tagLaunchWith(toolTag)">
-                </select>
-            </div>
-
-            <div class="well well-sm">
-              <div>
-                <pre>{{launchWith}}</pre>
-              </div>
-            </div>
-          </li>
-
-
         </ul>
         <div ng-if="!editMode">
           <hr />

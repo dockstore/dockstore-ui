@@ -19,7 +19,7 @@
     "cytoscape-dagre" : "~1.1.2",
     "jquery": "~2.1.4",
     "angular-highlightjs": "~0.6.1",
-    "angular-marked": "~0.0.21",
+    "angular-marked": "~1.2.2",
     "angular-messages": "~1.5.8",
     "angular-addthis": "~0.2.0"
   },

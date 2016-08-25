@@ -14,8 +14,7 @@ angular.module('dockstore.ui')
     'ContainerService',
     'FormattingService',
     'NotificationService',
-    function ($scope, $q, ContainerService, FrmttSrvc, NtfnService) {
-
+    function ($scope, $q, ContainerService, FrmttSrvc) {
       $scope.labelsEditMode = false;
       $scope.dockerfileEnabled = false;
       $scope.descriptorEnabled = false;
@@ -51,6 +50,9 @@ angular.module('dockstore.ui')
 
       $scope.refreshTagLaunchWith = function() {
         //get the tool tags that are valid
+        if ($scope.containerObj === null){
+          return;
+        }
         $scope.validTags = [];
         for(var i=0;i<$scope.containerObj.tags.length;i++){
           if($scope.isTagValid($scope.containerObj.tags[i])){
@@ -100,7 +102,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.showLaunchWith = function() {
-        if($scope.containerObj.tags.length === 0 ||
+        if($scope.containerObj === undefined || $scope.containerObj.tags.length === 0 ||
           $scope.validTags.length === 0){
           //no tags available in the container, do not show launchWith
           //return false immediately to get out of this method
@@ -108,12 +110,7 @@ angular.module('dockstore.ui')
         }
 
         // assign default values
-        var tool_path = $scope.containerObj.path;
-        var toJson = 'cwl2json';
-
-        if($scope.desc === 'wdl'){
-          toJson = 'wdl2json';
-        }
+        var tool_path = $scope.containerObj === null ? "" : $scope.containerObj.path;
 
         //get the tag name from tag id
         for(var i=0;i<$scope.validTags.length;i++){
@@ -124,41 +121,44 @@ angular.module('dockstore.ui')
         }
 
         //get rid of blank option in tag dropdown if exists
-        if(document.getElementById('tagVersion')[0].value === '?' ||
-          document.getElementById('tagVersion')[0].value === ''){
+        if(document.getElementById('tagVersion')[0] !== undefined &&
+          (document.getElementById('tagVersion')[0].value === '?' ||
+          document.getElementById('tagVersion')[0].value === '')){
           $scope.refreshTagLaunchWith();
           var firstElement = $scope.toolTagName;
           var validTagsNameArray =[];
           for(var j=0;j<$scope.validTags.length;j++){
             validTagsNameArray.push($scope.validTags[j].name);
           }
-
-          $("#tagVersion option").filter(function(){
+          var tagVersion = $("#tagVersion");
+          tagVersion.find("option").filter(function(){
             return $(this).text() === firstElement;
           }).attr('selected',true);
-          $("#tagVersion option").filter(function(){
+          tagVersion.find("option").filter(function(){
             return window.jQuery.inArray($(this).text(),validTagsNameArray) === -1;
           }).remove();
         }
 
         //get rid of blank option in descriptor dropdown if exists
-        if(document.getElementById('descType')[0].value === '?' ||
-          document.getElementById('descType')[0].value === ''){
+        if(document.getElementById('descType')[0] !== undefined &&
+          (document.getElementById('descType')[0].value === '?' ||
+          document.getElementById('descType')[0].value === '')){
           var firstElementDesc = $scope.descAvailable[0];
           var descriptorAvailable = $scope.descAvailable;
-
-          $("#descType option").filter(function(){
+          var descType = $("#descType");
+          descType.find("option").filter(function(){
             return $(this).text() === firstElementDesc;
           }).attr('selected',true);
-          $("#descType option").filter(function(){
+          descType.find("option").filter(function(){
             return window.jQuery.inArray($(this).text(),descriptorAvailable) === -1;
           }).remove();
         }
 
         $scope.launchWith =
-          "dockstore tool " + $scope.desc + " --entry " + tool_path + ":" + $scope.toolTagName +" > Dockstore." + $scope.desc +
-          "\ndockstore tool convert " + toJson + " --" + $scope.desc + " Dockstore." + $scope.desc + " > Dockstore.json" +
-          "\nvim Dockstore.json       #edit the provided json file and fill in desired inputs, outputs, and other parameters"+
+          "# make a runtime JSON template and fill in desired inputs, outputs, and other parameters" +
+          "\ndockstore tool convert entry2json --entry " + tool_path + ":" + $scope.toolTagName +" > Dockstore.json" +
+          "\nvim Dockstore.json"+
+          "\n# run it locally with the Dockstore CLI" +
           "\ndockstore tool launch --entry " + tool_path + ":" + $scope.toolTagName + " --json Dockstore.json";
 
         return $scope.validContent; //only show LaunchWith when content is valid
@@ -185,11 +185,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.isTagValid = function(element) {
-        if(element.valid){
-          return true;
-        }else{
-          return false;
-        }
+        return !!element.valid;
       };
 
       $scope.loadContainerDetails = function(containerPath) {
@@ -231,7 +227,7 @@ angular.module('dockstore.ui')
               );
               return $q.reject(response);
             }
-          ).finally(function(response) {
+          ).finally(function() {
             $scope.containerEditData.isPublished = $scope.containerObj.is_published;
           });
       };
@@ -240,7 +236,7 @@ angular.module('dockstore.ui')
         $scope.setContainerDetailsError(null);
         return ContainerService.deleteContainer(containerId)
           .then(
-            function(response) {
+            function() {
               $scope.$emit('deregisterContainer', containerId);
               return containerId;
             },
@@ -282,7 +278,7 @@ angular.module('dockstore.ui')
               );
               return $q.reject(response);
             }
-          ).finally(function(response) {
+          ).finally(function() {
             $scope.refreshingContainer = false;
           });
       };
@@ -516,12 +512,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.checkOverflow = function() {
-
-        if ($('#label-values')[0].scrollHeight > $('#label-holder').height()) {
-           return true;
-        } else {
-          return false;
-        }
+        return $('#label-values')[0].scrollHeight > $('#label-holder').height();
       };
 
       $scope.moveToStart = function(element) {
@@ -564,9 +555,9 @@ angular.module('dockstore.ui')
             $scope.containerObj.default_dockerfile_path !== 'undefined'){
           $scope.setDefaultToolPath($scope.containerObj.id,
             cwlpath, wdlpath, dfpath)
-          .then(function(containerObj) {
+          .then(function() {
             $scope.updateToolTagPaths($scope.containerObj.id, cwlpath, wdlpath, dfpath)
-              .then(function(containerObj){
+              .then(function(){
                 $scope.labelsEditMode = false;
                 $scope.refreshContainer($scope.containerObj.id,0);
               });
@@ -584,7 +575,7 @@ angular.module('dockstore.ui')
         if ($scope.containerEditData.labels !== 'undefined') {
           $scope.setContainerLabels($scope.containerObj.id,
               $scope.containerEditData.labels)
-            .then(function(containerObj) {
+            .then(function() {
               $scope.labelsEditMode = false;
             });
         }
@@ -609,7 +600,7 @@ angular.module('dockstore.ui')
         return false;
       };
 
-      $scope.$watch('containerPath', function(newValue, oldValue) {
+      $scope.$watch('containerPath', function(newValue) {
         if (newValue) {
           $scope.setContainerDetailsError(null);
           $scope.missingContent = [];
@@ -617,7 +608,7 @@ angular.module('dockstore.ui')
 
           if (!$scope.editMode) {
             $scope.loadContainerDetails($scope.containerPath)
-              .then(function(containerObj) {
+              .then(function() {
                 $scope.updateInfoURLs();
                 $scope.refreshTagLaunchWith();
                 $scope.refreshDescLaunchWith();
@@ -632,7 +623,7 @@ angular.module('dockstore.ui')
         }
       });
 
-      $scope.$watch('containerToolname', function(newValue, oldValue) {
+      $scope.$watch('containerToolname', function(newValue) {
         if (newValue) {
           $scope.updateInfoURLs();
         }

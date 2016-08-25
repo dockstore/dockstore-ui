@@ -42,7 +42,7 @@ module.exports = function(config) {
       'bower_components/cytoscape-dagre/cytoscape-dagre.js',
       'bower_components/angular-highlightjs/build/angular-highlightjs.js',
       'bower_components/marked/lib/marked.js',
-      'bower_components/angular-marked/angular-marked.js',
+      'bower_components/angular-marked/dist/angular-marked.js',
       'bower_components/angular-messages/angular-messages.js',
       'bower_components/angular-addthis/dist/angular-addthis.js',
       'bower_components/angular-mocks/angular-mocks.js',
@@ -56,7 +56,7 @@ module.exports = function(config) {
     exclude: [
     ],
 
-    customLaunchers: {  
+    customLaunchers: {
       Chrome_travis_ci: {
          base: 'Chrome',
 	 flags: ['--no-sandbox']
@@ -102,19 +102,19 @@ module.exports = function(config) {
     // URL root prevent conflicts with the site root
     // urlRoot: '_karma_'
 
-    preprocessors: {  
+    preprocessors: {
       'app/scripts/**/*.js': ['coverage']
     },
 
     reporters: ['dots', 'coverage'],
 
-    coverageReporter: {  
+    coverageReporter: {
       type: 'lcov',
       dir: 'build/coverage/'
     }
   });
 
-  if(process.env.TRAVIS) {  
+  if(process.env.TRAVIS) {
     config.browsers = ['Chrome_travis_ci'];
   }
 };
