@@ -12,7 +12,8 @@ angular.module('dockstore.ui')
     '$scope',
     '$q',
     'TokenService',
-    function ($scope, $q, TokenService) {
+    'NotificationService',
+    function ($scope, $q, TokenService, NtfnService) {
 
       $scope.metadata = function(){
         return TokenService.getWebServiceVersion()
@@ -26,7 +27,7 @@ angular.module('dockstore.ui')
               $scope.ga4ghApiVersion = "unreachable";
               var message = '[HTTP ' + response.status + '] ' +
                 response.statusText + ': ' + response.data;
-              TokenService.popError('Metadata', message);
+              NtfnService.popError('Metadata', message);
               return $q.reject(response);
             }
           );

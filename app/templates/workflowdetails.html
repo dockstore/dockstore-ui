@@ -98,6 +98,7 @@
         </button>
 
       </div>
+
     </h3>
   </div>
   <div class="col-md-4"
@@ -204,6 +205,12 @@
           <li ng-show="editMode">
             <strong>Mode</strong>:
             {{workflowObj.mode | lowercase}}
+            <a
+              ng-disabled="refreshingWorkflow || (workflowObj.mode === 'STUB' || workflowObj.is_published)"
+              ng-hide="workflowObj.mode === 'STUB' || workflowObj.is_published"
+              ng-click="restubWorkflow(workflowObj.id);">
+               (Restub)
+            </a>
           </li>
           <li>
           <!-- when not in edit mode-->

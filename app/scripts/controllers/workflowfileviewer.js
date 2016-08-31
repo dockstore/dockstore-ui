@@ -27,7 +27,7 @@ angular.module('dockstore.ui')
         var contentHTML = pre[0].innerHTML;
         var firstChildNode = pre[0].firstChild;
         var codeTag = document.getElementById('code');
-        
+
         if(contentHTML !== "<code class=\"hljs\"></code>" && contentHTML !== "<code class=\"hljs yaml\"></code>"){
           if($('#preCopy').length === 0){
             $('pre').hide(); //hide the original code
@@ -40,7 +40,7 @@ angular.module('dockstore.ui')
             preCopy.setAttribute("id","preCopy");
             lineNumSpan.setAttribute("class","line-number");
             closeSpan.setAttribute("class","cl");
-            
+
             //append nodes to appropriate tags
             preCopy.appendChild(lineNumSpan);
             preCopy.appendChild(firstChildNode);
@@ -90,7 +90,7 @@ angular.module('dockstore.ui')
             };
             index++;
         }
-        
+
         var checkSuccess = function(acc) {
           var makePromises = function(acc, start) {
             var vd = acc[start];
@@ -301,14 +301,16 @@ angular.module('dockstore.ui')
         $scope.secondaryDescriptors = extracted();
         $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
         var file = $scope.getSecondaryDescriptorFile($scope.workflowObj.id, $scope.selVersionName, $scope.descriptor, $scope.selSecondaryDescriptorName);
-        file.then(
-          function(s){
-            $scope.totalLines = s.split(/\n/).length;
-            $scope.getContentHTML();
-          },
-          function(e){
-            console.log("error refreshDocumentType",e);
-          });
+        if (file) {
+          file.then(
+           function(s){
+             $scope.totalLines = s.split(/\n/).length;
+              $scope.getContentHTML();
+           },
+            function(e){
+             console.log("error refreshDocumentType",e);
+           });
+          }
       };
 
       $scope.refreshDocument = function() {
@@ -316,14 +318,16 @@ angular.module('dockstore.ui')
         $scope.fileContents = null;
         $scope.expectedFilename = 'Descriptor';
         var file = $scope.getSecondaryDescriptorFile($scope.workflowObj.id, $scope.selVersionName, $scope.descriptor, $scope.selSecondaryDescriptorName);
-        file.then(
-          function(s){
-            $scope.totalLines = s.split(/\n/).length;
-            $scope.getContentHTML();
-          },
-          function(e){
-            console.log("error refreshDocument",e);
-          });
+        if (file) {
+          file.then(
+            function(s){
+              $scope.totalLines = s.split(/\n/).length;
+              $scope.getContentHTML();
+            },
+            function(e){
+              console.log("error refreshDocument",e);
+            });
+          }
       };
 
       $scope.setDocument();

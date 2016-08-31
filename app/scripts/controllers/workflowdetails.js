@@ -122,6 +122,32 @@ angular.module('dockstore.ui')
           });
       };
 
+      $scope.restubWorkflow = function(workflowId, activeTabIndex) {
+        $scope.setWorkflowDetailsError(null);
+        if ($scope.refreshingWorkflow) return;
+        return WorkflowService.restubWorkflow(workflowId)
+          .then(
+            function(workflowObj) {
+              $scope.updateWorkflowObj({
+                workflowObj: workflowObj,
+                activeTabIndex: activeTabIndex ? activeTabIndex : null
+              });
+              $scope.updateInfoURLs();
+              return workflowObj;
+             },
+             function(response) {
+              $scope.setWorkflowDetailsError(
+                'The webservice encountered an error trying to refresh this ' +
+                'workflow, please ensure that the associated ' +
+                'descriptor is valid and accessible.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
+              return $q.reject(response);
+             }
+            );
+      };
+
       $scope.checkContentValid = function(){
         //will print this when the 'Publish' button is clicked
         var message = 'The file is missing some required fields. Please make sure the file has all the required fields. ';
@@ -169,7 +195,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.setDefaultWorkflowPath = function(workflowId, path){
-        return WorkflowService.setDefaultWorkflowPath(workflowId, path, $scope.workflowObj.workflowName, $scope.workflowObj.descriptorType, 
+        return WorkflowService.setDefaultWorkflowPath(workflowId, path, $scope.workflowObj.workflowName, $scope.workflowObj.descriptorType,
           $scope.workflowObj.path, $scope.workflowObj.gitUrl)
           .then(
             function(workflowObj){
@@ -194,7 +220,7 @@ angular.module('dockstore.ui')
       $scope.setDescriptorType = function(workflowId){
         //we are calling setDefaultWorkflowPath because PUT in this service will also change the descriptor type
         //and required to change the same values as when changing the default path
-        return WorkflowService.setDefaultWorkflowPath(workflowId, $scope.workflowObj.workflow_path, $scope.workflowObj.workflowName, 
+        return WorkflowService.setDefaultWorkflowPath(workflowId, $scope.workflowObj.workflow_path, $scope.workflowObj.workflowName,
           $scope.workflowObj.descriptorType, $scope.workflowObj.path, $scope.workflowObj.gitUrl)
           .then(
             function(workflowObj){
@@ -215,7 +241,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.updateWorkflowPathVersion = function(workflowId, path){
-        return WorkflowService.updateWorkflowPathVersion(workflowId, path, $scope.workflowObj.workflowName, $scope.workflowObj.descriptorType, 
+        return WorkflowService.updateWorkflowPathVersion(workflowId, path, $scope.workflowObj.workflowName, $scope.workflowObj.descriptorType,
           $scope.workflowObj.path, $scope.workflowObj.gitUrl)
           .then(
             function(workflowObj){
@@ -404,7 +430,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.checkExtension = function(path, type){
-        // will never have indexPeriod = -1 because by default save button 
+        // will never have indexPeriod = -1 because by default save button
         // is disabled when there is no extension provided in workflow path
         // and this function is called only when save button is clicked
         var indexPeriod = path.indexOf('.');

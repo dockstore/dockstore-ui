@@ -81,6 +81,19 @@ angular.module('dockstore.ui')
       });
     };
 
+    this.restubWorkflow = function(workflowId) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: WebService.API_URI + '/workflows/' + workflowId + '/restub',
+         }).then(function(response) {
+          resolve(response.data);
+         }, function(response) {
+          reject(response);
+         });
+        });
+       };
+
     this.refreshUserWorkflows = function(userId) {
       return $q(function(resolve, reject) {
         $http({
@@ -176,7 +189,9 @@ angular.module('dockstore.ui')
           method: 'GET',
           url: WebService.API_URI + '/workflows/' + workflowId + '/dag/' + workflowVersionId
         }).then(function(response) {
-          resolve(response.data);
+          if (response !== null) {
+            resolve(response.data);
+          }
         }, function(response) {
           reject(response);
         });
