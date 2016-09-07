@@ -64,7 +64,7 @@
     <div class="col-md-3 containers-rsb">
       <div class="ns-containers-accordion" ng-if="nsContainers">
         <uib-accordion close-others="true">
-          <uib-accordion-group ng-repeat="nsObj in nsContainers" is-open="nsContainers[$index].isOpen">
+          <uib-accordion-group ng-repeat="nsObj in nsContainers" is-open="$first">
             <uib-accordion-heading>
               <div class="container-namespace-label-oflw"
                   title="{{nsObj.namespace}}"

@@ -300,4 +300,18 @@ angular.module('dockstore.ui')
       });
     };
 
+    this.updateDefaultVersion = function(workflowId,workflowObj){
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'PUT',
+          url: WebService.API_URI + '/workflows/' + workflowId,
+          data: workflowObj
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
   }]);

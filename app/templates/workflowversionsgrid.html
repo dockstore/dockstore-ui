@@ -55,6 +55,7 @@
         </td>
         <td>
           <div class="git-ref">
+            <input class="radio-button-reference" ng-if="editMode" type="radio" name="defaultVersion" ng-model="$parent.workflowObj.defaultVersion" ng-value="versionTag.reference" ng-click="updateDefaultVersion(versionTag.reference)"/>
             {{versionTag.reference ? versionTag.reference : 'n/a'}}
             </span>
           </div>

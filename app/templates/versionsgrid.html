@@ -3,14 +3,14 @@
     <table class="table versions-grid table-bordered table-condensed table-striped">
       <thead>
         <tr>
-          <th style="width:7.5% !important">
+          <th style="width:10.5% !important">
             Tag
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('name')"
                   ng-click="clickSortColumn('name')">
             </span>
           </th>
-          <th style="width:14.5% !important">
+          <th style="width:8% !important">
             Git Reference
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('reference')"
@@ -31,14 +31,14 @@
                   ng-click="clickSortColumn('last_modified')">
             </span>
           </th>
-          <th style="width:9.5% !important">
+          <th style="width:7.5% !important">
             Valid
             <span class="glyphicon pull-right"
                   ng-class="getIconClass('valid')"
                   ng-click="clickSortColumn('valid')">
             </span>
           </th>
-          <th>
+          <th style="width:6.5% !important">
             Actions
           </th>
           <th>
@@ -58,8 +58,9 @@
           </td>
           <td>
             <div class="git-ref">
+              <input class="radio-button-reference" ng-if="editMode && versionTag.name !== 'latest'" type="radio" name="defaultVersion" ng-model="$parent.containerObj.defaultVersion" ng-value="versionTag.reference" ng-click="updateDefaultVersion(versionTag.reference)"/>
               {{versionTag.reference ? versionTag.reference : 'n/a'}}
-            </span>
+            </div>
           </td>
           <td>
             <div style="border-bottom:1.5px solid #ddd;margin-bottom:6px;">

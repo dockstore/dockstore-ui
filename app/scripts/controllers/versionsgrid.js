@@ -92,4 +92,11 @@ angular.module('dockstore.ui')
         };
       };
 
+      $scope.updateDefaultVersion = function(referenceName) {
+      $scope.containerObj.defaultValue = referenceName;
+        ContainerService.updateDefaultVersion($scope.containerObj.id,$scope.containerObj)
+        .then(function(){
+          $scope.$parent.refreshContainer($scope.containerObj.id,0);
+         });
+      };
   }]);

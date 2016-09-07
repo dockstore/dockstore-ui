@@ -239,7 +239,7 @@ angular.module('dockstore.ui')
       });
     };
 
-    // this is actually a partial update, see https://github.com/ga4gh/dockstore/issues/274 
+    // this is actually a partial update, see https://github.com/ga4gh/dockstore/issues/274
     this.setDefaultToolPath = function(containerId,cwlPath,wdlPath,dfPath,toolname,giturl){
       return $q(function(resolve, reject) {
         $http({
@@ -343,6 +343,21 @@ angular.module('dockstore.ui')
             });
           });
         };
+
+
+    this.updateDefaultVersion = function(containerId,toolObj){
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'PUT',
+          url: WebService.API_URI + '/containers/' + containerId,
+          data: toolObj
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
 
 
   }]);

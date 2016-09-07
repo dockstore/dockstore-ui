@@ -63,7 +63,7 @@
     <div class="col-md-3 containers-rsb">
       <div class="ns-containers-accordion">
         <uib-accordion close-others="true">
-          <uib-accordion-group ng-repeat="orgObj in orgWorkflows" is-open="orgWorkflows[$index].isOpen">
+          <uib-accordion-group ng-repeat="orgObj in orgWorkflows" is-open="$first">
             <uib-accordion-heading>
               <div class="container-namespace-label-oflw"
                    title="{{orgObj.organization}}"

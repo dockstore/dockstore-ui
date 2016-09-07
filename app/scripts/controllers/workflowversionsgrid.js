@@ -44,5 +44,13 @@ angular.module('dockstore.ui')
         $scope.versionTags.push(tagObj);
       };
 
+      $scope.updateDefaultVersion = function(referenceName) {
+      $scope.workflowObj.defaultValue = referenceName;
+        WorkflowService.updateDefaultVersion($scope.workflowObj.id,$scope.workflowObj)
+        .then(function(){
+          $scope.$parent.refreshWorkflow($scope.workflowObj.id,0);
+         });
+      };
+
 
   }]);
