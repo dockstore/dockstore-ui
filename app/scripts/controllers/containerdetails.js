@@ -102,7 +102,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.showLaunchWith = function() {
-        if($scope.containerObj === undefined || $scope.containerObj.tags.length === 0 ||
+        if($scope.containerObj === undefined ||  $scope.containerObj === null || $scope.containerObj.tags.length === 0 ||
           $scope.validTags.length === 0){
           //no tags available in the container, do not show launchWith
           //return false immediately to get out of this method

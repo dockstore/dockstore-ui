@@ -28,11 +28,6 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-show="filteredContainers.length === 0">
-              <td colspan="4">
-                <div class="text-center">No Records Found</div>
-              </td>
-            </tr>
             <!-- need a to write a 'smart search' filter -->
             <tr ng-repeat="container in ((filteredContainers = (containers | PreviewFilter:contLimit | filter: searchQueryContainer)) | orderBy:sortColumn:sortReverse | PaginationFilter:getListRange())">
               <td>
