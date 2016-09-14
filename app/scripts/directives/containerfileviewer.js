@@ -29,6 +29,7 @@ angular.module('dockstore.ui')
         scope.$on('refreshFiles', function() {
           scope.setDocument();
           scope.refreshDocument();
+          scope.checkDescriptor();
         });
         scope.$on('checkDescPageType', function() {
           scope.checkDescriptor();

@@ -59,17 +59,38 @@ angular.module('dockstore.ui')
             $scope.validTags.push($scope.containerObj.tags[i]);
           }
         }
+        var isVersionValid = false;
+        var firstTag;
         if($scope.validTags.length !==0){
-          $scope.toolTag = $scope.validTags[0].id;
-          $scope.toolTagName = $scope.validTags[0].name;
+          if ($scope.containerObj.defaultVersion === null) {
+            $scope.toolTag = $scope.validTags[0].id;
+            $scope.toolTagName = $scope.validTags[0].name;
+            firstTag = 0;
+          } else {
+            for (i = 0; i < $scope.validTags.length; i++) {
+              if ($scope.validTags[i].name === $scope.containerObj.defaultVersion) {
+                 $scope.toolTag = $scope.validTags[i].id;
+                 $scope.toolTagName = $scope.validTags[i].name;
+                 firstTag = i;
+                 isVersionValid = true;
+                break;
+              }
+            }
+            if (!isVersionValid) {
+              $scope.toolTag = $scope.validTags[0].id;
+              $scope.toolTagName = $scope.validTags[0].name;
+              firstTag = 0;
+            }
+          }
         }
+        $scope.refreshDescLaunchWith(firstTag);
       };
 
-      $scope.refreshDescLaunchWith = function() {
+      $scope.refreshDescLaunchWith = function(tagIndex) {
         //get the descriptor type that is available for tool version
         $scope.descAvailable = [];
-        for(var j=0;j<$scope.validTags[0].sourceFiles.length;j++){
-          var fileType = $scope.validTags[0].sourceFiles[j].type;
+        for(var j=0;j<$scope.validTags[tagIndex].sourceFiles.length;j++){
+          var fileType = $scope.validTags[tagIndex].sourceFiles[j].type;
           if($scope.descAvailable.indexOf(fileType)){
             if(fileType === 'DOCKSTORE_CWL' && $scope.descAvailable.indexOf('cwl') === -1){
               $scope.descAvailable.push('cwl');
@@ -79,7 +100,7 @@ angular.module('dockstore.ui')
           }
         }
         if($scope.descAvailable.length !==0){
-          $scope.desc = $scope.descAvailable[0];
+          $scope.desc = $scope.descAvailable[tagIndex];
         }
       };
 
@@ -611,14 +632,12 @@ angular.module('dockstore.ui')
               .then(function() {
                 $scope.updateInfoURLs();
                 $scope.refreshTagLaunchWith();
-                $scope.refreshDescLaunchWith();
               });
           } else {
             $scope.labelsEditMode = false;
             $scope.resetContainerEditData($scope.containerObj);
             $scope.updateInfoURLs();
             $scope.refreshTagLaunchWith();
-            $scope.refreshDescLaunchWith();
           }
         }
       });

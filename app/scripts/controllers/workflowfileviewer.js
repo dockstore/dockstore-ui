@@ -126,8 +126,27 @@ angular.module('dockstore.ui')
         var successResult = checkSuccess(accumulator);
         successResult.then(
           function(r){
-            $scope.selVersionName = $scope.successContent[0].version;
-            $scope.fileContent = $scope.successContent[0].content;
+            var isVersionValid = false;
+            if ($scope.successContent.length !== 0) {
+              if ($scope.workflowObj.defaultVersion === null) {
+                $scope.selVersionName = $scope.successContent[0].version;
+                $scope.fileContent = $scope.successContent[0].content;
+              } else {
+                for (var counter = 0; counter < $scope.successContent.length; counter++) {
+                  if ($scope.successContent[counter].version === $scope.workflowObj.defaultVersion) {
+                    $scope.selVersionName = $scope.successContent[counter].version;
+                    $scope.fileContent = $scope.successContent[counter].content;
+                    isVersionValid = true;
+                    break;
+                  }
+                }
+                if (!isVersionValid) {
+                  $scope.selVersionName = $scope.successContent[0].version;
+                  $scope.fileContent = $scope.successContent[0].content;
+                }
+              }
+            }
+
             var result = $scope.fileContent;
             m = [];
             v = false;
