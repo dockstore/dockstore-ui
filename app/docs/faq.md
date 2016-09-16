@@ -9,7 +9,11 @@ We can also provision input and output files from and to HTTP, ftp, and S3. We a
 
 ## What environment do you test tools in?
  
-Typically, we test running tools in Ubuntu Linux 14.04 LTS and 16.04 LTS on VMs in [OpenStack](https://www.openstack.org/) with 8 vCPUs and 96 GB of RAM and above. If you are only listing and editing tools, we have achieved success with much lower system requirements. However, launching tools will have higher system requirements dependent on the specific tool. Consult a tool's README when in doubt.   
+Typically, we test running tools in Ubuntu Linux 14.04 LTS and 16.04 LTS on VMs in [OpenStack](https://www.openstack.org/) with 8 vCPUs and 96 GB of RAM and above. If you are only listing and editing tools, we have achieved success with much lower system requirements. However, launching tools will have higher system requirements dependent on the specific tool. Consult a tool's README when in doubt.  
+ 
+## There are too many versions of my tool, how do I delete some?
+
+Versions of your tool for most tools are harvested from the list of Tags for an image on quay.io, [as an example](https://quay.io/repository/pancancer/pcawg-bwa-mem-workflow?tab=tags). If you have the right permissions, you can delete some and then refresh a tool on Dockstore to clean-up. 
 
 ## Do you have tips on creating Dockerfiles?
 

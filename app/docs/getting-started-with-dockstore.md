@@ -46,6 +46,11 @@ Now select the `collaboratory/dockstore-tool-bamstats` repository and click "Pub
                   
 You can also click on the "Versions" tab and should notice `1.25-3` is present and Valid=Yes.  If any versions are invalid it is likely due to a path issue to the `Dockstore.cwl`, `Dockerfile`, or `Dockstore.wdl` (if used) files.  In BAMStats I used the default value of `Dockstore.cwl` and `Dockerfile` in the root repo directory so this was not an issue.
 
+![Publish](docs/versions_toggle.png)
+
+Next, pick a version of your tool that you wish to present to the world by clicking on the radio selector in the Git Reference column. This will determine which version of your CWL/WDL file will be used to find the author, email, and description in the case that it changes between versions. This also allows you to pre-select a version of your tool to present to users in the "Launch With" section, and the Dockerfile and Descriptor tabs. 
+
+
 #### Manual Registration of Tools
 
 Outside of this tutorial, in certain cases, it is not possible for Dockstore to register every existing tool, especially those with unusual project structures. Most notably, Docker Hub images can not be automatically detected by Dockstore. The second possibility is that you have multiple CWL documents in a GitHub repository associated with multiple images. For those cases, it is necessary to manually register their details to Dockstore.
