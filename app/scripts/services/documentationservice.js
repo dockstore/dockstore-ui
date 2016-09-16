@@ -65,6 +65,12 @@ angular.module('dockstore.ui')
           description: 'This page introduces advanced features of Dockstore that may make using or developing Dockstore tools more convenient',
           name: 'Advanced Features',
           path: 'docs/advanced-features.md'
+        },
+        {
+          slug: 'faq',
+          description: 'This page gathers tools and tips on using Dockstore along with tips on creating tools with Docker and CWL 1.0',
+          name: 'FAQ',
+          path: 'docs/faq.md'
         }
       ];
 
