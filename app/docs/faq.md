@@ -15,6 +15,10 @@ Typically, we test running tools in Ubuntu Linux 14.04 LTS and 16.04 LTS on VMs 
 
 Versions of your tool for most tools are harvested from the list of Tags for an image on quay.io, [as an example](https://quay.io/repository/pancancer/pcawg-bwa-mem-workflow?tab=tags). If you have the right permissions, you can delete some and then refresh a tool on Dockstore to clean-up. 
 
+## How do I cite Dockstore?
+
+Currently, we recommend looking at our Zenodo entry. You will find a variety of citation styles and ways to export it at  [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.154185.svg)](https://doi.org/10.5281/zenodo.154185)
+
 ## Do you have tips on creating Dockerfiles?
 
 * make sure you [set up Docker command](https://docs.docker.com/engine/installation/linux/ubuntulinux/#/create-a-docker-group) on your system so you do not need sudo
