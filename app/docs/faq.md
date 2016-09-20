@@ -40,7 +40,17 @@ Additionally:
 * genomics workflows work with large data files, this can have a few ramifications:
     * do not "package" large data reference files in your Docker image.  Instead, treat them as "inputs" so they can be stagged outside and mounted into the running container
     * the `$TMPDIR` variable can be used as a scratch space inside your container.  Make sure your host running Docker has sufficient scratch space for processing your genomics data.
-    
+ 
+## How do I use the Dockstore CLI on a Mac?
+Use [Docker for Mac](https://docs.docker.com/engine/installation/mac/)
+
+Note:
+Docker behaves a bit differently on a [mac](https://docs.docker.com/docker-for-mac/osxfs/#/namespaces) than on a typical ubuntu machine. By default the only shared volumes are /Users, /Volumes, /tmp, and /private. Note that /var is not a shared directory (and can't be set as one). CWLtool uses your TMPDIR (the env variable) to setup volumes with docker, which on a Mac can default to a subdirectory of /var. In order to get CWLtool working on your mac, you need to set your TMPDIR to be under one of the shared volumes in Docker for Mac. You can do this by doing something similar to the following:
+
+```
+export TMPDIR=/tmp/docker_tmp
+```
+
 ## Any last tips on using Dockstore?
 
 * the Dockstore CLI uses `./datastore` for temp files so if you're processing large files make sure this partition hosting the current directory is large.

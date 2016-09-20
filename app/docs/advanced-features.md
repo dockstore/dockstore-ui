@@ -16,3 +16,12 @@ cache-dir =
 The former is false by default and can be set to true in order to activate the cache. 
 The latter is `~/.dockstore/cache/` by default and can be set to any directory location.
 
+## Running CWL-runner with extra tags
+
+When running a CWL tool, you may want to add additional parameters/flags to the cwl-runner command. You can do this by updating your dockstore config file (~/.dockstore/config).
+
+As an example, adding the following line to your config file will stop cwl-runner from cleaning up, make it run in debug mode, and set the outdir to '/new/outputdir'
+
+```
+cwltool-extra-parameters: --debug, --leave-container, --leave-tmpdir, --outdir /new/outputdir
+```
