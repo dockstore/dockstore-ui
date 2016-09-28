@@ -28,9 +28,9 @@ angular.module('dockstore.ui')
     '$scope',
     '$rootScope',
     'FormattingService',
-    function ($scope, $rootScope, FrmttSrvc) {
+    '$filter',
+    function ($scope, $rootScope, FrmttSrvc, $filter) {
 
-      $scope.containers = [];
       $scope.sortColumn = 'name';
       $scope.sortReverse = false;
       $scope.numContsPage = 10;
@@ -73,7 +73,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.getLastPage = function() {
-        return Math.ceil($scope.filteredContainers.length / $scope.numContsPage);
+        return Math.ceil($scope.filteredTools.length / $scope.numContsPage);
       };
 
       $scope.changePage = function(nextPage) {
@@ -91,28 +91,21 @@ angular.module('dockstore.ui')
       $scope.getListRange = function() {
         return {
           start: Math.min($scope.numContsPage * ($scope.currPage - 1),
-                          $scope.filteredContainers.length),
+                          $scope.filteredTools.length),
           end: Math.min($scope.numContsPage * $scope.currPage - 1,
-                        $scope.filteredContainers.length)
+                        $scope.filteredTools.length)
         };
       };
 
-      $scope.getListRangeString = function() {
-        var start = Math.min($scope.numContsPage * ($scope.currPage - 1) + 1,
-                              $scope.filteredContainers.length).toString();
-        var end = Math.min($scope.numContsPage * $scope.currPage,
-                              $scope.filteredContainers.length).toString();
+      $scope.$watch('searchQueryContainer', function(term) {
+        $scope.filteredTools = $filter('filter')($scope.containers, term);
+        $scope.entryCount = $scope.filteredTools.length;
+      });
 
-        var padLength = Math.max(start.length, end.length);
+      $scope.$watch('containers', function() {
+        $scope.filteredTools = $filter('filter')($scope.containers, $scope.searchQueryContainer);
+        $scope.entryCount = $scope.filteredTools.length;
+      });
 
-        for (var i = start.length; i < padLength; i++) {
-          start = '0' + start;
-        }
-        for (var j = end.length; j < padLength; j++) {
-          end = '0' + end;
-        }
-
-        return start + ' to ' + end + ' of ' + $scope.filteredContainers.length;
-      };
 
   }]);

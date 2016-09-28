@@ -45,7 +45,7 @@
           </thead>
           <tbody>
             <!-- need a to write a 'smart search' filter -->
-            <tr ng-repeat="container in ((filteredContainers = (containers | PreviewFilter:contLimit | filter: searchQueryContainer)) | orderBy:sortColumn:sortReverse | PaginationFilter:getListRange())">
+            <tr ng-repeat="container in filteredTools | orderBy:sortColumn:sortReverse | PreviewFilter:contLimit | PaginationFilter:getListRange()">
               <td>
                 <a href="/containers/{{container.tool_path}}">{{container.name + (container.toolname ? '/' + container.toolname : '')}}</a>
               </td>
@@ -89,17 +89,8 @@
 <div id="container-pagination" ng-show="!previewMode">
   <div class="container">
     <div class="row-center">
-        <ul class="pagination">
-          <li>
-            <div class="button" ng-hide="currPage <= getFirstPage()">
-              <p><a href ng-click="changePage(false)">&laquo; Previous</a></p>
-            </div>
-            <li>{{getListRangeString()}}</li>
-            <div class="button" ng-hide="currPage >= getLastPage()">
-              <p><a href ng-click="changePage(true)">Next &raquo;</a></p>
-            </div>
-          </li>
-        </ul>
+      <ul ng-show="getLastPage() > 5" uib-pagination total-items="entryCount" rotate="false"  ng-model="currPage" items-per-page="numContsPage" force-ellipses="true" max-size="5" boundary-links="true" direction-links="false" boundary-link-numbers="true"></ul>
+      <ul ng-show="getLastPage() < 6" uib-pagination total-items="entryCount" rotate="false"  ng-model="currPage" items-per-page="numContsPage"  direction-links="false"></ul>
     </div>
   </div>
 </div>

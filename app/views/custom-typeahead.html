@@ -1,0 +1,10 @@
+<div class="home-search-entry-holder">
+  <div class="home-search-entry-name">
+    <a ng-show="match.model.entryType == 'workflow'" ng-bind-html="match.model.repository + (match.model.workflowName ? '/' + match.model.workflowName : '') | typeaheadHighlight:query"></a>
+    <a ng-show="match.model.entryType == 'tool'" ng-bind-html="match.model.name + (match.model.toolname ? '/' + match.model.toolname : '') | typeaheadHighlight:query"></a>
+  </div>
+  <div class="home-search-entry-type">
+    <strong ng-show="match.model.entryType == 'workflow'" ng-bind-html="match.model.entryType | uppercase" style="color:#4ab4a9;"></strong>
+    <strong ng-show="match.model.entryType == 'tool'" ng-bind-html="match.model.entryType | uppercase" style="color:#51aad8;"></strong>
+  </div>
+</div>

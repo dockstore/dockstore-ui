@@ -40,6 +40,7 @@ angular.module('dockstore.ui')
         WorkflowService, UserService, TokenService, NtfnService) {
 
       $scope.userObj = UserService.getUserObj();
+      $scope.workflows = [];
 
       $scope.listPublishedWorkflows = function() {
         return WorkflowService.getPublishedWorkflowList()
@@ -68,21 +69,18 @@ angular.module('dockstore.ui')
           );
       }
 
-      if ($routeParams.searchQueryWorkflow) {
-        $rootScope.searchQueryWorkflow = $routeParams.searchQueryWorkflow;
+      if (($location.search()).query) {
+        $rootScope.searchQueryWorkflow = ($location.search()).query;
+      } else {
+        $rootScope.searchQueryWorkflow = '';
       }
-
-$scope.$watch('searchQueryContainer', function(newValue, oldValue) {
-        $rootScope.searchQueryContainer = newValue;
-      });
 
       $scope.$watch('searchQueryWorkflow', function(newValue, oldValue) {
         $rootScope.searchQueryWorkflow = newValue;
-      });
-
-      $scope.$on('$routeChangeStart', function(event, next, current) {
-        if ($location.url().indexOf('/search-containers') === -1) {
-          $scope.searchQueryContainer = '';
+        if (newValue === null || newValue === '') {
+          $location.search('query', null);
+        } else {
+          $location.search('query', newValue);
         }
       });
 

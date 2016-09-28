@@ -28,9 +28,8 @@ angular.module('dockstore.ui')
     '$scope',
     '$rootScope',
     'FormattingService',
-    function ($scope, $rootScope, FrmttSrvc) {
-
-      $scope.workflows = [];
+    '$filter',
+    function ($scope, $rootScope, FrmttSrvc, $filter) {
       $scope.sortColumn = 'name';
       $scope.sortReverse = false;
       $scope.numContsPage = 10;
@@ -90,24 +89,6 @@ angular.module('dockstore.ui')
         };
       };
 
-      $scope.getListRangeString = function() {
-        var start = Math.min($scope.numContsPage * ($scope.currPage - 1) + 1,
-                              $scope.filteredWorkflows.length).toString();
-        var end = Math.min($scope.numContsPage * $scope.currPage,
-                              $scope.filteredWorkflows.length).toString();
-
-        var padLength = Math.max(start.length, end.length);
-
-        for (var i = start.length; i < padLength; i++) {
-          start = '0' + start;
-        }
-        for (var j = end.length; j < padLength; j++) {
-          end = '0' + end;
-        }
-
-        return start + ' to ' + end + ' of ' + $scope.filteredWorkflows.length;
-      };
-
       $scope.getHumanReadableDescriptor = function(descriptor) {
         switch(descriptor) {
           case 'DOCKSTORE_CWL':
@@ -118,5 +99,15 @@ angular.module('dockstore.ui')
             return 'n/a';
         }
       };
+
+      $scope.$watch('searchQueryWorkflow', function(term) {
+        $scope.filteredWorkflows = $filter('filter')($scope.workflows, term);
+        $scope.entryCount = $scope.filteredWorkflows.length;
+      });
+
+      $scope.$watch('workflows', function() {
+        $scope.filteredWorkflows = $filter('filter')($scope.workflows, $scope.searchQueryWorkflow);
+        $scope.entryCount = $scope.filteredWorkflows.length;
+      });
 
   }]);

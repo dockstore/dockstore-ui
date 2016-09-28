@@ -315,7 +315,7 @@ img.site-icons-tab {
 }
 
 .search-home {
-  width: 430px;
+  width: 475px;
 }
 
 input[type=text]:focus, textarea:focus {
@@ -884,5 +884,34 @@ div.tabs > div:target > div, :target #info > div, #info > div {
 .radio-button-reference {
   margin-top: -1px;
   vertical-align: middle;
+}
+
+.home-search-entry-holder {
+  width:475px;
+  overflow: hidden;
+  padding-left:10px;
+}
+
+.home-search-entry-type {
+  float:right;
+  width:130px;
+  background:#f4f4f4;
+  padding-left:15px;
+  padding-right:15px;
+  font-size: 10px;
+}
+
+.home-search-entry-name {
+  float:left;
+  width:325px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.custom-typeahead-popup {
+  padding:0px;
+  border:1px solid #ccc;
+  margin:0px;
 }
 /* End Temporary Styles - Need to Refactor Later */

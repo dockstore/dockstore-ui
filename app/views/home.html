@@ -21,25 +21,15 @@
         <h1 class="title">Create, Share, Use</h1>
         <h2 class="title caption">Search Docker Tools and Workflows for the Sciences:</h2>
         <div class="btn-group">
-          <button id="homeSearch" type="button" class="btn btn-default dropdown-toggle rounded-left" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{searchMode}} <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu search-dropdown">
-            <li><a href="#" ng-click="selectTool()">Tool</a></li>
-            <li><a href="#" ng-click="selectWorkflow()">Workflow</a></li>
-          </ul>
           <input type="text"
                  placeholder="Enter Keyword..."
-                 ng-model="searchQueryContainer"
-                 class="search left rounded search-home"
-                 ng-show="searchMode === 'Tool'">
-          <input type="text"
-                 placeholder="Enter Keyword..."
-                 ng-model="searchQueryWorkflow"
-                 class="search left rounded search-home"
-                 ng-show="searchMode === 'Workflow'">
+                 ng-model="searchQuery"
+                 class="search left fully-rounded search-home form-control"
+                 uib-typeahead="entry.path for entry in filteredEntries = (identifyWorkflow(workflows).concat(identifyTool(containers)) | filter:searchQuery) | orderBy:random | limitTo:5"
+                 typeahead-on-select="onSelect($item, $model, $label)"
+                 typeahead-template-url="views/custom-typeahead.html"
+                 typeahead-popup-template-url="views/custom-typeahead-popup.html">
         </div>
-
       </div>
       <div class="col-md-3">
         <img id="ship" src="images/ship.png">
@@ -71,21 +61,6 @@
     </div>
   </div>
 </div>
-
-<!--<div id="container-header">-->
-  <!--<div class="container">-->
-    <!--<div class="row">-->
-      <!--<div class="col-md-12">-->
-        <!--<h3 ng-if="tabMode === 'Tool'" class="available-containers">-->
-          <!--<img class="site-icons-medium" src="images/dockstore-tools-blue.png"> Available Tools-->
-        <!--</h3>-->
-        <!--<h3 ng-if="tabMode === 'Workflow'" class="available-containers">-->
-          <!--<img class="site-icons-medium" src="images/dockstore-workflows-green.png"> Available Workflows-->
-        <!--</h3>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
 
 <div class="container" style="padding-top:30px;">
   <button ng-class="tabMode == 'Tool' ? 'tool-tab-selected' : 'tool-tab-not-selected'" ng-click="selectToolTab()" ng-disabled="tabMode === 'Tool'" class="tool-tab"><img class="site-icons-tab" src="images/dockstore-tools-blue.png"> <span class="tab-text">Browse Tools</span></button>

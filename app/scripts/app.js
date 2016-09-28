@@ -78,15 +78,17 @@ angular
           controller: 'LoginCtrl',
           controllerAs: 'Login'
         })
-        .when('/search-containers/:searchQueryContainer?', {
+        .when('/search-containers', {
           templateUrl: 'views/search.html',
           controller: 'SearchCtrl',
-          controllerAs: 'Search'
+          controllerAs: 'Search',
+          reloadOnSearch: false
         })
-        .when('/search-workflows/:searchQueryWorkflow?', {
+        .when('/search-workflows', {
           templateUrl: 'views/searchworkflow.html',
           controller: 'SearchWorkflowCtrl',
-          controllerAs: 'SearchWorkflow'
+          controllerAs: 'SearchWorkflow',
+          reloadOnSearch: false
         })
         .when('/containers/:containerPath*', {
           templateUrl: 'views/containerviewer.html',
