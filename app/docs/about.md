@@ -14,8 +14,8 @@ Dockstore also attempts to work with new and alternative languages/standards suc
 
 Docker repositories, like
 [DockerHub](https://hub.docker.com/) and [Quay.io](https://quay.io/), and
-source control repositories like [GitHub](http://github.com) and
-[BitBucket](https://bitbucket.org/), provide
+source control repositories like [GitHub](http://github.com),
+[BitBucket](https://bitbucket.org/), and [GitLab](https://gitlab.org), provide
 much of the infrastructure we need.  They allow users build, publish,
 and share both public and private Docker images.  However, the services lack standardized ways of
 describing how to invoke tools contained within Docker containers.  The CWL

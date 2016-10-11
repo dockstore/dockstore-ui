@@ -67,6 +67,21 @@ angular.module('dockstore.ui')
           );
       };
 
+      $scope.registerGitlabToken = function(userId, accessToken) {
+        return TokenService.registerGitlabToken(userId, accessToken)
+          .then(
+            function(token) {
+              return token;
+            },
+            function(response) {
+              $scope.errorMsg =
+                '[HTTP ' + response.status + '] ' + response.statusText + '. ' +
+                'Error registering Gitlab token.';
+              return $q.reject(response);
+            }
+          );
+      };
+
       $scope.refreshUserContainers = function(userId) {
         return ContainerService.refreshUserContainers(userId)
           .then(
@@ -97,6 +112,21 @@ angular.module('dockstore.ui')
           var bitbucketToken = $location.url().match(bitbucketTokenRegExp);
           if (bitbucketToken) {
             $scope.registerBitbucketToken($scope.userObj.id, bitbucketToken[1])
+              .then(
+                function() {
+                  $window.location.href = '/onboarding';
+                }
+              );
+          } else {
+            $window.location.href = '/login';
+          }
+          break;
+        case 'gitlab.com':
+          $scope.providerName = 'Gitlab';
+          var gitlabTokenRegExp = /code=([a-zA-Z0-9]*)/;
+          var gitlabToken = $location.url().match(gitlabTokenRegExp);
+          if (gitlabToken) {
+            $scope.registerGitlabToken($scope.userObj.id, gitlabToken[1])
               .then(
                 function() {
                   $window.location.href = '/onboarding';

@@ -535,6 +535,8 @@ angular.module('dockstore.ui')
           return 'GitHub';
         } else if (gitUrl.indexOf('bitbucket.org') !== -1) {
           return 'Bitbucket';
+        } else if (gitUrl.indexOf('gitlab.com') !== -1) {
+          return 'Gitlab';
         } else {
           return null;
         }
@@ -545,6 +547,8 @@ angular.module('dockstore.ui')
           return 'https://github.com/' + organization + '/' + repository;
         } else if (registry.toLowerCase() === "bitbucket") {
           return 'https://bitbucket.org/' + organization + '/' + repository;
+        } else if (registry.toLowerCase() === "gitlab") {
+          return 'https://gitlab.com/' + organization + '/' + repository;
         } else {
           return null;
         }

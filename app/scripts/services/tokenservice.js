@@ -62,6 +62,22 @@ angular.module('dockstore.ui')
         });
       };
 
+      this.registerGitlabToken = function(userId, accessToken) {
+        return $q(function(resolve, reject) {
+          $http({
+            method: 'GET',
+            url: WebService.API_URI + '/auth/tokens/gitlab.com/',
+            params: {
+              code: accessToken
+            }
+          }).then(function(response) {
+            resolve(response.data);
+          }, function(response) {
+            reject(response);
+          });
+        });
+      };
+
       this.registerQuayIOToken = function(userId, accessToken) {
         return $q(function(resolve, reject) {
           $http({
@@ -117,7 +133,8 @@ angular.module('dockstore.ui')
                 dockstore: false,
                 github: false,
                 bitbucket: false,
-                quayio: false
+                quayio: false,
+                gitlab: false
               };
               for (var i = 0; i < tokens.length; i++) {
                 switch (tokens[i].tokenSource) {
@@ -132,6 +149,9 @@ angular.module('dockstore.ui')
                     break;
                   case 'quay.io':
                     tokenStatusSet.quayio = true;
+                    break;
+                  case 'gitlab.com':
+                    tokenStatusSet.gitlab = true;
                     break;
                 }
               }

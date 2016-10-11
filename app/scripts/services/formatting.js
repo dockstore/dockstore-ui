@@ -71,6 +71,8 @@ angular.module('dockstore.ui')
           return 'GITHUB';
         } else if (gitUrl.indexOf('bitbucket.org') !== -1) {
           return 'BITBUCKET';
+        } else if (gitUrl.indexOf('gitlab.com') !== -1) {
+          return 'GITLAB';
         } else {
           return null;
         }
@@ -82,6 +84,8 @@ angular.module('dockstore.ui')
             return 'GitHub';
           case 'BITBUCKET':
             return 'Bitbucket';
+          case 'GITLAB':
+            return 'GitLab';
           default:
             return 'Unknown';
         }
@@ -100,6 +104,9 @@ angular.module('dockstore.ui')
           case 'BITBUCKET':
             gitWebUrl = 'https://bitbucket.org/';
             break;
+          case 'GITLAB':
+            gitWebUrl = 'https://gitlab.com/';
+            break;
           default:
             return null;
         }
@@ -116,6 +123,9 @@ angular.module('dockstore.ui')
             break;
           case 'BITBUCKET':
             gitWebUrl = 'https://bitbucket.org/';
+            break;
+          case 'GITLAB':
+            gitWebUrl = 'https://gitlab.com/';
             break;
           default:
             return null;

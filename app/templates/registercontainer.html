@@ -70,6 +70,11 @@
                         Bitbucket
                       </a>
                     </li>
+                    <li>
+                      <a href ng-click="containerObj.scrProvider = 'GitLab'">
+                        GitLab
+                      </a>
+                    </li>
                   </ul>
                 </div>
                 <input
@@ -79,7 +84,7 @@
                     ng-model="containerObj.gitPath"
                     ng-minlength="3"
                     ng-maxlength="128"
-                    ng-pattern="/^([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)\/([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)$/i"
+                    ng-pattern="/^([a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*)\/([a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*)$/i"
                     required
                     data-toggle="tooltip"
                     title="Git Repository path."
@@ -204,7 +209,7 @@
                     ng-model="containerObj.imagePath"
                     ng-minlength="3"
                     ng-maxlength="128"
-                    ng-pattern="/^(([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)|_)\/([a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*)$/i"
+                    ng-pattern="/^(([a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*)|_)\/([a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*)$/i"
                     required
                     data-toggle="tooltip"
                     title="Docker Image Registry path."

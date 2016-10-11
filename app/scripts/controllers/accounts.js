@@ -62,6 +62,13 @@ angular.module('dockstore.ui')
           '&scope=' + WebService.QUAYIO_SCOPE;
       };
 
+      $scope.linkGitlabAccount = function() {
+        $window.location.href = WebService.GITLAB_AUTH_URL +
+          '?client_id=' + WebService.GITLAB_CLIENT_ID +
+          '&redirect_uri=' + WebService.GITLAB_REDIRECT_URI +
+          '&response_type=code';
+      };
+
       TokenService.getUserTokenStatusSet($scope.userObj.id)
         .then(
           function(tokenStatusSet) {

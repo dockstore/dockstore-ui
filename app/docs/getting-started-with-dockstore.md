@@ -1,8 +1,8 @@
 # Getting Started with Dockstore
 
-## [Linking GitHub, Bitbucket and Quay.io](#Linking-services)
+## [Linking GitHub, Bitbucket, GitLab and Quay.io](#Linking-services)
 
-The first step is to log in to the Dockstore which will link your accounts for GitHub, Bitbucket and Quay.io along with providing you the command line tool we will use for most of the tasks in this tutorial.  Make sure you have your GitHub, Bitbucket and/or Quay.io accounts established and follow the onboarding wizard:
+The first step is to log in to the Dockstore which will link your accounts for GitHub, Bitbucket, GitLab, and Quay.io along with providing you the command line tool we will use for most of the tasks in this tutorial.  Make sure you have your GitHub, Bitbucket, GitLab and/or Quay.io accounts established and follow the onboarding wizard:
 
 https://www.dockstore.org/login
 
@@ -14,7 +14,7 @@ Linking a supported image repository service (e.g. Quay.io) will automatically t
 
 ![Refresh tools](docs/linking2.png)
 
-Below, GitHub, BitBucket and Quay.io accounts have been linked, it is necessary for at least the GitHub account be linked in order to perform regular account activities.
+Below, GitHub, BitBucket, GitLab and Quay.io accounts have been linked, it is necessary for at least the GitHub account be linked in order to perform regular account activities.
 
 ![Link accounts completed](docs/linking3.png)
 
@@ -28,7 +28,7 @@ Now that you have your `Dockerfile` and `Dockstore.cwl` in GitHub, have setup Qu
 
 ### Quick Registration via the Web UI 
 
-In the authenticated Web UI, navigate to 'My Tools' to begin managing Docker images imported through your linked account(s). These pages will allow you to quickly register tools that follow a particularly simple format (look below to manual registration for more complex formats). For quick registration, we look through your quay.io images and see if any are setup as [automated builds](https://docs.quay.io/guides/building.html). Using those to track back to your github or bitbucket accounts, we list all pairs of Docker images with git repositories that contain a `Dockstore.cwl` and a `Dockerfile`. When we discover both of these, we create an unregistered entry in the interface below. 
+In the authenticated Web UI, navigate to 'My Tools' to begin managing Docker images imported through your linked account(s). These pages will allow you to quickly register tools that follow a particularly simple format (look below to manual registration for more complex formats). For quick registration, we look through your quay.io images and see if any are setup as [automated builds](https://docs.quay.io/guides/building.html). Using those to track back to your github, bitbucket, or gitlab accounts, we list all pairs of Docker images with git repositories that contain a `Dockstore.cwl` and a `Dockerfile`. When we discover both of these, we create an unregistered entry in the interface below. 
 
 ![My Tools](docs/register_ui.png)
 
@@ -63,7 +63,7 @@ The Source Code Repository and Image Registry fields must be filled out, they ar
 
 Upon successful submission and registration of the tool, a resynchronization call will be made to fetch all available data from the given sources. If the image registry is Quay.io, existing version tags will be prepopulated for the Dockstore record.
 
-The user will then be taken to the 'Versions' tab of the new tool, where tags (corresponding to GitHub/Bitbucket tag names) may be added.
+The user will then be taken to the 'Versions' tab of the new tool, where tags (corresponding to GitHub/Bitbucket/GitLab tag names) may be added.
 
 ![Versions Grid](docs/version_tags.png)
 
@@ -71,7 +71,7 @@ Press the 'Add Tag' button to begin creating tags for the different versions of 
 
 ![Edit Version Tag Dialogue](docs/tageditor_modal.png)
 
-The fields in the form should correspond to the actual values on GitHub/Bitbucket and Quay.io/Docker Hub in order for the information to be useful to other users. Selecting `Hidden` will prevent the tag from appearing in the public listing of tags for the image.
+The fields in the form should correspond to the actual values on GitHub/Bitbucket/GitLab and Quay.io/Docker Hub in order for the information to be useful to other users. Selecting `Hidden` will prevent the tag from appearing in the public listing of tags for the image.
 
 ### CLI Client
 
@@ -109,7 +109,7 @@ The `dockstore` command line can be used as an alternative to the GUI and has a 
     
     ------------------
  
-First, we will work in tool mode (`dockstore tool`). We recommend you first `dockstore tool refresh` to ensure the latest GitHub, Bitbucket and Quay.io information is indexed properly.
+First, we will work in tool mode (`dockstore tool`). We recommend you first `dockstore tool refresh` to ensure the latest GitHub, Bitbucket, GitLab and Quay.io information is indexed properly.
  
     $ dockstore
     
@@ -173,7 +173,7 @@ You can then use `dockstore tool publish` to see the list of available Docker im
 
 0. public
 0. at least one valid tag. In order to be valid, a tag has to:
-    * be automated from a GitHub or Bitbucket reference
+    * be automated from a GitHub, Bitbucket, or GitLab reference
     * have the reference be linked to the `Dockerfile`
     * have the reference be linked a corresponding `Dockstore.cwl`
     
