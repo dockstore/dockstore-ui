@@ -365,6 +365,18 @@
             <strong>Last Update</strong>:
             {{ containerObj.lastUpdated ? getDateTimeString(containerObj.lastUpdated) : 'n/a' }}
           </li>
+          <li>
+            <strong>Description</strong>:
+            <div class="well well-sm">
+              <div
+                ng-show="containerObj.description"
+                marked="containerObj.description">
+              </div>
+              <span ng-show="!containerObj.description">
+                No description associated with this container.
+              </span>
+            </div>
+          </li>
           <li ng-show="showLaunchWith()">
             <strong>Launch With:</strong>
             <div class="pull-right" style="margin-left:5px">
@@ -386,17 +398,10 @@
                               <pre>{{launchWith}}</pre>
                             </div>
                           </div>
-          </li>
-          <li>
-            <strong>Description</strong>:
             <div class="well well-sm">
-              <div
-                  ng-show="containerObj.description"
-                  marked="containerObj.description">
+              <div>
+                <pre>{{launchWithCWLTool}}</pre>
               </div>
-              <span ng-show="!containerObj.description">
-                No description associated with this container.
-              </span>
             </div>
           </li>
         </ul>

@@ -27,10 +27,7 @@ When going through the onboarding wizard, our various dependencies were introduc
     $> cwltool --version
     /usr/local/bin/cwltool 1.0.20160712154127
 
-    $> dockstore --version
-    Dockstore version 0.4-beta.5
-    You are running the latest stable version...
-    ...
+You can also call `dockstore --version` which should report the same version as the DockstoreApi shown below in the footer.
     
 In addition to the tools mentioned above you will probably want a editor capable of syntax highlighting Dockerfiles such as [Atom](https://atom.io/).
 

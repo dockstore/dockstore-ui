@@ -67,7 +67,8 @@ angular
       gfm: true,
       tables: true,
       breaks: true,
-      sanitize: true
+      sanitize: true,
+      smartypants: true
     });
   }])
   .config(['$routeProvider', '$locationProvider',

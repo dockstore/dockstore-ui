@@ -42,6 +42,7 @@ angular.module('dockstore.ui')
       $scope.showEditWDL = true;
       $scope.showEditDockerfile = true;
       $scope.launchWith = null;
+      $scope.launchWithCWLTool = null;
       $scope.desc = 'cwl';
       $scope.toolTag = '';
       $scope.toolTagName = '';
@@ -197,6 +198,12 @@ angular.module('dockstore.ui')
           "\nvim Dockstore.json"+
           "\n# run it locally with the Dockstore CLI" +
           "\ndockstore tool launch --entry " + tool_path + ":" + $scope.toolTagName + " --json Dockstore.json";
+
+        var escapedPath = encodeURIComponent(tool_path);
+        var escapedVersion = encodeURIComponent($scope.toolTagName);
+
+        $scope.launchWithCWLTool = "# alternatively, cwltool can run a tool directly when all inputs and outputs are available on the local filesystem" +
+          "\ncwltool --non-strict https://www.dockstore.org:8443/api/ga4gh/v1/tools/" + escapedPath + "/versions/" + escapedVersion + "/plain-CWL/descriptor Dockstore.json";
 
         return $scope.validContent; //only show LaunchWith when content is valid
       };
