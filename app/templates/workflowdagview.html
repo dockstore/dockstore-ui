@@ -14,10 +14,10 @@
   ~    limitations under the License.
   -->
 
-<div class="row">
-  <div class="col-md-12">
+<div class="row" id="dag-holder">
+  <div class="col-md-12" id="dag-col">
     <div class="ds-holder">
-      <div class="ds-version-selector">
+      <div class="ds-version-selector" id="dag-version-bar">
         <strong>Workflow Version</strong>:
         <select class="ds-version" ng-model="selVersionName">
           <option
@@ -26,13 +26,25 @@
             {{version}}
           </option>
         </select>
+        <a id="exportLink" href="#" ng-show="dagJSON !== null && !notFound && !missingTool"><span class="glyphicon glyphicon-export"></span>Export to PNG</a>
+        <button ng-show="dagJSON !== null && !notFound && !missingTool" ng-click="refreshDocument()" class="dag-button" uib-tooltip="Reset"><span class="glyphicon glyphicon-screenshot"></span></button>
+        <button ng-show="dagJSON !== null && !notFound && !missingTool" ng-click="expandDAG()" uib-tooltip="Toggle fullscreen" class="dag-button">
+          <span class="glyphicon glyphicon-resize-full" id="resize-full-button"></span>
+          <span class="glyphicon glyphicon-resize-small no-display" id="resize-small-button"></span>
+        </button>
       </div>
     </div>
     <div class="alert alert-warning"
          role="alert"
          ng-show="dagJson === null || notFound">
       <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
-      A Descriptor associated with this workflow could not be found.
+      <span ng-show="workflowObj.descriptorType === 'wdl'">
+        A Descriptor associated with this workflow could not be found.
+      </span>
+      <span ng-show="workflowObj.descriptorType === 'cwl'">
+        Please ensure that the Descriptor is a valid CWL 1.0 workflow.
+      </span>
+
     </div>
     <div class="alert alert-warning"
          role="alert"
@@ -40,6 +52,13 @@
       <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
       DAG cannot be created because some required tools are missing from Github repo.
     </div>
-    <div id="cy" ng-show="dagJson !== null && !missingTool"></div>
+    <div id="tooltiptext">
+      <div>
+        <div><b>Type:</b> {{ dynamicPopover.type | lowercase }}</div>
+        <div><b>Run:</b> {{ dynamicPopover.run }}</div>
+        <div><b>Docker:</b> <a ng-href="{{dynamicPopover.link}}"> {{dynamicPopover.docker}}</a></div>
+      </div>
+    </div>
+    <div id="cy" ng-show="dagJson !== null && !missingTool" class="mini-dag"></div>
   </div>
 </div>

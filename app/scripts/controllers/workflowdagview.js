@@ -31,10 +31,19 @@ angular.module('dockstore.ui')
     'NotificationService',
     function ($scope, $q, WorkflowService, FrmttSrvc, NtfnService) {
       $scope.dagJson = null;
-      var cy;
+      $scope.cy = null;
       $scope.successContent = [];
       $scope.missingTool = false;
       $scope.notFound = false;
+      $scope.showPopover = false;
+
+      $scope.dynamicPopover = {
+          link: '',
+          title: '',
+          type: '',
+          docker: '',
+          run: ''
+        };
 
       $scope.getWorkflowVersions = function() {
         var sortedVersionObjs = $scope.workflowObj.workflowVersions;
@@ -126,7 +135,53 @@ angular.module('dockstore.ui')
 
       };
 
+      $scope.updateUndefinedPopoverContent = function() {
+        if ($scope.dynamicPopover.title === undefined) {
+          $scope.dynamicPopover.title = "n/a";
+        }
+        if ($scope.dynamicPopover.type === undefined) {
+          $scope.dynamicPopover.type = "n/a";
+        }
+        if ($scope.dynamicPopover.docker === undefined) {
+          $scope.dynamicPopover.docker = "n/a";
+        }
+        if ($scope.dynamicPopover.run === undefined) {
+          $scope.dynamicPopover.run = "n/a";
+        }
+      };
+
+      $scope.clearPopover = function() {
+        $scope.dynamicPopover.link = '';
+        $scope.dynamicPopover.title = '';
+        $scope.dynamicPopover.type = '';
+        $scope.dynamicPopover.docker = '';
+        $scope.dynamicPopover.run = '';
+        $scope.$apply();
+      };
+
+      $scope.expandDAG = function() {
+        // Activated on fullscreen
+        $("#dag-holder").toggleClass('fullscreen');
+        $("#dag-col").toggleClass('fullscreen-element');
+        $("#dag-version-bar").toggleClass('fullscreen-dropdown');
+        $("#cy").toggleClass('fullscreen-element');
+        $("#cy").toggleClass('large-dag');
+        $("#resize-full-button").toggleClass('no-display');
+
+        // Activated on normal screen
+        $("#cy").toggleClass('mini-dag');
+        $("#resize-small-button").toggleClass('no-display');
+        $scope.refreshDocument();
+      };
+
+      $("#exportLink").on("click", function() {
+        var pngDAG = $scope.cy.png({ full: true, scale: 2 });
+        var uriContent = pngDAG;
+        $(this).attr("href", uriContent).attr("download", "DAG-" + $scope.workflowObj.repository + "_" + $scope.selVersionName + ".png");
+      });
+
       $scope.refreshDocument = function() {
+      $scope.showPopover = false;
         $scope.dagJson = $scope.nodesAndEdges($scope.workflowObj.id, $scope.workflowObj.workflowVersions);
         //$scope.dagJson is a promise returned by the web service from nodesAndEdges function
         if ($scope.dagJson !== null){
@@ -148,7 +203,7 @@ angular.module('dockstore.ui')
             $scope.missingTool = false;
           }
         );
-          cy = window.cy = cytoscape({
+          $scope.cy = window.cy = cytoscape({
         	  container: document.getElementById('cy'),
 
             boxSelectionEnabled: false,
@@ -163,10 +218,11 @@ angular.module('dockstore.ui')
         				selector: 'node',
         				style: {
         					'content': 'data(name)',
-                  'font-size': '12px',
+                  'font-size': '16px',
         					'text-valign': 'center',
         					'text-halign': 'center',
-        					'background-opacity': '0'
+        					'background-opacity': '10',
+        					'background-color' : '#7a88a9'
         				}
         			},
 
@@ -179,26 +235,162 @@ angular.module('dockstore.ui')
         					'target-arrow-color': '#9dbaea',
                   'curve-style': 'bezier'
         				}
+        			},
+
+              {
+        				selector: 'node[id = "UniqueBeginKey"]',
+        				style: {
+        					'content': 'Start',
+                  'font-size': '16px',
+        					'text-valign': 'center',
+        					'text-halign': 'center',
+        					'background-opacity': '10',
+        					'background-color': '#4caf50'
+        				}
+        			},
+
+              {
+        				selector: 'node[id = "UniqueEndKey"]',
+        				style: {
+        					'content': 'End',
+                  'font-size': '16px',
+        					'text-valign': 'center',
+        					'text-halign': 'center',
+        					'background-opacity': '10',
+        					'background-color': '#f44336'
+        				}
+        			},
+
+              {
+        				selector: 'node[type = "workflow"]',
+        				style: {
+        					'content': 'data(name)',
+                  'font-size': '16px',
+        					'text-valign': 'center',
+        					'text-halign': 'center',
+        					'background-opacity': '10',
+        					'background-color': '#4ab4a9'
+        				}
+        			},
+
+              {
+        				selector: 'node[type = "tool"]',
+        				style: {
+        					'content': 'data(name)',
+                  'font-size': '16px',
+        					'text-valign': 'center',
+        					'text-halign': 'center',
+        					'background-opacity': '10',
+        					'background-color': '#51aad8'
+        				}
+        			},
+
+              {
+        				selector: 'node[type = "expressionTool"]',
+        				style: {
+        					'content': 'data(name)',
+                  'font-size': '16px',
+        					'text-valign': 'center',
+        					'text-halign': 'center',
+        					'background-opacity': '10',
+        					'background-color': '#9966FF'
+        				}
+        			},
+
+              {
+        			  selector: 'edge.notselected',
+        			  style: {
+        			    'opacity': '0.4'
+        			  }
         			}
         		],
 
         		elements: $scope.dagJson,
       		});
 
-        	cy.on('tap', 'node', function(){
+        	$scope.cy.on('tap', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(){
             try { // your browser may block popups
-              if(this.data('tool') !== "https://hub.docker.com/_/" && this.data('tool') !== ""){
+              if(this.data('tool') !== "https://hub.docker.com/_/" && this.data('tool') !== "" && this.data('tool') !== undefined){
                 window.open(this.data('tool'));
               }
             } catch(e){ // fall back on url change
-              if(this.data('tool') !== "https://hub.docker.com/_/" && this.data('tool') !== ""){
+              if(this.data('tool') !== "https://hub.docker.com/_/" && this.data('tool') !== "" && this.data('tool') !== undefined){
                 window.location.href = this.data('tool');
               }
             }
           });
 
+           $scope.cy.on('mouseover', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(){
+              var node = this;
+              $scope.dynamicPopover.title = this.data('name');
+              $scope.dynamicPopover.link = this.data('tool');
+              $scope.dynamicPopover.type = this.data('type');
+              $scope.dynamicPopover.docker = this.data('docker');
+              $scope.dynamicPopover.run = this.data('run');
+
+              $scope.updateUndefinedPopoverContent();
+
+              $scope.$apply();
+
+              var tooltip = node.qtip({
+                content: {text: $('#tooltiptext').html(), title: node.data('name')},
+                style: {
+                  classes: 'qtip-bootstrap'
+                },
+                show: {
+                  solo: true
+                }
+              });
+              var api = tooltip.qtip('api');
+              api.toggle(true);
+          });
+
+          $scope.cy.on('mouseout mousedown', 'node[id!="UniqueBeginKey"][id!="UniqueEndKey"]', function(){
+              var node = this;
+              var api = node.qtip('api');
+              api.destroy();
+          });
+
+          $scope.cy.on('mouseout', 'node', function() {
+            var node = this;
+            $scope.cy.elements().removeClass('notselected');
+            node.connectedEdges().animate({
+                style: {
+        			    'line-color': '#9dbaea',
+        			    'target-arrow-color': '#9dbaea',
+        			    'width': 3
+        			    }
+        			  }, {
+        			  duration: 150
+        			  });
+          });
+
+          $scope.cy.on('mouseover', 'node', function() {
+            var node = this;
+            $scope.cy.elements().difference(node.connectedEdges()).not(node).addClass('notselected');
+
+            node.outgoers('edge').animate({
+                style: {
+        			    'line-color': '#e57373',
+        			    'target-arrow-color': '#e57373',
+        			    'width': 5
+        			    }
+        			  }, {
+        			  duration: 150
+        			  });
+            node.incomers('edge').animate({
+                style: {
+        			    'line-color': '#81c784',
+        			    'target-arrow-color': '#81c784',
+        			    'width': 5
+        			    }
+        			  }, {
+        			  duration: 150
+        			  });
+          });
+
         } else {
-          cy = window.cy = null;
+          $scope.cy = window.cy = null;
         }
       };
 

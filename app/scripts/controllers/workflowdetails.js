@@ -508,7 +508,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.isWorkflowFull = function() {
-        if ($scope.workflowObj.mode === 'FULL') {
+        if ($scope.workflowObj !== null && $scope.workflowObj.mode === 'FULL') {
           return true;
         }
         return false;
@@ -531,19 +531,24 @@ angular.module('dockstore.ui')
       });
 
       $scope.getRegistry = function(gitUrl) {
-      if (gitUrl.indexOf('github.com') !== -1) {
-          return 'GitHub';
-        } else if (gitUrl.indexOf('bitbucket.org') !== -1) {
-          return 'Bitbucket';
-        } else if (gitUrl.indexOf('gitlab.com') !== -1) {
-          return 'Gitlab';
+        if (gitUrl !== undefined) {
+          if (gitUrl.indexOf('github.com') !== -1) {
+            return 'GitHub';
+          } else if (gitUrl.indexOf('bitbucket.org') !== -1) {
+            return 'Bitbucket';
+          } else if (gitUrl.indexOf('gitlab.com') !== -1) {
+            return 'Gitlab';
+          } else {
+            return null;
+          }
         } else {
           return null;
         }
       };
 
      $scope.getRepoUrl = function(organization, repository, registry) {
-      if (registry.toLowerCase() === "github") {
+      if (registry !== undefined) {
+        if (registry.toLowerCase() === "github") {
           return 'https://github.com/' + organization + '/' + repository;
         } else if (registry.toLowerCase() === "bitbucket") {
           return 'https://bitbucket.org/' + organization + '/' + repository;
@@ -552,6 +557,9 @@ angular.module('dockstore.ui')
         } else {
           return null;
         }
-      };
+      } else {
+        return null;
+      }
+     };
 
   }]);

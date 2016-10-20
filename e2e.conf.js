@@ -18,11 +18,11 @@ exports.config = {
 
 	allScriptsTimeout: 99999,
 
-	directConnect: true,
+	seleniumAddress: 'http://localhost:4444/wd/hub',
 
 	// Capabilities to be passed to the webdriver instance.
 	capabilities: {
-		'browserName': 'chrome'
+		'browserName': 'firefox'
 	},
 
 	baseUrl: 'http://localhost:9001/', //must be 9001 because grunt-test is in port 9001

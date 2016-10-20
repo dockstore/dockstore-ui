@@ -4,16 +4,19 @@ language: node_js
 node_js:
   - 'stable'
   - '4.2.1'
+addons:
+  firefox: "latest"
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-beta
 before_install:
   - 'npm config get registry'
   - 'npm config set registry http://registry.npmjs.org/'
-  - 'export CHROME_BIN=/usr/bin/google-chrome'
   - 'export DISPLAY=:99.0'
   - 'sh -e /etc/init.d/xvfb start'
-  - 'sudo apt-get update'
-  - 'sudo apt-get install -y libappindicator1 fonts-liberation'
-  - 'wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
-  - 'sudo dpkg -i google-chrome*.deb'
+  - 'sleep 3' # https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI
 install:
   - 'npm install --global grunt-cli bower yo generator-karma generator-angular'
   - 'npm install karma jasmine-core'
@@ -21,12 +24,14 @@ install:
   - 'gem install compass'
   - 'npm update'
   - 'bower update'
-  - 'node_modules/protractor/bin/webdriver-manager update --standalone --chrome'
-  - 'node_modules/grunt-protractor-runner/scripts/webdriver-manager-update'
-after_script:  
-- cat ./build/coverage/**/lcov.info | ./node_modules/coveralls/bin/coveralls.js 
+  - 'node_modules/protractor/bin/webdriver-manager update --standalone --firefox'
+  - 'sleep 5'
+  - 'node_modules/protractor/bin/webdriver-manager start --standalone --firefox &'
+  - 'sleep 5'
+after_script:
+- cat ./build/coverage/**/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 after_success: grunt coveralls
- 
+
 notifications:
   webhooks:
     urls:
