@@ -86,7 +86,7 @@
                   ng-maxlength="128"
                   ng-pattern="/^([a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*)\/([a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*)$/i"
                   required
-                  data-toggle="tooltip"
+                  uib-tooltip
                   title="Git Repository path."
                   placeholder="e.g. CancerCollaboratory/dockstore-tool-liftover" />
               </div>
@@ -134,7 +134,7 @@
                   ng-maxlength="256"
                   ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(cwl|wdl|yaml|yml)$/i"
                   required
-                  data-toggle="tooltip"
+                  uib-tooltip
                   title="Default relative path to the Descriptor in the Git repository."
                   placeholder="{{workflowObj.descriptorType === 'cwl' ? 'e.g. /Dockstore.cwl' : 'e.g. /Dockstore.wdl'}}"/>
             </div>
@@ -161,7 +161,7 @@
                 ng-model="workflowObj.workflow_name"
                 ng-maxlength="256"
                 ng-pattern="/^[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*$/i"
-                data-toggle="tooltip"
+                uib-tooltip
                 title="Workflow name for given workflow."
                 placeholder="e.g. liftover-fast (optional)" />
               <div

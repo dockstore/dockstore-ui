@@ -84,7 +84,7 @@
             <uib-accordion-heading>
               <div class="container-namespace-label-oflw"
                   title="{{nsObj.namespace}}"
-                  data-toggle="tooltip">
+                   uib-tooltip>
                 {{nsObj.namespace}}
               </div>
             </uib-accordion-heading>
@@ -94,7 +94,7 @@
                 ng-repeat="containerObj in nsObj.containers">
               <div class="container-name-oflw pull-left"
                   title="{{containerObj.name + (containerObj.toolname ? '/' + containerObj.toolname : '')}}"
-                  data-toggle="tooltip">
+                   uib-tooltip>
                 <a href ng-click="selectContainer(containerObj.id)">
                   {{containerObj.name + (containerObj.toolname ? '/' + containerObj.toolname : '')}}
                 </a>
@@ -103,7 +103,7 @@
                 <span class="label"
                   ng-class="containerObj.is_published ? 'label-primary' : 'label-warning'"
                   title="{{ containerObj.is_published ? 'Published' : 'Unpublished' }}"
-                  data-toggle="tooltip">
+                      uib-tooltip>
                   {{ containerObj.is_published ? 'PUB' : 'UNPUB' }}
                 </span>
               </div>

@@ -83,7 +83,7 @@
             <uib-accordion-heading>
               <div class="container-namespace-label-oflw"
                    title="{{orgObj.organization}}"
-                   data-toggle="tooltip">
+                   uib-tooltip>
                 {{orgObj.organization}}
               </div>
             </uib-accordion-heading>
@@ -93,7 +93,7 @@
               ng-repeat="workflowObj in orgObj.workflows">
               <div class="container-name-oflw pull-left"
                    title="{{workflowObj.repository + (workflowObj.workflowName ? ' (' + workflowObj.workflowName + ')' : '')}}"
-                   data-toggle="tooltip">
+                   uib-tooltip>
                 <a href ng-click="selectWorkflow(workflowObj.id)">
                   {{workflowObj.repository + (workflowObj.workflowName ? ' (' + workflowObj.workflowName + ')' : '')}}
                 </a>
@@ -102,7 +102,7 @@
                 <span class="label"
                       ng-class="workflowObj.is_published ? 'label-primary' : 'label-warning'"
                       title="{{ workflowObj.is_published ? 'Published' : 'Unpublished' }}"
-                      data-toggle="tooltip">
+                      uib-tooltip>
                   {{ workflowObj.is_published ? 'PUB' : 'UNPUB' }}
                 </span>
               </div>

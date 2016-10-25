@@ -53,11 +53,7 @@
       DAG cannot be created because some required tools are missing from Github repo.
     </div>
     <div id="tooltiptext">
-      <div>
-        <div><b>Type:</b> {{ dynamicPopover.type | lowercase }}</div>
-        <div><b>Run:</b> {{ dynamicPopover.run }}</div>
-        <div><b>Docker:</b> <a ng-href="{{dynamicPopover.link}}"> {{dynamicPopover.docker}}</a></div>
-      </div>
+
     </div>
     <div id="cy" ng-show="dagJson !== null && !missingTool" class="mini-dag"></div>
   </div>

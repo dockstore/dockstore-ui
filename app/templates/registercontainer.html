@@ -86,7 +86,7 @@
                     ng-maxlength="128"
                     ng-pattern="/^([a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*)\/([a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*)$/i"
                     required
-                    data-toggle="tooltip"
+                    uib-tooltip
                     title="Git Repository path."
                     placeholder="e.g. CancerCollaboratory/dockstore-tool-liftover" />
               </div>
@@ -113,7 +113,7 @@
                   ng-maxlength="256"
                   ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*Dockerfile$/i"
                   required
-                  data-toggle="tooltip"
+                  uib-tooltip
                   title="Default relative path to the Dockerfile in the Git repository."
                   placeholder="e.g. /Dockerfile" />
               <div
@@ -139,7 +139,7 @@
                   ng-maxlength="256"
                   ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(cwl|yaml|yml)$/i"
                   required
-                  data-toggle="tooltip"
+                  uib-tooltip
                   title="Default relative path to the CWL Descriptor in the Git repository."
                   placeholder="e.g. /Dockstore.cwl" />
               <div
@@ -165,7 +165,7 @@
                 ng-maxlength="256"
                 ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.wdl$/i"
                 required
-                data-toggle="tooltip"
+                uib-tooltip
                 title="Default relative path to the WDL Descriptor in the Git repository."
                 placeholder="e.g. /Dockstore.wdl" />
               <div
@@ -211,7 +211,7 @@
                     ng-maxlength="128"
                     ng-pattern="/^(([a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*)|_)\/([a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*)$/i"
                     required
-                    data-toggle="tooltip"
+                    uib-tooltip
                     title="Docker Image Registry path."
                     placeholder="e.g. cancercollaboratory/dockstore-tool-liftover" />
               </div>
@@ -236,7 +236,7 @@
                   ng-model="containerObj.toolname"
                   ng-maxlength="256"
                   ng-pattern="/^[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*$/i"
-                  data-toggle="tooltip"
+                  uib-tooltip
                   title="Dockstore Image path toolname suffix."
                   placeholder="e.g. liftover-fast (optional)" />
               <div

@@ -60,7 +60,7 @@
                 ng-maxlength="128"
                 ng-pattern="/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*$/i"
                 required
-                data-toggle="tooltip"
+               uib-tooltip
                 title="Docker Image tag name."
                 placeholder="e.g. develop"
                 ng-disabled="!versionTagObj.create" />
@@ -86,7 +86,7 @@
                 ng-minlength="3"
                 ng-maxlength="128"
                 ng-pattern="/^[\w-]+((\/|\.)[\w-]+)*$/i"
-                data-toggle="tooltip"
+               uib-tooltip
                 title="Git branch or tag name."
                 placeholder="e.g. develop"
                 ng-disabled="!versionTagObj.create"  />
@@ -113,7 +113,7 @@
                 ng-maxlength="128"
                 ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(cwl|wdl|yml|yaml)$/i"
                 required
-                data-toggle="tooltip"
+               uib-tooltip
                 title="Relative path to the Descriptor in the Git repository."
                 placeholder="e.g. /Dockstore.cwl"
                 ng-disabled="!editMode" />
@@ -135,7 +135,7 @@
                 <label>
                   <input type="checkbox"
                          ng-model="versionTagObj.hidden"
-                         data-toggle="tooltip"
+                        uib-tooltip
                          title="Hide workflow version from public view." />
                 </label>
               </div>

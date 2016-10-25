@@ -27,9 +27,10 @@ angular.module('dockstore.ui')
   .controller('WorkflowDagViewCtrl', [
     '$scope',
     '$q',
+    '$compile',
     'WorkflowService',
     'NotificationService',
-    function ($scope, $q, WorkflowService, FrmttSrvc, NtfnService) {
+    function ($scope, $q, $compile, WorkflowService, FrmttSrvc, NtfnService) {
       $scope.dagJson = null;
       $scope.cy = null;
       $scope.successContent = [];
@@ -147,6 +148,22 @@ angular.module('dockstore.ui')
         }
         if ($scope.dynamicPopover.run === undefined) {
           $scope.dynamicPopover.run = "n/a";
+        }
+      };
+
+      $scope.checkLink = function() {
+        if ($scope.dynamicPopover.docker === 'n/a') {
+          return false;
+        } else {
+          return true;
+        }
+      };
+
+      $scope.checkIfHttp = function() {
+        if ($scope.dynamicPopover.run.match("^http") || $scope.dynamicPopover.run.match("^https")) {
+          return true;
+        } else {
+          return false;
         }
       };
 
@@ -332,6 +349,12 @@ angular.module('dockstore.ui')
 
               $scope.$apply();
 
+              $('#tooltiptext').html(
+                $compile(
+                  "<div><div><b>Type:</b> {{ dynamicPopover.type | lowercase }}</div><div ng-if='checkIfHttp()'><b>Run:</b> <a ng-href='{{ dynamicPopover.run }}'>{{ dynamicPopover.run }}</a></div><div ng-if='!checkIfHttp()'><b>Run:</b> {{ dynamicPopover.run }}</div><div ng-if='checkLink()'><b>Docker:</b> <a ng-href='{{dynamicPopover.link}}'> {{dynamicPopover.docker}}</a></div><div ng-if='!checkLink()'><b>Docker:</b>  {{dynamicPopover.docker}}</div></div>"
+                )
+              ($scope));
+              $scope.$apply();
               var tooltip = node.qtip({
                 content: {text: $('#tooltiptext').html(), title: node.data('name')},
                 style: {

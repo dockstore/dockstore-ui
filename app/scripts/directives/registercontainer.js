@@ -40,9 +40,9 @@ angular.module('dockstore.ui')
         scope.$watch('containerObj', function(newValue, oldValue, scope) {
           if (newValue) {
             scope.containerObj.gitPath = scope.containerObj.namespace ?
-              scope.containerObj.namespace + '/' + 'new_container' : '';
+              scope.containerObj.namespace + '/' + 'new_tool' : '';
             scope.containerObj.imagePath = scope.containerObj.namespace ?
-              scope.containerObj.namespace + '/' + 'new_container' : '';
+              scope.containerObj.namespace + '/' + 'new_tool' : '';
             $(element).find('[data-toggle="tooltip"]').tooltip();
           }
         });

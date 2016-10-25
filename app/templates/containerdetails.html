@@ -85,9 +85,9 @@
         </div>
     </div>
 
-    <p class="update">
+    <p class="update" title="{{ containerObj.lastUpdated ? getDateTimeString(containerObj.lastUpdated) : 'n/a' }}" uib-tooltip>
       Last build:
-      {{ containerObj.lastBuild ? getDaysAgoString(containerObj.lastBuild) : 'n/a' }}
+      {{ containerObj.lastBuild ? getTimeAgoString(containerObj.lastBuild) : 'n/a' }}
     </p>
   </div>
   <div class="col-md-5"

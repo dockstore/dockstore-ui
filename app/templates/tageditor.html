@@ -60,7 +60,7 @@
                   ng-maxlength="128"
                   ng-pattern="/^[a-zA-Z0-9]+([-_\.][a-zA-Z0-9]+)*$/i"
                   required
-                  data-toggle="tooltip"
+                 uib-tooltip
                   title="Docker Image tag name."
                   placeholder="e.g. develop"
                   ng-disabled="!tagObj.create" />
@@ -86,7 +86,7 @@
                   ng-minlength="3"
                   ng-maxlength="128"
                   ng-pattern="/^[\w-]+((\/|\.)[\w-]+)*$/i"
-                  data-toggle="tooltip"
+                 uib-tooltip
                   title="Git branch or tag name."
                   placeholder="e.g. develop"
                   ng-disabled="!editMode || (editMode && tagObj.automated)" />
@@ -113,7 +113,7 @@
                   ng-maxlength="128"
                   ng-pattern="/^[a-zA-Z0-9]*$/i"
                   required
-                  data-toggle="tooltip"
+                 uib-tooltip
                   title="Docker Image ID."
                   placeholder="e.g. 28d30887157514b6047c9"
                   ng-disabled="true" />
@@ -140,7 +140,7 @@
                   ng-maxlength="128"
                   ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*Dockerfile$/i"
                   required
-                  data-toggle="tooltip"
+                 uib-tooltip
                   title="Relative path to the Dockerfile in the Git repository."
                   placeholder="e.g. /Dockerfile"
                   ng-disabled="!editMode" />
@@ -167,7 +167,7 @@
                   ng-maxlength="128"
                   ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(cwl|yaml|yml)/i"
                   required
-                  data-toggle="tooltip"
+                 uib-tooltip
                   title="Relative path to the CWL Descriptor in the Git repository."
                   placeholder="e.g. /Dockstore.cwl"
                   ng-disabled="!editMode" />
@@ -194,7 +194,7 @@
                 ng-maxlength="128"
                 ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.wdl$/i"
                 required
-                data-toggle="tooltip"
+               uib-tooltip
                 title="Relative path to the WDL Descriptor in the Git repository."
                 placeholder="e.g. /Dockstore.wdl"
                 ng-disabled="!editMode" />
@@ -216,7 +216,7 @@
                 <label>
                   <input type="checkbox"
                       ng-model="tagObj.hidden"
-                      data-toggle="tooltip"
+                     uib-tooltip
                       title="Hide tag from public view." />
                 </label>
               </div>

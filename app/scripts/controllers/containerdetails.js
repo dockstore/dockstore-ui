@@ -500,18 +500,35 @@ angular.module('dockstore.ui')
         }
       };
 
-      $scope.getDaysAgo = function(timestamp) {
+      $scope.getTimeAgo = function(timestamp, timeConversion) {
         var timeDiff = (new Date()).getTime() - timestamp;
-        return Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+        return Math.floor(timeDiff / timeConversion);
       };
 
-      $scope.getDaysAgoString = function(timestamp) {
-        var daysAgo = $scope.getDaysAgo(timestamp);
-        if(daysAgo < 0){
-          daysAgo = 0;
+      $scope.getTimeAgoString = function(timestamp) {
+        var msToDays = 1000 * 60 * 60 * 24;
+        var msToHours = 1000 * 60 * 60;
+        var msToMins = 1000 * 60;
+
+        var timeAgo = $scope.getTimeAgo(timestamp, msToDays);
+        if (timeAgo < 1){
+          timeAgo = $scope.getTimeAgo(timestamp, msToHours);
+          if (timeAgo < 1) {
+            timeAgo = $scope.getTimeAgo(timestamp, msToMins);
+            if (timeAgo === 0) {
+              return '<1 minute ago';
+            } else {
+              return timeAgo.toString() +
+                    ((timeAgo === 1) ? ' minute ago' : ' minutes ago');
+            }
+          } else {
+            return timeAgo.toString() +
+                  ((timeAgo === 1) ? ' hour ago' : ' hours ago');
+          }
+        } else {
+          return timeAgo.toString() +
+                ((timeAgo === 1) ? ' day ago' : ' days ago');
         }
-        return daysAgo.toString() +
-                ((daysAgo === 1) ? ' day ago' : ' days ago');
       };
 
       $scope.getGitReposProvider = FrmttSrvc.getGitReposProvider;
