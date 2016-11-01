@@ -267,6 +267,8 @@ angular.module('dockstore.ui')
           default_dockerfile_path: '/Dockerfile',
           default_cwl_path: '/Dockstore.cwl',
           default_wdl_path: '/Dockstore.wdl',
+          default_cwl_test_parameter_file: '/test.cwl.json',
+          default_wdl_test_parameter_file: '/test.wdl.json',
           is_published: false,
           scrProvider: 'GitHub',
           irProvider: 'Quay.io'

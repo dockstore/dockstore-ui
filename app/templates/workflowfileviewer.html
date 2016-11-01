@@ -13,9 +13,17 @@
   ~    See the License for the specific language governing permissions and
   ~    limitations under the License.
   -->
+<div class="btn-group btn-group-justified file-tabs" role="group">
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-default" ng-class="type == 'descriptor' ? 'active' : ''" ng-click="setType('descriptor')">Descriptor Files</button>
+  </div>
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-default" ng-class="type == 'testparameter' ? 'active' : ''" ng-click="setType('testparameter')">Test Parameter File</button>
+  </div>
+</div>
 
 <div class="ds-holder">
-  <div class="ds-version-selector">
+  <div class="ds-version-selector float-left">
     <strong>Workflow Version</strong>:
     <select class="ds-version" ng-model="selVersionName">
       <option
@@ -26,7 +34,7 @@
     </select>
   </div>
 
-  <div class="ds-descriptor-selector">
+  <div class="ds-descriptor-selector float-left" ng-hide="isTestParameter()">
     <strong>File</strong>:
     <select class="ds-wide-descriptor" ng-model="selSecondaryDescriptorName">
       <option
@@ -46,18 +54,18 @@
 </div>
 <style>
   pre .line-number {
-    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-    font-size:inherit;
-    color:#444;
-    float:left;
-    margin:7px 2px 0 0;
-    border-right:1px solid #444;
-    text-align:left;
-    padding:0 10px 2px 0;
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-size:inherit;
+  color:#444;
+  float:left;
+  margin:7px 2px 0 0;
+  border-right:1px solid #444;
+  text-align:left;
+  padding:0 10px 2px 0;
   }
 
   pre .line-number span {
-    display:block;
+  display:block;
   }
 
   pre .cl {
@@ -70,8 +78,9 @@
     /*this will create a horizontal scrollbar if the line is longer than the specified content width*/
   }
 </style>
-<div hljs id="code"
+<div hljs class="code"
      source="fileContents"
      hljs-language="yaml"
+     type="workflow-file-viewer"
      ng-show="fileLoaded && fileContents">
 </div>

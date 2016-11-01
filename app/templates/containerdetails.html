@@ -161,7 +161,7 @@
 </div>
 <div class="row" ng-show="containerObj">
   <div class="ds-tabs" ng-class="editMode ? 'col-md-12' : 'col-md-9'">
-    <uib-tabset>
+    <uib-tabset >
       <uib-tab active="activeTabs[0]">
         <uib-tab-heading>Info</uib-tab-heading>
         <ul class="list-unstyled container-info">
@@ -208,7 +208,7 @@
               <strong>Dockerfile Path</strong>:
               {{containerObj.default_dockerfile_path}}
               <button type="sbutton"
-                  class="btn btn-link pull-right"
+                  class="btn btn-link push-right"
                   style="padding: 3px 12px!important;"
                   ng-click="showEditDockerfile = false">
                 <span class="glyphicon glyphicon-edit"></span>Edit
@@ -227,7 +227,7 @@
                 </div>
               </div>
               <button type="submit"
-                      class="btn btn-link pull-right"
+                      class="btn btn-link push-right"
                       style="padding: 3px 12px!important;"
                       ng-click="showEditDockerfile = true"
                       ng-disabled="editDockerfilePath.contDockerfilePath.$invalid || refreshingContainer">
@@ -260,7 +260,7 @@
               <strong>CWL Path</strong>:
               {{containerObj.default_cwl_path}}
               <button type="sbutton"
-                  class="btn btn-link pull-right"
+                  class="btn btn-link push-right"
                   style="padding: 3px 12px!important;"
                   ng-click="showEditCWL = false">
                 <span class="glyphicon glyphicon-edit"></span>Edit
@@ -279,7 +279,7 @@
                 </div>
               </div>
               <button type="submit"
-                      class="btn btn-link pull-right"
+                      class="btn btn-link push-right"
                       style="padding: 3px 12px!important;"
                       ng-click="showEditCWL = true"
                       ng-disabled="editCWLPath.contCWLPath.$invalid || refreshingContainer">
@@ -312,7 +312,7 @@
               <strong>WDL Path</strong>:
               {{containerObj.default_wdl_path}}
               <button type="sbutton"
-                  class="btn btn-link pull-right"
+                  class="btn btn-link push-right"
                   style="padding: 3px 12px!important;"
                   ng-click="showEditWDL = false">
                 <span class="glyphicon glyphicon-edit"></span>Edit
@@ -331,7 +331,7 @@
                 </div>
               </div>
               <button type="submit"
-                      class="btn btn-link pull-right"
+                      class="btn btn-link push-right"
                       style="padding: 3px 12px!important;"
                       ng-click="showEditWDL = true"
                       ng-disabled="editWDLPath.contWDLPath.$invalid || refreshingContainer">
@@ -349,6 +349,110 @@
                       ng-minlength="3"
                       ng-maxlength="256"
                       placeholder="e.g. /Dockstore.wdl" />
+                </div>
+              </div>
+            </form>
+          </li>
+          <li>
+            <!-- for when it's not edit mode-->
+            <div ng-show="!editMode">
+              <strong>CWL Test Parameter Path</strong>:
+              {{containerObj.default_cwl_test_parameter_file}}
+            </div>
+            <!-- for when it's edit mode and Edit button not clicked-->
+            <div ng-show="editMode && showEditCWLTestParameterPath">
+              <strong>CWL Test Parameter Path</strong>:
+              {{containerObj.default_cwl_test_parameter_file}}
+              <button type="sbutton"
+                      class="btn btn-link push-right"
+                      style="padding: 3px 12px!important;"
+                      ng-click="showEditCWLTestParameterPath = false">
+                <span class="glyphicon glyphicon-edit"></span>Edit
+              </button>
+            </div>
+            <!-- for when it's edit mode and Edit button clicked-->
+            <form name="editCWLTestParameterPath"
+                  class="edit-container form-inline"
+                  ng-show="editMode && !showEditCWLTestParameterPath"
+                  ng-submit="submitTestParameterFileEdits()">
+              <div
+                class="form-error-messages"
+                ng-messages="editCWLTestParameterPath.contCWLTestParameterPath.$error"
+                ng-if="editCWLTestParameterPath.contCWLTestParameterPath.$touched">
+                <div ng-messages-include="templates/validation/containers/testparameterfile.html">
+                </div>
+              </div>
+              <button type="submit"
+                      class="btn btn-link push-right"
+                      style="padding: 3px 12px!important;"
+                      ng-click="showEditCWLTestParameterPath = true"
+                      ng-disabled="editCWLTestParameterPath.contCWLTestParameterPath.$invalid || refreshingContainer">
+                <span class="glyphicon glyphicon-floppy-save"></span>Save
+              </button>
+              <div ng-show="!showEditCWLTestParameterPath">
+                <strong>CWL Test Parameter Path</strong>:
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="input-default form-control"
+                    name="contCWLTestParameterPath"
+                    ng-model="containerObj.default_cwl_test_parameter_file"
+                    ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(json|yml|yaml)$/i"
+                    ng-minlength="3"
+                    ng-maxlength="256"
+                    placeholder="e.g. /test.cwl.json" />
+                </div>
+              </div>
+            </form>
+          </li>
+          <li>
+            <!-- for when it's not edit mode-->
+            <div ng-show="!editMode">
+              <strong>WDL Test Parameter Path</strong>:
+              {{containerObj.default_wdl_test_parameter_file}}
+            </div>
+            <!-- for when it's edit mode and Edit button not clicked-->
+            <div ng-show="editMode && showEditWDLTestParameterPath">
+              <strong>WDL Test Parameter Path</strong>:
+              {{containerObj.default_wdl_test_parameter_file}}
+              <button type="sbutton"
+                      class="btn btn-link push-right"
+                      style="padding: 3px 12px!important;"
+                      ng-click="showEditWDLTestParameterPath = false">
+                <span class="glyphicon glyphicon-edit"></span>Edit
+              </button>
+            </div>
+            <!-- for when it's edit mode and Edit button clicked-->
+            <form name="editWDLTestParameterPath"
+                  class="edit-container form-inline"
+                  ng-show="editMode && !showEditWDLTestParameterPath"
+                  ng-submit="submitTestParameterFileEdits()">
+              <div
+                class="form-error-messages"
+                ng-messages="editWDLTestParameterPath.contWDLTestParameterPath.$error"
+                ng-if="editWDLTestParameterPath.contWDLTestParameterPath.$touched">
+                <div ng-messages-include="templates/validation/containers/testparameterfile.html">
+                </div>
+              </div>
+              <button type="submit"
+                      class="btn btn-link push-right"
+                      style="padding: 3px 12px!important;"
+                      ng-click="showEditWDLTestParameterPath = true"
+                      ng-disabled="editWDLTestParameterPath.contWDLTestParameterPath.$invalid || refreshingContainer">
+                <span class="glyphicon glyphicon-floppy-save"></span>Save
+              </button>
+              <div ng-show="!showEditWDLTestParameterPath">
+                <strong>WDL Test Parameter Path</strong>:
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="input-default form-control"
+                    name="contWDLTestParameterPath"
+                    ng-model="containerObj.default_wdl_test_parameter_file"
+                    ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(json|yml|yaml)$/i"
+                    ng-minlength="3"
+                    ng-maxlength="256"
+                    placeholder="e.g. /test.wdl.json" />
                 </div>
               </div>
             </form>
@@ -462,7 +566,7 @@
           </div>
         </form>
       </uib-tab>
-      <uib-tab  active="activeTabs[2]">
+      <uib-tab active="activeTabs[2]">
         <uib-tab-heading>Versions</uib-tab-heading>
         <div versions-grid
             container-obj="containerObj"
@@ -471,17 +575,9 @@
         </div>
       </uib-tab>
       <uib-tab active="activeTabs[3]">
-        <uib-tab-heading ng-click="dockerfileTab()">Dockerfile</uib-tab-heading>
+        <uib-tab-heading ng-click="dockerfileTab()">Files</uib-tab-heading>
         <div container-file-viewer
             type="dockerfile"
-            container-obj="containerObj"
-            ng-if="containerObj">
-        </div>
-      </uib-tab>
-      <uib-tab active="activeTabs[4]">
-        <uib-tab-heading ng-click="checkPage()">Descriptor</uib-tab-heading>
-        <div container-file-viewer
-            type="descriptor"
             container-obj="containerObj"
             ng-if="containerObj">
         </div>

@@ -43,7 +43,7 @@ angular.module('dockstore.ui')
       $scope.createWorkflow = function(workflowObj) {
         if ($scope.savingActive) return;
         $scope.savingActive = true;
-        return WorkflowService.createWorkflow($scope.workflowObj.scrProvider, workflowObj.gitUrl, workflowObj.default_workflow_path, workflowObj.workflowName, $scope.workflowObj.descriptorType)
+        return WorkflowService.createWorkflow($scope.workflowObj.scrProvider, workflowObj.gitUrl, workflowObj.default_workflow_path, workflowObj.workflowName, $scope.workflowObj.descriptorType, $scope.workflowObj.default_test_parameter_file)
           .then(
             function(workflowObj) {
               return workflowObj;
@@ -96,6 +96,7 @@ angular.module('dockstore.ui')
           organization: $scope.getWorkflowPath(workflowObj.gitPath, 'organization'),
           gitUrl: workflowObj.gitPath,
           default_workflow_path: workflowObj.default_workflow_path,
+          default_test_parameter_file: workflowObj.default_test_parameter_file,
           is_published: workflowObj.is_published,
         };
         return normWorkflowObj;

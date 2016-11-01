@@ -118,7 +118,7 @@ describe('Service: WorkflowService', function () {
 
   describe('mocking services: PUT', function() {
     //mock setDefaultWorkflowPath
-    it('should mock setDefaultWorkflowPath', function() {
+    it('should mock updateWorkflowDefaults', function() {
       httpBackend.whenPUT("http://localhost:8080/workflows/1114").respond({
         //NOTE: this is just part of the real content. For complete full content, check the webservice
           "id": 1114,
@@ -133,8 +133,8 @@ describe('Service: WorkflowService', function () {
           "workflow_path": "/test/Dockstore.cwl"
       });
 
-      WorkflowService.setDefaultWorkflowPath(1114,"/test/Dockstore.cwl",null,"cwl",
-         "DockstoreTestUser/hello-dockstore-workflow","git@github.com:DockstoreTestUser/hello-dockstore-workflow.git")
+      WorkflowService.updateWorkflowDefaults(1114, { workflow_path: "/test/Dockstore.cwl", workflowName: null, descriptorType: "cwl",
+         path: "DockstoreTestUser/hello-dockstore-workflow", gitUrl: "git@github.com:DockstoreTestUser/hello-dockstore-workflow.git" })
         .then(function(response){
           expect(response.workflow_path).toBe('/test/Dockstore.cwl');
         });

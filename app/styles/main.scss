@@ -352,6 +352,11 @@ input[type=text]:focus, textarea:focus {
   margin: 0;
 }
 
+.push-right {
+  position: absolute;
+  right: 20px;
+}
+
 /* BUTTONS - - - - - - - - - - - - - */
 
 div.button{
@@ -958,6 +963,10 @@ div.tabs > div:target > div, :target #info > div, #info > div {
 
 #tooltiptext {
   display:none;
+}
+
+.file-tabs {
+  padding-bottom:5px;
 }
 
 html, body {

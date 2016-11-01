@@ -294,6 +294,11 @@ cwltool --non-strict --enable-net --outdir /home/ubuntu/gitroot/dockstore-tool-b
 and uses it for inputs/outputs.  It can get quite large depending on the tool/inputs/outputs being used.  Plan accordingly e.g. execute
 the dockstore CLI in a directory located on a partition with sufficient storage.
 
+## Adding a Test Parameter File
+We are able register the above input parameterization of the tool into Dockstore so that users can see and test an example with our tool. By default we look for the files `/test.cwl.json` and/or `/test.wdl.json`, depending on which descriptor language you end up using for a given Tool. 
+
+**Tip:** Make sure that any required input files are given as URLs so that a user can run the example successfully.
+
 ## Releasing on GitHub
 
 At this point we've successfully created our tool in Docker, tested it, written a CWL that describes how to run it, and tested

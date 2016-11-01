@@ -28,7 +28,7 @@ angular.module('dockstore.ui')
       restrict: 'AE',
       controller: 'WorkflowFileViewerCtrl',
       scope: {
-        type: '@',
+        type: '=',
         workflowObj: '=',
         isEnabled: '='
       },
@@ -42,20 +42,23 @@ angular.module('dockstore.ui')
         });
         scope.$on('refreshFiles', function(event) {
           scope.setDocument();
-          scope.refreshDocument();
+          scope.refreshDocument(false);
+          scope.checkDescriptor();
         });
         scope.$on('checkDescPageType', function(event) {
+          scope.refreshDocument(false);
           scope.checkDescriptor();
         });
         scope.$watchGroup(
           ['selVersionName','descriptor'],
           function(newValues, oldValues) {
-            scope.refreshDocumentType();
+            scope.refreshDocument(true);
           });
         scope.$watchGroup(
           ['workflowObj.id', 'selSecondaryDescriptorName'],
           function(newValues, oldValues) {
-            scope.refreshDocument();
+            scope.setType('descriptor');
+            scope.refreshDocument(false);
           });
       }
     };

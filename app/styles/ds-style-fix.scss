@@ -346,6 +346,12 @@ div.ds-holder {
   margin-bottom: 5px;
 }
 
+div.ds-holder div{
+  display: table-cell;
+  padding: 5px;
+  width:33%;
+}
+
 div.ds-descriptor-selector {
   display: table-cell;
 }

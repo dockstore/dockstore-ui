@@ -180,8 +180,8 @@
             <div ng-show="editMode && showEditWorkflowPath">
               <strong>Workflow Path</strong>:
               {{workflowObj.workflow_path}}
-              <button type="sbutton" id="editButton"
-                  class="btn btn-link pull-right"
+              <button type="sbutton"
+                  class="btn btn-link push-right"
                   ng-click="showEditWorkflowPath = false">
                 <span class="glyphicon glyphicon-edit"></span>Edit
               </button>
@@ -199,7 +199,7 @@
                 </div>
               </div>
               <button type="submit"
-                      class="btn btn-link pull-right"
+                      class="btn btn-link push-right"
                       ng-click="showEditWorkflowPath = true"
                       ng-disabled="editWorkflowPath.contDescPath.$invalid || refreshingWorkflow">
                 <span class="glyphicon glyphicon-floppy-save"></span>Save
@@ -216,6 +216,57 @@
                       ng-minlength="3"
                       ng-maxlength="256"
                       placeholder="e.g. /Dockstore.cwl" />
+                </div>
+              </div>
+            </form>
+          </li>
+          <li>
+            <!-- for when it's not edit mode-->
+            <div ng-show="!editMode">
+              <strong>Test Parameter Path</strong>:
+              {{workflowObj.default_test_parameter_file}}
+            </div>
+
+            <!-- for when it's edit mode and Edit button not clicked-->
+            <div ng-show="editMode && showEditTestParameterPath">
+              <strong>Test Parameter Path</strong>:
+              {{workflowObj.default_test_parameter_file}}
+              <button type="sbutton"
+                      class="btn btn-link push-right"
+                      ng-click="showEditTestParameterPath = false">
+                <span class="glyphicon glyphicon-edit"></span>Edit
+              </button>
+            </div>
+
+            <!-- for when it's edit mode and Edit button clicked-->
+            <form name="editTestParameterPath"
+                  class="edit-container form-inline"
+                  ng-show="editMode && !showEditTestParameterPath"
+                  ng-submit="submitTestParameterPathEdits()">
+              <div class="form-error-messages"
+                   ng-messages="editTestParameterPath.contTestParameterPath.$error"
+                   ng-if="editTestParameterPath.contTestParameterPath.$touched">
+                <div ng-messages-include="templates/validation/containers/testparameterfile.html">
+                </div>
+              </div>
+              <button type="submit"
+                      class="btn btn-link push-right"
+                      ng-click="showEditTestParameterPath = true"
+                      ng-disabled="editTestParameterPath.contTestParameterPath.$invalid || refreshingWorkflow">
+                <span class="glyphicon glyphicon-floppy-save"></span>Save
+              </button>
+              <div ng-show="!showEditTestParameterPath">
+                <strong>Test Parameter Path</strong>:
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="input-default form-control"
+                    name="contTestParameterPath"
+                    ng-model="workflowObj.default_test_parameter_file"
+                    ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(json|yaml|yml)$/i"
+                    ng-minlength="3"
+                    ng-maxlength="256"
+                    placeholder="e.g. /test.json" />
                 </div>
               </div>
             </form>
@@ -241,7 +292,7 @@
             <Strong>Descriptor Type</Strong>:
             {{workflowObj.descriptorType | lowercase}}
             <button type="sbutton" id="editButton"
-                  class="btn btn-link pull-right"
+                  class="btn btn-link push-right"
                   style="padding: 3px 12px!important;"
                   ng-click="showEditDescriptorType = false">
                 <span class="glyphicon glyphicon-edit"></span>Edit
@@ -255,7 +306,7 @@
               <option value="wdl">wdl</option>
               </select>
               <button type="submit"
-                      class="btn btn-link pull-right"
+                      class="btn btn-link push-right"
                       style="padding: 3px 12px!important;"
                       ng-click="showEditDescriptorType = true;submitDescriptorEdit()">
                 <span class="glyphicon glyphicon-floppy-save"></span>Save
@@ -283,7 +334,7 @@
       <uib-tab active="activeTabs[1]" style="min-width: 144px !important;">
         <uib-tab-heading>Labels</uib-tab-heading>
         <button type="sbutton"
-                class="btn btn-link pull-right"
+                class="btn btn-link push-right"
                 ng-if="editMode && !labelsEditMode"
                 ng-click="toggleLabelsEditMode()">
           <span class="glyphicon glyphicon-edit"></span>Edit
@@ -305,7 +356,7 @@
               ng-submit="submitWorkflowEdits()"
               novalidate>
           <button type="submit"
-                  class="btn btn-link pull-right"
+                  class="btn btn-link push-right"
                   ng-disabled="editWorkflowForm.$invalid"
                   ng-if="editMode && labelsEditMode">
             <span class="glyphicon glyphicon-floppy-save"></span>Save
@@ -341,7 +392,9 @@
         </div>
       </uib-tab>
       <uib-tab active="activeTabs[3]" disable="!isWorkflowFull()" style="min-width: 145px !important;">
-        <uib-tab-heading ng-click="checkPage()">Descriptor</uib-tab-heading>
+        <uib-tab-heading ng-click="checkPage()">
+          Files
+        </uib-tab-heading>
         <div workflow-file-viewer
              type="descriptor"
              workflow-obj="workflowObj"

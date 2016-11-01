@@ -143,6 +143,8 @@ angular.module('dockstore.ui')
           default_dockerfile_path: containerObj.default_dockerfile_path,
           default_cwl_path: containerObj.default_cwl_path,
           default_wdl_path: containerObj.default_wdl_path,
+          default_cwl_test_parameter_file: containerObj.default_cwl_test_parameter_file,
+          default_wdl_test_parameter_file: containerObj.default_wdl_test_parameter_file,
           is_published: containerObj.is_published,
         };
         if (normContainerObj.toolname === normContainerObj.name) {

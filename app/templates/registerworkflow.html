@@ -151,6 +151,31 @@
 
           <div class="form-group form-group-sm">
             <label class="col-sm-3 control-label">
+              Test Parameter File Path:
+            </label>
+            <div class="col-sm-9">
+              <input
+                type="text"
+                class="form-control"
+                name="default_test_parameter_file"
+                ng-model="workflowObj.default_test_parameter_file"
+                ng-maxlength="256"
+                ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(json|yaml|yml)$/i"
+                data-toggle="tooltip"
+                title="Default relative path to the test parameter file for given workflow."
+                placeholder="e.g. liftover-fast (optional)" />
+              <div
+                class="form-error-messages"
+                ng-messages="registerWorkflowForm.default_test_parameter_file.$error"
+                ng-if="registerWorkflowForm.default_test_parameter_file.$touched">
+                <div ng-messages-include="templates/validation/containers/testparameterfile.html">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
               Workflow Name:
             </label>
             <div class="col-sm-9">
