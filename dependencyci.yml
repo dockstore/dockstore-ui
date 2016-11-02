@@ -1,0 +1,6 @@
+# ignore dependency grunt-usemin for now https://github.com/ga4gh/dockstore/issues/460
+platform:
+  npm:
+    grunt-usemin:
+      tests:
+        unmaintained: skip
