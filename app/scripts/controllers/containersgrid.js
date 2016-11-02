@@ -43,7 +43,6 @@ angular.module('dockstore.ui')
       $scope.getImageReposProvider = FrmttSrvc.getImageReposProvider;
       $scope.getImageReposProviderName = FrmttSrvc.getImageReposProviderName;
       $scope.getImageReposWebUrl = FrmttSrvc.getImageReposWebUrl;
-
       $scope.getDockerPullCmd = function(path) {
         return FrmttSrvc.getFilteredDockerPullCmd(path);
       };

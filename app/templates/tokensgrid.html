@@ -22,13 +22,6 @@
           <thead>
             <tr>
               <th>
-                Token ID
-                <span class="glyphicon"
-                      ng-class="getIconClass('tokenId')"
-                      ng-click="clickSortColumn('tokenId')">
-                </span>
-              </th>
-              <th>
                 Token Source
                 <span class="glyphicon"
                       ng-class="getIconClass('source')"
@@ -51,9 +44,6 @@
             </tr>
             <!-- need a to write a 'smart search' filter -->
             <tr ng-repeat="token in ((filteredTokens = tokens) | orderBy:sortColumn:sortReverse | PaginationFilter:getListRange())">
-              <td>
-                {{token.id}}
-              </td>
               <td>
                 {{token.tokenSource}}
               </td>

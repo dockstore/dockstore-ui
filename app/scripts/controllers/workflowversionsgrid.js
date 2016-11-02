@@ -27,14 +27,16 @@ angular.module('dockstore.ui')
   .controller('WorkflowVersionsGridCtrl', [
     '$scope',
     '$q',
+    '$sce',
     'WorkflowService',
     'FormattingService',
     'NotificationService',
-    function ($scope, $q, WorkflowService, FrmttSrvc, NtfnService) {
+    function ($scope, $q, $sce, WorkflowService, FrmttSrvc, NtfnService) {
 
       $scope.workflows = [];
       $scope.sortColumn = 'name';
       $scope.sortReverse = false;
+      $scope.gitReferenceTooltip = $sce.trustAsHtml('Git branches/tags<br/> The selected reference will be used to populate <br/>the info tab including "launch with"');
 
       $scope.getDateModified = FrmttSrvc.getDateModified;
 

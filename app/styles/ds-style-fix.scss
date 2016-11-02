@@ -63,18 +63,15 @@ table.containers-grid {
 }
 
 table.tokens-grid {
-  th:nth-child(1) {
-    width: 15%;
-  }
-  th:nth-child(2) {
-    width: 20%;
-  }
-  th:nth-child(3) {
-    width: 45%;
-  }
-  th:nth-child(4) {
-    width: 20%;
-  }
+    th:nth-child(1) {
+      width: 25%;
+    }
+    th:nth-child(2) {
+      width: 60%;
+    }
+    th:nth-child(3) {
+      width: 15%;
+    }
 }
 
 table.versions-grid {
@@ -85,19 +82,44 @@ table.versions-grid {
     width: 17.5%;
   }
   th:nth-child(3) {
-    width: 12.5%;
+    width: 17.5%;
   }
   th:nth-child(4) {
-    width: 17%;
+    width: 15%;
   }
   th:nth-child(5) {
-    width: 9%;
+    width: 10%;
   }
   th:nth-child(6) {
-    width: 8%;
+    width: 10%;
   }
   th:nth-child(7) {
-    width: 23.5%;
+    width: 17.5%;
+  }
+  div.git-ref {
+    width: 124px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  margin-bottom: 10px;
+}
+
+table.workflow-versions-grid {
+  th:nth-child(1) {
+    width: 22.5%;
+  }
+  th:nth-child(2) {
+    width: 35%;
+  }
+  th:nth-child(3) {
+    width: 22.5%;
+  }
+  th:nth-child(4) {
+    width: 10%;
+  }
+  th:nth-child(5) {
+    width: 10%;
   }
   div.git-ref {
     width: 124px;
@@ -487,15 +509,12 @@ button.contact-button {
   }
   table.tokens-grid {
     th:nth-child(1) {
-      width: 20%;
-    }
-    th:nth-child(2) {
       width: 25%;
     }
-    th:nth-child(3) {
-      width: 40%;
+    th:nth-child(2) {
+      width: 60%;
     }
-    th:nth-child(4) {
+    th:nth-child(3) {
       width: 15%;
     }
   }

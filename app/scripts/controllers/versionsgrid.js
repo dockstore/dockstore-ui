@@ -27,10 +27,11 @@ angular.module('dockstore.ui')
   .controller('VersionsGridCtrl', [
     '$scope',
     '$q',
+    '$sce',
     'ContainerService',
     'FormattingService',
     'NotificationService',
-    function ($scope, $q, ContainerService, FrmttSrvc, NtfnService) {
+    function ($scope, $q, $sce, ContainerService, FrmttSrvc, NtfnService) {
 
       $scope.containers = [];
       $scope.sortColumn = 'name';
@@ -38,6 +39,7 @@ angular.module('dockstore.ui')
 
       $scope.getHRSize = FrmttSrvc.getHRSize;
       $scope.getDateModified = FrmttSrvc.getDateModified;
+      $scope.gitReferenceTooltip = $sce.trustAsHtml('Git branches/tags<br/> The selected reference and tag will be used to populate <br/>the info tab including "launch with"');
 
       $scope.clickSortColumn = function(columnName) {
         if ($scope.sortColumn === columnName) {

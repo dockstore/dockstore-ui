@@ -166,11 +166,11 @@
         <uib-tab-heading>Info</uib-tab-heading>
         <ul class="list-unstyled container-info">
           <li>
-            <strong>Author</strong>:
+            <strong uib-tooltip="Author listed in descriptor">Author</strong>:
             {{ containerObj.author ? containerObj.author : 'n/a' }}
           </li>
           <li>
-            <strong>E-mail</strong>:
+            <strong uib-tooltip="E-mail of corresponding author for workflow">E-mail</strong>:
             <span ng-if="!containerObj.email">n/a</span>
             <a href="mailto:{{containerObj.email}}"
                 ng-if="containerObj.email">
@@ -178,7 +178,7 @@
             </a>
           </li>
           <li ng-if="gitReposProvider">
-            <strong>{{gitReposProviderName}}</strong>:
+            <strong uib-tooltip="Git repository for the associated tool descriptors and Dockerfile">{{gitReposProviderName}}</strong>:
             <span ng-if="!gitReposProvider">n/a</span>
             <span ng-if="gitReposWebUrl">
               <a ng-href="{{gitReposWebUrl}}" target="_blank">
@@ -188,7 +188,7 @@
           </li>
           <li ng-if="imageReposProvider">
             <div>
-              <strong>{{imageReposProviderName}}</strong>:
+              <strong uib-tooltip="Docker registry for the associated Docker images">{{imageReposProviderName}}</strong>:
               <span ng-if="!imageReposWebUrl">n/a</span>
               <span ng-if="imageReposWebUrl">
               <a ng-href="{{imageReposWebUrl}}" target="_blank">
@@ -200,12 +200,12 @@
           <li>
           <!-- for when it's not edit mode-->
             <div ng-show="!editMode">
-              <strong>Dockerfile Path</strong>:
+              <strong uib-tooltip="Path in Git repository to the tool's Dockerfile">Dockerfile Path</strong>:
               {{containerObj.default_dockerfile_path}}
             </div>
           <!-- for when it's edit mode and Edit button not clicked-->
             <div ng-show="editMode && showEditDockerfile">
-              <strong>Dockerfile Path</strong>:
+              <strong uib-tooltip="Path in Git repository to the tool's Dockerfile">Dockerfile Path</strong>:
               {{containerObj.default_dockerfile_path}}
               <button type="sbutton"
                   class="btn btn-link push-right"
@@ -234,7 +234,7 @@
                 <span class="glyphicon glyphicon-floppy-save"></span>Save
               </button>
               <div ng-show="!showEditDockerfile">
-              <strong>Dockerfile Path</strong>:
+              <strong uib-tooltip="Path in Git repository to the tool's Dockerfile">Dockerfile Path</strong>:
                 <div class="form-group">
                   <input
                       type="text"
@@ -252,12 +252,12 @@
           <li>
           <!-- for when it's not edit mode-->
             <div ng-show="!editMode">
-              <strong>CWL Path</strong>:
+              <strong uib-tooltip="Path in Git repository to main CWL descriptor file">CWL Path</strong>:
               {{containerObj.default_cwl_path}}
             </div>
           <!-- for when it's edit mode and Edit button not clicked-->
             <div ng-show="editMode && showEditCWL">
-              <strong>CWL Path</strong>:
+              <strong uib-tooltip="Path in Git repository to main CWL descriptor file">CWL Path</strong>:
               {{containerObj.default_cwl_path}}
               <button type="sbutton"
                   class="btn btn-link push-right"
@@ -286,7 +286,7 @@
                 <span class="glyphicon glyphicon-floppy-save"></span>Save
               </button>
               <div ng-show="!showEditCWL">
-              <strong>CWL Path</strong>:
+              <strong uib-tooltip="Path in Git repository to main CWL descriptor file">CWL Path</strong>:
                 <div class="form-group">
                   <input
                       type="text"
@@ -304,12 +304,12 @@
           <li>
           <!-- for when it's not edit mode-->
             <div ng-show="!editMode">
-              <strong>WDL Path</strong>:
+              <strong uib-tooltip="Path in Git repository to main WDL descriptor file">WDL Path</strong>:
               {{containerObj.default_wdl_path}}
             </div>
           <!-- for when it's edit mode and Edit button not clicked-->
             <div ng-show="editMode && showEditWDL">
-              <strong>WDL Path</strong>:
+              <strong uib-tooltip="Path in Git repository to main WDL descriptor file">WDL Path</strong>:
               {{containerObj.default_wdl_path}}
               <button type="sbutton"
                   class="btn btn-link push-right"
@@ -338,7 +338,7 @@
                 <span class="glyphicon glyphicon-floppy-save"></span>Save
               </button>
               <div ng-show="!showEditWDL">
-              <strong>WDL Path</strong>:
+              <strong uib-tooltip="Path in Git repository to main WDL descriptor file">WDL Path</strong>:
                 <div class="form-group">
                   <input
                       type="text"
@@ -458,19 +458,19 @@
             </form>
           </li>
           <li>
-            <strong>Build Mode</strong>:
+            <strong uib-tooltip-html="buildTooltip">Build Mode</strong>:
             {{getContainerModeString(containerObj.mode)}}
           </li>
           <li>
-            <strong>Last Build</strong>:
+            <strong uib-tooltip="Date and time of the last build of the Docker image">Last Build</strong>:
             {{ containerObj.lastBuild ? getDateTimeString(containerObj.lastBuild) : 'n/a' }}
           </li>
           <li>
-            <strong>Last Update</strong>:
+            <strong uib-tooltip="Date and time of the last update to the Tool entry">Last Update</strong>:
             {{ containerObj.lastUpdated ? getDateTimeString(containerObj.lastUpdated) : 'n/a' }}
           </li>
           <li>
-            <strong>Description</strong>:
+            <strong uib-tooltip="Description of tool obtained from tool descriptor">Description</strong>:
             <div class="well well-sm">
               <div
                 ng-show="containerObj.description"
@@ -482,7 +482,7 @@
             </div>
           </li>
           <li ng-show="showLaunchWith()">
-            <strong>Launch With:</strong>
+            <strong uib-tooltip="Commands to launch tool from the command line">Launch With:</strong>
             <div class="pull-right" style="margin-left:5px">
               <select id="descType"
                       ng-model="desc"
@@ -497,12 +497,12 @@
                       ng-change="tagLaunchWith(toolTag)">
               </select>
             </div>
-            <div class="well well-sm">
+            <div class="well well-sm" uib-tooltip="Commands for launching tool through Dockstore CLI (Supports file provisioning">
                             <div>
                               <pre>{{launchWith}}</pre>
                             </div>
                           </div>
-            <div class="well well-sm">
+            <div class="well well-sm" uib-tooltip="Commands for launching tool through CWLtool (Does not support file provisioning)">
               <div>
                 <pre>{{launchWithCWLTool}}</pre>
               </div>

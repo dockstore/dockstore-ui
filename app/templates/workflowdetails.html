@@ -148,21 +148,21 @@
         <uib-tab-heading>Info</uib-tab-heading>
         <ul class="list-unstyled container-info">
           <li>
-            <strong>Name</strong>:
+            <strong uib-tooltip="Complete path of workflow, used as a unique identifier">Path</strong>:
             {{workflowObj.path}}
           </li>
           <li>
-            <strong>{{getRegistry(workflowObj.gitUrl)}}</strong>:
+            <strong uib-tooltip="Git repository for the associated descriptors.">{{getRegistry(workflowObj.gitUrl)}}</strong>:
             <a href="{{getRepoUrl(workflowObj.organization, workflowObj.repository, getRegistry(workflowObj.gitUrl))}}" target="_blank">
               {{getRepoUrl(workflowObj.organization, workflowObj.repository, getRegistry(workflowObj.gitUrl))}}
             </a>
           </li>
           <li>
-            <strong>Author</strong>:
+            <strong uib-tooltip="Author listed in descriptor">Author</strong>:
             {{ workflowObj.author ? workflowObj.author : 'n/a' }}
           </li>
           <li>
-            <strong>E-mail</strong>:
+            <strong uib-tooltip="E-mail of corresponding author for workflow">E-mail</strong>:
             <span ng-if="!workflowObj.email">n/a</span>
             <a href="mailto:{{workflowObj.email}}"
                ng-if="workflowObj.email">
@@ -172,13 +172,13 @@
           <li>
           <!-- for when it's not edit mode-->
             <div ng-show="!editMode">
-              <strong>Workflow Path</strong>:
+              <strong uib-tooltip="Path in Git repository to main descriptor file">Workflow Path</strong>:
               {{workflowObj.workflow_path}}
             </div>
 
           <!-- for when it's edit mode and Edit button not clicked-->
             <div ng-show="editMode && showEditWorkflowPath">
-              <strong>Workflow Path</strong>:
+              <strong uib-tooltip="Path in Git repository to main descriptor file">Workflow Path</strong>:
               {{workflowObj.workflow_path}}
               <button type="sbutton"
                   class="btn btn-link push-right"
@@ -205,7 +205,7 @@
                 <span class="glyphicon glyphicon-floppy-save"></span>Save
               </button>
               <div ng-show="!showEditWorkflowPath">
-              <strong>Workflow Path</strong>:
+              <strong uib-tooltip="Path in Git repository to main descriptor file">Workflow Path</strong>:
                 <div class="form-group">
                   <input
                       type="text"
@@ -272,7 +272,7 @@
             </form>
           </li>
           <li ng-show="editMode">
-            <strong>Mode</strong>:
+            <strong uib-tooltip-html="modeTooltip">Mode</strong>:
             {{workflowObj.mode | lowercase}}
             <a
               ng-disabled="refreshingWorkflow || (workflowObj.mode === 'STUB' || workflowObj.is_published)"
@@ -284,12 +284,12 @@
           <li>
           <!-- when not in edit mode-->
             <div ng-show="!editMode">
-              <Strong>Descriptor Type</Strong>:
+              <Strong uib-tooltip="Type of descriptor language used.">Descriptor Type</Strong>:
               {{workflowObj.descriptorType | lowercase}}
             </div>
           <!-- when in edit mode and Edit button for descriptor not clicked-->
             <div ng-show="editMode && showEditDescriptorType">
-            <Strong>Descriptor Type</Strong>:
+            <Strong uib-tooltip="Type of descriptor language used.">Descriptor Type</Strong>:
             {{workflowObj.descriptorType | lowercase}}
             <button type="sbutton" id="editButton"
                   class="btn btn-link push-right"
@@ -300,7 +300,7 @@
             </div>
           <!-- when in edit mode and Edit button for descriptor is clicked-->
             <div ng-show="editMode && !showEditDescriptorType">
-            <Strong>Descriptor Type</Strong>:
+            <Strong uib-tooltip="Type of descriptor language used">Descriptor Type</Strong>:
               <select ng-model="workflowObj.descriptorType">
               <option value="cwl">cwl</option>
               <option value="wdl">wdl</option>
@@ -314,7 +314,7 @@
             </div>
           </li>
           <li>
-            <strong>Description</strong>:
+            <strong uib-tooltip="Description of workflow obtained from workflow descriptor">Description</strong>:
             <div class="well well-sm">
               <div
                 ng-show="workflowObj.description"
