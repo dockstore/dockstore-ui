@@ -68,8 +68,8 @@
   <div class="row tab-holder">
     <p class="pull-left tab-info" ng-show="tabMode === 'Tool'">A tool is a docker container with an associated descriptor describing how to run it.</p>
     <p class="pull-left tab-info" ng-show="tabMode === 'Workflow'">A workflow is a series of tools strung together, with an associated descriptor describing how to run it.</p>
-    <div containers-grid containers="containers" preview-mode="true" ng-show="tabMode === 'Tool'"></div>
-    <div workflows-grid workflows="workflows" preview-mode="true" ng-show="tabMode === 'Workflow'"></div>
+    <div containers-grid containers="containers" preview-mode="true" ng-show="tabMode === 'Tool'" home-page="true"></div>
+    <div workflows-grid workflows="workflows" preview-mode="true" ng-show="tabMode === 'Workflow'" home-page="true"></div>
   </div>
 </div>
 

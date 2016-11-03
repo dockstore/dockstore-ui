@@ -492,9 +492,9 @@ angular.module('dockstore.ui')
       };
 
       $scope.setDescriptorType = function(workflowId){
-        //we are calling setDefaultWorkflowPath because PUT in this service will also change the descriptor type
+        //we are calling updateWorkflowDefaults because PUT in this service will also change the descriptor type
         //and required to change the same values as when changing the default path
-        return WorkflowService.setDefaultWorkflowPath(workflowId, $scope.workflowObj)
+        return WorkflowService.updateWorkflowDefaults(workflowId, $scope.workflowObj)
           .then(
             function(workflowObj){
               $scope.workflowObj.descriptorType = workflowObj.descriptorType;
@@ -609,4 +609,7 @@ angular.module('dockstore.ui')
       }
      };
 
+      $scope.onSuccess = function(e) {
+        e.clearSelection();
+      };
   }]);

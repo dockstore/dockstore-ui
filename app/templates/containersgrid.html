@@ -45,7 +45,7 @@
           </thead>
           <tbody>
             <!-- need a to write a 'smart search' filter -->
-            <tr ng-repeat="container in filteredTools | orderBy:sortColumn:sortReverse | PreviewFilter:contLimit | PaginationFilter:getListRange()">
+            <tr ng-repeat-start="container in filteredTools | orderBy:sortColumn:sortReverse | PreviewFilter:contLimit | PaginationFilter:getListRange()" ng-class="hasDescription(container.description)">
               <td>
                 <a href="/containers/{{container.tool_path}}">{{container.name + (container.toolname ? '/' + container.toolname : '')}}</a>
               </td>
@@ -70,6 +70,11 @@
               </td>
               <td ng-init="dockerPullCmd = getDockerPullCmd(container.path)">
                 <div copy-text>{{dockerPullCmd}}</div>
+              </td>
+            </tr>
+            <tr ng-repeat-end ng-if="container.description !== '' && container.description !== null && container.description !== undefined && homePage === false" class="search-description-row">
+              <td class="search-description" colspan="4" style="font-size:90%">
+                <span class="search-date">{{getDateModified(container.lastUpdated)}} </span> {{container.description | limitTo:descriptionLimit}}{{container.description.length >= descriptionLimit ? '...' : ''}}
               </td>
             </tr>
             <tr ng-show="previewMode && filteredContainers.length !== 0">

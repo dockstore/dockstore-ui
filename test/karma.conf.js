@@ -62,6 +62,7 @@ module.exports = function(config) {
       'bower_components/angular-messages/angular-messages.js',
       'bower_components/angular-addthis/dist/angular-addthis.js',
       'bower_components/angular-mocks/angular-mocks.js',
+      'bower_components/ngclipboard/dist/ngclipboard.js',
       // endbower
       "app/scripts/**/*.js",
       // "test/mock/**/*.js",

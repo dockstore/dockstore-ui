@@ -691,4 +691,7 @@ angular.module('dockstore.ui')
         }
       });
 
+      $scope.onSuccess = function(e) {
+        e.clearSelection();
+      };
   }]);

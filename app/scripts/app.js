@@ -39,7 +39,8 @@ angular
     'toaster',
     'hljs',
     'hc.marked',
-    'sn.addthis'
+    'sn.addthis',
+    'ngclipboard'
   ])
   .config(['$authProvider', 'WebService',
     function($authProvider, WebService) {

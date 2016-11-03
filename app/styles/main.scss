@@ -408,21 +408,9 @@ th {
   text-align: left;
 }
 
-tr:hover, tr:nth-child(odd):hover {
-  background: #e8eaef;
-}
-
 td.browse-all {
   background-color: #f4f4f4;
   text-align: center;
-}
-
-tr:nth-child(odd) {
-  background: #fafafa;
-}
-
-tr:nth-child(even) td{
-
 }
 
 .browse-all .button {
@@ -967,6 +955,31 @@ div.tabs > div:target > div, :target #info > div, #info > div {
 
 .file-tabs {
   padding-bottom:5px;
+}
+
+.search-description {
+  padding: 0px 35px 10px 35px;
+  line-height: 1.5;
+  font-size:90%;
+}
+
+.search-with-description td {
+  border-bottom: 0px;
+}
+
+.search-date {
+  color: #808080;
+}
+
+.code-holder {
+  position:relative;
+  overflow:visible;
+}
+
+.code-copy-button {
+  top:2px;
+  right:2px;
+  position:absolute;
 }
 
 html, body {

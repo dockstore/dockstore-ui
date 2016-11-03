@@ -60,11 +60,10 @@
 </div>
 <div class="row" ng-show="workflowObj">
   <div ng-class="editMode ? 'col-md-7' : 'col-md-8'">
-    <h3>
+    <h3 id="workflow-path">
       {{
-      (workflowObj.organization !== '_' ? workflowObj.organization + '/' : '') +
-      workflowObj.repository
-      }}
+      workflowObj.path
+      }} <button class="btn" ngclipboard data-clipboard-target="#workflow-path" ngclipboard-success="onSuccess(e);"><span class="glyphicon glyphicon-copy"></span></button>
     </h3>
     <div ng-if="workflowObj" id="label-holder">
       <div id="label-values">

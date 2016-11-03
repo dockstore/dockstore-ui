@@ -30,7 +30,8 @@ angular.module('dockstore.ui')
       scope: {
         workflows: '=',
         previewMode: '=',
-        searchQueryWorkflow: '='
+        searchQueryWorkflow: '=',
+        homePage: '='
       },
       templateUrl: 'templates/workflowsgrid.html',
       link: function postLink(scope, element, attrs) {

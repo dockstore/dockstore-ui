@@ -93,9 +93,15 @@
   }
 </style>
 
-<div hljs class="code"
+<div class="code-holder">
+  <button class="code-copy-button" ng-show="fileLoaded && fileContents" ngclipboard data-clipboard-target=".hljs" ngclipboard-success="onSuccess(e);">
+    <span class="glyphicon glyphicon-copy"></span>
+  </button>
+  <div hljs class="code"
     source="fileContents"
     hljs-language="yaml"
     type="container-file-viewer"
-    ng-show="fileLoaded && fileContents">
+    ng-show="fileLoaded && fileContents"
+    id="file">
+  </div>
 </div>

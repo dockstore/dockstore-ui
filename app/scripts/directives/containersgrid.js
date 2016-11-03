@@ -30,7 +30,8 @@ angular.module('dockstore.ui')
       scope: {
         containers: '=',
         previewMode: '=',
-        searchQueryContainer: '='
+        searchQueryContainer: '=',
+        homePage: '='
       },
       templateUrl: 'templates/containersgrid.html',
       link: function postLink(scope, element, attrs) {

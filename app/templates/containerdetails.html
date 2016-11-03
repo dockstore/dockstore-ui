@@ -61,11 +61,11 @@
 </div>
 <div class="row" ng-show="containerObj">
   <div ng-class="editMode ? 'col-md-7' : 'col-md-8'">
-    <h3>
+    <h3 id="tool-path">
       <!--<span class="glyphicon glyphicon-lock" ng-if="!containerObj.is_public"></span>-->
       {{
         (containerObj.tool_path)
-      }}
+      }} <button class="btn" ngclipboard data-clipboard-target="#tool-path" ngclipboard-success="onSuccess(e);"><span class="glyphicon glyphicon-copy"></span></button>
     </h3>
     <div ng-if="containerObj" id="label-holder">
       <div id="label-values">

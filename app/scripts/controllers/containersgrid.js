@@ -36,6 +36,7 @@ angular.module('dockstore.ui')
       $scope.numContsPage = 10;
       $scope.currPage = 1;
       $scope.contLimit = $scope.previewMode ? 5 : undefined;
+      $scope.descriptionLimit = 300;
 
       $scope.getGitReposProvider = FrmttSrvc.getGitReposProvider;
       $scope.getGitReposProviderName = FrmttSrvc.getGitReposProviderName;
@@ -43,6 +44,16 @@ angular.module('dockstore.ui')
       $scope.getImageReposProvider = FrmttSrvc.getImageReposProvider;
       $scope.getImageReposProviderName = FrmttSrvc.getImageReposProviderName;
       $scope.getImageReposWebUrl = FrmttSrvc.getImageReposWebUrl;
+      $scope.getDateModified = FrmttSrvc.getDateModified;
+
+      $scope.hasDescription = function(description) {
+        if (description !== undefined && description !== null && description !== '' && $scope.homePage === false) {
+          return 'search-with-description';
+        } else {
+          return '';
+        }
+      };
+
       $scope.getDockerPullCmd = function(path) {
         return FrmttSrvc.getFilteredDockerPullCmd(path);
       };
