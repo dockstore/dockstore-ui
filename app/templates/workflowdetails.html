@@ -324,6 +324,26 @@
               </span>
             </div>
           </li>
+          <li ng-show="showLaunchWith()">
+            <strong uib-tooltip="Commands to launch workflow from the command line">Launch With:</strong>
+            <div class="pull-right" style="margin-left:5px">
+              <select id="workflowVersions"
+                      ng-model="workflowVersion"
+                      ng-options="version.id as version.name for version in validVersions"
+                      ng-change="versionLaunchWith(workflowVersion)">
+              </select>
+            </div>
+            <div class="well well-sm" uib-tooltip="Commands for launching tool through Dockstore CLI (Supports file provisioning)">
+              <div>
+                <pre>{{launchWith}}</pre>
+              </div>
+            </div>
+            <div ng-show="workflowObj.descriptorType === 'cwl'" class="well well-sm" uib-tooltip="Commands for launching workflow through CWLtool (Does not support file provisioning)">
+              <div>
+                <pre>{{launchWithCWLTool}}</pre>
+              </div>
+            </div>
+          </li>
         </ul>
         <div ng-if="!editMode">
           <hr />

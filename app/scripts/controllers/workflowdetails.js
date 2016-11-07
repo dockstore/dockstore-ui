@@ -44,9 +44,11 @@ angular.module('dockstore.ui')
       $scope.showEditTestParameterPath = true;
       $scope.pathExtensions = ['cwl','wdl','yml','yaml'];
       $scope.modeTooltip = $sce.trustAsHtml('Stub: Private workflow only containing basic metadata<br>Full:  Publishable workflow that can contain versions and sourcefiles');
+      $scope.validVersions = [];
+      $scope.workflowVersion = '';
+      $scope.workflowVersionName = '';
 
-      //there are 6 tabs, and only 1 tab can be active
-      //so there are 5 tabs that are not active
+      // There are 6 tabs, and only 1 tab can be active
       var notActiveTabs = 5;
       if (!$scope.activeTabs) {
         $scope.activeTabs = [true];
@@ -568,11 +570,13 @@ angular.module('dockstore.ui')
             $scope.loadWorkflowDetails($scope.workflowPath)
               .then(function(workflowObj) {
                 $scope.updateInfoURLs();
+                $scope.refreshVersionLaunchWith();
               });
           } else {
             $scope.labelsEditMode = false;
             $scope.resetWorkflowEditData($scope.workflowObj);
             $scope.updateInfoURLs();
+            $scope.refreshVersionLaunchWith();
           }
         }
       });
@@ -612,4 +616,100 @@ angular.module('dockstore.ui')
       $scope.onSuccess = function(e) {
         e.clearSelection();
       };
+
+      $scope.showLaunchWith = function() {
+      if($scope.workflowObj === undefined ||  $scope.workflowObj === null || $scope.workflowObj.workflowVersions.length === 0 ||
+                        $scope.validVersions.length === 0){
+        return false;
+      }
+
+        // assign default values
+        var full_workflow_path = $scope.workflowObj === null ? "" : $scope.workflowObj.path;
+
+        //get the tag name from tag id
+        for(var i=0;i<$scope.validVersions.length;i++){
+          if($scope.workflowVersion === $scope.validVersions[i].id){
+            $scope.workflowVersionName = $scope.validVersions[i].name;
+            break;
+          }
+        }
+
+        //get rid of blank option in version dropdown if exists
+        // We should be able to replace this by
+        if(document.getElementById('workflowVersions')[0] !== undefined &&
+          (document.getElementById('workflowVersions')[0].value === '?' ||
+          document.getElementById('workflowVersions')[0].value === '')){
+          var firstElement = $scope.workflowVersionName;
+          var validVersionsNameArray =[];
+          for(var j=0;j<$scope.validVersions.length;j++){
+            validVersionsNameArray.push($scope.validVersions[j].name);
+          }
+          var tempWorkflowVersion = $("#workflowVersions");
+          tempWorkflowVersion.find("option").filter(function(){
+            return $(this).text() === firstElement;
+          }).attr('selected',true);
+          tempWorkflowVersion.find("option").filter(function(){
+            return window.jQuery.inArray($(this).text(),validVersionsNameArray) === -1;
+          }).remove();
+        }
+
+        $scope.launchWith =
+          "# make a runtime JSON template and fill in desired inputs, outputs, and other parameters" +
+          "\ndockstore workflow convert entry2json --entry " + full_workflow_path + ":" + $scope.workflowVersionName +" > Dockstore.json" +
+          "\nvim Dockstore.json"+
+          "\n# run it locally with the Dockstore CLI" +
+          "\ndockstore workflow launch --entry " + full_workflow_path + ":" + $scope.workflowVersionName + " --json Dockstore.json";
+
+        var escapedPath = encodeURIComponent(full_workflow_path);
+        var escapedVersion = encodeURIComponent($scope.workflowVersionName);
+
+        $scope.launchWithCWLTool = "# alternatively, cwltool can run a workflow directly when all inputs and outputs are available on the local filesystem" +
+          "\ncwltool --non-strict https://www.dockstore.org:8443/api/ga4gh/v1/workflows/" + escapedPath + "/versions/" + escapedVersion + "/plain-CWL/descriptor Dockstore.json";
+
+        return $scope.validContent; //only show LaunchWith when content is valid
+      };
+
+      $scope.refreshVersionLaunchWith = function() {
+        //get the workflow versions that are valid
+        if ($scope.workflowObj === null){
+          return;
+        }
+        $scope.validVersions = [];
+        for(var i=0;i<$scope.workflowObj.workflowVersions.length;i++){
+          if($scope.isVersionValid($scope.workflowObj.workflowVersions[i])){
+            $scope.validVersions.push($scope.workflowObj.workflowVersions[i]);
+          }
+        }
+        var isVersionValid = false;
+        var firstVersion;
+        if($scope.validVersions.length !==0){
+          if ($scope.workflowObj.defaultVersion === null) {
+            $scope.workflowVersion = $scope.validVersions[0].id;
+            $scope.workflowVersionName = $scope.validVersions[0].name;
+          } else {
+            for (i = 0; i < $scope.validVersions.length; i++) {
+              if ($scope.validVersions[i].name === $scope.workflowObj.defaultVersion) {
+                 $scope.workflowVersion = $scope.validVersions[i].id;
+                 $scope.workflowVersionName = $scope.validVersions[i].name;
+                 isVersionValid = true;
+                break;
+              }
+            }
+            if (!isVersionValid) {
+              $scope.workflowVersion = $scope.validVersions[0].id;
+              $scope.workflowVersionName = $scope.validVersions[0].name;
+            }
+          }
+        }
+      };
+
+      $scope.isVersionValid = function(element) {
+        return !!element.valid;
+      };
+
+      $scope.versionLaunchWith = function(version) {
+        $scope.workflowVersion = version;
+        $scope.showLaunchWith();
+      };
+
   }]);

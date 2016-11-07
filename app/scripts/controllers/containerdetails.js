@@ -200,6 +200,10 @@ angular.module('dockstore.ui')
           "\n# run it locally with the Dockstore CLI" +
           "\ndockstore tool launch --entry " + tool_path + ":" + $scope.toolTagName + " --json Dockstore.json";
 
+        if ($scope.desc !== 'cwl') {
+          $scope.launchWith += " --descriptor " + $scope.desc;
+        }
+
         var escapedPath = encodeURIComponent(tool_path);
         var escapedVersion = encodeURIComponent($scope.toolTagName);
 
