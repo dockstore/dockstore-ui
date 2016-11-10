@@ -14,7 +14,7 @@ Dockstore is powered by [Quay.io](https://quay.io/) and [Docker Hub](https://hub
 
 ## Tool Development Environment 
 
-When going through the onboarding wizard, our various dependencies were introduced. Verify that they are properly installed by opening a terminal and executing the following. You should see very similar output. If there are errors make sure you follow the setup instructions carefully:
+When going through the onboarding wizard, our various dependencies were introduced. If you have not completed the onboarding wizard, please browse to [onboarding](https://dockstore.org/onboarding) and then return here.  Verify that the dependencies are properly installed by opening a terminal and executing the following. You should see very similar output. If there are errors make sure you follow the setup instructions carefully:
 
     $> java -version
     java version "1.8.0_101"

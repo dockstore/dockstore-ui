@@ -163,10 +163,7 @@
           <li>
             <strong uib-tooltip="E-mail of corresponding author for workflow">E-mail</strong>:
             <span ng-if="!workflowObj.email">n/a</span>
-            <a href="mailto:{{workflowObj.email}}"
-               ng-if="workflowObj.email">
-              {{workflowObj.email}}
-            </a>
+            <a href={{getMailToLink(workflowObj)}} ng-if="workflowObj.email">{{workflowObj.email}}</a>
           </li>
           <li>
           <!-- for when it's not edit mode-->

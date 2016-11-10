@@ -172,10 +172,7 @@
           <li>
             <strong uib-tooltip="E-mail of corresponding author for workflow">E-mail</strong>:
             <span ng-if="!containerObj.email">n/a</span>
-            <a href="mailto:{{containerObj.email}}"
-                ng-if="containerObj.email">
-              {{containerObj.email}}
-            </a>
+            <a href={{getMailToLink(containerObj)}} ng-if="containerObj.email">{{containerObj.email}}</a>
           </li>
           <li ng-if="gitReposProvider">
             <strong uib-tooltip="Git repository for the associated tool descriptors and Dockerfile">{{gitReposProviderName}}</strong>:

@@ -169,6 +169,12 @@ angular.module('dockstore.ui')
             );
       };
 
+      $scope.getMailToLink = function(workflowObj){
+        var subject = encodeURIComponent("Question about the workflow "+workflowObj.path+" on Dockstore");
+        var body = encodeURIComponent("I would like to ask a question about the workflow at "+window.location);
+        return "mailto:"+workflowObj.email+"?subject="+subject+"&body="+body;
+      };
+
       $scope.checkContentValid = function(){
         //will print this when the 'Publish' button is clicked
         var message = 'The file is missing some required fields. Please make sure the file has all the required fields. ';
