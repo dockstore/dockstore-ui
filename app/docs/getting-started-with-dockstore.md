@@ -2,7 +2,7 @@
 
 ## [Linking GitHub, Bitbucket, GitLab and Quay.io](#Linking-services)
 
-The first step is to log in to the Dockstore which will link your accounts for GitHub, Bitbucket, GitLab, and Quay.io along with providing you the command line tool we will use for most of the tasks in this tutorial.  Make sure you have your GitHub, Bitbucket, GitLab and/or Quay.io accounts established and follow the onboarding wizard:
+If you have not gone through the onboarding wizard yet, first step is to log in to the Dockstore which will link your accounts for GitHub, Bitbucket, GitLab, and Quay.io along with providing you the command line tool we will use for most of the tasks in this tutorial.  Make sure you have your GitHub, Bitbucket, GitLab and/or Quay.io accounts established and follow the onboarding wizard:
 
 https://www.dockstore.org/login
 
@@ -18,7 +18,7 @@ Below, GitHub, BitBucket, GitLab and Quay.io accounts have been linked, it is ne
 
 ![Link accounts completed](docs/linking3.png)
 
-Next, the wizard will instruct you to setup the `dockstore` command line tool after linking your accounts, and upon completetion you will be ready to use Dockstore.
+Next, the wizard will instruct you to setup the `dockstore` command line tool after linking your accounts, and upon completion you will be ready to use Dockstore.
 
 ![Link accounts](docs/linking4.png)
 
@@ -32,9 +32,9 @@ In the authenticated Web UI, navigate to 'My Tools' to begin managing Docker ima
 
 ![My Tools](docs/register_ui.png)
 
-The left side menu is a list of all image repositories associated with the user, grouped lexicographically by namespace. Words encapsulated in parentheses denotes the toolname. Detailed information and links for each tool is located on the 'Info' tab. The 'Labels' tab allows editing of keywords to be associated with a tool for efficient searching and grouping. Settings such as the path to the Dockerfile and CWL Descriptor can be modified on a per-tag basis in the 'Versions' tab. The Dockerfile, CWL/WDL Descriptor and test parameter files may be viewed in the 'Files' tab, by the Version tag (corresponding to a Git tag/branch).
+The left side menu is a list of all image repositories associated with the user, grouped lexicographically by namespace. Each tool is named after the docker location of the associated Docker image, in this example, `quay.io/cancercollaboratory/dockstore-tool-bedgraph-bigwig`. Detailed information and links for each tool are located on the 'Info' tab. The 'Labels' tab allows editing of keywords to be associated with a tool for efficient searching and grouping. Settings such as the path to the Dockerfile and CWL Descriptor can be modified on a per-tag basis in the 'Versions' tab. The Dockerfile, CWL/WDL Descriptor and test parameter files may be viewed in the 'Files' tab, by the Version tag (corresponding to a Git tag/branch).
 
-A tool is not visible on the public 'Tools' listing unless it is published. To publish a tool, press the yellow 'Register' button in the top-right corner.
+A tool is not visible on the public 'Tools' listing unless it is published. To publish a tool, press the yellow 'Publish' button in the top-right corner.
 
 For the tutorial, generally, you should hit the "Refresh All Tools" button to make sure Dockstore has examined your latest repositories on Quay.  Do this especially if you created a new repository like we did here.
                   
@@ -59,7 +59,7 @@ Tools can be registered manually from the 'My Tools' page by pressing the 'Add T
 
 ![Register Tool Manual](docs/register_container_manual.png)
 
-The Source Code Repository and Image Registry fields must be filled out, they are in the format `namespace/name` (the two paths may differ). The Dockerfile Path,  CWL/WDL Descriptor Paths, and CWL/WDL Test Parameter Paths are relative to the root of the Source Code Repository (and must begin with '/'), these will be the default locations to find their corresponding files, unless specified otherwise in the tags. The toolname is an optional 'suffix' appended to the Dockstore path, it allows for two repositories to share the same Git and Image Registry paths; the image registry path and the toolname uniquely distinguishes image repositories in Dockstore.
+The Source Code Repository and Image Registry fields must be filled out, they are in the format `namespace/name` (the two paths may differ). The Dockerfile Path,  CWL/WDL Descriptor Paths, and CWL/WDL Test Parameter Paths are relative to the root of the Source Code Repository (and must begin with '/'), these will be the default locations to find their corresponding files, unless specified otherwise in the tags. The toolname is an optional 'suffix' appended to the Dockstore path, it allows for two repositories to share the same Git and Image Registry paths; the combination of Docker image registry path and toolname uniquely distinguishes tools in Dockstore.
 
 Upon successful submission and registration of the tool, a resynchronization call will be made to fetch all available data from the given sources. If the image registry is Quay.io, existing version tags will be prepopulated for the Dockstore record.
 

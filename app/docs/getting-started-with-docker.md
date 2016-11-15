@@ -214,13 +214,18 @@ to see what type of reports are created by this tool. For example, here's a snip
 
 ![Sample report](docs/report.png)
 
+Rather than interactively working with the image, you could also run your Docker image from the command-line. 
+
+```
+wget ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/phase3/data/NA12878/alignment/NA12878.chrom20.ILLUMINA.bwa.CEU.low_coverage.20121211.bam
+docker run -w="/home/ubuntu" -it -v `pwd`:/home/ubuntu quay.io/collaboratory/dockstore-tool-bamstats:1.25-3 bamstats 4 NA12878.chrom20.ILLUMINA.bwa.CEU.low_coverage.20121211.bam
+```
+
+In the next section, we will also demonstrate how this command-line including the input file can be parameterized and constructed via CWL.
+
 ## You Could Stop Here!
 
-At this point you have a working Docker image.  You could use the `docker push` command to send that
-to Quay or DockerHub and share with others.  However, what you loose is a standardized way to describe
-how to run your tool.  That's what the CWL descriptor and Dockstore provide.  We think it's valuable
-and there's an increasing number of tools designed to work with CWL so there are benefits to not just stopping here.
-
+At this point you have a working Docker image.  You could use the `docker push` command to send that to Quay or DockerHub and share with others.  However, what you lose is a standardized way to describe how to run your tool.  That's what the CWL descriptor and Dockstore provide.  We think it's valuable and there's an increasing number of tools designed to work with CWL so there are benefits to not just stopping here.
 
 ## Next Steps
 

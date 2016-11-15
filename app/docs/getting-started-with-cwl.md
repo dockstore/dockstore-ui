@@ -23,19 +23,9 @@ Again, we provide an example from the [dockstore-tool-bamstats](https://github.c
     id: "BAMStats"
     label: "BAMStats tool"
     cwlVersion: v1.0 
-    description: |
+    doc: |
         ![build_status](https://quay.io/repository/collaboratory/dockstore-tool-bamstats/status)
         A Docker container for the BAMStats command. See the [BAMStats](http://bamstats.sourceforge.net/) website for more information.
-        ```
-        Usage:
-        # fetch CWL
-        $> dockstore tool cwl --entry quay.io/collaboratory/dockstore-tool-bamstats:1.25-5 > Dockstore.cwl
-        # make a runtime JSON template and edit it (or use the content of sample_configs.json in this git repo)
-        $> dockstore tool convert cwl2json --cwl Dockstore.cwl > Dockstore.json
-        # run it locally with the Dockstore CLI
-        $> dockstore tool launch --entry quay.io/collaboratory/dockstore-tool-bamstats:1.25-5 \
-            --json Dockstore.json
-        ```
 
     dct:creator:
       "@id": "http://orcid.org/0000-0002-7681-6415"
@@ -89,8 +79,11 @@ class: CommandLineTool
 id: "BAMStats"
 label: "BAMStats tool"
 cwlVersion: v1.0
-description: "A Docker container for the BAMStats command. See the BAMStats website for more information."
+description: |
+        ![build_status](https://quay.io/repository/collaboratory/dockstore-tool-bamstats/status)
+        A Docker container for the BAMStats command. See the [BAMStats](http://bamstats.sourceforge.net/) website for more information.
 ```
+
 These items are recommended and the description is actually parsed and displayed in the Dockstore page. Here's an example:
 
 ![Entry](docs/entry.png)
@@ -142,7 +135,7 @@ This may or may not be honoured by the tool calling this CWL but at least it giv
         inputBinding:
           position: 2
 
-This is one of the items from the inputs section.  Notice a few things, first, the `bam_input:` matches with `bam_input` in the sample parameterization JSON.
+This is one of the items from the inputs section.  Notice a few things, first, the `bam_input:` matches with `bam_input` in the sample parameterization JSON (shown in the next section as `sample_configs.local.json`).
 Also, you can control the position of the variable, it can have a type (int or File here), and, for tools that require a prefix (`--prefix`) before a parameter you can use the `prefix: key` in the inputBindings section.
 
 Also, I'm using the `format` field to specify a file format via the [EDAM](http://bioportal.bioontology.org/ontologies/EDAM) ontology.
@@ -332,7 +325,7 @@ Log onto Quay now and setup a new repository (click the "+" icon).
 
 ![New Quay Repo](docs/quay_new_repo.png)
 
-You must match the name to what I was using previously, so in this case it's `CancerCollaboratory` / `dockstore-tool-bamstats`.  Also, Dockstore will
+You must match the name to what I was using previously, so in this case it's `CancerCollaboratory/dockstore-tool-bamstats`.  Also, Dockstore will
 only work with `Public` repositories currently.
 Notice I'm selecting "Link to a GitHub Repository Push", this is because we want Quay to automatically build our Docker image
 every time we update the repository on GitHub.  Very slick!

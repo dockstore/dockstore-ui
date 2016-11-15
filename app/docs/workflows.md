@@ -5,22 +5,22 @@ This tutorial walks through the process of registering and sharing more complex 
 ## Create Your Workflow
 
 The combination of light-weight Docker containers to run your tools and programmatic descriptors takes us part of the way there. 
-However, the next step is to chain together these containers in order to call tools in a particular sequence or in a particular patterm in order to create larger workflows. 
+However, the next step is to chain together these containers in order to call tools in a particular sequence or in a particular pattern in order to create larger workflows. 
 Dockstore provides a few simple tools to share workflows, similar to how Dockstore shares command-line tools. 
 
 The steps to accomplish this task, at a high level, are:
 
 0. create a new repository on GitHub, Bitbucket or GitLab
-0. describe your workflow as either a [CWL workflow](http://www.commonwl.org/draft-3/Workflow.html) or a [WDL workflow](https://github.com/broadinstitute/wdl/blob/develop/SPEC.md#workflow-definition)
+0. describe your workflow as either a [CWL workflow](http://www.commonwl.org/v1.0/UserGuide.html#Writing_Workflows) or a [WDL workflow](https://github.com/broadinstitute/wdl/blob/develop/SPEC.md#workflow-definition)
 0. test your workflow using an environment that supports full CWL workflows or WDL
 0. use the release process on GitHub, Bitbucket or GitLab to make distinct release tags, we like the  [HubFlow](https://datasift.github.io/gitflow/) process in our group for managing releases in git
 0. create an entry on Dockstore and then publish it
 
-<!-- insert a good example here -->
+An extremely simple example is available [here](https://dockstore.org/workflows/denis-yuen/dockstore-whalesay) and we will be working on more and better examples in the coming months. 
 
 ## Create Workflow Stubs from GitHub, Bitbucket, and GitLab
 
-The first step is to create a CWL or WDL workflow descriptor for your workflow and then check it into GitHub, Bitbucket or GitLab in a repo, we recommend the filename `Dockstore.cwl` at the root of your repository for simplicity but anything else with a consistent extension should work just as well. The details as to how to write a workflow are somewhat beyond the scope of this tutorial but we can recommend the [Introduction to the CWL](http://www.commonwl.org/draft-3/UserGuide.html) and [Getting Started with WDL](https://github.com/broadinstitute/wdl/tree/master#getting-started-with-wdl).
+The first step is to create a CWL or WDL workflow descriptor for your workflow and then check it into GitHub, Bitbucket or GitLab in a repo, we recommend the filename `Dockstore.cwl` at the root of your repository for simplicity but anything else with a consistent extension should work just as well. The details as to how to write a workflow are somewhat beyond the scope of this tutorial but we can recommend the [Introduction to the CWL](http://www.commonwl.org/v1.0/UserGuide.html) and [Getting Started with WDL](https://github.com/broadinstitute/wdl/tree/master#getting-started-with-wdl).
 
 You can also check in a test parameter file into the same Git repo, with the recommended filename `/test.json`, though again anything with a correct extension (json, yml, or yaml) should work. This file is an example input JSON (or YAML) for running the given workflow. It should be easy for a user to run your workflow with the test parameter file in order to see an example of your workflow, so try and store any required files in the same Git repository or somewhere else where the files are likely to be present.
 
