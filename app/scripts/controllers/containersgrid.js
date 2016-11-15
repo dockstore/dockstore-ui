@@ -28,8 +28,9 @@ angular.module('dockstore.ui')
     '$scope',
     '$rootScope',
     'FormattingService',
+    'UtilityService',
     '$filter',
-    function ($scope, $rootScope, FrmttSrvc, $filter) {
+    function ($scope, $rootScope, FrmttSrvc, UtilityService, $filter) {
 
       $scope.sortColumn = 'name';
       $scope.sortReverse = false;
@@ -72,52 +73,38 @@ angular.module('dockstore.ui')
       };
 
       $scope.getIconClass = function(columnName) {
-        if ($scope.sortColumn === columnName) {
-          return !$scope.sortReverse ?
-            'glyphicon-sort-by-alphabet' : 'glyphicon-sort-by-alphabet-alt';
-        } else {
-          return 'glyphicon-sort';
-        }
+        return UtilityService.getIconClass(columnName, $scope.sortColumn, $scope.sortReverse);
       };
 
       /* Pagination */
       $scope.getFirstPage = function() {
-        return 1;
+        return UtilityService.getFirstPage();
       };
 
       $scope.getLastPage = function() {
-        return Math.ceil($scope.filteredTools.length / $scope.numContsPage);
+        return UtilityService.getLastPage($scope.numContsPage, $scope.filteredTools.length);
       };
 
       $scope.changePage = function(nextPage) {
-        if (nextPage) {
-          /* Next Page*/
-          if ($scope.currPage === $scope.getLastPage) return;
-          $scope.currPage++;
-        } else {
-          /* Previous Page*/
-          if ($scope.currPage === $scope.getFirstPage) return;
-          $scope.currPage--;
-        }
+        $scope.currPage = UtilityService.changePage(nextPage, $scope.currPage, $scope.getFirstPage, $scope.getLastPage);
       };
 
       $scope.getListRange = function() {
-        return {
-          start: Math.min($scope.numContsPage * ($scope.currPage - 1),
-                          $scope.filteredTools.length),
-          end: Math.min($scope.numContsPage * $scope.currPage - 1,
-                        $scope.filteredTools.length)
-        };
+        return UtilityService.getListRange($scope.numContsPage, $scope.currPage, $scope.filteredTools.length);
       };
 
       $scope.$watch('searchQueryContainer', function(term) {
         $scope.filteredTools = $filter('filter')($scope.containers, term);
-        $scope.entryCount = $scope.filteredTools.length;
+        if ($scope.filteredTools !== undefined) {
+          $scope.entryCount = $scope.filteredTools.length;
+        }
       });
 
       $scope.$watch('containers', function() {
         $scope.filteredTools = $filter('filter')($scope.containers, $scope.searchQueryContainer);
-        $scope.entryCount = $scope.filteredTools.length;
+        if ($scope.filteredTools !== undefined) {
+          $scope.entryCount = $scope.filteredTools.length;
+        }
       });
 
 

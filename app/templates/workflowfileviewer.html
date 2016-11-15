@@ -52,41 +52,8 @@
   <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
   A {{expectedFilename}} associated with this workflow could not be found.
 </div>
-<style>
-  pre .line-number {
-  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-  font-size:inherit;
-  color:#444;
-  float:left;
-  margin:7px 2px 0 0;
-  border-right:1px solid #444;
-  text-align:left;
-  padding:0 10px 2px 0;
-  }
 
-  pre .line-number span {
-  display:block;
-  }
-
-  pre .cl {
-  display:block;
-  clear:both;
-  }
-
-  pre code{
-    white-space: pre !important;
-    /*this will create a horizontal scrollbar if the line is longer than the specified content width*/
-  }
-</style>
-<div class="code-holder">
-  <button class="code-copy-button" ng-show="fileLoaded && fileContents" ngclipboard data-clipboard-target=".hljs" ngclipboard-success="onSuccess(e);">
-    <span class="glyphicon glyphicon-copy"></span>
-  </button>
-  <div hljs class="code"
-       source="fileContents"
-       hljs-language="yaml"
-       type="workflow-file-viewer"
-       ng-show="fileLoaded && fileContents"
-       id="file">
-  </div>
+<div file-viewer
+     ng-if="workflowObj"
+     file-contents="fileContents">
 </div>

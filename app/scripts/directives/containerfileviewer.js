@@ -36,7 +36,6 @@ angular.module('dockstore.ui')
       link: function postLink(scope) {
         scope.$watch('containerObj.path', function(newValue) {
           if (newValue) {
-            console.log("changed containerObj path");
             scope.setDocument();
             scope.checkDescriptor();
             scope.checkDockerfile();

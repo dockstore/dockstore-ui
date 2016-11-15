@@ -31,7 +31,8 @@ angular.module('dockstore.ui')
     'WorkflowService',
     'FormattingService',
     'NotificationService',
-    function ($scope, $q, $sce, WorkflowService, FrmttSrvc, NtfnService) {
+    'UtilityService',
+    function ($scope, $q, $sce, WorkflowService, FrmttSrvc, NtfnService, UtilityService) {
 
       $scope.workflows = [];
       $scope.sortColumn = 'name';
@@ -50,12 +51,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.getIconClass = function(columnName) {
-        if ($scope.sortColumn === columnName) {
-          return !$scope.sortReverse ?
-            'glyphicon-sort-by-alphabet' : 'glyphicon-sort-by-alphabet-alt';
-        } else {
-          return 'glyphicon-sort';
-        }
+        return UtilityService.getIconClass(columnName, $scope.sortColumn, $scope.sortReverse);
       };
 
       $scope.addVersionTag = function(tagObj) {
