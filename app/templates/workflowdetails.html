@@ -61,6 +61,9 @@
 <div class="row" ng-show="workflowObj">
   <div ng-class="editMode ? 'col-md-7' : 'col-md-8'">
     <h3 id="workflow-path">
+      <span ng-show="workflowObj.verified" uib-tooltip="Verified">
+        <span class="glyphicon glyphicon-ok"></span>
+      </span>
       {{
       workflowObj.path
       }} <button class="btn" ngclipboard data-clipboard-target="#workflow-path" ngclipboard-success="onSuccess(e);"><span class="glyphicon glyphicon-copy"></span></button>
@@ -453,6 +456,25 @@
                     <span class="glyphicon glyphicon-new-window"></span>
                   </a>
                 </span>
+            </p>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <table ng-show="workflowObj.verified">
+      <thead>
+      <th>
+        <h3>Verified</h3>
+      </th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>
+          <div class="container-source-repos">
+            <p>
+              {{workflowObj.verifiedSource}}
             </p>
           </div>
         </td>

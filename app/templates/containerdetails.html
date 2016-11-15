@@ -63,6 +63,9 @@
   <div ng-class="editMode ? 'col-md-7' : 'col-md-8'">
     <h3 id="tool-path">
       <!--<span class="glyphicon glyphicon-lock" ng-if="!containerObj.is_public"></span>-->
+      <span ng-show="containerObj.verified" uib-tooltip="Verified">
+        <span class="glyphicon glyphicon-ok"></span>
+      </span>
       {{
         (containerObj.tool_path)
       }} <button class="btn" ngclipboard data-clipboard-target="#tool-path" ngclipboard-success="onSuccess(e);"><span class="glyphicon glyphicon-copy"></span></button>
@@ -634,6 +637,25 @@
       </tbody>
     </table>
 
+    <table ng-show="containerObj.verified">
+      <thead>
+      <th>
+        <h3>Verified</h3>
+      </th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>
+          <div class="container-source-repos">
+            <p>
+              {{containerObj.verifiedSource}}
+            </p>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
     <table ng-if="containerObj">
       <thead>
         <th>
@@ -657,5 +679,6 @@
         </tr>
       </tbody>
     </table>
+
   </div>
 </div>
