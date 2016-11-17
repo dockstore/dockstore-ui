@@ -675,4 +675,12 @@ angular.module('dockstore.ui')
       $scope.onSuccess = function(e) {
         e.clearSelection();
       };
+
+      $scope.isVerified = function() {
+        return UtilityService.isVerifiedTool($scope.containerObj);
+      };
+
+      $scope.getVerifiedSources = function() {
+        return UtilityService.getVerifiedToolSources($scope.containerObj);
+      };
   }]);

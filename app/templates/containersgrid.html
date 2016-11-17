@@ -47,7 +47,7 @@
             <!-- need a to write a 'smart search' filter -->
             <tr ng-repeat="container in filteredTools | orderBy:sortColumn:sortReverse | PreviewFilter:contLimit | PaginationFilter:getListRange()" ng-class="hasDescription(container.description)">
               <td>
-                <span ng-show="container.verified" uib-tooltip="Verified">
+                <span ng-show="isVerified(container)" uib-tooltip="Verified">
                   <span class="glyphicon glyphicon-ok"></span>
                 </span>
                 <a href="/containers/{{container.tool_path}}">{{container.name + (container.toolname ? '/' + container.toolname : '')}}</a>

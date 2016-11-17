@@ -46,12 +46,12 @@ angular.module('dockstore.ui')
       $scope.hasDescription = function(description) {
         // temporary
         return false;
-        //
-        if (description !== undefined && description !== null && description !== '' && $scope.homePage === false) {
-          return 'search-with-description';
-        } else {
-          return '';
-        }
+        // Don't delete - This is used to display a description in the search, but we don't yet want it to show
+//        if (description !== undefined && description !== null && description !== '' && $scope.homePage === false) {
+//          return 'search-with-description';
+//        } else {
+//          return '';
+//        }
       };
 
       /* Column Sorting */
@@ -98,4 +98,8 @@ angular.module('dockstore.ui')
         $scope.filteredWorkflows = $filter('filter')($scope.workflows, $scope.searchQueryWorkflow);
         $scope.entryCount = $scope.filteredWorkflows.length;
       });
+
+      $scope.isVerified = function(workflow) {
+        return UtilityService.isVerifiedWorkflow(workflow);
+      };
   }]);

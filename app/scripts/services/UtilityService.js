@@ -112,4 +112,54 @@ angular.module('dockstore.ui')
         var body = encodeURIComponent("I would like to ask a question about the " + entryType + " at " + windlowLocation);
         return "mailto:" + email + "?subject=" + subject + "&body=" + body;
       };
+
+      this.isVerifiedWorkflow = function(workflow) {
+        if (workflow !== null) {
+          for (var i = 0; i < workflow.workflowVersions.length; i++) {
+            if (workflow.workflowVersions[i].verified) {
+              return true;
+            }
+          }
+          return false;
+        }
+      };
+
+      this.isVerifiedTool = function(container) {
+        if (container !== null) {
+          for (var i = 0; i < container.tags.length; i++) {
+            if (container.tags[i].verified) {
+              return true;
+            }
+          }
+          return false;
+        }
+      };
+
+      this.getVerifiedWorkflowSources = function(workflow) {
+        var sources = [];
+        if (workflow !== null) {
+          for (var i = 0; i < workflow.workflowVersions.length; i++) {
+            if (workflow.workflowVersions[i].verified) {
+              sources.push(workflow.workflowVersions[i].verifiedSource);
+            }
+          }
+        }
+        return sources.filter(function(elem, pos) {
+          return sources.indexOf(elem) === pos;
+        });
+      };
+
+      this.getVerifiedToolSources = function(container) {
+        var sources = [];
+        if (container !== null) {
+          for (var i = 0; i < container.tags.length; i++) {
+            if (container.tags[i].verified) {
+              sources.push(container.tags[i].verifiedSource);
+            }
+          }
+        }
+        return sources.filter(function(elem, pos) {
+          return sources.indexOf(elem) === pos;
+        });
+      };
   }]);

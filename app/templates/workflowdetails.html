@@ -61,7 +61,7 @@
 <div class="row" ng-show="workflowObj">
   <div ng-class="editMode ? 'col-md-7' : 'col-md-8'">
     <h3 id="workflow-path">
-      <span ng-show="workflowObj.verified" uib-tooltip="Verified">
+      <span ng-show="isVerified()" uib-tooltip="Verified">
         <span class="glyphicon glyphicon-ok"></span>
       </span>
       {{
@@ -463,7 +463,7 @@
       </tbody>
     </table>
 
-    <table ng-show="workflowObj.verified">
+    <table ng-show="isVerified()">
       <thead>
       <th>
         <h3>Verified</h3>
@@ -472,10 +472,10 @@
       <tbody>
       <tr>
         <td>
-          <div class="container-source-repos">
-            <p>
-              {{workflowObj.verifiedSource}}
-            </p>
+          <div class="container-verified">
+              <p ng-repeat="source in getVerifiedSources()" uib-tooltip="{{source}}" tooltip-append-to-body="true" class="ellipsis-lines">
+                {{source}}
+              </p>
           </div>
         </td>
       </tr>

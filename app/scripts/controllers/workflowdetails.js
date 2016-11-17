@@ -690,4 +690,11 @@ angular.module('dockstore.ui')
         $scope.showLaunchWith();
       };
 
+      $scope.isVerified = function() {
+        return UtilityService.isVerifiedWorkflow($scope.workflowObj);
+      };
+
+      $scope.getVerifiedSources = function() {
+        return UtilityService.getVerifiedWorkflowSources($scope.workflowObj);
+      };
   }]);

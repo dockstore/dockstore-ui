@@ -63,7 +63,7 @@
   <div ng-class="editMode ? 'col-md-7' : 'col-md-8'">
     <h3 id="tool-path">
       <!--<span class="glyphicon glyphicon-lock" ng-if="!containerObj.is_public"></span>-->
-      <span ng-show="containerObj.verified" uib-tooltip="Verified">
+      <span ng-show="isVerified()" uib-tooltip="Verified">
         <span class="glyphicon glyphicon-ok"></span>
       </span>
       {{
@@ -637,7 +637,7 @@
       </tbody>
     </table>
 
-    <table ng-show="containerObj.verified">
+    <table ng-show="isVerified()">
       <thead>
       <th>
         <h3>Verified</h3>
@@ -647,9 +647,9 @@
       <tr>
         <td>
           <div class="container-source-repos">
-            <p>
-              {{containerObj.verifiedSource}}
-            </p>
+              <p ng-repeat="source in getVerifiedSources()" uib-tooltip="{{source}}" tooltip-append-to-body="true" class="ellipsis-lines">
+                {{source}}
+              </p>
           </div>
         </td>
       </tr>

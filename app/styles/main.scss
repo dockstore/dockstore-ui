@@ -982,6 +982,12 @@ div.tabs > div:target > div, :target #info > div, #info > div {
   position:absolute;
 }
 
+.ellipsis-lines {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow:hidden;
+}
+
 html, body {
   height:100%;
 }

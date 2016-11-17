@@ -47,7 +47,7 @@
           <!-- need a to write a 'smart search' filter -->
           <tr ng-repeat="workflow in filteredWorkflows | orderBy:sortColumn:sortReverse | PreviewFilter:contLimit | PaginationFilter:getListRange()" ng-class="hasDescription(workflow.description)">
             <td>
-              <span ng-show="workflow.verified" uib-tooltip="Verified">
+              <span ng-show="isVerified(workflow)" uib-tooltip="Verified">
                   <span class="glyphicon glyphicon-ok"></span>
               </span>
               <a ng-href="/workflows/{{workflow.path}}">{{workflow.repository + (workflow.workflowName ? ' (' + workflow.workflowName + ')' : '')}}</a>
