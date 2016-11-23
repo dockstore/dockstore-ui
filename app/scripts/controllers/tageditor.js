@@ -35,6 +35,128 @@ angular.module('dockstore.ui')
       $scope.getHRSize = FrmttSrvc.getHRSize;
       $scope.getDateTimeString = FrmttSrvc.getDateTimeString;
 
+      // Items are the test parameter paths to display
+      $scope.cwlItems = [];
+      $scope.wdlItems = [];
+      // Values in database are the currently stored test parameter paths in the database
+      $scope.cwlValuesInDatabase = [];
+      $scope.wdlValuesInDatabase = [];
+
+      // Retrieve test parameter paths from the database and store to items array
+      $scope.getTestParameterFiles = function(type) {
+        if ($scope.tagObj !== undefined) {
+        return ContainerService.getTestJson($scope.containerId, $scope.tagObj.name, type)
+          .then(
+            function(testJson) {
+              if (type === 'CWL') {
+                $scope.cwlItems = [];
+                for (var i = 0; i < testJson.length; i++) {
+                  $scope.cwlItems.push(testJson[i].path);
+                }
+              if (testJson.length === 0) {
+                $scope.cwlItems.push("");
+              }
+              } else if (type === 'WDL') {
+                $scope.wdlItems = [];
+                for (var j = 0; j < testJson.length; j++) {
+                  $scope.wdlItems.push(testJson[j].path);
+                }
+              if (testJson.length === 0) {
+                $scope.wdlItems.push("");
+              }
+              }
+            },
+            function(response) {
+              return $q.reject(response);
+            }
+          );
+          }
+      };
+
+      // Retrieve test parameter paths from the database and store to ValuesInDatabase array
+      $scope.getDbTestParameterFiles = function(type) {
+        if ($scope.tagObj !== undefined) {
+        return ContainerService.getTestJson($scope.containerId, $scope.tagObj.name, type)
+          .then(
+            function(testJson) {
+              if (type === 'CWL') {
+                $scope.cwlValuesInDatabase = [];
+                for (var i = 0; i < testJson.length; i++) {
+                  $scope.cwlValuesInDatabase.push(testJson[i].path);
+                }
+              } else if (type === 'WDL') {
+                $scope.wdlValuesInDatabase = [];
+                for (var j = 0; j < testJson.length; j++) {
+                  $scope.wdlValuesInDatabase.push(testJson[j].path);
+                }
+              }
+            },
+            function(response) {
+              return $q.reject(response);
+            }
+          );
+          }
+      };
+
+      // Adds a blank text input for a new test parameter file
+      $scope.addTestParameterFile = function(type) {
+        if (type === 'CWL') {
+          if ($scope.cwlItems[$scope.cwlItems.length - 1] !== "") {
+            $scope.cwlItems.push("");
+          }
+        } else if (type === 'WDL') {
+          if ($scope.wdlItems[$scope.wdlItems.length - 1] !== "") {
+            $scope.wdlItems.push("");
+          }
+        }
+      };
+
+      // Removes a text input for a test parameter file
+      $scope.removeTestParameterFile = function(index, type) {
+        if (type === 'CWL') {
+          if (index > -1) {
+            $scope.cwlItems.splice(index, 1);
+          }
+          if ($scope.cwlItems.length === 0) {
+            $scope.cwlItems.push("");
+          }
+        } else if (type === 'WDL') {
+          if (index > -1) {
+            $scope.wdlItems.splice(index, 1);
+          }
+          if ($scope.wdlItems.length === 0) {
+            $scope.wdlItems.push("");
+          }
+        }
+      };
+
+      // Updates the database with the new set of test parameter files, removes any that have been deleted
+      $scope.updateTestParameterFiles = function() {
+        $scope.getDbTestParameterFiles('CWL').then(function() {
+          $scope.getDbTestParameterFiles('WDL').then(function() {
+            // Remove all blanks
+            while ($scope.cwlItems.indexOf("") !== -1) {
+              $scope.cwlItems.splice($scope.cwlItems.indexOf(""), 1);
+            }
+            while ($scope.wdlItems.indexOf("") !== -1) {
+              $scope.wdlItems.splice($scope.wdlItems.indexOf(""), 1);
+            }
+            var toRemoveCwl = [];
+            var toAddCwl = [];
+            var toRemoveWdl = [];
+            var toAddWdl = [];
+
+            toRemoveCwl = $($scope.cwlValuesInDatabase).not($scope.cwlItems);
+            toAddCwl = $scope.cwlItems;
+            toRemoveWdl = $($scope.wdlValuesInDatabase).not($scope.wdlItems);
+            toAddWdl = $scope.wdlItems;
+
+            $scope.removeTestParameterFileToDb(toRemoveCwl.toArray(), toAddCwl, 'CWL');
+            $scope.removeTestParameterFileToDb(toRemoveWdl.toArray(), toAddWdl, 'WDL');
+          });
+        });
+      };
+
       $scope.saveTagChanges = function() {
         if ($scope.savingActive) return;
         $scope.savingActive = true;
@@ -42,7 +164,7 @@ angular.module('dockstore.ui')
           .then(
             function(versionTags) {
               $scope.closeEditTagModal(true);
-              $scope.$emit('tagEditorRefreshContainer', $scope.containerId);
+              $scope.updateTestParameterFiles();
               return versionTags;
             },
             function(response) {
@@ -120,4 +242,66 @@ angular.module('dockstore.ui')
 
       $scope.setTagEditError(null);
 
+      // Initializes items with test parameter files from the version
+      $scope.setItems = function() {
+        $scope.getTestParameterFiles('CWL');
+        $scope.getTestParameterFiles('WDL');
+      };
+
+      // Update db with new test parameter files for the given tool and version
+      $scope.addTestParameterFileToDb = function(toAdd, type) {
+        if ($scope.tagObj !== undefined) {
+        return ContainerService.addTestJson($scope.containerId, $scope.tagObj.name, toAdd, type)
+          .then(
+            function(testParameterFiles) {
+              // Only refresh after WDL was checked
+              if (type === 'WDL') {
+                $scope.$emit('tagEditorRefreshContainer', $scope.containerId);
+              }
+            },
+            function(response) {
+              $scope.setTagEditError(
+                'The webservice encountered an error trying to modify test ' +
+                'parameter files for this tool, please ensure that the ' +
+                'test parameter paths are properly-formatted and do not ' +
+                'contain prohibited characters of words.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
+              return $q.reject(response);
+            }
+          );
+          }
+      };
+
+      // Remove from db test parameter files for the given tool and version
+      $scope.removeTestParameterFileToDb = function(toRemove, toAdd, type) {
+        if ($scope.tagObj !== undefined) {
+        return ContainerService.removeTestJson($scope.containerId, $scope.tagObj.name, toRemove, type)
+          .then(
+            function(testParameterFiles) {
+              $scope.addTestParameterFileToDb(toAdd, type);
+            },
+            function(response) {
+              $scope.setTagEditError(
+                'The webservice encountered an error trying to modify test ' +
+                'parameter files for this tool, please ensure that the ' +
+                'test parameter paths are properly-formatted and do not ' +
+                'contain prohibited characters of words.',
+                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                response.data
+              );
+              return $q.reject(response);
+            }
+          );
+          }
+      };
+
+      $scope.hasBlankPath = function(type) {
+        if (type === 'CWL') {
+          return ($scope.cwlItems.indexOf("") !== -1);
+        } else if (type === 'WDL') {
+          return ($scope.wdlItems.indexOf("") !== -1);
+        }
+      };
   }]);

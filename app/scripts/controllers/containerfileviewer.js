@@ -254,12 +254,17 @@ angular.module('dockstore.ui')
           );
       };
 
-      $scope.getTestJson = function(containerId, tagName, descType) {
+      $scope.getTestJson = function(containerId, tagName, descType, filePath, fileType) {
         return ContainerService.getTestJson(containerId, tagName, descType)
           .then(
             function(testJson) {
-              $scope.fileContents = testJson;
-              return testJson;
+              for (var i = 0; i < testJson.length; i++) {
+                if (testJson[i].path === filePath && testJson[i].type === fileType) {
+                  $scope.fileContents = testJson[i].content;
+                  return testJson[i].content;
+                }
+              }
+              return undefined;
             },
             function(response) {
               return $q.reject(response);
@@ -308,13 +313,13 @@ angular.module('dockstore.ui')
        * This extracts a list of valid secondary files for a given tool, filtered by the selected tag and descriptor type
        * Returns an empty array if there are not valid tags
        */
-      function extracted(){
+      function extracted(fileType){
         if($scope.containerObj.tags.length !==0){
           return $scope.containerObj.tags.filter(
             function(a) {
               return a.name === $scope.selTagName;})[0].sourceFiles.filter(
               function(a) {
-                return a.type === 'DOCKSTORE_'+$scope.selDescriptorName.toUpperCase();}).map(
+                return a.type === '' + fileType;}).map(
                 function(a) {
                   return a.path;
                 }).sort();
@@ -332,13 +337,18 @@ angular.module('dockstore.ui')
         $scope.descriptors = descriptors;
         $scope.selDescriptorName = descriptors[0];
         // prepare Descriptor Imports drop-down
-        $scope.secondaryDescriptors = extracted();
+        var fileType = $scope.selDescriptorName === 'cwl' ? 'DOCKSTORE_CWL' : 'DOCKSTORE_WDL';
+
+        $scope.secondaryDescriptors = extracted(fileType);
         $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
       };
 
       $scope.refreshDocument = function(versionChange) {
         $scope.fileLoaded = false;
         $scope.fileContents = null;
+        var testFileType = $scope.selDescriptorName === 'cwl' ? 'CWL_TEST_JSON' : 'WDL_TEST_JSON';
+        var fileType = $scope.selDescriptorName === 'cwl' ? 'DOCKSTORE_CWL' : 'DOCKSTORE_WDL';
+
         switch ($scope.type) {
           case 'dockerfile':
             $scope.expectedFilename = 'Dockerfile';
@@ -347,7 +357,7 @@ angular.module('dockstore.ui')
           case 'descriptor':
             $scope.expectedFilename = 'Descriptor';
             // prepare Descriptor Imports drop-down
-            $scope.secondaryDescriptors = extracted();
+            $scope.secondaryDescriptors = extracted(fileType);
             if (versionChange === true) {
               $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
             }
@@ -355,16 +365,11 @@ angular.module('dockstore.ui')
             break;
           case 'testparameter':
             $scope.expectedFilename = 'Test Parameter File';
-            var testjson = $scope.getTestJson($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName);
-            if(testjson !== undefined){
-              testjson.then(function(s){
-                $scope.totalLines = s.split(/\n/).length;
-                $scope.setupLineNumbers();
-              },
-              function(e){
-//                console.log("error refreshDocument",e);
-              });
+            $scope.secondaryDescriptors = extracted(testFileType);
+            if (versionChange === true) {
+              $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
             }
+            var testjson = $scope.getTestJson($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName,$scope.selSecondaryDescriptorName, testFileType);
             break;
           default:
           // ...

@@ -52,6 +52,11 @@ angular.module('dockstore.ui')
             $(element).find('[data-toggle="tooltip"]').tooltip();
           }
         });
+        scope.$watch('tagObj.name', function(newValue, oldValue) {
+          if (newValue !== undefined) {
+            scope.setItems();
+          }
+        });
       }
     };
   });

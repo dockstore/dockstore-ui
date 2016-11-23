@@ -230,7 +230,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.getSecondaryDescriptorFile = function(containerId, tagName, type, secondaryDescriptorPath) {
-        if(typeof $scope.selVersionName === 'undefined' || typeof $scope.selSecondaryDescriptorName === 'undefined'){
+        if(typeof $scope.selVersionName === 'undefined' || typeof $scope.selFileName === 'undefined'){
           return;
         }
         return WorkflowService.getSecondaryDescriptorFile(containerId, tagName, type, encodeURIComponent(secondaryDescriptorPath))
@@ -249,11 +249,16 @@ angular.module('dockstore.ui')
           );
       };
 
-      $scope.getTestParameterFile = function(workflowId, versionName) {
+      $scope.getTestParameterFile = function(workflowId, versionName, filePath, fileType) {
         return WorkflowService.getTestJson(workflowId, versionName)
           .then(
             function(testJson) {
-              $scope.fileContents = testJson;
+              for (var i = 0; i < testJson.length; i++) {
+                if (testJson[i].path === filePath && testJson[i].type === fileType) {
+                  $scope.fileContents = testJson[i].content;
+                  return testJson[i].content;
+                }
+              }
               return testJson;
             },
             function(response) {
@@ -267,12 +272,12 @@ angular.module('dockstore.ui')
           );
       };
 
-      function extracted(){
+      function extracted(fileType){
         try {
           return $scope.workflowObj.workflowVersions.filter(function (a) {
             return a.name === $scope.selVersionName;
           })[0].sourceFiles.filter(function (a) {
-            return a.type === 'DOCKSTORE_' + $scope.descriptor.toUpperCase();
+            return a.type === '' + fileType;
           }).map(function (a) {
             return a.path;
           }).sort();
@@ -287,25 +292,33 @@ angular.module('dockstore.ui')
         $scope.workflowVersions = $scope.workflowObj.workflowVersions.map(function(a) {return a.name;}).sort();
         $scope.selVersionName = $scope.workflowVersions[0];
         // prepare Descriptor Imports drop-down
-        $scope.secondaryDescriptors = extracted();
-        $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
+        var fileType = $scope.descriptor === 'cwl' ? 'DOCKSTORE_CWL' : 'DOCKSTORE_WDL';
+        $scope.fileList = extracted(fileType);
+        $scope.selFileName = $scope.fileList[0];
       };
 
       $scope.refreshDocument = function(versionChange) {
         $scope.fileLoaded = false;
         $scope.fileContents = null;
+        var testFileType = $scope.descriptor === 'cwl' ? 'CWL_TEST_JSON' : 'WDL_TEST_JSON';
+        var fileType = $scope.descriptor === 'cwl' ? 'DOCKSTORE_CWL' : 'DOCKSTORE_WDL';
         switch ($scope.type) {
           case 'descriptor':
             $scope.expectedFilename = 'Descriptor';
-            $scope.secondaryDescriptors = extracted();
+            $scope.fileList = extracted(fileType);
             if (versionChange === true) {
-                $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
+                $scope.selFileName = $scope.fileList[0];
             }
-            var descriptor = $scope.getSecondaryDescriptorFile($scope.workflowObj.id, $scope.selVersionName, $scope.descriptor, $scope.selSecondaryDescriptorName);
+            var descriptor = $scope.getSecondaryDescriptorFile($scope.workflowObj.id, $scope.selVersionName, $scope.descriptor, $scope.selFileName);
               break;
           case 'testparameter':
             $scope.expectedFilename = 'Test Parameter File';
-            var testparameter = $scope.getTestParameterFile($scope.workflowObj.id, $scope.selVersionName);
+            $scope.fileList = extracted(testFileType);
+            if (versionChange === true) {
+              $scope.selFileName = $scope.fileList[0];
+            }
+
+            var testparameter = $scope.getTestParameterFile($scope.workflowObj.id, $scope.selVersionName, $scope.selFileName, testFileType);
             break;
           default:
             // ...

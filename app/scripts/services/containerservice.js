@@ -266,9 +266,7 @@ angular.module('dockstore.ui')
             default_wdl_path: containerObj.default_wdl_path,
             default_dockerfile_path: containerObj.default_dockerfile_path,
             toolname: containerObj.toolname,
-            gitUrl: containerObj.gitUrl,
-            default_cwl_test_parameter_file: containerObj.default_cwl_test_parameter_file,
-            default_wdl_test_parameter_file: containerObj.default_wdl_test_parameter_file
+            gitUrl: containerObj.gitUrl
           }
         }).then(function(response) {
           resolve(response.data);
@@ -288,9 +286,7 @@ angular.module('dockstore.ui')
             default_wdl_path: containerObj.default_wdl_path,
             default_dockerfile_path: containerObj.default_dockerfile_path,
             toolname: containerObj.toolname,
-            gitUrl: containerObj.gitUrl,
-            default_cwl_test_parameter_file: containerObj.default_cwl_test_parameter_file,
-            default_wdl_test_parameter_file: containerObj.default_wdl_test_parameter_file
+            gitUrl: containerObj.gitUrl
           }
         }).then(function(response) {
           resolve(response.data);
@@ -320,13 +316,49 @@ angular.module('dockstore.ui')
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/containers/' + containerId + '/testparameter',
+          url: WebService.API_URI + '/containers/' + containerId + '/testParameterFiles',
           params: {
             tag: tagName,
-            type: descType
+            descriptorType: descType
           }
         }).then(function(response) {
-          resolve(response.data.content);
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.addTestJson = function(containerId, tagName, testParameterArray, descType) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'PUT',
+          url: WebService.API_URI + '/containers/' + containerId + '/testParameterFiles',
+          params: {
+            tagName: tagName,
+            testParameterPaths: testParameterArray,
+            descriptorType: descType
+          }
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.removeTestJson = function(containerId, tagName, testParameterArray, descType) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'DELETE',
+          url: WebService.API_URI + '/containers/' + containerId + '/testParameterFiles',
+          params: {
+            tagName: tagName,
+            testParameterPaths: testParameterArray,
+            descriptorType: descType
+          }
+        }).then(function(response) {
+          resolve(response.data);
         }, function(response) {
           reject(response);
         });

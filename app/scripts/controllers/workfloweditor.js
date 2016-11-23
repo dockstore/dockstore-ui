@@ -175,7 +175,6 @@ angular.module('dockstore.ui')
           registry: '',
           gitUrl: '',
           default_workflow_path: '/Dockstore.cwl',
-          default_test_parameter_file: '/test.json',
           is_published: false,
           scrProvider: 'GitHub',
           descriptorType: 'cwl'

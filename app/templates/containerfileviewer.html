@@ -21,7 +21,7 @@
     <button type="button" class="btn btn-default" ng-class="type == 'descriptor' ? 'active' : ''" ng-click="setType('descriptor')">Descriptor Files</button>
   </div>
   <div class="btn-group" role="group">
-    <button type="button" class="btn btn-default" ng-class="type == 'testparameter' ? 'active' : ''" ng-click="setType('testparameter')">Test Parameter File</button>
+    <button type="button" class="btn btn-default" ng-class="type == 'testparameter' ? 'active' : ''" ng-click="setType('testparameter')">Test Parameter Files</button>
   </div>
 </div>
 
@@ -48,7 +48,7 @@
     </select>
   </div>
 
-  <div class="ds-descriptor-selector float-left" ng-hide="isDockerfile() || isTestJson()">
+  <div class="ds-descriptor-selector float-left" ng-hide="isDockerfile()">
     <strong>File</strong>:
     <select class="ds-wide-descriptor" ng-model="selSecondaryDescriptorName">
       <option

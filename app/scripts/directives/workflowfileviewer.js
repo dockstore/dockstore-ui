@@ -30,14 +30,16 @@ angular.module('dockstore.ui')
       scope: {
         type: '=',
         workflowObj: '=',
-        isEnabled: '='
+        isEnabled: '=',
+        tabindex: '='
       },
       templateUrl: 'templates/workflowfileviewer.html',
       link: function postLink(scope, element, attrs) {
-        scope.$watch('workflowObj.path', function(newValue, oldValue) {
+        scope.$watchGroup(['workflowObj.path', 'tabindex'], function(newValue, oldValue) {
           if (newValue) {
             scope.setDocument();
             scope.checkDescriptor();
+            scope.setType('descriptor');
           }
         });
         scope.$on('refreshFiles', function(event) {
@@ -50,14 +52,19 @@ angular.module('dockstore.ui')
           scope.checkDescriptor();
         });
         scope.$watchGroup(
-          ['selVersionName','descriptor'],
+          ['selVersionName','descriptor', 'type'],
           function(newValues, oldValues) {
             scope.refreshDocument(true);
           });
         scope.$watchGroup(
-          ['workflowObj.id', 'selSecondaryDescriptorName'],
+          ['workflowObj.id'],
           function(newValues, oldValues) {
             scope.setType('descriptor');
+            scope.refreshDocument(false);
+          });
+        scope.$watchGroup(
+          ['selFileName'],
+          function(newValues, oldValues) {
             scope.refreshDocument(false);
           });
       }

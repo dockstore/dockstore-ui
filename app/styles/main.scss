@@ -988,6 +988,27 @@ div.tabs > div:target > div, :target #info > div, #info > div {
   overflow:hidden;
 }
 
+.test_parameter_input {
+  width:90%;
+  float:left;
+}
+
+.test_parameter_remove_button {
+  margin-left:2px;
+  width:9%;
+  float:left;
+  padding: 4px 0px 4px 0px;
+}
+
+.test_parameter_add_button {
+  float:right;
+}
+
+.test_parameter_div {
+  margin-top:5px;
+  margin-bottom:5px;
+}
+
 html, body {
   height:100%;
 }

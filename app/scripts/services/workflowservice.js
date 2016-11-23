@@ -169,8 +169,7 @@ angular.module('dockstore.ui')
             workflowName: workflowObj.workflowName,
             descriptorType: workflowObj.descriptorType,
             path: workflowObj.path,
-            gitUrl: workflowObj.gitUrl,
-            default_test_parameter_file: workflowObj.default_test_parameter_file
+            gitUrl: workflowObj.gitUrl
           }
         }).then(function(response) {
           resolve(response.data);
@@ -190,8 +189,7 @@ angular.module('dockstore.ui')
             workflowName: workflowObj.workflowName,
             descriptorType: workflowObj.descriptorType,
             path: workflowObj.path,
-            gitUrl: workflowObj.gitUrl,
-            default_test_parameter_file: workflowObj.default_test_parameter_file
+            gitUrl: workflowObj.gitUrl
           }
         }).then(function(response) {
           resolve(response.data);
@@ -220,12 +218,46 @@ angular.module('dockstore.ui')
       return $q(function(resolve, reject) {
         $http({
           method: 'GET',
-          url: WebService.API_URI + '/workflows/' + workflowId + '/testparameter',
+          url: WebService.API_URI + '/workflows/' + workflowId + '/testParameterFiles',
           params: {
             version: versionName
           }
         }).then(function(response) {
-          resolve(response.data.content);
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.addTestJson = function(workflowId, versionName, testParameterArray) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'PUT',
+          url: WebService.API_URI + '/workflows/' + workflowId + '/testParameterFiles',
+          params: {
+            version: versionName,
+            testParameterPaths: testParameterArray
+          }
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
+    this.removeTestJson = function(workflowId, versionName, testParameterArray) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'DELETE',
+          url: WebService.API_URI + '/workflows/' + workflowId + '/testParameterFiles',
+          params: {
+            version: versionName,
+            testParameterPaths: testParameterArray
+          }
+        }).then(function(response) {
+          resolve(response.data);
         }, function(response) {
           reject(response);
         });
@@ -248,7 +280,7 @@ angular.module('dockstore.ui')
       });
     };
 
-    this.createWorkflow = function(workflowRegistry, workflowPath, workflowDescriptorPath, workflowName, descriptorType, testParameterFilePath) {
+    this.createWorkflow = function(workflowRegistry, workflowPath, workflowDescriptorPath, workflowName, descriptorType) {
       return $q(function(resolve, reject) {
         $http({
           method: 'POST',
@@ -261,8 +293,7 @@ angular.module('dockstore.ui')
             workflowPath : workflowPath,
             defaultWorkflowPath : workflowDescriptorPath,
             workflowName : workflowName,
-            descriptorType : descriptorType,
-            testParameterPath: testParameterFilePath
+            descriptorType : descriptorType
           }
         }).then(function(response) {
           resolve(response.data);

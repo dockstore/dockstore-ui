@@ -30,11 +30,12 @@ angular.module('dockstore.ui')
       scope: {
         type: '=',
         containerObj: '=',
-        isEnabled: '='
+        isEnabled: '=',
+        tabindex: '='
       },
       templateUrl: 'templates/containerfileviewer.html',
       link: function postLink(scope) {
-        scope.$watch('containerObj.path', function(newValue) {
+        scope.$watchGroup(['containerObj.path', 'tabindex'], function(newValue) {
           if (newValue) {
             scope.setDocument();
             scope.checkDescriptor();
@@ -53,14 +54,13 @@ angular.module('dockstore.ui')
           scope.checkDockerfile();
         });
         scope.$watchGroup(
-          ['selTagName', 'selDescriptorName'],
+          ['selTagName', 'selDescriptorName', 'type'],
           function() {
             scope.refreshDocument(true);
           });
         scope.$watchGroup(
           ['selSecondaryDescriptorName'],
           function() {
-            scope.setType('descriptor');
             scope.refreshDocument(false);
           });
         scope.$watchGroup(
