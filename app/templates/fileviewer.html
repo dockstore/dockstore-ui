@@ -40,7 +40,7 @@
   }
 </style>
 <div class="code-holder">
-  <button class="code-copy-button" ng-show="fileContents" ngclipboard data-clipboard-target=".hljs" ngclipboard-success="onSuccess(e);">
+  <button class="code-copy-button" ng-show="fileContents" ngclipboard data-clipboard-target=".hljs" ngclipboard-success="onSuccess(e);" ngclipboard-error="onError(e);">
     <span class="glyphicon glyphicon-copy"></span>
   </button>
   <div hljs class="code"

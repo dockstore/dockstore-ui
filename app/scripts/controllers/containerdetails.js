@@ -31,7 +31,8 @@ angular.module('dockstore.ui')
     'ContainerService',
     'FormattingService',
     'UtilityService',
-    function ($scope, $q, $sce, ContainerService, FrmttSrvc, UtilityService) {
+    'NotificationService',
+    function ($scope, $q, $sce, ContainerService, FrmttSrvc, UtilityService, NtfnService) {
       $scope.labelsEditMode = false;
       $scope.dockerfileEnabled = false;
       $scope.descriptorEnabled = false;
@@ -52,6 +53,7 @@ angular.module('dockstore.ui')
       $scope.validTags = [];
       $scope.descAvailable = [];
       $scope.buildTooltip = $sce.trustAsHtml('<strong>Fully-Automated</strong>: All versions are automated builds<br><strong>Partially-Automated</strong>: At least one version is an automated build<br><strong>Manual</strong>: No versions are automated builds<br><strong>Unknown</strong>: Build information not known');
+      $scope.dockerPullTag = '';
 
       //There are 5 tabs, and only 1 can be active
       // so there are 4 other tabs that are not active
@@ -106,6 +108,9 @@ angular.module('dockstore.ui')
 
       $scope.refreshDescLaunchWith = function(tagIndex) {
         //get the descriptor type that is available for tool version
+        if ($scope.validTags.length === 0) {
+          return;
+        }
         $scope.descAvailable = [];
         for(var j=0;j<$scope.validTags[tagIndex].sourceFiles.length;j++){
           var fileType = $scope.validTags[tagIndex].sourceFiles[j].type;
@@ -209,7 +214,6 @@ angular.module('dockstore.ui')
 
         $scope.launchWithCWLTool = "# alternatively, cwltool can run a tool directly when all inputs and outputs are available on the local filesystem" +
           "\ncwltool --non-strict https://www.dockstore.org:8443/api/ga4gh/v1/tools/" + escapedPath + "/versions/" + escapedVersion + "/plain-CWL/descriptor Dockstore.json";
-
         return $scope.validContent; //only show LaunchWith when content is valid
       };
 
@@ -513,6 +517,12 @@ angular.module('dockstore.ui')
         return FrmttSrvc.getFilteredDockerPullCmd(path);
       };
 
+      $scope.getDockerPullCmdForTag = function() {
+        if ($scope.containerObj !== null) {
+          return FrmttSrvc.getFilteredDockerPullCmd($scope.containerObj.path);
+        }
+      };
+
       $scope.submitDescriptorEdits = function(type){
         var cwlpath = $scope.containerObj.default_cwl_path;
         var wdlpath = $scope.containerObj.default_wdl_path;
@@ -672,8 +682,19 @@ angular.module('dockstore.ui')
         }
       });
 
+      $scope.$watch('toolTagName', function(newValue) {
+        if (newValue) {
+          $scope.dockerPullTag = $scope.getDockerPullCmdForTag();
+        }
+      });
+
       $scope.onSuccess = function(e) {
         e.clearSelection();
+        NtfnService.popSuccess('Copy Success');
+      };
+
+      $scope.onError = function(e) {
+        NtfnService.popFailure('Copy Failure');
       };
 
       $scope.isVerified = function() {

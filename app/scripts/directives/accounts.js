@@ -18,20 +18,19 @@
 
 /**
  * @ngdoc directive
- * @name dockstore.ui.directive:tokensGrid
+ * @name dockstore.ui.directive:accounts
  * @description
- * # tokensGrid
+ * # accounts
  */
 angular.module('dockstore.ui')
-  .directive('tokensGrid', function () {
+  .directive('accounts', function () {
     return {
       restrict: 'AE',
-      controller: 'TokensGridCtrl',
+      controller: 'AccountsCtrl',
       scope: {
-        tokens: '=',
-        deleteToken: '&'
+
       },
-      templateUrl: 'templates/tokensgrid.html',
+      templateUrl: 'templates/accountlinks.html',
       link: function postLink(scope, element, attrs) {
 
       }

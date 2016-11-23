@@ -28,7 +28,7 @@ Now that you have your `Dockerfile` and `Dockstore.cwl` in GitHub, have setup Qu
 
 ### Quick Registration via the Web UI 
 
-In the authenticated Web UI, navigate to 'My Tools' to begin managing Docker images imported through your linked account(s). These pages will allow you to quickly register tools that follow a particularly simple format (look below to manual registration for more complex formats). For quick registration, we look through your quay.io images and see if any are setup as [automated builds](https://docs.quay.io/guides/building.html). Using those to track back to your github, bitbucket, or gitlab accounts, we list all pairs of Docker images with git repositories that contain a `Dockstore.cwl` and a `Dockerfile`. When we discover both of these, we create an unregistered entry in the interface below. Note that we also look for `/test.cwl.json` and `/test.wdl.json` for test parameter files respectively, but they are not required for Quick Registration.
+In the authenticated Web UI, navigate to 'My Tools' to begin managing Docker images imported through your linked account(s). These pages will allow you to quickly register tools that follow a particularly simple format (look below to manual registration for more complex formats). For quick registration, we look through your quay.io images and see if any are setup as [automated builds](https://docs.quay.io/guides/building.html). Using those to track back to your github, bitbucket, or gitlab accounts, we list all pairs of Docker images with git repositories that contain a `Dockstore.cwl` and a `Dockerfile`. When we discover both of these, we create an unregistered entry in the interface below.
 
 ![My Tools](docs/register_ui.png)
 
@@ -44,7 +44,7 @@ Now select the `collaboratory/dockstore-tool-bamstats` repository and click "Pub
                   
 ![Publish](docs/publish.png)
                   
-You can also click on the "Versions" tab and should notice `1.25-3` is present and Valid=Yes.  If any versions are invalid it is likely due to a path issue to the `Dockstore.cwl`, `Dockerfile`, or `Dockstore.wdl` (if used) files.  In BAMStats I used the default value of `Dockstore.cwl` and `Dockerfile` in the root repo directory so this was not an issue.
+You can also click on the "Versions" tab and should notice `1.25-6` is present and valid.  If any versions are invalid it is likely due to a path issue to the `Dockstore.cwl`, `Dockerfile`, or `Dockstore.wdl` (if used) files.  In BAMStats I used the default value of `Dockstore.cwl` and `Dockerfile` in the root repo directory so this was not an issue.
 
 ![Publish](docs/versions_toggle.png)
 
@@ -111,7 +111,7 @@ The `dockstore` command line can be used as an alternative to the GUI and has a 
  
 First, we will work in tool mode (`dockstore tool`). We recommend you first `dockstore tool refresh` to ensure the latest GitHub, Bitbucket, GitLab and Quay.io information is indexed properly.
  
-    $ dockstore
+    $ dockstore tool
     
     HELP FOR DOCKSTORE
     ------------------
@@ -137,6 +137,8 @@ First, we will work in tool mode (`dockstore tool`). We recommend you first `doc
       refresh          :  updates your list of Tools stored on Dockstore or an individual Tool
     
       label            :  updates labels for an individual Tool
+      
+      test_parameter   :  updates test parameter files for a version of a Tool
     
       convert          :  utilities that allow you to convert file types
     

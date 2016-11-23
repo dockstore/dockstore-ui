@@ -574,6 +574,7 @@ module.exports = function (grunt) {
       'wiredep',
       'concurrent:server',
       'autoprefixer:server',
+      'copy:styles',
       'connect:livereload',
       'watch'
     ]);
@@ -611,6 +612,7 @@ module.exports = function (grunt) {
       'concat',
       'ngAnnotate',
       'copy:dist',
+      'copy:styles',
       'insert',
       'cdnify',
       'cssmin',

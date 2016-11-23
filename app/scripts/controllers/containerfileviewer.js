@@ -29,7 +29,7 @@ angular.module('dockstore.ui')
     '$q',
     'ContainerService',
     'NotificationService',
-    function ($scope, $q, ContainerService) {
+    function ($scope, $q, ContainerService, NtfnService) {
 
       var descriptors = ["cwl", "wdl"];
 
@@ -45,6 +45,9 @@ angular.module('dockstore.ui')
 
       $scope.checkDescriptor = function() {
         $scope.containerTags = $scope.getContainerTags();
+        if ($scope.containerTags.length === 0) {
+          return;
+        }
         $scope.successContent = [];
         $scope.fileContent = null;
         var accumulator = [];
@@ -378,6 +381,11 @@ angular.module('dockstore.ui')
 
       $scope.onSuccess = function(e) {
         e.clearSelection();
+        NtfnService.popSuccess('Copy Success');
+      };
+
+      $scope.onError = function(e) {
+        NtfnService.popFailure('Copy Failure');
       };
 
       $scope.setDocument();

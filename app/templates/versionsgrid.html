@@ -60,9 +60,6 @@
           <th uib-tooltip="View more information about the given version" tooltip-append-to-body="true">
             <span>Actions</span>
           </th>
-          <th uib-tooltip="Docker pull command" tooltip-append-to-body="true">
-            <span>Docker Pull</span>
-          </th>
         </tr>
       </thead>
       <tbody>
@@ -98,23 +95,25 @@
             {{getDateModified(versionTag.last_modified)}}
           </td>
           <td>
-            {{versionTag.valid ? 'Yes' : 'No'}}
+            <span class="glyphicon glyphicon-ok" ng-if="versionTag.valid"></span>
+            <span class="glyphicon glyphicon-remove" ng-if="!versionTag.valid"></span>
           </td>
           <td uib-tooltip="{{versionTag.verifiedSource}}" tooltip-append-to-body="true">
-            {{versionTag.verified ? 'Yes' : 'No'}}
+            <span class="glyphicon glyphicon-ok" ng-if="versionTag.verified"></span>
+            <span class="glyphicon glyphicon-remove" ng-if="!versionTag.verified"></span>
           </td>
           <td class="tag-actions">
             <a href
                 data-toggle="modal"
                 data-target="#tagEditorModal"
-                ng-click="VersionsGrid.editTagObj = versionTag"
+                ng-click="setEditTagObj(versionTag)"
                 ng-if="!editMode">
               View
             </a>
             <a href
                 data-toggle="modal"
                 data-target="#tagEditorModal"
-                ng-click="VersionsGrid.editTagObj = versionTag"
+                ng-click="setEditTagObj(versionTag)"
                 ng-if="editMode">
               Edit
             </a>
@@ -124,28 +123,24 @@
               Delete
             </a>
           </td>
-          <td ng-init="dockerPullCmd = getDockerPullCmd(containerObj.path, versionTag.name)">
-            <div copy-text>{{dockerPullCmd}}</div>
-          </td>
         </tr>
       </tbody>
     </table>
     <button type="button"
         class="btn btn-primary btn-sm pull-right"
-        ng-if="editMode && containerObj.mode === 'MANUAL_IMAGE_PATH'">
-      <a href
-          data-toggle="modal"
-          data-target="#tagEditorModal"
-          ng-click="VersionsGrid.editTagObj = getCreateTagObj()">
+        ng-if="editMode && containerObj.mode === 'MANUAL_IMAGE_PATH'" data-toggle="modal"
+            data-target="#tagEditorModal"
+            ng-click="getCreateTagObj()">
+
         Add Tag
-      </a>
     </button>
     <div tag-editor
-        tag-obj="VersionsGrid.editTagObj"
+        tag-obj="editTagObj"
         container-id="{{containerObj.id}}"
         container-path="{{containerObj.path}}"
         edit-mode="editMode"
         add-version-tag="addVersionTag">
     </div>
+    {{VersionsGrid.editTagObj}}
   </div>
 </div>

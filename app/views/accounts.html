@@ -19,6 +19,7 @@
     <div class="row">
       <div class="col-md-12">
         <h3 class="available-containers">
+          <span class="glyphicon glyphicon-user"></span>
           Accounts
           <span class="public-lists">Current User</span>
         </h3>
@@ -49,59 +50,11 @@
 
       <h3>External Accounts</h3>
 
-      <h4>GitHub Account</h4>
-      <div ng-show="tokenStatusSet.github">
-        <span class="label label-success">
-          <span class="glyphicon glyphicon-link"></span> Linked
-        </span>
-      </div>
-      <div ng-show="!tokenStatusSet.github">
-        <button class="btn btn-primary btn-xs" ng-click="linkGitHubAccount()">
-          <span class="glyphicon glyphicon-link"></span> Link Account
-        </button>
-      </div>
-
-      <h4>Bitbucket Account</h4>
-      <div ng-show="tokenStatusSet.bitbucket">
-        <span class="label label-success">
-          <span class="glyphicon glyphicon-link"></span> Linked
-        </span>
-      </div>
-      <div ng-show="!tokenStatusSet.bitbucket">
-        <button class="btn btn-primary btn-xs" ng-click="linkBitbucketAccount()">
-          <span class="glyphicon glyphicon-link"></span> Link Account
-        </button>
-      </div>
-
-      <h4>Gitlab Account</h4>
-      <div ng-show="tokenStatusSet.gitlab">
-        <span class="label label-success">
-          <span class="glyphicon glyphicon-link"></span> Linked
-        </span>
-      </div>
-      <div ng-show="!tokenStatusSet.gitlab">
-        <button class="btn btn-primary btn-xs" ng-click="linkGitlabAccount()">
-          <span class="glyphicon glyphicon-link"></span> Link Account
-        </button>
-      </div>
-
-      <h4>Quay.io Account</h4>
-      <div ng-show="tokenStatusSet.quayio">
-        <span class="label label-success">
-          <span class="glyphicon glyphicon-link"></span> Linked
-        </span>
-      </div>
-      <div ng-show="!tokenStatusSet.quayio">
-        <button
-            class="btn btn-primary btn-xs"
-            ng-click="linkQuayIOAccount()"
-            ng-disabled="quayIOHold">
-          <span class="glyphicon glyphicon-link"></span> Link Account
-        </button>
-      </div>
+      <div accounts></div>
     </div>
   </div>
 </div>
+
 
 <div id="our-sponsors">
   <div class="container">
@@ -111,22 +64,22 @@
           <li>In Affiliation With:</li>
           <li>
             <a href="https://www.cancercollaboratory.org/" target="_blank">
-              <img src="images/collaboratory.png" />
+              <img src="images/collaboratory.png"/>
             </a>
           </li>
           <li>
             <a href="https://oicr.on.ca/" target="_blank">
-              <img src="images/oicr.png" />
+              <img src="images/oicr.png"/>
             </a>
           </li>
           <li>
             <a href="https://genomicsandhealth.org/" target="_blank">
-              <img src="images/ga4gh.png" />
+              <img src="images/ga4gh.png"/>
             </a>
           </li>
           <li>
             <a href="http://www.commonwl.org/" target="_blank">
-              <img src="images/cwl.png" />
+              <img src="images/cwl.png"/>
             </a>
           </li>
         </ul>

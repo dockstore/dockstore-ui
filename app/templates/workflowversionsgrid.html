@@ -78,10 +78,12 @@
           {{getDateModified(versionTag.last_modified)}}
         </td>
         <td>
-          {{versionTag.valid ? 'Yes' : 'No'}}
+          <span class="glyphicon glyphicon-ok" ng-if="versionTag.valid"></span>
+          <span class="glyphicon glyphicon-remove" ng-if="!versionTag.valid"></span>
         </td>
         <td uib-tooltip="{{versionTag.verifiedSource}}" tooltip-append-to-body="true">
-          {{versionTag.verified ? 'Yes' : 'No'}}
+          <span class="glyphicon glyphicon-ok" ng-if="versionTag.verified"></span>
+          <span class="glyphicon glyphicon-remove" ng-if="!versionTag.verified"></span>
         </td>
         <td class="tag-actions">
           <a href

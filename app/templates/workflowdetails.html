@@ -64,9 +64,7 @@
       <span ng-show="isVerified()" uib-tooltip="Verified">
         <span class="glyphicon glyphicon-ok"></span>
       </span>
-      {{
-      workflowObj.path
-      }} <button class="btn" ngclipboard data-clipboard-target="#workflow-path" ngclipboard-success="onSuccess(e);"><span class="glyphicon glyphicon-copy"></span></button>
+      {{workflowObj.path}} <button class="btn btn-default" ngclipboard data-clipboard-target="#workflow-path" ngclipboard-success="onSuccess(e);" ngclipboard-error="onError(e);"><span class="glyphicon glyphicon-copy"></span></button>
     </h3>
     <div ng-if="workflowObj" id="label-holder">
       <div id="label-values">
@@ -86,7 +84,7 @@
       </div>
     </div>
 
-    <p class="update" title="{{ workflowObj.lastUpdated ? getDateTimeString(workflowObj.lastUpdated) : 'n/a' }}" uib-tooltip>
+    <p class="update" title="{{ workflowObj.lastUpdated ? getDateTimeString(workflowObj.lastUpdated) : 'n/a' }}" uib-tooltip tooltip-append-to-body="true">
       Last Modified:
       {{ workflowObj.lastUpdated ? getTimeAgoString(workflowObj.lastUpdated) : 'n/a' }}
     </p>

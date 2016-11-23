@@ -2,7 +2,7 @@
 
 ## Describe Your Tool in CWL
 
-Now that you have a git repository that includes a `Dockerfile`, you have tested it, and are satisfied that your tool works in Docker, the next step is to create a [CWL tool definition file](http://www.commonwl.org/). This YAML file describes the inputs, outputs, and Docker image dependencies for your tool.
+Now that you have a git repository that includes a `Dockerfile`, you have tested it, and are satisfied that your tool works in Docker, the next step is to create a [CWL tool definition file](http://www.commonwl.org/). This YAML (Or JSON) file describes the inputs, outputs, and Docker image dependencies for your tool.
 
 It is recommended that you have the following minimum fields:
 
@@ -71,8 +71,7 @@ Again, we provide an example from the [dockstore-tool-bamstats](https://github.c
 
 You can see this tool takes two inputs, a parameter to control memory usage and a BAM file (binary sequence alignment file).  It produces one output, a zip file, that contains various HTML reports that BamStats creates.
 
-There's a lot going on here.  Let's break it down.  The CWL is actually recognized and parsed by Dockstore (when we register this later). By
-default it recognizes `Dockstore.cwl` but you can customize this if you need to.  One of the most important items below is the [CWL version](http://www.commonwl.org/v1.0/CommandLineTool.html#CWLVersion), you should label your CWL with the version you are using so CWL tools that cannot run this version can error out appropriately. Our tools have been tested with draft-3 and v1.0 (we recommend the latter).
+There's a lot going on here.  Let's break it down.  The CWL is actually recognized and parsed by Dockstore (when we register this later). By default it recognizes `Dockstore.cwl` but you can customize this if you need to.  One of the most important items below is the [CWL version](http://www.commonwl.org/v1.0/CommandLineTool.html#CWLVersion), you should label your CWL with the version you are using so CWL tools that cannot run this version can error out appropriately. Our tools have been tested with draft-3 and v1.0 (we recommend the latter).
 
 ```
 class: CommandLineTool
@@ -135,8 +134,7 @@ This may or may not be honoured by the tool calling this CWL but at least it giv
         inputBinding:
           position: 2
 
-This is one of the items from the inputs section.  Notice a few things, first, the `bam_input:` matches with `bam_input` in the sample parameterization JSON (shown in the next section as `sample_configs.local.json`).
-Also, you can control the position of the variable, it can have a type (int or File here), and, for tools that require a prefix (`--prefix`) before a parameter you can use the `prefix: key` in the inputBindings section.
+This is one of the items from the inputs section.  Notice a few things, first, the `bam_input:` matches with `bam_input` in the sample parameterization JSON (shown in the next section as `sample_configs.local.json`). Also, you can control the position of the variable, it can have a type (int or File here), and, for tools that require a prefix (`--prefix`) before a parameter you can use the `prefix: key` in the inputBindings section.
 
 Also, I'm using the `format` field to specify a file format via the [EDAM](http://bioportal.bioontology.org/ontologies/EDAM) ontology.
 
@@ -148,9 +146,7 @@ Also, I'm using the `format` field to specify a file format via the [EDAM](http:
           glob: bamstats_report.zip
         doc: "A zip file that contains the HTML report and various graphics."
 
-Finally, the outputs section defines the output files.  In this case it says in the current working directory there will
-be a file called `bamstats_report.zip`.  When running this tool with CWL tools the file will be copied out of the container to a
-location you specify in your parameter JSON file.  We'll walk though an example in the next section.
+Finally, the outputs section defines the output files.  In this case it says in the current working directory there will be a file called `bamstats_report.zip`.  When running this tool with CWL tools the file will be copied out of the container to a location you specify in your parameter JSON file.  We'll walk though an example in the next section.
 
 Finally, the `baseCommand` is the actual command that will be executed, in this case it's the wrapper script I wrote for bamstats.
 
@@ -162,9 +158,7 @@ The [CWL standard](http://www.commonwl.org/) is continuing to evolve and hopeful
 
 ## Testing Locally
 
-So at this point you've created a Docker-based tool and have described how to call that tool using CWL.  Let's test running the BAMStats
-using the Dockstore command line and descriptor rather than just directly calling it via Docker.  This will test that the CWL
-correctly describes how to run your tool.
+So at this point you've created a Docker-based tool and have described how to call that tool using CWL.  Let's test running the BAMStats using the Dockstore command line and descriptor rather than just directly calling it via Docker.  This will test that the CWL correctly describes how to run your tool.
 
 First thing I'll do is create a completely local dataset and JSON parameterization file:
 
@@ -175,8 +169,7 @@ $> wget https://s3.amazonaws.com/oconnor-test-bucket/sample-data/NA12878.chrom20
 $> mv NA12878.chrom20.ILLUMINA.bwa.CEU.low_coverage.20121211.bam /tmp/
 ```
 
-This downloads to my current directory and then moves to `/tmp`.  I could choose another location, it really doesn't matter, but we
-need the full path when dealing with the parameter JSON file.  I'm using a sample I checked in already: `sample_configs.local.json`.
+This downloads to my current directory and then moves to `/tmp`.  I could choose another location, it really doesn't matter, but we need the full path when dealing with the parameter JSON file.  I'm using a sample I checked in already: `sample_configs.local.json`.
 
 ```
 {
@@ -258,8 +251,7 @@ Uploading: #bamstats_report from /home/dyuen/dockstore-tool-bamstats/./datastore
 [##################################################] 100%
 ```
 
-So that's a lot of information but you can see the process was a success.  We get output from the command we ran and also see the file being moved to
-the correct output location:
+So that's a lot of information but you can see the process was a success.  We get output from the command we ran and also see the file being moved to the correct output location:
 
 ```
 $> ls -lth /tmp/bamstats_report.zip
@@ -272,10 +264,7 @@ So what's going on here?  What's the Dockstore CLI doing?  It can best be summed
 
 ![Lifecycle](docs/dockstore_lifecycle.png)
 
-The command line first provisions file.  In our case, the files were local so no provisioning was needed.  But as the Tip above mentioned, these can be
-various URLs.  After provisioning the docker image is pulled and ran via the `cwltool` command line. This uses the `Dockerfile.cwl` and parameterization
-JSON file (`sample_configs.local.json`) to construct the underlying `docker run` command.  Finally, the Dockstore CLI provisions files back.  In this
-case it's just a file copy to `/tmp/bamstats_report.zip` but it could copy the result to a destination in S3 for example.
+The command line first provisions file.  In our case, the files were local so no provisioning was needed.  But as the Tip above mentioned, these can be various URLs.  After provisioning the docker image is pulled and ran via the `cwltool` command line. This uses the `Dockerfile.cwl` and parameterization JSON file (`sample_configs.local.json`) to construct the underlying `docker run` command.  Finally, the Dockstore CLI provisions files back.  In this case it's just a file copy to `/tmp/bamstats_report.zip` but it could copy the result to a destination in S3 for example.
 
 **Tip:** you can use `--debug` to get much more information during this run, including the actual call to cwltool (which can be super helpful in debugging):
 
@@ -283,24 +272,18 @@ case it's just a file copy to `/tmp/bamstats_report.zip` but it could copy the r
 cwltool --non-strict --enable-net --outdir /home/ubuntu/gitroot/dockstore-tool-bamstats/./datastore/launcher-08852137-71c1-4b75-b2fc-16ab7ca3243b/outputs/ /home/ubuntu/gitroot/dockstore-tool-bamstats/Dockstore.cwl /home/ubuntu/gitroot/dockstore-tool-bamstats/./datastore/launcher-08852137-71c1-4b75-b2fc-16ab7ca3243b/workflow_params.json
 ```
 
-**Tip:** the `dockstore` CLI automatically create a `datastore` directory in the current working directory where you execute the command
-and uses it for inputs/outputs.  It can get quite large depending on the tool/inputs/outputs being used.  Plan accordingly e.g. execute
-the dockstore CLI in a directory located on a partition with sufficient storage.
+**Tip:** the `dockstore` CLI automatically create a `datastore` directory in the current working directory where you execute the command and uses it for inputs/outputs.  It can get quite large depending on the tool/inputs/outputs being used.  Plan accordingly e.g. execute the dockstore CLI in a directory located on a partition with sufficient storage.
 
 ## Adding a Test Parameter File
-We are able register the above input parameterization of the tool into Dockstore so that users can see and test an example with our tool. By default we look for the files `/test.cwl.json` and/or `/test.wdl.json`, depending on which descriptor language you end up using for a given Tool. 
+We are able register the above input parameterization of the tool into Dockstore so that users can see and test an example with our tool. Users can manually add test parameter files for a given tool tag or workflow version through both the command line and the versions tab in the UI. 
 
 **Tip:** Make sure that any required input files are given as URLs so that a user can run the example successfully.
 
 ## Releasing on GitHub
 
-At this point we've successfully created our tool in Docker, tested it, written a CWL that describes how to run it, and tested
-running this via the Dockstore command line.  All of this work has been done locally, so if we encounter problems
-along the way its fast to perform debug cycles, fixing problems as we go.  At this point we're confident that the tool is ready to share with others and bug free.  It's time to release `1.25-3`
+At this point we've successfully created our tool in Docker, tested it, written a CWL that describes how to run it, and tested running this via the Dockstore command line.  All of this work has been done locally, so if we encounter problems along the way its fast to perform debug cycles, fixing problems as we go.  At this point we're confident that the tool is ready to share with others and bug free.  It's time to release `1.25-3`
 
-Releasing will tag your GitHub repository with a version tag so you always can get back to
-this particular release.  I'm going to use the tag `1.25-3` which you can see referenced in my Docker image
-tag and also my CWL file.  GitHub makes it very easy to release:
+Releasing will tag your GitHub repository with a version tag so you always can get back to this particular release.  I'm going to use the tag `1.25-3` which you can see referenced in my Docker image tag and also my CWL file.  GitHub makes it very easy to release:
 
 ![Release](docs/release.png)
 
@@ -310,28 +293,17 @@ I click on "releases" in my GitHub project [page](https://github.com/CancerColla
 
 # Building on Quay.io
 
-Now that you've perfected the `Dockerfile`, have built the image on your local host,
-and have tested running the Docker container and tool packaged inside and have
-released this version on GitHub, it's time to
-push the image to a place where others can use it.  For this you can use DockerHub but
-we prefer [Quay.io](http://quay.io) since it integrates really nicely with Dockstore.
+Now that you've perfected the `Dockerfile`, have built the image on your local host, and have tested running the Docker container and tool packaged inside and have released this version on GitHub, it's time to push the image to a place where others can use it.  For this you can use DockerHub but we prefer [Quay.io](http://quay.io) since it integrates really nicely with Dockstore.
 
-You can manually `docker push` the image you have already built but the most reliable
-and transparent thing you can do is link your GitHub repository (and the Dockerfile contained
-within) to Quay.  This will cause Quay to automatically build the Docker image every
-time there is a change.
+You can manually `docker push` the image you have already built but the most reliable and transparent thing you can do is link your GitHub repository (and the Dockerfile contained within) to Quay.  This will cause Quay to automatically build the Docker image every time there is a change.
 
 Log onto Quay now and setup a new repository (click the "+" icon).
 
 ![New Quay Repo](docs/quay_new_repo.png)
 
-You must match the name to what I was using previously, so in this case it's `CancerCollaboratory/dockstore-tool-bamstats`.  Also, Dockstore will
-only work with `Public` repositories currently.
-Notice I'm selecting "Link to a GitHub Repository Push", this is because we want Quay to automatically build our Docker image
-every time we update the repository on GitHub.  Very slick!
+You must match the name to what I was using previously, so in this case it's `CancerCollaboratory/dockstore-tool-bamstats`.  Also, Dockstore will only work with `Public` repositories currently. Notice I'm selecting "Link to a GitHub Repository Push", this is because we want Quay to automatically build our Docker image every time we update the repository on GitHub.  Very slick!
 
-It will automatically prompt you to setup a "build trigger" after GitHub authenticates you.  Here I select the GitHub repo
-for `CancerCollaboratory/dockstore-tool-bamstats`.
+It will automatically prompt you to setup a "build trigger" after GitHub authenticates you.  Here I select the GitHub repo for `CancerCollaboratory/dockstore-tool-bamstats`.
 
 ![Build Trigger](docs/build_trigger.png)
 
@@ -339,11 +311,9 @@ It will then ask if there are particular branches you want to build, I typically
 
 ![Build Trigger](docs/build_all.png)
 
-So every time you do a commit to your GitHub repo Quay automatially builds and tags a Docker image.  If this is overkill for you, consider
-setting up particular build trigger regular expressions at this step.
+So every time you do a commit to your GitHub repo Quay automatially builds and tags a Docker image.  If this is overkill for you, consider setting up particular build trigger regular expressions at this step.
 
-It will then ask you where your Dockerfile is located.  Since the Dockerfile is in the root directory of this GitHub repo
-you can just click next:
+It will then ask you where your Dockerfile is located.  Since the Dockerfile is in the root directory of this GitHub repo you can just click next:
 
 ![Build Trigger](docs/dockerfile.png)
 

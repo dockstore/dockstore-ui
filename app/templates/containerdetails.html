@@ -68,7 +68,7 @@
       </span>
       {{
         (containerObj.tool_path)
-      }} <button class="btn" ngclipboard data-clipboard-target="#tool-path" ngclipboard-success="onSuccess(e);"><span class="glyphicon glyphicon-copy"></span></button>
+      }} <button class="btn btn-default" ngclipboard data-clipboard-target="#tool-path" ngclipboard-success="onSuccess(e);" ngclipboard-error="onError(e);"><span class="glyphicon glyphicon-copy"></span></button>
     </h3>
     <div ng-if="containerObj" id="label-holder">
       <div id="label-values">
@@ -88,7 +88,7 @@
         </div>
     </div>
 
-    <p class="update" title="{{ containerObj.lastUpdated ? getDateTimeString(containerObj.lastUpdated) : 'n/a' }}" uib-tooltip>
+    <p class="update" title="{{ containerObj.lastUpdated ? getDateTimeString(containerObj.lastUpdated) : 'n/a' }}" uib-tooltip tooltip-append-to-body="true">
       Last build:
       {{ containerObj.lastBuild ? getTimeAgoString(containerObj.lastBuild) : 'n/a' }}
     </p>
@@ -403,6 +403,12 @@
                 <pre>{{launchWithCWLTool}}</pre>
               </div>
             </div>
+          </li>
+          <li ng-if="validTags.length > 0">
+            <strong uib-tooltip="Pull the Docker image directly">Docker Pull:</strong>
+              <div ng-repeat="tag in validTags">
+                <div copy-text ng-show="tag.name === toolTagName">{{dockerPullTag}}:{{tag.name}}</div>
+              </div>
           </li>
         </ul>
         <div ng-if="!editMode">
