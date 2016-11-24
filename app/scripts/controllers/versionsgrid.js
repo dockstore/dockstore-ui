@@ -37,6 +37,7 @@ angular.module('dockstore.ui')
       $scope.containers = [];
       $scope.sortColumn = 'name';
       $scope.sortReverse = false;
+      $scope.editTagObj = {};
 
       $scope.getHRSize = FrmttSrvc.getHRSize;
       $scope.getDateModified = FrmttSrvc.getDateModified;
@@ -93,7 +94,7 @@ angular.module('dockstore.ui')
       };
 
       $scope.getCreateTagObj = function() {
-        return {
+        $scope.editTagObj = {
           create: true,
           name: '',
           reference: '',
@@ -102,7 +103,11 @@ angular.module('dockstore.ui')
           cwl_path: $scope.containerObj.default_cwl_path,
           wdl_path: $scope.containerObj.default_wdl_path,
           hidden: true,
-          automated: false
+          automated: false,
+          dirtyBit: false,
+          verified: false,
+          verifiedSource: null,
+          size: 0,
         };
       };
 
@@ -112,5 +117,9 @@ angular.module('dockstore.ui')
         .then(function(){
           $scope.$parent.refreshContainer($scope.containerObj.id,0);
          });
+      };
+
+      $scope.setEditTagObj = function(versionTag) {
+        $scope.editTagObj = versionTag;
       };
   }]);

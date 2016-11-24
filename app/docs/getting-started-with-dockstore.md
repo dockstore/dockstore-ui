@@ -44,7 +44,7 @@ Now select the `collaboratory/dockstore-tool-bamstats` repository and click "Pub
                   
 ![Publish](docs/publish.png)
                   
-You can also click on the "Versions" tab and should notice `1.25-3` is present and Valid=Yes.  If any versions are invalid it is likely due to a path issue to the `Dockstore.cwl`, `Dockerfile`, or `Dockstore.wdl` (if used) files.  In BAMStats I used the default value of `Dockstore.cwl` and `Dockerfile` in the root repo directory so this was not an issue.
+You can also click on the "Versions" tab and should notice `1.25-6` is present and valid.  If any versions are invalid it is likely due to a path issue to the `Dockstore.cwl`, `Dockerfile`, or `Dockstore.wdl` (if used) files.  In BAMStats I used the default value of `Dockstore.cwl` and `Dockerfile` in the root repo directory so this was not an issue.
 
 ![Publish](docs/versions_toggle.png)
 
@@ -111,7 +111,7 @@ The `dockstore` command line can be used as an alternative to the GUI and has a 
  
 First, we will work in tool mode (`dockstore tool`). We recommend you first `dockstore tool refresh` to ensure the latest GitHub, Bitbucket, GitLab and Quay.io information is indexed properly.
  
-    $ dockstore
+    $ dockstore tool
     
     HELP FOR DOCKSTORE
     ------------------
@@ -137,6 +137,8 @@ First, we will work in tool mode (`dockstore tool`). We recommend you first `doc
       refresh          :  updates your list of Tools stored on Dockstore or an individual Tool
     
       label            :  updates labels for an individual Tool
+      
+      test_parameter   :  updates test parameter files for a version of a Tool
     
       convert          :  utilities that allow you to convert file types
     

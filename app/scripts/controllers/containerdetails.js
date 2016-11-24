@@ -108,6 +108,9 @@ angular.module('dockstore.ui')
 
       $scope.refreshDescLaunchWith = function(tagIndex) {
         //get the descriptor type that is available for tool version
+        if ($scope.validTags.length === 0) {
+          return;
+        }
         $scope.descAvailable = [];
         for(var j=0;j<$scope.validTags[tagIndex].sourceFiles.length;j++){
           var fileType = $scope.validTags[tagIndex].sourceFiles[j].type;
