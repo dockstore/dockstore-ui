@@ -1,5 +1,24 @@
 # News and Events
 
+## November 25, 2016 - Dockstore 1.1 Release
+
+### Highlighted New Features and Fixes
+
+* Greatly upgraded workflow views for CWL and WDL
+* Support for GitLab as a source code repository
+* Updating naive launch of WDL workflows to Cromwell 0.21 and WDL parsing code to WDL4S 0.6
+* Support for multiple test json/yaml files for a tool or workflow
+* Updates to common-vfs to support file provisioning from ICGC portal
+* Support for administrators to verify versions of tools and workflows
+* CWL generation of parameter files now supports YAML as well as JSON
+* Documentation updates and tooltips!
+
+
+## November 24, 2016 - Updated Tutorial Video
+
+A new tutorial video has been published which walks through our getting started tutorial and answers some common questions.
+See it [here](https://youtu.be/sInP-ByF9xU)!
+
 ## September 14, 2016 - Dockstore 1.0 Release
 
 This date marks the launch of [Dockstore 1.0](https://github.com/ga4gh/dockstore/releases/tag/1.0). This release combines the release of several Pan-cancer workflows, tested as standardized [CWL 1.0](http://www.commonwl.org/) CommandLineTools along with several new features including support for CWL 1.0 in Dockstore itself and preliminary support for the GA4GH [tool-registry-schema](https://github.com/ga4gh/tool-registry-schemas).
