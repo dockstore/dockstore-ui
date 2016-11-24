@@ -40,7 +40,7 @@ angular.module('dockstore.ui')
             if (document.execCommand('copy')) {
               scope.ntfyCopySuccess();
             } else {
-              scope.ntfyCopyFailure('Clipboard copy was unsuccessul, please ' +
+              scope.ntfyCopyFailure('Clipboard copy was unsuccessful, please ' +
                 'retry using the OS copy command.');
             }
           } catch (error) {

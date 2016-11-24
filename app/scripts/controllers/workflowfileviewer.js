@@ -327,6 +327,11 @@ angular.module('dockstore.ui')
 
       $scope.onSuccess = function(e) {
         e.clearSelection();
+        NtfnService.popSuccess('Copy Success');
+      };
+
+      $scope.onError = function(e) {
+        NtfnService.popFailure('Copy Failure');
       };
 
       $scope.setDocument();

@@ -60,9 +60,6 @@
           <th uib-tooltip="View more information about the given version" tooltip-append-to-body="true">
             <span>Actions</span>
           </th>
-          <th uib-tooltip="Docker pull command" tooltip-append-to-body="true">
-            <span>Docker Pull</span>
-          </th>
         </tr>
       </thead>
       <tbody>
@@ -98,10 +95,12 @@
             {{getDateModified(versionTag.last_modified)}}
           </td>
           <td>
-            {{versionTag.valid ? 'Yes' : 'No'}}
+            <span class="glyphicon glyphicon-ok" ng-if="versionTag.valid"></span>
+            <span class="glyphicon glyphicon-remove" ng-if="!versionTag.valid"></span>
           </td>
           <td uib-tooltip="{{versionTag.verifiedSource}}" tooltip-append-to-body="true">
-            {{versionTag.verified ? 'Yes' : 'No'}}
+            <span class="glyphicon glyphicon-ok" ng-if="versionTag.verified"></span>
+            <span class="glyphicon glyphicon-remove" ng-if="!versionTag.verified"></span>
           </td>
           <td class="tag-actions">
             <a href
@@ -123,9 +122,6 @@
                 ng-if="editMode && containerObj.mode === 'MANUAL_IMAGE_PATH'">
               Delete
             </a>
-          </td>
-          <td ng-init="dockerPullCmd = getDockerPullCmd(containerObj.path, versionTag.name)">
-            <div copy-text>{{dockerPullCmd}}</div>
           </td>
         </tr>
       </tbody>
