@@ -27,7 +27,7 @@ When going through the onboarding wizard, our various dependencies were introduc
     Docker version 1.12.0, build 8eab29e
 
     $> cwltool --version
-    /usr/local/bin/cwltool 1.0.20160712154127
+    /usr/local/bin/cwltool 1.0.20161114152756
 
 You can also call `dockstore --version` which should report the same version as the DockstoreApi shown below in the footer.
     
