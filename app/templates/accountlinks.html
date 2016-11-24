@@ -1,0 +1,69 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">GitHub Account
+        <span ng-show="tokenStatusSet.github" class="label label-success">
+          <span class="glyphicon glyphicon-link"></span> Linked
+        </span>
+      <button class="btn btn-primary btn-xs" ng-click="linkGitHubAccount()" ng-show="!tokenStatusSet.github">
+        <span class="glyphicon glyphicon-link"></span> Link Account
+      </button>
+    </h3>
+  </div>
+  <div class="panel-body">
+    <p><strong>Required:</strong> GitHub credentials are used for login purposes as well as for pulling source
+      code from GitHub.</p>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Bitbucket Account
+        <span ng-show="tokenStatusSet.bitbucket" class="label label-success">
+          <span class="glyphicon glyphicon-link"></span> Linked
+        </span>
+      <button class="btn btn-primary btn-xs" ng-click="linkBitbucketAccount()"
+              ng-show="!tokenStatusSet.bitbucket">
+        <span class="glyphicon glyphicon-link"></span> Link Account
+      </button>
+    </h3>
+  </div>
+  <div class="panel-body">
+    <p><strong>Optional:</strong> Bitbucket credentials are used for pulling source code from Bitbucket.</p>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">GitLab Account
+        <span ng-show="tokenStatusSet.gitlab" class="label label-success">
+          <span class="glyphicon glyphicon-link"></span> Linked
+        </span>
+      <button class="btn btn-primary btn-xs" ng-click="linkGitlabAccount()" ng-show="!tokenStatusSet.gitlab">
+        <span class="glyphicon glyphicon-link"></span> Link Account
+      </button>
+    </h3>
+  </div>
+  <div class="panel-body">
+    <p><strong>Optional:</strong> GitLab credentials are used for pulling source code from GitLab.</p>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Quay.io Account
+        <span class="label label-success" ng-show="tokenStatusSet.quayio">
+          <span class="glyphicon glyphicon-link"></span> Linked
+        </span>
+      <button ng-show="!tokenStatusSet.quayio"
+              class="btn btn-primary btn-xs"
+              ng-click="linkQuayIOAccount()"
+              ng-disabled="quayIOHold">
+        <span class="glyphicon glyphicon-link"></span> Link Account
+      </button>
+    </h3>
+  </div>
+  <div class="panel-body">
+    <p><strong>Optional:</strong> Quay.io credentials are used for pulling information about Docker images and
+      automated builds.</p>
+  </div>
+</div>
