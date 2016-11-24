@@ -76,7 +76,7 @@
 
       <span class="label label-default container-label"
             ng-repeat="label in getContainerLabelStrings(containerObj.labels)" id="{{label}}">
-        <a ng-href="/search-containers/{{label}}">
+        <a ng-href="/search-containers?query={{label}}">
           {{label}}
         </a>
         <span ng-if="$first">
@@ -100,11 +100,10 @@
         <div class="btn-group" role="group">
           <button uib-btn-checkbox
               type="button"
-              class="btn btn-primary"
+              class="btn btn-warning"
               ng-class="!refreshingContainer && isContainerValid()? '' : 'disabled'"
               ng-click="setContainerRegistration(containerObj.id, containerObj.is_published); checkContentValid()"
               ng-model="containerObj.is_published"
-              ng-class="containerObj.is_published ? 'btn-primary' : 'btn-warning'"
               ng-disabled="refreshingContainer || !isContainerValid() || !validContent">
             {{ containerObj.is_published ? 'Unpublish' : 'Publish' }}
           </button>
@@ -164,7 +163,7 @@
 </div>
 <div class="row" ng-show="containerObj">
   <div class="ds-tabs" ng-class="editMode ? 'col-md-12' : 'col-md-9'">
-    <uib-tabset >
+    <uib-tabset justified="true">
       <uib-tab active="activeTabs[0]">
         <uib-tab-heading>Info</uib-tab-heading>
         <ul class="list-unstyled container-info">
@@ -430,7 +429,7 @@
             <span ng-show="containerObj.labels.length === 0">n/a</span>
             <span class="label label-default container-label"
                   ng-repeat="label in getContainerLabelStrings(containerObj.labels)">
-              <a ng-href="/search-containers/{{label}}">
+              <a ng-href="/search-containers?query={{label}}">
                 {{label}}
               </a>
             </span>
@@ -481,7 +480,6 @@
         <div container-file-viewer
             type="dockerfile"
             container-obj="containerObj"
-             tabindex="activeTabs[4]"
             ng-if="containerObj">
         </div>
       </uib-tab>

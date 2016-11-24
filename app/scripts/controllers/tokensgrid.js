@@ -27,8 +27,6 @@ angular.module('dockstore.ui')
   .controller('TokensGridCtrl', [
     '$scope',
     function ($scope) {
-
-      $scope.tokens;
       $scope.sortColumn = 'tokenId';
       $scope.sortReverse = false;
       $scope.numTknsPage = 10;

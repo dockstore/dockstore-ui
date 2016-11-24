@@ -30,44 +30,68 @@ angular.module('dockstore.ui')
       scope: {
         type: '=',
         containerObj: '=',
-        isEnabled: '=',
-        tabindex: '='
+        isEnabled: '='
       },
       templateUrl: 'templates/containerfileviewer.html',
       link: function postLink(scope) {
-        scope.$watchGroup(['containerObj.path', 'tabindex'], function(newValue) {
-          if (newValue) {
-            scope.setDocument();
-            scope.checkDescriptor();
-            scope.checkDockerfile();
-          }
-        });
+        // call on refresh
         scope.$on('refreshFiles', function() {
           scope.setDocument();
-          scope.refreshDocument(false);
+          scope.refreshDocument(false, false, false);
           scope.checkDescriptor();
         });
+
+        // Call on refresh to check if tool is valid
         scope.$on('checkDescPageType', function() {
-          scope.setType('dockerfile');
-          scope.refreshDocument(false);
+          scope.refreshDocument(false, false, false);
           scope.checkDescriptor();
           scope.checkDockerfile();
         });
+
+        // Call when the selected descriptor type changes to pull the correct file
         scope.$watchGroup(
-          ['selTagName', 'selDescriptorName', 'type'],
-          function() {
-            scope.refreshDocument(true);
+          ['selDescriptorName'],
+          function(newValue, oldValue) {
+            if ( newValue !== oldValue ) {
+              scope.refreshDocument(false, false, true);
+            }
           });
+
+        // Call when the selected tag name changes to pull the correct file
         scope.$watchGroup(
-          ['selSecondaryDescriptorName'],
-          function() {
-            scope.refreshDocument(false);
+          ['selTagName'],
+          function(newValue, oldValue) {
+            if ( newValue !== oldValue ) {
+              scope.refreshDocument(false, true, true);
+            }
           });
+        // Call when the selected file changes to pull the correct file
         scope.$watchGroup(
-          ['containerObj.id'],
+          ['selFileName'],
+          function(newValue, oldValue) {
+            if ( newValue !== oldValue ) {
+              scope.refreshDocument(false, false, false);
+            }
+          });
+
+        // Call when the type of tab changes (dockerfile, descriptor files, and test parameter files)
+        scope.$watchGroup(
+          ['type'],
+          function(newValue, oldValue) {
+            if ( newValue !== oldValue ) {
+              scope.refreshDocument(true, true, true);
+            }
+          });
+
+        // Call when the selected tool changes to reinitialize the tab
+        scope.$watchGroup(
+          ['containerObj'],
           function() {
             scope.setType('dockerfile');
-            scope.refreshDocument(false);
+            scope.setDocument();
+            scope.checkDescriptor();
+            scope.checkDockerfile();
+            scope.refreshDocument(false, false, false);
           });
       }
     };

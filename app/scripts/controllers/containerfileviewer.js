@@ -43,6 +43,7 @@ angular.module('dockstore.ui')
         var dockerfile = $scope.getDockerFile($scope.containerObj.id, $scope.selTagName);
       };
 
+      // Check that the descriptor is valid
       $scope.checkDescriptor = function() {
         $scope.containerTags = $scope.getContainerTags();
         if ($scope.containerTags.length === 0) {
@@ -184,9 +185,11 @@ angular.module('dockstore.ui')
           });
       };
 
+      // Filter descriptor select element  (CWL/WDL)
       $scope.filterDescriptor = function(element) {
+      if ($scope.isDescriptor()){
         for(var i=0;i<$scope.successContent.length;i++){
-          if($scope.successContent[i].descriptor === element){
+          if($scope.successContent[i].descriptor === element && $scope.successContent[i].tag === $scope.selTagName){
             return true;
           } else{
             if(i===$scope.successContent.length -1){
@@ -194,33 +197,79 @@ angular.module('dockstore.ui')
             }
           }
         }
+      } else if ($scope.isTestJson()) {
+           for(var j=0;j<$scope.containerObj.tags.length;j++){
+             if($scope.containerObj.tags[j].name === $scope.selTagName){
+               for(var k=0; k < $scope.containerObj.tags[j].sourceFiles.length; k++) {
+                 if (($scope.containerObj.tags[j].sourceFiles[k].type === 'CWL_TEST_JSON' && element === 'cwl') || ($scope.containerObj.tags[j].sourceFiles[k].type === 'WDL_TEST_JSON' && element === 'wdl')) {
+                   return true;
+                 }
+               }
+               return false;
+             } else{
+               return false;
+             }
+           }
+         } else {
+           return true;
+         }
       };
 
-      $scope.filterVersion = function(element) {
-        for(var i=0;i<$scope.successContent.length;i++){
-          if($scope.successContent[i].tag === element){
-            return true;
-          } else{
-            if(i===$scope.successContent.length -1){
+      // Filter version select element (Tags)
+      $scope.filterVersion = function (element) {
+        if ($scope.isDockerfile() || $scope.isDescriptor()) {
+          for (var i = 0; i < $scope.successContent.length; i++) {
+            if ($scope.successContent[i].tag === element) {
+              return true;
+            } else {
+              if (i === $scope.successContent.length - 1) {
+                return false;
+              }
+            }
+          }
+        } else if ($scope.isTestJson()) {
+          for (var j = 0; j < $scope.containerObj.tags.length; j++) {
+            var tag = $scope.containerObj.tags[j];
+            if (tag.name === element) {
+              for (var k = 0; k < tag.sourceFiles.length; k++) {
+                var sourceFile = tag.sourceFiles[k];
+                if (sourceFile.type === 'CWL_TEST_JSON' || sourceFile.type === 'WDL_TEST_JSON') {
+                  // show if any source file is a test json
+                  return true;
+                }
+              }
+              // if no source files are test json
               return false;
             }
           }
         }
+        else {
+          // this should not occur, this is a different kind of scope
+          return false;
+        }
       };
 
+      // Check if in the dockerfile tab
       $scope.isDockerfile = function() {
         return $scope.type === 'dockerfile';
       };
 
+      // Check if in the test parameter tab
       $scope.isTestJson = function() {
         return $scope.type === 'testparameter';
       };
 
-      $scope.setType = function(type) {
-        $scope.type = type;
-        $scope.refreshDocument(false);
+      // Check if in the descriptor tab
+      $scope.isDescriptor = function() {
+        return $scope.type === 'descriptor';
       };
 
+      // Update the type
+      $scope.setType = function(type) {
+        $scope.type = type;
+      };
+
+      // Get a list of tags for the current container (names only)
       $scope.getContainerTags = function() {
         var sortedTagObjs = $scope.containerObj.tags;
         sortedTagObjs.sort(function(a, b) {
@@ -241,6 +290,7 @@ angular.module('dockstore.ui')
         return tags;
       };
 
+      // Grab the dockerfile for the given tag and update the file contents
       $scope.getDockerFile = function(containerId, tagName) {
         return ContainerService.getDockerFile(containerId, tagName)
           .then(
@@ -257,6 +307,7 @@ angular.module('dockstore.ui')
           );
       };
 
+      // Grab the test parameter file for the given tag and descriptor type and update the file contents
       $scope.getTestJson = function(containerId, tagName, descType, filePath, fileType) {
         return ContainerService.getTestJson(containerId, tagName, descType)
           .then(
@@ -278,6 +329,7 @@ angular.module('dockstore.ui')
           );
       };
 
+      // Grab the descriptor file for the given tag and descriptor type and update the file contents
       $scope.getDescriptorFile = function(containerId, tagName, type) {
         return ContainerService.getDescriptorFile(containerId, tagName, type)
           .then(
@@ -294,6 +346,7 @@ angular.module('dockstore.ui')
           );
       };
 
+      // Grab a secondary descriptor file for the given tag, descriptor type, and path and update the file contents
       $scope.getSecondaryDescriptorFile = function(containerId, tagName, type, secondaryDescriptorPath) {
         if(typeof tagName === 'undefined' || typeof secondaryDescriptorPath === 'undefined'){
           return;
@@ -332,6 +385,7 @@ angular.module('dockstore.ui')
 
       }
 
+      // Initialize the select/dropdown elements
       $scope.setDocument = function() {
         // prepare Container Version drop-down
         $scope.containerTags = $scope.getContainerTags();
@@ -342,13 +396,15 @@ angular.module('dockstore.ui')
         // prepare Descriptor Imports drop-down
         var fileType = $scope.selDescriptorName === 'cwl' ? 'DOCKSTORE_CWL' : 'DOCKSTORE_WDL';
 
-        $scope.secondaryDescriptors = extracted(fileType);
-        $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
+        $scope.fileList = extracted(fileType);
+        $scope.selFileName = $scope.fileList[0];
       };
 
-      $scope.refreshDocument = function(versionChange) {
+      // Update the file contents based on the type and selected values of the dropdowns
+      $scope.refreshDocument = function(versionChange, descriptorTypeChange, fileNameChange) {
         $scope.fileLoaded = false;
         $scope.fileContents = null;
+
         var testFileType = $scope.selDescriptorName === 'cwl' ? 'CWL_TEST_JSON' : 'WDL_TEST_JSON';
         var fileType = $scope.selDescriptorName === 'cwl' ? 'DOCKSTORE_CWL' : 'DOCKSTORE_WDL';
 
@@ -360,19 +416,19 @@ angular.module('dockstore.ui')
           case 'descriptor':
             $scope.expectedFilename = 'Descriptor';
             // prepare Descriptor Imports drop-down
-            $scope.secondaryDescriptors = extracted(fileType);
-            if (versionChange === true) {
-              $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
-            }
-            var file = $scope.getSecondaryDescriptorFile($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName, $scope.selSecondaryDescriptorName);
+            $scope.fileList = extracted(fileType);
+
+            $scope.selectDropdownOptions(versionChange, descriptorTypeChange, fileNameChange);
+
+            var file = $scope.getSecondaryDescriptorFile($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName, $scope.selFileName);
             break;
           case 'testparameter':
             $scope.expectedFilename = 'Test Parameter File';
-            $scope.secondaryDescriptors = extracted(testFileType);
-            if (versionChange === true) {
-              $scope.selSecondaryDescriptorName = $scope.secondaryDescriptors[0];
-            }
-            var testjson = $scope.getTestJson($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName,$scope.selSecondaryDescriptorName, testFileType);
+            $scope.fileList = extracted(testFileType);
+
+            $scope.selectDropdownOptions(versionChange, descriptorTypeChange, fileNameChange);
+
+            var testjson = $scope.getTestJson($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName,$scope.selFileName, testFileType);
             break;
           default:
           // ...
@@ -386,6 +442,18 @@ angular.module('dockstore.ui')
 
       $scope.onError = function(e) {
         NtfnService.popFailure('Copy Failure');
+      };
+
+      $scope.selectDropdownOptions = function(versionChange, descriptorTypeChange, fileNameChange) {
+        if (versionChange && $scope.filteredVersions.length > 0) {
+          $scope.selTagName = $scope.filteredVersions[0];
+        }
+        if (descriptorTypeChange && $scope.filteredDescriptorType.length > 0) {
+          $scope.selDescriptorName = $scope.filteredDescriptorType[0];
+        }
+        if (fileNameChange && $scope.fileList.length > 0) {
+          $scope.selFileName = $scope.fileList[0];
+        }
       };
 
       $scope.setDocument();

@@ -35,13 +35,6 @@ angular.module('dockstore.ui')
       },
       templateUrl: 'templates/workflowfileviewer.html',
       link: function postLink(scope, element, attrs) {
-        scope.$watchGroup(['workflowObj.path', 'tabindex'], function(newValue, oldValue) {
-          if (newValue) {
-            scope.setDocument();
-            scope.checkDescriptor();
-            scope.setType('descriptor');
-          }
-        });
         scope.$on('refreshFiles', function(event) {
           scope.setDocument();
           scope.refreshDocument(false);
@@ -51,17 +44,31 @@ angular.module('dockstore.ui')
           scope.refreshDocument(false);
           scope.checkDescriptor();
         });
+        // If the workflowObj changes, reset to selecting the descriptor tab
         scope.$watchGroup(
-          ['selVersionName','descriptor', 'type'],
+          ['workflowObj'],
+          function() {
+              scope.setType('descriptor');
+              scope.setDocument();
+              scope.checkDescriptor();
+              scope.refreshDocument(false);
+          });
+        // If the selected version or descriptor type changes, reload the file list and select the first file
+        scope.$watchGroup(
+          ['selVersionName','descriptor'],
           function(newValues, oldValues) {
             scope.refreshDocument(true);
           });
+        // If the selected file tab changes, select the first version, reload file list and select first
         scope.$watchGroup(
-          ['workflowObj.id'],
-          function(newValues, oldValues) {
-            scope.setType('descriptor');
-            scope.refreshDocument(false);
+          ['type'],
+          function(newValue, oldValue) {
+            if ( newValue !== oldValue ) {
+              scope.selVersionName = scope.filteredVersions[0];
+              scope.refreshDocument(true);
+            }
           });
+        // If a new file name is selected, load it
         scope.$watchGroup(
           ['selFileName'],
           function(newValues, oldValues) {

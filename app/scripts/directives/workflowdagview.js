@@ -32,7 +32,7 @@ angular.module('dockstore.ui')
       },
       templateUrl: 'templates/workflowdagview.html',
       link: function postLink(scope, element, attrs) {
-        scope.$watch('workflowObj.path', function(newValue, oldValue) {
+        scope.$watch('workflowObj', function(newValue, oldValue) {
           if (newValue) {
             scope.checkVersion();
             scope.setDocument();

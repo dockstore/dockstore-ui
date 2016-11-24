@@ -30,7 +30,7 @@
     <strong>Container Version</strong>:
     <select class="ds-version" ng-model="selTagName">
       <option
-        ng-repeat="tag in containerTags | filter: filterVersion"
+        ng-repeat="tag in (filteredVersions = (containerTags | filter: filterVersion))"
         value="{{tag}}">
         {{tag}}
       </option>
@@ -41,7 +41,7 @@
     <strong>Descriptor Type</strong>:
     <select class="ds-descriptor" ng-model="selDescriptorName">
       <option
-        ng-repeat="descriptor in descriptors | filter: filterDescriptor"
+        ng-repeat="descriptor in (filteredDescriptorType = (descriptors | filter: filterDescriptor))"
         value="{{descriptor}}">
         {{descriptor}}
       </option>
@@ -50,16 +50,15 @@
 
   <div class="ds-descriptor-selector float-left" ng-hide="isDockerfile()">
     <strong>File</strong>:
-    <select class="ds-wide-descriptor" ng-model="selSecondaryDescriptorName">
+    <select class="ds-wide-descriptor" ng-model="selFileName">
       <option
-        ng-repeat="secondaryDescriptorPath in secondaryDescriptors"
+        ng-repeat="secondaryDescriptorPath in fileList"
         value="{{secondaryDescriptorPath}}">
         {{secondaryDescriptorPath}}
       </option>
     </select>
   </div>
 </div>
-
 <div class="alert alert-warning" role="alert"
     ng-show="fileLoaded && !fileContents">
   <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
