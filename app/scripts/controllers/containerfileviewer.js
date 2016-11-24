@@ -185,8 +185,9 @@ angular.module('dockstore.ui')
       };
 
       $scope.filterDescriptor = function(element) {
+      if ($scope.isDescriptor()){
         for(var i=0;i<$scope.successContent.length;i++){
-          if($scope.successContent[i].descriptor === element){
+          if($scope.successContent[i].descriptor === element && $scope.successContent[i].tag === $scope.selTagName){
             return true;
           } else{
             if(i===$scope.successContent.length -1){
@@ -194,9 +195,26 @@ angular.module('dockstore.ui')
             }
           }
         }
+      } else if ($scope.isTestJson()) {
+           for(var j=0;j<$scope.containerObj.tags.length;j++){
+             if($scope.containerObj.tags[j].name === $scope.selTagName){
+               for(var k=0; k < $scope.containerObj.tags[j].sourceFiles.length; k++) {
+                 if (($scope.containerObj.tags[j].sourceFiles[k].type === 'CWL_TEST_JSON' && element === 'cwl') || ($scope.containerObj.tags[j].sourceFiles[k].type === 'WDL_TEST_JSON' && element === 'wdl')) {
+                   return true;
+                 }
+               }
+               return false;
+             } else{
+               return false;
+             }
+           }
+         } else {
+           return true;
+         }
       };
 
       $scope.filterVersion = function(element) {
+      if ($scope.isDockerfile() || $scope.isDescriptor()){
         for(var i=0;i<$scope.successContent.length;i++){
           if($scope.successContent[i].tag === element){
             return true;
@@ -206,6 +224,22 @@ angular.module('dockstore.ui')
             }
           }
         }
+      } else if ($scope.isTestJson()) {
+           for(var j=0;j<$scope.containerObj.tags.length;j++){
+             if($scope.containerObj.tags[j].name === element){
+               for(var k=0; k < $scope.containerObj.tags[j].sourceFiles.length; k++) {
+                 if ($scope.containerObj.tags[j].sourceFiles[k].type === 'CWL_TEST_JSON' || $scope.containerObj.tags[j].sourceFiles[k].type === 'WDL_TEST_JSON') {
+                   return true;
+                 }
+               }
+               return false;
+             } else{
+               return false;
+             }
+           }
+         } else {
+           return true;
+         }
       };
 
       $scope.isDockerfile = function() {
@@ -214,6 +248,10 @@ angular.module('dockstore.ui')
 
       $scope.isTestJson = function() {
         return $scope.type === 'testparameter';
+      };
+
+      $scope.isDescriptor = function() {
+        return $scope.type === 'descriptor';
       };
 
       $scope.setType = function(type) {

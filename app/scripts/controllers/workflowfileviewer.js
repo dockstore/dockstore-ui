@@ -178,19 +178,40 @@ angular.module('dockstore.ui')
       };
 
       $scope.filterVersion = function(element) {
-        for(var i=0;i<$scope.successContent.length;i++){
-          if($scope.successContent[i].version === element){
-            return true;
-          } else{
-            if(i===$scope.successContent.length -1){
+        if($scope.isDescriptor()) {
+          for(var i=0;i<$scope.successContent.length;i++){
+            if($scope.successContent[i].version === element){
+              return true;
+            } else{
+              if(i===$scope.successContent.length -1){
+                return false;
+             }
+            }
+          }
+        } else if ($scope.isTestParameter()) {
+          for(var j=0;j<$scope.workflowObj.workflowVersions.length;j++){
+            if($scope.workflowObj.workflowVersions[j].name === element){
+              for(var k=0; k < $scope.workflowObj.workflowVersions[j].sourceFiles.length; k++) {
+                if ($scope.workflowObj.workflowVersions[j].sourceFiles[k].type === 'CWL_TEST_JSON' || $scope.workflowObj.workflowVersions[j].sourceFiles[k].type === 'WDL_TEST_JSON') {
+                  return true;
+                }
+              }
+              return false;
+            } else{
               return false;
             }
           }
+        } else {
+          return true;
         }
       };
 
       $scope.isTestParameter = function() {
         return $scope.type === 'testparameter';
+      };
+
+      $scope.isDescriptor = function() {
+        return $scope.type === 'descriptor';
       };
 
       $scope.getWorkflowVersions = function() {
