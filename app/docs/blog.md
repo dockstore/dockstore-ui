@@ -4,13 +4,14 @@
 
 ### Highlighted New Features and Fixes
 
-* Improved workflow views for CWL and WDL based on the actual order of execution
+* Greatly upgraded workflow views for CWL and WDL
 * Support for GitLab as a source code repository
 * Updating naive launch of WDL workflows to Cromwell 0.21 and WDL parsing code to WDL4S 0.6
 * Support for multiple test json/yaml files for a tool or workflow
 * Updates to common-vfs to support file provisioning from ICGC portal
 * Support for administrators to verify versions of tools and workflows
 * CWL generation of parameter files now supports YAML as well as JSON
+* Documentation updates and tooltips!
 
 
 ## November 24, 2016 - Updated Tutorial Video
