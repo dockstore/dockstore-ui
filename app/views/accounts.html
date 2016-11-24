@@ -50,6 +50,7 @@
       <h3>External Accounts</h3>
 
       <h4>GitHub Account</h4>
+      <p><strong>Required:</strong> GitHub credentials are used for login purposes as well as for pulling user and repository information from GitHub.</p>
       <div ng-show="tokenStatusSet.github">
         <span class="label label-success">
           <span class="glyphicon glyphicon-link"></span> Linked
@@ -62,6 +63,7 @@
       </div>
 
       <h4>Bitbucket Account</h4>
+      <p><strong>Optional:</strong> Bitbucket credentials are used for pulling user and repository information from Bitbucket.</p>
       <div ng-show="tokenStatusSet.bitbucket">
         <span class="label label-success">
           <span class="glyphicon glyphicon-link"></span> Linked
@@ -73,7 +75,8 @@
         </button>
       </div>
 
-      <h4>Gitlab Account</h4>
+      <h4>GitLab Account</h4>
+      <p><strong>Optional:</strong> GitLab credentials are used for pulling user and repository information from GitLab.</p>
       <div ng-show="tokenStatusSet.gitlab">
         <span class="label label-success">
           <span class="glyphicon glyphicon-link"></span> Linked
@@ -86,6 +89,7 @@
       </div>
 
       <h4>Quay.io Account</h4>
+      <p><strong>Optional:</strong> Quay.io credentials are used for pulling user and repository information from Quay.io.</p>
       <div ng-show="tokenStatusSet.quayio">
         <span class="label label-success">
           <span class="glyphicon glyphicon-link"></span> Linked

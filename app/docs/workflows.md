@@ -22,7 +22,7 @@ An extremely simple example is available [here](https://dockstore.org/workflows/
 
 The first step is to create a CWL or WDL workflow descriptor for your workflow and then check it into GitHub, Bitbucket or GitLab in a repo, we recommend the filename `Dockstore.cwl` at the root of your repository for simplicity but anything else with a consistent extension should work just as well. The details as to how to write a workflow are somewhat beyond the scope of this tutorial but we can recommend the [Introduction to the CWL](http://www.commonwl.org/v1.0/UserGuide.html) and [Getting Started with WDL](https://github.com/broadinstitute/wdl/tree/master#getting-started-with-wdl).
 
-You can also check in a test parameter file into the same Git repo, with the recommended filename `/test.json`, though again anything with a correct extension (json, yml, or yaml) should work. This file is an example input JSON (or YAML) for running the given workflow. It should be easy for a user to run your workflow with the test parameter file in order to see an example of your workflow, so try and store any required files in the same Git repository or somewhere else where the files are likely to be present.
+You can also check in test parameter files into the same Git repo. These files are example input JSON (or YAML) files for running the given workflow. It should be easy for a user to run your workflow with the test parameter files in order to see an example of your workflow, so try and store any required files in the same Git repository or somewhere else where the files are likely to be present.
 
 <!-- this following markdown link/anchor does not seem to work properly -->
 
