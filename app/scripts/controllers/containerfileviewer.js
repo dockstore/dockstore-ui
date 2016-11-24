@@ -213,33 +213,37 @@ angular.module('dockstore.ui')
          }
       };
 
-      $scope.filterVersion = function(element) {
-      if ($scope.isDockerfile() || $scope.isDescriptor()){
-        for(var i=0;i<$scope.successContent.length;i++){
-          if($scope.successContent[i].tag === element){
-            return true;
-          } else{
-            if(i===$scope.successContent.length -1){
+      $scope.filterVersion = function (element) {
+        if ($scope.isDockerfile() || $scope.isDescriptor()) {
+          for (var i = 0; i < $scope.successContent.length; i++) {
+            if ($scope.successContent[i].tag === element) {
+              return true;
+            } else {
+              if (i === $scope.successContent.length - 1) {
+                return false;
+              }
+            }
+          }
+        } else if ($scope.isTestJson()) {
+          for (var j = 0; j < $scope.containerObj.tags.length; j++) {
+            var tag = $scope.containerObj.tags[j];
+            if (tag.name === element) {
+              for (var k = 0; k < tag.sourceFiles.length; k++) {
+                var sourceFile = tag.sourceFiles[k];
+                if (sourceFile.type === 'CWL_TEST_JSON' || sourceFile.type === 'WDL_TEST_JSON') {
+                  // show if any source file is a test json
+                  return true;
+                }
+              }
+              // if no source files are test json
               return false;
             }
           }
         }
-      } else if ($scope.isTestJson()) {
-           for(var j=0;j<$scope.containerObj.tags.length;j++){
-             if($scope.containerObj.tags[j].name === element){
-               for(var k=0; k < $scope.containerObj.tags[j].sourceFiles.length; k++) {
-                 if ($scope.containerObj.tags[j].sourceFiles[k].type === 'CWL_TEST_JSON' || $scope.containerObj.tags[j].sourceFiles[k].type === 'WDL_TEST_JSON') {
-                   return true;
-                 }
-               }
-               return false;
-             } else{
-               return false;
-             }
-           }
-         } else {
-           return true;
-         }
+        else {
+          // this should not occur, this is a different kind of scope
+          return false;
+        }
       };
 
       $scope.isDockerfile = function() {

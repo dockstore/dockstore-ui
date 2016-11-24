@@ -37,7 +37,7 @@
     </select>
   </div>
 
-  <div class="ds-descriptor-selector float-left" ng-hide="isDockerfile()">
+  <div class="ds-descriptor-selector float-left" ng-show="isDescriptor()">
     <strong>Descriptor Type</strong>:
     <select class="ds-descriptor" ng-model="selDescriptorName">
       <option
