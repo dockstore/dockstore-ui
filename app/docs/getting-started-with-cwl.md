@@ -6,7 +6,7 @@ Now that you have a git repository that includes a `Dockerfile`, you have tested
 
 It is recommended that you have the following minimum fields:
 
-    description: <description>
+    doc: <description>
     id: <id>
     label: <label>
     
@@ -39,9 +39,8 @@ Again, we provide an example from the [dockstore-tool-bamstats](https://github.c
     hints:
       - class: ResourceRequirement
         coresMin: 1
-        ramMin: 4092
+        ramMin: 4092 #"the process requires at least 4G of RAM
         outdirMin: 512000
-        description: "the process requires at least 4G of RAM"
     
     inputs:
       mem_gb:
@@ -78,16 +77,16 @@ class: CommandLineTool
 id: "BAMStats"
 label: "BAMStats tool"
 cwlVersion: v1.0
-description: |
+doc: |
         ![build_status](https://quay.io/repository/collaboratory/dockstore-tool-bamstats/status)
         A Docker container for the BAMStats command. See the [BAMStats](http://bamstats.sourceforge.net/) website for more information.
 ```
 
-These items are recommended and the description is actually parsed and displayed in the Dockstore page. Here's an example:
+These items are recommended and the doc (description) is actually parsed and displayed in the Dockstore page. Here's an example:
 
 ![Entry](docs/entry.png)
 
-In the code above you can see how to have an extended description which is quite useful.
+In the code above you can see how to have an extended doc (description) which is quite useful.
 
 ```
 dct:creator:
@@ -112,9 +111,8 @@ This section links the Docker image used to this CWL.  Notice it's exactly the s
 hints:
   - class: ResourceRequirement
     coresMin: 1
-    ramMin: 4092
+    ramMin: 4092 # the process requires at least 4G of RAM
     outdirMin: 512000
-    description: "the process requires at least 4G of RAM"
 ```
 
 This may or may not be honoured by the tool calling this CWL but at least it gives you a place to declare computational requirements.
@@ -173,7 +171,7 @@ This downloads to my current directory and then moves to `/tmp`.  I could choose
 
 ```
 {
-  "bam_input": {
+    "bam_input": {
         "class": "File",
         "path": "/tmp/NA12878.chrom20.ILLUMINA.bwa.CEU.low_coverage.20121211.bam"
     },
