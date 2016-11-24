@@ -33,12 +33,7 @@ angular.module('dockstore.ui')
       },
       templateUrl: 'templates/tokensgrid.html',
       link: function postLink(scope, element, attrs) {
-        scope.$watchCollection('filteredTokens',
-          function(newVal, oldVal, scope) {
-            if (newVal) {
-              scope.currPage = 1;
-            }
-        });
+
       }
     };
   });

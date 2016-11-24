@@ -37,13 +37,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-show="filteredContainers.length === 0">
+            <tr ng-show="tokens.length === 0">
               <td colspan="4">
                 <div class="text-center">No Records Found</div>
               </td>
             </tr>
             <!-- need a to write a 'smart search' filter -->
-            <tr ng-repeat="token in ((filteredTokens = tokens) | orderBy:sortColumn:sortReverse | PaginationFilter:getListRange())">
+            <tr ng-repeat="token in (tokens | orderBy:sortColumn:sortReverse | PaginationFilter:getListRange())">
               <td>
                 {{token.tokenSource}}
               </td>
@@ -59,24 +59,6 @@
           </tbody>
         </table>
       </div>
-    </div>
-  </div>
-</div>
-
-<div id="container-pagination">
-  <div class="container">
-    <div class="row-center">
-        <ul class="pagination">
-          <li>{{getListRangeString()}}</li>
-          <li>
-            <div class="button" ng-hide="currPage <= getFirstPage()">
-              <p><a href ng-click="changePage(false)">&laquo; Previous</a></p>
-            </div>
-            <div class="button" ng-hide="currPage >= getLastPage()">
-              <p><a href ng-click="changePage(true)">Next &raquo;</a></p>
-            </div>
-          </li>
-        </ul>
     </div>
   </div>
 </div>
