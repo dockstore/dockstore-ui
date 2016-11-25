@@ -102,7 +102,7 @@ angular.module('dockstore.ui')
           dockerfile_path: $scope.containerObj.default_dockerfile_path,
           cwl_path: $scope.containerObj.default_cwl_path,
           wdl_path: $scope.containerObj.default_wdl_path,
-          hidden: true,
+          hidden: false,
           automated: false,
           dirtyBit: false,
           verified: false,
