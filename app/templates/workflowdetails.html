@@ -96,11 +96,10 @@
         <div class="btn-group" role="group">
           <button uib-btn-checkbox
                   type="button"
-                  class="btn btn-primary"
+                  class="btn btn-warning"
                   ng-class="!refreshingWorkflow && isWorkflowValid()? '' : 'disabled'"
                   ng-click="setWorkflowRegistration(workflowObj.id, workflowObj.is_published); checkContentValid()"
                   ng-model="workflowObj.is_published"
-                  ng-class="workflowObj.is_published? 'btn-primary' : 'btn-warning'"
                   ng-disabled="refreshingWorkflow || !isWorkflowValid() || workflowObj.mode === 'STUB' || !validContent">
             {{ workflowObj.is_published ? 'Unpublish' : 'Publish' }}
           </button>

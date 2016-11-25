@@ -100,11 +100,10 @@
         <div class="btn-group" role="group">
           <button uib-btn-checkbox
               type="button"
-              class="btn btn-primary"
+              class="btn btn-warning"
               ng-class="!refreshingContainer && isContainerValid()? '' : 'disabled'"
               ng-click="setContainerRegistration(containerObj.id, containerObj.is_published); checkContentValid()"
               ng-model="containerObj.is_published"
-              ng-class="containerObj.is_published ? 'btn-primary' : 'btn-warning'"
               ng-disabled="refreshingContainer || !isContainerValid() || !validContent">
             {{ containerObj.is_published ? 'Unpublish' : 'Publish' }}
           </button>
