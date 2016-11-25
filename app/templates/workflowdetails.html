@@ -72,7 +72,7 @@
 
       <span class="label label-default container-label"
             ng-repeat="label in getWorkflowLabelStrings(workflowObj.labels)" id="{{label}}">
-        <a ng-href="/search-workflows/{{label}}">
+        <a ng-href="/search-workflows?query={{label}}">
           {{label}}
         </a>
         <span ng-if="$first">
@@ -310,7 +310,7 @@
             <span ng-show="workflowObj.labels.length === 0">n/a</span>
             <span class="label label-default container-label"
                   ng-repeat="label in getWorkflowLabelStrings(workflowObj.labels)">
-              <a ng-href="/search-workflows/{{label}}">
+              <a ng-href="/search-workflows?query={{label}}">
                 {{label}}
               </a>
             </span>
