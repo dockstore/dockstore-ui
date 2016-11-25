@@ -27,7 +27,7 @@
     <strong>Workflow Version</strong>:
     <select class="ds-version" ng-model="selVersionName">
       <option
-        ng-repeat="version in workflowVersions | filter: filterVersion"
+        ng-repeat="version in (filteredVersions = (workflowVersions | filter: filterVersion))"
         value="{{version}}">
         {{version}}
       </option>
@@ -44,7 +44,6 @@
       </option>
     </select>
   </div>
-
 </div>
 </div>
 

@@ -39,7 +39,6 @@ angular.module('dockstore.ui')
 
       $scope.setType = function(type) {
         $scope.type = type;
-        $scope.refreshDocument(false);
       };
 
       $scope.checkDescriptor = function() {
@@ -189,18 +188,18 @@ angular.module('dockstore.ui')
             }
           }
         } else if ($scope.isTestParameter()) {
-          for(var j=0;j<$scope.workflowObj.workflowVersions.length;j++){
-            if($scope.workflowObj.workflowVersions[j].name === element){
-              for(var k=0; k < $scope.workflowObj.workflowVersions[j].sourceFiles.length; k++) {
-                if ($scope.workflowObj.workflowVersions[j].sourceFiles[k].type === 'CWL_TEST_JSON' || $scope.workflowObj.workflowVersions[j].sourceFiles[k].type === 'WDL_TEST_JSON') {
+          for(var a = 0; a < $scope.workflowObj.workflowVersions.length; a++){
+            var workflowVersion = $scope.workflowObj.workflowVersions[a];
+            if(workflowVersion.name === element){
+              for(var k = 0; k < workflowVersion.sourceFiles.length; k++) {
+                if (workflowVersion.sourceFiles[k].type === 'CWL_TEST_JSON' || workflowVersion.sourceFiles[k].type === 'WDL_TEST_JSON') {
                   return true;
                 }
               }
               return false;
-            } else{
-              return false;
             }
           }
+
         } else {
           return true;
         }
@@ -338,7 +337,6 @@ angular.module('dockstore.ui')
             if (versionChange === true) {
               $scope.selFileName = $scope.fileList[0];
             }
-
             var testparameter = $scope.getTestParameterFile($scope.workflowObj.id, $scope.selVersionName, $scope.selFileName, testFileType);
             break;
           default:
