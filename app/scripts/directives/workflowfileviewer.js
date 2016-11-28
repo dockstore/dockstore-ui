@@ -44,19 +44,7 @@ angular.module('dockstore.ui')
           scope.refreshDocument(false);
           scope.checkDescriptor();
         });
-        scope.$watchGroup(
-          ['selVersionName','descriptor'],
-          function(newValues, oldValues) {
-            scope.refreshDocument(true);
-          });
-        scope.$watchGroup(
-          ['type'],
-          function(newValue, oldValue) {
-            if ( newValue !== oldValue ) {
-              scope.selVersionName = scope.filteredVersions[0];
-              scope.refreshDocument(true);
-            }
-          });
+        // If the workflowObj changes, reset to selecting the descriptor tab
         scope.$watchGroup(
           ['workflowObj'],
           function() {
@@ -65,6 +53,22 @@ angular.module('dockstore.ui')
               scope.checkDescriptor();
               scope.refreshDocument(false);
           });
+        // If the selected version or descriptor type changes, reload the file list and select the first file
+        scope.$watchGroup(
+          ['selVersionName','descriptor'],
+          function(newValues, oldValues) {
+            scope.refreshDocument(true);
+          });
+        // If the selected file tab changes, select the first version, reload file list and select first
+        scope.$watchGroup(
+          ['type'],
+          function(newValue, oldValue) {
+            if ( newValue !== oldValue ) {
+              scope.selVersionName = scope.filteredVersions[0];
+              scope.refreshDocument(true);
+            }
+          });
+        // If a new file name is selected, load it
         scope.$watchGroup(
           ['selFileName'],
           function(newValues, oldValues) {

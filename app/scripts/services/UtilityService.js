@@ -42,7 +42,7 @@ angular.module('dockstore.ui')
           timeAgo = this.getTimeAgo(timestamp, msToHours);
           if (timeAgo < 1) {
             timeAgo = this.getTimeAgo(timestamp, msToMins);
-            if (timeAgo === 0) {
+            if (timeAgo < 1) {
               return '<1 minute ago';
             } else {
               return timeAgo.toString() +

@@ -37,10 +37,6 @@ angular.module('dockstore.ui')
       $scope.successContent = [];
       $scope.fileTabs = ['descriptor', 'testparameter'];
 
-      $scope.setType = function(type) {
-        $scope.type = type;
-      };
-
       $scope.checkDescriptor = function() {
         $scope.workflowVersions = $scope.getWorkflowVersions();
         if ($scope.workflowVersions.length === 0){
@@ -205,14 +201,22 @@ angular.module('dockstore.ui')
         }
       };
 
+      // Check if test parameter tab is selected
       $scope.isTestParameter = function() {
         return $scope.type === 'testparameter';
       };
 
+      // Check if descriptor tab is selected
       $scope.isDescriptor = function() {
         return $scope.type === 'descriptor';
       };
 
+      // Change the type (tab) selected
+      $scope.setType = function(type) {
+        $scope.type = type;
+      };
+
+      // Get a list of sorted workflow version names
       $scope.getWorkflowVersions = function() {
         var sortedVersionObjs = $scope.workflowObj.workflowVersions;
         sortedVersionObjs.sort(function(a, b) {
@@ -233,6 +237,7 @@ angular.module('dockstore.ui')
         return versions;
       };
 
+      // Grab descriptor file from server
       $scope.getDescriptorFile = function(workflowId, versionName, type) {
         return WorkflowService.getDescriptorFile(workflowId, versionName, type)
           .then(
@@ -249,6 +254,7 @@ angular.module('dockstore.ui')
           );
       };
 
+      // Grab secondary descriptor file from server
       $scope.getSecondaryDescriptorFile = function(containerId, tagName, type, secondaryDescriptorPath) {
         if(typeof $scope.selVersionName === 'undefined' || typeof $scope.selFileName === 'undefined'){
           return;
@@ -269,6 +275,7 @@ angular.module('dockstore.ui')
           );
       };
 
+      // Grab test parameter file from server
       $scope.getTestParameterFile = function(workflowId, versionName, filePath, fileType) {
         return WorkflowService.getTestJson(workflowId, versionName)
           .then(
@@ -292,6 +299,7 @@ angular.module('dockstore.ui')
           );
       };
 
+      // Grab a list of files for the selected version and file type
       function extracted(fileType){
         try {
           return $scope.workflowObj.workflowVersions.filter(function (a) {
@@ -306,6 +314,7 @@ angular.module('dockstore.ui')
         }
       }
 
+      // Get list of workflow versions, select the first, and get the associated files, select the first
       $scope.setDocument = function() {
         $scope.descriptor = $scope.workflowObj.descriptorType;
         // prepare Workflow Version drop-down
@@ -317,6 +326,7 @@ angular.module('dockstore.ui')
         $scope.selFileName = $scope.fileList[0];
       };
 
+      // Reload file list and get selected file
       $scope.refreshDocument = function(versionChange) {
         $scope.fileLoaded = false;
         $scope.fileContents = null;
@@ -344,11 +354,13 @@ angular.module('dockstore.ui')
             }
       };
 
+      // On copy success
       $scope.onSuccess = function(e) {
         e.clearSelection();
         NtfnService.popSuccess('Copy Success');
       };
 
+      // On copy error
       $scope.onError = function(e) {
         NtfnService.popFailure('Copy Failure');
       };
