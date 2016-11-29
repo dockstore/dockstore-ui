@@ -19,6 +19,16 @@ Versions of your tool for most tools are harvested from the list of Tags for an 
 
 Currently, we recommend looking at our Zenodo entry. You will find a variety of citation styles and ways to export it at  [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.154185.svg)](https://doi.org/10.5281/zenodo.154185)
 
+## How do I get more space inside my CWL tool running in a container?
+
+There are a couple different answers here. Different directories inside a container run by CWL are mounted from different locations and will impose different storage requirements. 
+
+Outside the container, the Dockstore CLI will create a directory called `datastore` which contains input files provisioned for the running container. 
+
+By default, the working directory inside a CWL tool (`/var/spool/cwl`) is mounted from a randomly generated directory on the host in `/tmp` (on Linux). Depending on your filesystem structure, you may not have enough space allocated to this directory. Override this by exporting a new temporary directory, for example `export TMPDIR=/media/large_temporary_volume`. Depending on your OS, add this to a startup or login script to persist this value. 
+
+Also be aware that some directories will use space from your root filesystem. For example, Docker's storage driver and data volumes will by default install to and use space on your root filesystem.
+
 ## Do you have tips on creating Dockerfiles?
 
 * make sure you [set up Docker command](https://docs.docker.com/engine/installation/linux/ubuntulinux/#/create-a-docker-group) on your system so you do not need sudo

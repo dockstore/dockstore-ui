@@ -5,7 +5,7 @@ node_js:
   - 'stable'
   - '4.2.1'
 addons:
-  firefox: "50.0"
+  firefox: "latest"
   apt:
     sources:
       - google-chrome
