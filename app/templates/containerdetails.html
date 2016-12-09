@@ -62,9 +62,11 @@
 <div class="row" ng-show="containerObj">
   <div ng-class="editMode ? 'col-md-7' : 'col-md-8'">
     <h3 id="tool-path">
-      <!--<span class="glyphicon glyphicon-lock" ng-if="!containerObj.is_public"></span>-->
       <span ng-show="isVerified()" uib-tooltip="Verified">
         <span class="glyphicon glyphicon-ok"></span>
+      </span>
+      <span ng-show="containerObj.private_access" uib-tooltip="Private">
+        <span class="glyphicon glyphicon-lock"></span>
       </span>
       {{
         (containerObj.tool_path)
@@ -127,40 +129,27 @@
   <div class="col-md-4"
       ng-if="containerObj.email">
     <h3 class="pull-right">
-      <div class="btn-group" role="group">
-        <button type="button"
-            class="btn btn-primary contact-button"
-            ng-if="!editMode && !containerObj.is_published">
-          <a href="mailto:{{containerObj.email}}?subject=Dockstore Request for Access to {{containerObj.path}}&body=I would like to request access to your Docker image {{containerObj.path}} housed on {{gitReposProviderName}}.  My username on {{gitReposProviderName}} is <username>.">
-            Request Access
-          </a>
-        </button>
-        <!-- non-functional
-        <button type="button"
-            class="btn btn-info contact-button"
-            ng-if="!editMode">
-          <a href="mailto:{{containerObj.email}}?subject=Dockstore Contact Request About: {{containerObj.path}}">
-            Contact Author
-          </a>
-        </button>
-        -->
-      </div>
+        <div
+            class="button contact-button"
+            ng-if="!editMode && containerObj.private_access">
+          <p>
+            <a href="mailto:{{getRequestAccessEmail()}}?subject=Dockstore%20Request%20for%20Access%20to%20{{containerObj.path}}&body=I%20would%20like%20to%20request%20access%20to%20your%20Docker%20image%20{{containerObj.path}}%20housed%20on%20{{gitReposProviderName}}. %20My%20username%20on%20{{gitReposProviderName}}%20is%20<username>.">
+              Request Access on {{getDockerRegistryName()}}
+            </a>
+          </p>
+        </div>
+        <div
+            class="button contact-button"
+            ng-if="!editMode && containerObj.email !== null && !containerObj.private_access">
+          <p>
+            <a href="mailto:{{stripMailTo(containerObj.email)}}?subject=Dockstore%20{{containerObj.path}}%20inquiry">
+              Contact Author
+            </a>
+          </p>
+        </div>
     </h3>
   </div>
-  <!--div class="col-md-2">
-    <span class="starRating">
-      <input id="rating5" type="radio" name="rating" value="5">
-      <label for="rating5">5</label>
-      <input id="rating4" type="radio" name="rating" value="4">
-      <label for="rating4">4</label>
-      <input id="rating3" type="radio" name="rating" value="3" checked>
-      <label for="rating3">3</label>
-      <input id="rating2" type="radio" name="rating" value="2">
-      <label for="rating2">2</label>
-      <input id="rating1" type="radio" name="rating" value="1">
-      <label for="rating1">1</label>
-    </span>
-  </div-->
+
 </div>
 <div class="row" ng-show="containerObj">
   <div class="ds-tabs" ng-class="editMode ? 'col-md-12' : 'col-md-9'">
@@ -173,9 +162,12 @@
             {{ containerObj.author ? containerObj.author : 'n/a' }}
           </li>
           <li>
-            <strong uib-tooltip="E-mail of corresponding author for workflow">E-mail</strong>:
-            <span ng-if="!containerObj.email">n/a</span>
-            <a href={{getMailToLink(containerObj)}} ng-if="containerObj.email">{{containerObj.email}}</a>
+            <strong uib-tooltip="E-mail of corresponding author for tool">E-mail</strong>:
+            {{ containerObj.email ? stripMailTo(containerObj.email) : 'n/a' }}
+          </li>
+          <li ng-if="containerObj.tool_maintainer_email && containerObj.private_access">
+            <strong uib-tooltip-html="toolMaintainerTooltip">Tool Maintainer E-mail</strong>:
+            <span>{{stripMailTo(containerObj.tool_maintainer_email)}}</span>
           </li>
           <li ng-if="gitReposProvider">
             <strong uib-tooltip="Git repository for the associated tool descriptors and Dockerfile">{{gitReposProviderName}}</strong>:
@@ -403,12 +395,6 @@
                 <pre>{{launchWithCWLTool}}</pre>
               </div>
             </div>
-          </li>
-          <li ng-if="validTags.length > 0">
-            <strong uib-tooltip="Pull the Docker image directly">Docker Pull:</strong>
-              <div ng-repeat="tag in validTags">
-                <div copy-text ng-show="tag.name === toolTagName">{{dockerPullTag}}:{{tag.name}}</div>
-              </div>
           </li>
         </ul>
         <div ng-if="!editMode">

@@ -110,7 +110,7 @@ angular.module('dockstore.ui')
       this.getMailToLink = function(entryType, entryPath, windlowLocation, email){
         var subject = encodeURIComponent("Question about the " + entryType + " " + entryPath + " on Dockstore");
         var body = encodeURIComponent("I would like to ask a question about the " + entryType + " at " + windlowLocation);
-        return "mailto:" + email + "?subject=" + subject + "&body=" + body;
+        return "mailto:" + email.replace(/^mailto:/, '') + "?subject=" + subject + "&body=" + body;
       };
 
       this.isVerifiedWorkflow = function(workflow) {

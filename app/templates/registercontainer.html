@@ -226,6 +226,42 @@
           </div>
           <div class="form-group form-group-sm">
             <label class="col-sm-3 control-label">
+              Private Image:
+            </label>
+            <div class="col-sm-9">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox"
+                         ng-model="containerObj.private_access"
+                         uib-tooltip
+                         title="Image registry entry is private." />
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm" ng-show="containerObj.private_access">
+            <label class="col-sm-3 control-label">
+              Tool Maintainer Email:
+            </label>
+            <div class="col-sm-9">
+              <input
+                type="email"
+                class="form-control"
+                name="toolmaintaineremail"
+                ng-model="containerObj.tool_maintainer_email"
+                ng-maxlength="256"
+                uib-tooltip
+                title="Email of the tool maintainer."
+                placeholder="e.g. example@domain.com" />
+              <div
+                class="form-error-messages"
+                ng-messages="registerContainerForm.toolmaintaineremail.$error"
+                ng-if="registerContainerForm.toolmaintaineremail.$touched">
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
               Tool Name:
             </label>
             <div class="col-sm-9">

@@ -702,4 +702,8 @@ angular.module('dockstore.ui')
       $scope.getVerifiedSources = function() {
         return UtilityService.getVerifiedWorkflowSources($scope.workflowObj);
       };
+
+      $scope.stripMailTo = function(email) {
+        return email.replace(/^mailto:/, '');
+      };
   }]);

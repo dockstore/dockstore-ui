@@ -146,6 +146,8 @@ angular.module('dockstore.ui')
           default_cwl_test_parameter_file: containerObj.default_cwl_test_parameter_file,
           default_wdl_test_parameter_file: containerObj.default_wdl_test_parameter_file,
           is_published: containerObj.is_published,
+          private_access: containerObj.private_access,
+          tool_maintainer_email: containerObj.tool_maintainer_email,
         };
         if (normContainerObj.toolname === normContainerObj.name) {
           delete normContainerObj.toolname;

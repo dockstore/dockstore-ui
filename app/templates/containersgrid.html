@@ -50,6 +50,9 @@
                 <span ng-show="isVerified(container)" uib-tooltip="Verified">
                   <span class="glyphicon glyphicon-ok"></span>
                 </span>
+                <span ng-show="container.private_access" uib-tooltip="Private">
+                  <span class="glyphicon glyphicon-lock"></span>
+                </span>
                 <a href="/containers/{{container.tool_path}}">{{container.name + (container.toolname ? '/' + container.toolname : '')}}</a>
               </td>
               <td>

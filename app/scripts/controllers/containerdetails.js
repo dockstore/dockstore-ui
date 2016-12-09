@@ -53,6 +53,7 @@ angular.module('dockstore.ui')
       $scope.validTags = [];
       $scope.descAvailable = [];
       $scope.buildTooltip = $sce.trustAsHtml('<strong>Fully-Automated</strong>: All versions are automated builds<br><strong>Partially-Automated</strong>: At least one version is an automated build<br><strong>Manual</strong>: No versions are automated builds<br><strong>Unknown</strong>: Build information not known');
+      $scope.toolMaintainerTooltip = $sce.trustAsHtml('E-mail of tool maintainer to be contacted for requesting private image access<br>Defaults to tool author if no tool maintainer given');
       $scope.dockerPullTag = '';
 
       //There are 5 tabs, and only 1 can be active
@@ -703,5 +704,29 @@ angular.module('dockstore.ui')
 
       $scope.getVerifiedSources = function() {
         return UtilityService.getVerifiedToolSources($scope.containerObj);
+      };
+
+      $scope.isToolMaintainerEmailNullOrEmpty = function() {
+        return ($scope.containerObj.tool_maintainer_email === null || $scope.containerObj.tool_maintainer_email === '');
+      };
+
+      $scope.getDockerRegistryName = function() {
+        if ($scope.containerObj.registry === "DOCKER_HUB") {
+          return "DockerHub";
+        } else if ($scope.containerObj.registry === "QUAY_IO") {
+          return "Quay.io";
+        }
+      };
+
+      $scope.getRequestAccessEmail = function() {
+        if(!$scope.isToolMaintainerEmailNullOrEmpty()) {
+          return $scope.stripMailTo($scope.containerObj.tool_maintainer_email);
+        } else {
+          return $scope.stripMailTo($scope.containerObj.email);
+        }
+      };
+
+      $scope.stripMailTo = function(email) {
+        return email.replace(/^mailto:/, '');
       };
   }]);

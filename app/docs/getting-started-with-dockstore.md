@@ -61,6 +61,8 @@ Tools can be registered manually from the 'My Tools' page by pressing the 'Add T
 
 The Source Code Repository and Image Registry fields must be filled out, they are in the format `namespace/name` (the two paths may differ). The Dockerfile Path,  CWL/WDL Descriptor Paths, and CWL/WDL Test Parameter Paths are relative to the root of the Source Code Repository (and must begin with '/'), these will be the default locations to find their corresponding files, unless specified otherwise in the tags. The toolname is an optional 'suffix' appended to the Dockstore path, it allows for two repositories to share the same Git and Image Registry paths; the combination of Docker image registry path and toolname uniquely distinguishes tools in Dockstore.
 
+If you want to register a private Docker image and manage access, please click the "private" checkbox. You will also be asked for a tool maintainer email. This is the email of the person responsible for giving users access to your tool on external sites. If you do not provide a tool maintainer email, we will use the email found in the tool's CWL descriptor instead.
+
 Upon successful submission and registration of the tool, a resynchronization call will be made to fetch all available data from the given sources. If the image registry is Quay.io, existing version tags will be prepopulated for the Dockstore record.
 
 The user will then be taken to the 'Versions' tab of the new tool, where tags (corresponding to GitHub/Bitbucket/GitLab tag names) may be added.
