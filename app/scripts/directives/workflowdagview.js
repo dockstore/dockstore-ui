@@ -36,10 +36,11 @@ angular.module('dockstore.ui')
           if (newValue) {
             scope.checkVersion();
             scope.setDocument();
+            scope.refreshDocument();
           }
         });
         scope.$watchGroup(
-          ['selVersionName', 'workflowObj.id'],
+          ['selVersionName'],
           function(newValues, oldValues) {
               scope.refreshDocument();
         });

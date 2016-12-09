@@ -21,12 +21,13 @@
         <h3 class="available-containers">
           <img class="site-icons-medium" src="images/dockstore-workflows-green.png"> My Workflows
         </h3>
-        <div class="button back-to-containers pull-right">
-          <p>
-            <a href ng-click="refreshUserWorkflows(userObj.id)">
-              Refresh All Workflows
-            </a>
-          </p>
+        <div class="pull-right refresh-all-holder">
+          <button type="button"
+                  class="refresh-all-button btn btn-primary"
+                  ng-click="refreshUserWorkflows(userObj.id)"
+                  ng-disabled="refreshingWorkflows">
+            Refresh All Workflows
+          </button>
         </div>
       </div>
     </div>
