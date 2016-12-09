@@ -15,13 +15,13 @@
   -->
 <div class="btn-group btn-group-justified file-tabs" role="group">
   <div class="btn-group" role="group">
-    <button type="button" class="btn btn-default" ng-class="type == 'dockerfile' ? 'active' : ''" ng-click="setType('dockerfile')">Dockerfile</button>
+    <button id="dockerfileTab" type="button" class="btn btn-default" ng-class="type == 'dockerfile' ? 'active' : ''" ng-click="setType('dockerfile')">Dockerfile</button>
   </div>
   <div class="btn-group" role="group">
-    <button type="button" class="btn btn-default" ng-class="type == 'descriptor' ? 'active' : ''" ng-click="setType('descriptor')">Descriptor Files</button>
+    <button id="descriptorTab" type="button" class="btn btn-default" ng-class="type == 'descriptor' ? 'active' : ''" ng-click="setType('descriptor')">Descriptor Files</button>
   </div>
   <div class="btn-group" role="group">
-    <button type="button" class="btn btn-default" ng-class="type == 'testparameter' ? 'active' : ''" ng-click="setType('testparameter')">Test Parameter Files</button>
+    <button id="testParameterTab" type="button" class="btn btn-default" ng-class="type == 'testparameter' ? 'active' : ''" ng-click="setType('testparameter')">Test Parameter Files</button>
   </div>
 </div>
 

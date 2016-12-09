@@ -43,7 +43,7 @@
               </td>
             </tr>
             <!-- need a to write a 'smart search' filter -->
-            <tr ng-repeat="token in (tokens | orderBy:sortColumn:sortReverse | PaginationFilter:getListRange())">
+            <tr ng-repeat="token in (tokens | orderBy:sortColumn:sortReverse | PaginationFilter:getListRange())" id="{{token.tokenSource}}_token">
               <td>
                 {{token.tokenSource}}
               </td>

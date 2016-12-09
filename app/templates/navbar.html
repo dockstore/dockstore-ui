@@ -37,7 +37,7 @@
         <span class="pull-right nav-item nav-item-button">
         <li uib-dropdown ng-show="isAuthenticated()">
           <div class="button login">
-          <a href uib-dropdown-toggle class="account-dropdown">
+          <a id="dropdown-main" href uib-dropdown-toggle class="account-dropdown">
             <span class="glyphicon glyphicon-user"></span>
             <span class="nav-menu-username ">{{userObj.username}}</span>
             <span class="caret"></span>
@@ -45,26 +45,26 @@
             </div>
           <ul class="dropdown-menu dropdown-menu-right">
             <li>
-              <a href="/accounts">
+              <a id="dropdown-accounts" href="/accounts">
                 <span class="glyphicon glyphicon-user"></span>&nbsp;
                 <span class="item-label">Accounts</span>
               </a>
             </li>
             <li>
-              <a href="/tokens">
+              <a id="dropdown-tokens" href="/tokens">
                 <span class="glyphicon glyphicon-link"></span>&nbsp;
                 <span class="item-label">Tokens</span>
               </a>
             </li>
             <li>
-              <a href="/onboarding">
+              <a id="dropdown-onboarding" href="/onboarding">
                 <span class="glyphicon glyphicon-tasks"></span>&nbsp;
                 <span class="item-label">Setup</span>
               </a>
             </li>
             <li class="divider" role="separator"></li>
             <li>
-              <a href ng-click="logout()">
+              <a id="dropdown-logout" href ng-click="logout()">
                 <span class="glyphicon glyphicon-log-out"></span>&nbsp;
                 <span class="item-label">Log out</span>
               </a>
@@ -74,10 +74,10 @@
         </span>
 
         <span class="pull-right nav-item nav-item-text">
-        <li ng-show="isAuthenticated()">
+        <li id="myToolsNav" ng-show="isAuthenticated()">
           <a href="/my-containers"><img class="site-icons-small" src="images/dockstore-tools-purple.png"> My Tools</a>
         </li>
-        <li ng-show="isAuthenticated()">
+        <li id="myWorkflowsNav" ng-show="isAuthenticated()">
           <a href="/my-workflows"><img class="site-icons-small" src="images/dockstore-workflows-purple.png"> My Workflows</a>
         </li>
         <li ng-show="!isAuthenticated()">

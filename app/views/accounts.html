@@ -34,9 +34,9 @@
       <h3>Collaboratory Account</h3>
 
       <ul class="list-unstyled">
-        <li><strong>Username</strong>: {{userObj.username}}</li>
+        <li><strong>Username</strong>: <span id="account-username">{{userObj.username}}</span></li>
         <li>
-          <strong>Administrator</strong>: {{ userObj.isAdmin ? 'Yes' : 'No' }}
+          <strong>Administrator</strong>: <span id="account-is-admin">{{ userObj.isAdmin ? 'Yes' : 'No' }}</span>
         </li>
         <li><strong>Groups</strong>:
           <span ng-show="!userObj.groups || userObj.groups.length <= 0">

@@ -5,6 +5,10 @@
 /bower_components
 /app/gitVersion.htm
 /.idea
+/cypress/support
+/cypress/fixtures
+/cypress/screenshots
+/cypress/videos
 
 # System Metadata
 .DS_Store

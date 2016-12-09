@@ -1,11 +1,18 @@
-sudo: true
+sudo: required
 dist: trusty
 language: node_js
 node_js:
   - 'stable'
   - '4.2.1'
+services:
+  - postgresql
+jdk:
+  - oraclejdk8
+env:
+  - WEBSERVICE_VERSION="1.1"
 addons:
   firefox: "latest"
+  postgresql: "9.4"
   apt:
     sources:
       - google-chrome
@@ -16,21 +23,39 @@ before_install:
   - 'npm config set registry http://registry.npmjs.org/'
   - 'export DISPLAY=:99.0'
   - 'sh -e /etc/init.d/xvfb start'
+  - 'sudo add-apt-repository -y ppa:webupd8team/java'
+  - 'sudo apt-get update'
+  - 'sudo apt-get install -y libappindicator1 fonts-liberation'
+  - 'sudo apt-get install -y oracle-java8-installer'
+  - 'sudo apt install -y oracle-java8-set-default'
+  - 'wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
+  - 'sudo dpkg -i google-chrome*.deb'
+  - 'npm install -g cypress-cli' #test using cypress cli for integrationg testing
+  - 'wget https://seqwaremaven.oicr.on.ca/artifactory/collab-release/io/dockstore/dockstore-webservice/$WEBSERVICE_VERSION/dockstore-webservice-${WEBSERVICE_VERSION}.jar'
+  - 'chmod u+x dockstore-webservice-${WEBSERVICE_VERSION}.jar'
   - 'sleep 3' # https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI
 install:
   - 'npm install --global grunt-cli bower yo generator-karma generator-angular'
-  - 'npm install karma jasmine-core'
   - 'sudo apt-get install -y ruby ruby-dev make'
   - 'gem install compass'
   - 'npm update'
   - 'bower update'
-  - 'node_modules/protractor/bin/webdriver-manager update --standalone --firefox'
-  - 'sleep 5'
-  - 'node_modules/protractor/bin/webdriver-manager start --standalone --firefox &'
-  - 'sleep 5'
-after_script:
-- cat ./build/coverage/**/lcov.info | ./node_modules/coveralls/bin/coveralls.js
-after_success: grunt coveralls
+
+before_script:
+  - grunt # this does syntax checking, unit testing, and jshint
+  - grunt serve --silent & #make sure it runs the server first before testing
+  - 'sleep 10'
+  - psql 'postgres' -U postgres < travisci/db_dump.sql
+  - java -jar dockstore-webservice-${WEBSERVICE_VERSION}.jar server travisci/web.yml 1>/dev/null &
+  - 'sleep 20'
+
+script:
+  - cypress ci #test using cypress for integration testing
+
+#after_script:
+#  - ./node_modules/.bin/mocha -R mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js
+
+#after_success: grunt coveralls
 
 notifications:
   webhooks:

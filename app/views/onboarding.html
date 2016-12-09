@@ -30,7 +30,7 @@
 <div class="container view-content">
   <div class="row">
     <div class="col-md-12">
-      <div ng-show="owStep === 1">
+      <div id="step_one" ng-show="owStep === 1">
         <h3>Step 1: Link External Accounts</h3>
         <hr />
 
@@ -44,7 +44,7 @@
 
       </div>
 
-      <div ng-show="owStep === 2">
+      <div id="step_two" ng-show="owStep === 2">
         <h3>Step 2: Download CLI Client</h3>
         <hr />
 
@@ -107,7 +107,7 @@ server-url: {{dsServerURI}}</div>
 
       </div>
 
-      <div class="document" ng-show="owStep === 3">
+      <div id="step_three" class="document" ng-show="owStep === 3">
         <h3>Step 3: Setup Complete</h3>
         <hr />
 
@@ -117,11 +117,11 @@ server-url: {{dsServerURI}}</div>
       <nav class="pull-right">
         <ul class="pager">
           <li ng-show="owStep > 1">
-            <a href ng-click="prevStep()">Previous</a>
+            <a href ng-click="prevStep()"><span class="glyphicon glyphicon-chevron-left"></span>Previous</a>
           </li>
           <li ng-class="{ disabled: !tokenSetComplete }">
-            <a href ng-show="owStep < 3" ng-click="nextStep()">Next</a>
-            <a href ng-show="owStep >= 3" ng-click="nextStep()">Finish</a>
+            <a id="next_step" href ng-show="owStep < 3" ng-click="nextStep()">Next<span class="glyphicon glyphicon-chevron-right"></span></a>
+            <a id="finish_step" href ng-show="owStep >= 3" ng-click="nextStep()">Finish<span class="glyphicon glyphicon-chevron-right"></span></a>
           </li>
         </ul>
       </nav>

@@ -94,7 +94,7 @@
     <h3>
       <div class="pull-right">
         <div class="btn-group" role="group">
-          <button uib-btn-checkbox
+          <button id="publishButton" uib-btn-checkbox
                   type="button"
                   class="btn btn-warning"
                   ng-class="!refreshingWorkflow && isWorkflowValid()? '' : 'disabled'"
@@ -105,7 +105,7 @@
           </button>
         </div>
 
-        <button type="button"
+        <button id="refreshButton" type="button"
                 class="btn btn-primary"
                 ng-click="refreshWorkflow(workflowObj.id); checkPage()"
                 ng-disabled="refreshingWorkflow">
@@ -143,7 +143,7 @@
 <div class="row" ng-show="workflowObj">
   <div class="ds-tabs" ng-class="editMode ? 'col-md-12' : 'col-md-9'">
     <uib-tabset justified="true">
-      <uib-tab active="activeTabs[0]">
+      <uib-tab active="activeTabs[0]" id="infoTab">
         <uib-tab-heading>Info</uib-tab-heading>
         <ul class="list-unstyled container-info">
           <li>
@@ -296,7 +296,7 @@
           <div disqus-comments class="comments" ng-if="!editMode"></div>
         </div>
       </uib-tab>
-      <uib-tab active="activeTabs[1]">
+      <uib-tab active="activeTabs[1]" id="labelsTab">
         <uib-tab-heading>Labels</uib-tab-heading>
         <button type="sbutton"
                 class="btn btn-link push-right"
@@ -348,7 +348,7 @@
           </div>
         </form>
       </uib-tab>
-      <uib-tab  active="activeTabs[2]"  disable="!isWorkflowFull()">
+      <uib-tab  active="activeTabs[2]"  disable="!isWorkflowFull()" id="versionsTab">
         <uib-tab-heading>Versions</uib-tab-heading>
         <div workflow-versions-grid
              workflow-obj="workflowObj"
@@ -356,7 +356,7 @@
              set-error="setWorkflowDetailsError">
         </div>
       </uib-tab>
-      <uib-tab active="activeTabs[3]" disable="!isWorkflowFull()">
+      <uib-tab active="activeTabs[3]" disable="!isWorkflowFull()" id="filesTab">
         <uib-tab-heading ng-click="checkPage()">
           Files
         </uib-tab-heading>
@@ -367,14 +367,14 @@
              ng-if="workflowObj">
         </div>
       </uib-tab>
-      <uib-tab active="activeTabs[4]" disable="!isWorkflowFull()">
+      <uib-tab active="activeTabs[4]" disable="!isWorkflowFull()" id="toolsTab">
         <uib-tab-heading ng-click="getTools()">Tools</uib-tab-heading>
         <div workflow-tools-grid
             ng-if="workflowObj"
             workflow-obj="workflowObj">
         </div>
       </uib-tab>
-      <uib-tab active="activeTabs[5]" disable="!isWorkflowFull()">
+      <uib-tab active="activeTabs[5]" disable="!isWorkflowFull()" id="dagTab">
         <uib-tab-heading ng-click="openDAG()">DAG</uib-tab-heading>
         <div workflow-dag-view
              ng-if="workflowObj"
