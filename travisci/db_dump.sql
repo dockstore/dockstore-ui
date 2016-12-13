@@ -268,7 +268,9 @@ CREATE TABLE tool (
     namespace character varying(255),
     path character varying(255),
     registry character varying(255) NOT NULL,
-    toolname character varying(255) NOT NULL
+    toolname character varying(255) NOT NULL,
+    toolmaintaineremail character varying(255),
+    privateaccess boolean
 );
 
 
@@ -1348,11 +1350,11 @@ SELECT pg_catalog.setval('token_id_seq', 4, true);
 -- Data for Name: tool; Type: TABLE DATA; Schema: public; Owner: dockstore
 --
 
-INSERT INTO tool VALUES (1, 'Dockstore Test User', NULL, 'Whalesay deep quotes', NULL, 'git@github.com:DockstoreTestUser/dockstore-whalesay.git', false, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-02-16 17:04:59', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'testrepo2', 'dockstore2', 'quay.io/dockstore2/testrepo2', 'QUAY_IO', '');
-INSERT INTO tool VALUES (2, 'Dockstore Test User2', NULL, 'Whalesay deep quotes', NULL, 'git@github.com:DockstoreTestUser2/quayandgithub.git', false, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:35:29', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'quayandgithub', 'dockstoretestuser2', 'quay.io/dockstoretestuser2/quayandgithub', 'QUAY_IO', '');
-INSERT INTO tool VALUES (5, NULL, NULL, '', NULL, 'git@github.com:DockstoreTestUser2/dockstore-tool-imports.git', true, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-06-08 14:06:36', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'dockstore-tool-imports', 'dockstoretestuser2', 'quay.io/dockstoretestuser2/dockstore-tool-imports', 'QUAY_IO', '');
-INSERT INTO tool VALUES (4, NULL, NULL, NULL, NULL, 'git@github.com:DockstoreTestUser2/quayandgithubwdl.git', true, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:36:22', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'quayandgithubwdl', 'dockstoretestuser2', 'quay.io/dockstoretestuser2/quayandgithubwdl', 'QUAY_IO', '');
-INSERT INTO tool VALUES (3, NULL, NULL, NULL, NULL, 'git@github.com:DockstoreTestUser2/quayandgithubalternate.git', false, NULL, '2016-11-28 15:02:48.557', '/Dockstore.cwl', '/testDir/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:35:57', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'quayandgithubalternate', 'dockstoretestuser2', 'quay.io/dockstoretestuser2/quayandgithubalternate', 'QUAY_IO', '');
+INSERT INTO tool VALUES (1, 'Dockstore Test User', NULL, 'Whalesay deep quotes', NULL, 'git@github.com:DockstoreTestUser/dockstore-whalesay.git', false, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-02-16 17:04:59', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'testrepo2', 'dockstore2', 'quay.io/dockstore2/testrepo2', 'QUAY_IO', '', '', false);
+INSERT INTO tool VALUES (2, 'Dockstore Test User2', NULL, 'Whalesay deep quotes', NULL, 'git@github.com:DockstoreTestUser2/quayandgithub.git', false, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:35:29', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'quayandgithub', 'dockstoretestuser2', 'quay.io/dockstoretestuser2/quayandgithub', 'QUAY_IO', '', '', false);
+INSERT INTO tool VALUES (5, NULL, NULL, '', NULL, 'git@github.com:DockstoreTestUser2/dockstore-tool-imports.git', true, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-06-08 14:06:36', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'dockstore-tool-imports', 'dockstoretestuser2', 'quay.io/dockstoretestuser2/dockstore-tool-imports', 'QUAY_IO', '', '', false);
+INSERT INTO tool VALUES (4, NULL, NULL, NULL, NULL, 'git@github.com:DockstoreTestUser2/quayandgithubwdl.git', true, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:36:22', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'quayandgithubwdl', 'dockstoretestuser2', 'quay.io/dockstoretestuser2/quayandgithubwdl', 'QUAY_IO', '', '', false);
+INSERT INTO tool VALUES (3, NULL, NULL, NULL, NULL, 'git@github.com:DockstoreTestUser2/quayandgithubalternate.git', false, NULL, '2016-11-28 15:02:48.557', '/Dockstore.cwl', '/testDir/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:35:57', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'quayandgithubalternate', 'dockstoretestuser2', 'quay.io/dockstoretestuser2/quayandgithubalternate', 'QUAY_IO', '', '', false);
 
 
 --

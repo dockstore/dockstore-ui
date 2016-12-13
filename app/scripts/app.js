@@ -204,8 +204,8 @@ angular
     $httpProvider.interceptors.push('webserviceResponseInterceptor');
     $httpProvider.interceptors.push('authHttpResponseInterceptor');
   }])
-  .run(['$rootScope', '$auth', '$location', 'UserService',
-    function($rootScope, $auth, $location, UserService) {
+  .run(['$rootScope', '$auth', '$location', 'UserService' , 'FormattingService',
+    function($rootScope, $auth, $location, UserService, FrmttSrvc) {
       $rootScope.$on('auth401Refused', function() {
         UserService.logout({
           title: 'Dockstore Web Service',
@@ -235,4 +235,7 @@ angular
           if (!isViewPublic($location.url())) $location.path('/login');
         }
       });
+
+      // Initialize the list of docker registries supported for manual tools
+      FrmttSrvc.getDockerRegistryList();
   }]);

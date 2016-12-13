@@ -126,8 +126,7 @@
       </div>
     </h3>
   </div>
-  <div class="col-md-4"
-      ng-if="containerObj.email">
+  <div class="col-md-4">
     <h3 class="pull-right">
         <div
             class="button contact-button"
@@ -497,7 +496,7 @@
         <tr>
           <td>
             <div class="container-source-repos">
-              <p>
+              <p>Git Repository:
                 <span ng-if="gitReposProvider">
                   <a ng-href="{{gitReposWebUrl}}" target="_blank">
                     {{gitReposProviderName}}
@@ -505,12 +504,13 @@
                   </a>
                 </span>
               </p>
-              <p>
+              <p>Docker Registry:
                 <span ng-if="imageReposProvider">
-                  <a ng-href="{{imageReposWebUrl}}" target="_blank">
+                  <a ng-if="imageReposWebUrl !== null" ng-href="{{imageReposWebUrl}}" target="_blank">
                     {{imageReposProviderName}}
                     <span class="glyphicon glyphicon-new-window"></span>
                   </a>
+                  <span ng-if="imageReposWebUrl === null">{{imageReposProviderName}}</span>
                 </span>
                 <span ng-if="imageReposWebUrl && imageReposWebUrl.startsWith('https://quay.io')"
                       class="pull-right">

@@ -55,6 +55,7 @@ angular.module('dockstore.ui')
       $scope.buildTooltip = $sce.trustAsHtml('<strong>Fully-Automated</strong>: All versions are automated builds<br><strong>Partially-Automated</strong>: At least one version is an automated build<br><strong>Manual</strong>: No versions are automated builds<br><strong>Unknown</strong>: Build information not known');
       $scope.toolMaintainerTooltip = $sce.trustAsHtml('E-mail of tool maintainer to be contacted for requesting private image access<br>Defaults to tool author if no tool maintainer given');
       $scope.dockerPullTag = '';
+      $scope.dockerRegistryMap = {};
 
       //There are 5 tabs, and only 1 can be active
       // so there are 4 other tabs that are not active
@@ -244,7 +245,8 @@ angular.module('dockstore.ui')
 
       $scope.loadContainerDetails = function(containerPath) {
         $scope.setContainerDetailsError(null);
-        return ContainerService.getPublishedContainerByToolPath(containerPath)
+        return ContainerService.
+        getPublishedContainerByToolPath(containerPath)
           .then(
             function(containerObj) {
               $scope.containerObj = containerObj;
@@ -711,10 +713,10 @@ angular.module('dockstore.ui')
       };
 
       $scope.getDockerRegistryName = function() {
-        if ($scope.containerObj.registry === "DOCKER_HUB") {
-          return "DockerHub";
-        } else if ($scope.containerObj.registry === "QUAY_IO") {
-          return "Quay.io";
+        for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
+          if ($scope.containerObj.registry === $scope.dockerRegistryMap[i].enum) {
+            return $scope.dockerRegistryMap[i].friendlyName;
+          }
         }
       };
 
@@ -729,4 +731,7 @@ angular.module('dockstore.ui')
       $scope.stripMailTo = function(email) {
         return email.replace(/^mailto:/, '');
       };
+
+      $scope.dockerRegistryMap = FrmttSrvc.returnDockerRegistryList();
+
   }]);

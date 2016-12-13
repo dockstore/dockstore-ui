@@ -8,7 +8,7 @@ Docker is a fantastic tool for creating light-weight containers to run your tool
 0. create a `Dockerfile` in that repository that describes how to create a Docker image
 0. use the Docker tools to build and test your Docker image
 0. use the release process on GitHub, Bitbucket, or GitLab to make distinct release tags
-0. setup Quay.io (or Docker Hub) to automatically build your Docker image
+0. setup Quay.io (or Docker Hub or GitLab) to automatically build your Docker image
 
 See the [dockstore-tool-bamstats](https://github.com/CancerCollaboratory/dockstore-tool-bamstats) repository on GitHub which we created as an example. This is linked to the quay.io repository at [dockstore-tool-bamstats](https://quay.io/repository/collaboratory/dockstore-tool-bamstats).
 

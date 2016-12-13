@@ -159,6 +159,19 @@ angular.module('dockstore.ui')
       });
     };
 
+    this.getDockerRegistryList = function() {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: WebService.API_URI + '/containers/dockerRegistryList',
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
     this.setContainerRegistration = function(containerId, isPublished) {
       return $q(function(resolve, reject) {
         $http({

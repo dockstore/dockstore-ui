@@ -24,9 +24,9 @@
  * Service in the dockstore.ui.
  */
 angular.module('dockstore.ui')
-  .service('FormattingService', [
-    function () {
-
+  .service('FormattingService', ['ContainerService',
+    function (ContainerService) {
+      var dockerRegistryMap = {};
       this.getHRSize = function(size) {
         if (!size) return 'n/a';
         var hrSize = '';
@@ -135,24 +135,23 @@ angular.module('dockstore.ui')
       };
 
       this.getImageReposProvider = function(path) {
-        if (path.indexOf('quay.io') !== -1) {
-          return 'QUAY_IO';
-        } else if (path.indexOf('hub.docker.com') !== -1) {
-          return 'DOCKER_HUB';
-        } else {
-          return null;
+        for (var i = 0; i < dockerRegistryMap.length; i++) {
+          if (path.indexOf(dockerRegistryMap[i].dockerCommand) !== -1) {
+            return dockerRegistryMap[i].enum;
+          }
         }
+        return null;
       };
 
       this.getImageReposProviderName = function(imageReposProvider) {
-        switch (imageReposProvider) {
-          case 'QUAY_IO':
-            return 'Quay.io';
-          case 'DOCKER_HUB':
-            return 'Docker Hub';
-          default:
-            return 'Unknown';
+        for (var i = 0; i < dockerRegistryMap.length; i++) {
+          if (imageReposProvider === dockerRegistryMap[i].enum) {
+            return dockerRegistryMap[i].friendlyName;
+          }
         }
+
+        /** Return unknown if we can't find a matching Registry Type */
+        return 'Unknown';
       };
 
       this.getImageReposWebUrl = function(path, imageReposProvider) {
@@ -162,18 +161,23 @@ angular.module('dockstore.ui')
         if (!matchRes) return null;
         var imageReposWebUrl = '';
         var suffix = '';
-        switch (imageReposProvider) {
-          case 'QUAY_IO':
-            imageReposWebUrl = 'https://quay.io/repository/';
-            break;
-          case 'DOCKER_HUB':
-            imageReposWebUrl = 'https://hub.docker.com/' +
-                ((matchRes[2] !== '_') ? 'r/' : '');
-            suffix = '/';
-            break;
-          default:
-            return null;
+        for (var i = 0; i < dockerRegistryMap.length; i++) {
+          if (imageReposProvider === dockerRegistryMap[i].enum) {
+            imageReposWebUrl = dockerRegistryMap[i].url;
+            // Special cases for docker registry URLs
+            if (imageReposProvider === 'DOCKER_HUB') {
+              imageReposWebUrl += ((matchRes[2] !== '_') ? 'r/' : '');
+            } else if (imageReposProvider === 'GITLAB') {
+              suffix = '/container_registry';
+            }
+          }
         }
+
+        // check that the docker registry can be linked to
+        if (imageReposWebUrl === 'empty') {
+          return null;
+        }
+
         imageReposWebUrl += matchRes[2] + '/' + matchRes[3] + suffix;
         return imageReposWebUrl;
       };
@@ -188,4 +192,16 @@ angular.module('dockstore.ui')
         return dockerPullCmd;
       };
 
+      this.getDockerRegistryList = function() {
+        return ContainerService.getDockerRegistryList()
+          .then(
+            function(result) {
+              dockerRegistryMap = result;
+            }
+          );
+      };
+
+      this.returnDockerRegistryList = function() {
+        return dockerRegistryMap;
+      };
   }]);

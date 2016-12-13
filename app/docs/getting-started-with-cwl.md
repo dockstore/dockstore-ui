@@ -291,7 +291,7 @@ I click on "releases" in my GitHub project [page](https://github.com/CancerColla
 
 # Building on Quay.io
 
-Now that you've perfected the `Dockerfile`, have built the image on your local host, and have tested running the Docker container and tool packaged inside and have released this version on GitHub, it's time to push the image to a place where others can use it.  For this you can use DockerHub but we prefer [Quay.io](http://quay.io) since it integrates really nicely with Dockstore.
+Now that you've perfected the `Dockerfile`, have built the image on your local host, and have tested running the Docker container and tool packaged inside and have released this version on GitHub, it's time to push the image to a place where others can use it.  For this you can use DockerHub or GitLab but we prefer [Quay.io](http://quay.io) since it integrates really nicely with Dockstore.
 
 You can manually `docker push` the image you have already built but the most reliable and transparent thing you can do is link your GitHub repository (and the Dockerfile contained within) to Quay.  This will cause Quay to automatically build the Docker image every time there is a change.
 

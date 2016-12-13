@@ -190,15 +190,11 @@
                     {{containerObj.irProvider}} <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu">
-                    <li>
-                      <a href ng-click="containerObj.irProvider = 'Quay.io'">
-                        Quay.io
+                    <li ng-repeat="registry in dockerRegistryMap">
+                      <a href ng-click="containerObj.irProvider = registry.friendlyName">
+                        {{registry.friendlyName}}
                       </a>
                     </li>
-                    <li>
-                      <a href ng-click="containerObj.irProvider = 'Docker Hub'">
-                        Docker Hub
-                      </a>
                     </li>
                   </ul>
                 </div>
