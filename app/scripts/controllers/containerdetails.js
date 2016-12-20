@@ -123,8 +123,9 @@ angular.module('dockstore.ui')
           }
         }
         if($scope.descAvailable.length !==0){
-          $scope.desc = $scope.descAvailable[tagIndex];
+          $scope.desc = $scope.descAvailable[0];
         }
+
       };
 
       $scope.getDescriptorByTag = function(tagObject){
