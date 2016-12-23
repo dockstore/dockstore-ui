@@ -40,7 +40,7 @@
           ng-if="refreshingContainer">
         <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">
         </span>
-        Please wait, retrieving Quay.io or Docker Hub tool...
+        Please wait, retrieving tool...
       </div>
       <form name="registerContainerForm"
           class="form-horizontal"
@@ -78,6 +78,7 @@
                   </ul>
                 </div>
                 <input
+                    id="sourceCodeRepositoryInput"
                     type="text"
                     class="form-control"
                     name="gitPath"
@@ -184,14 +185,14 @@
             <div class="col-sm-9">
               <div class="input-group">
                 <div class="input-group-btn">
-                  <button type="button"
+                  <button id='imageRegistrySpinner' type="button"
                       class="btn btn-default btn-sm dropdown-toggle"
                       data-toggle="dropdown">
                     {{containerObj.irProvider}} <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu">
                     <li ng-repeat="registry in dockerRegistryMap">
-                      <a href ng-click="containerObj.irProvider = registry.friendlyName">
+                      <a href ng-click="containerObj.irProvider = registry.friendlyName" id="imageRegistrySpinner_{{registry.enum}}">
                         {{registry.friendlyName}}
                       </a>
                     </li>
@@ -199,6 +200,7 @@
                   </ul>
                 </div>
                 <input
+                    id="imageRegistryInput"
                     type="text"
                     class="form-control"
                     name="imagePath"
@@ -222,6 +224,23 @@
           </div>
           <div class="form-group form-group-sm">
             <label class="col-sm-3 control-label">
+              Docker Registry Path:
+            </label>
+            <div class="col-sm-9">
+              <input
+                id="dockerRegistryPathInput"
+                class="form-control"
+                name="customDockerRegistryPath"
+                ng-model="customDockerRegistryPath"
+                ng-maxlength="256"
+                uib-tooltip
+                title="Custom Docker registry path"
+                placeholder="e.g. registry.hub.docker.com"
+                ng-disabled="!showCustomDockerRegistryPath"/>
+            </div>
+          </div>
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
               Private Image:
             </label>
             <div class="col-sm-9">
@@ -230,7 +249,8 @@
                   <input type="checkbox"
                          ng-model="containerObj.private_access"
                          uib-tooltip
-                         title="Image registry entry is private." />
+                         title="Image registry entry is private."
+                          id="privateTool"/>
                 </label>
               </div>
             </div>
@@ -241,6 +261,7 @@
             </label>
             <div class="col-sm-9">
               <input
+                id="toolMaintainerEmailInput"
                 type="email"
                 class="form-control"
                 name="toolmaintaineremail"
@@ -287,9 +308,9 @@
               ng-click="closeRegisterContainerModal(true)">
             Close
           </button>
-          <button type="submit"
+          <button id="submitButton" type="submit"
               class="btn btn-primary"
-              ng-disabled="registerContainerForm.$invalid || savingActive || refreshingContainer">
+              ng-disabled="registerContainerForm.$invalid || savingActive || refreshingContainer || isInvalidCustomRegistry() || isInvalidPrivateTool()">
             Add Tool
           </button>
         </div>

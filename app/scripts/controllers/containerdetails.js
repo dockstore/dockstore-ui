@@ -461,7 +461,6 @@ angular.module('dockstore.ui')
       $scope.getGitReposProvider = FrmttSrvc.getGitReposProvider;
       $scope.getGitReposProviderName = FrmttSrvc.getGitReposProviderName;
       $scope.getGitReposWebUrl = FrmttSrvc.getGitReposWebUrl;
-      $scope.getImageReposProvider = FrmttSrvc.getImageReposProvider;
       $scope.getImageReposProviderName = FrmttSrvc.getImageReposProviderName;
       $scope.getImageReposWebUrl = FrmttSrvc.getImageReposWebUrl;
 
@@ -475,13 +474,11 @@ angular.module('dockstore.ui')
             $scope.containerObj.gitUrl,
             $scope.gitReposProvider);
         /* Image Repository */
-        $scope.imageReposProvider = $scope.getImageReposProvider(
-            $scope.containerObj.path);
         $scope.imageReposProviderName = $scope.getImageReposProviderName(
-            $scope.imageReposProvider);
+            $scope.containerObj.registry);
         $scope.imageReposWebUrl = $scope.getImageReposWebUrl(
             $scope.containerObj.path,
-            $scope.imageReposProvider);
+            $scope.containerObj.registry);
       };
 
       $scope.getDateTimeString = FrmttSrvc.getDateTimeString;
@@ -731,6 +728,19 @@ angular.module('dockstore.ui')
 
       $scope.stripMailTo = function(email) {
         return email.replace(/^mailto:/, '');
+      };
+
+      /**
+      * Given a registry enum, determines if it is a private only registry
+      * @returns True if private only registry, False otherwise
+      */
+      $scope.checkPrivateOnlyRegistry = function() {
+        for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
+          if ($scope.containerObj.registry === $scope.dockerRegistryMap[i].enum) {
+            return $scope.dockerRegistryMap[i].privateOnly === "true";
+          }
+        }
+        return false;
       };
 
       $scope.dockerRegistryMap = FrmttSrvc.returnDockerRegistryList();

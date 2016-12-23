@@ -42,7 +42,6 @@ angular.module('dockstore.ui')
       $scope.getGitReposProvider = FrmttSrvc.getGitReposProvider;
       $scope.getGitReposProviderName = FrmttSrvc.getGitReposProviderName;
       $scope.getGitReposWebUrl = FrmttSrvc.getGitReposWebUrl;
-      $scope.getImageReposProvider = FrmttSrvc.getImageReposProvider;
       $scope.getImageReposProviderName = FrmttSrvc.getImageReposProviderName;
       $scope.getImageReposWebUrl = FrmttSrvc.getImageReposWebUrl;
       $scope.getDateModified = FrmttSrvc.getDateModified;

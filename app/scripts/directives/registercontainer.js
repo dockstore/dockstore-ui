@@ -63,6 +63,12 @@ angular.module('dockstore.ui')
             if (imageName) scope.containerObj.toolname = imageName;
           }
         });
+        scope.$watch('containerObj.irProvider', function(newValue, oldValue) {
+          if (newValue !== oldValue) {
+            scope.checkForSpecialDockerRegistry();
+            scope.containerObj.path = scope.createPath();
+          }
+        });
       }
     };
   });

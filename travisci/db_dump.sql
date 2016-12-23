@@ -488,26 +488,14 @@ SELECT pg_catalog.setval('label_id_seq', 1, false);
 -- Data for Name: sourcefile; Type: TABLE DATA; Schema: public; Owner: dockstore
 --
 
-INSERT INTO sourcefile VALUES (1, 'description: "Whalesay deep quotes"
-id: "dockstore-whalesay"
-label: "dockstore whalesay"
-
-dct:creator:
-  foaf:name: "Dockstore Test User"
-', '/Dockstore.cwl', 'DOCKSTORE_CWL');
+INSERT INTO sourcefile VALUES (1, 'cwlVersion: v1.0 class: CommandLineTool baseCommand: echo inputs: message: type: string inputBinding: position: 1 outputs: []', '/Dockstore.cwl', 'DOCKSTORE_CWL');
 INSERT INTO sourcefile VALUES (2, 'FROM docker/whalesay:latest
 
 RUN apt-get -y update && apt-get install -y fortunes
 
 CMD /usr/games/fortune -a | cowsay
 ', '/Dockerfile', 'DOCKERFILE');
-INSERT INTO sourcefile VALUES (3, 'description: "Whalesay deep quotes"
-id: "dockstore-whalesay"
-label: "dockstore whalesay"
-
-dct:creator:
-  foaf:name: "Dockstore Test User"
-', '/Dockstore.cwl', 'DOCKSTORE_CWL');
+INSERT INTO sourcefile VALUES (3, 'cwlVersion: v1.0 class: CommandLineTool baseCommand: echo inputs: message: type: string inputBinding: position: 1 outputs: []', '/Dockstore.cwl', 'DOCKSTORE_CWL');
 INSERT INTO sourcefile VALUES (4, 'task hello {
   String name
 
@@ -529,13 +517,7 @@ RUN apt-get -y update && apt-get install -y fortunes
 
 CMD /usr/games/fortune -a | cowsay
 ', '/Dockerfile', 'DOCKERFILE');
-INSERT INTO sourcefile VALUES (6, 'description: "Whalesay deep quotes"
-id: "dockstore-whalesay"
-label: "dockstore whalesay"
-
-dct:creator:
-  foaf:name: "Dockstore Test User"
-', '/Dockstore.cwl', 'DOCKSTORE_CWL');
+INSERT INTO sourcefile VALUES (6, 'cwlVersion: v1.0 class: CommandLineTool baseCommand: echo inputs: message: type: string inputBinding: position: 1 outputs: []', '/Dockstore.cwl', 'DOCKSTORE_CWL');
 INSERT INTO sourcefile VALUES (7, 'task hello {
   String name
 
@@ -557,26 +539,14 @@ RUN apt-get -y update && apt-get install -y fortunes
 
 CMD /usr/games/fortune -a | cowsay
 ', '/Dockerfile', 'DOCKERFILE');
-INSERT INTO sourcefile VALUES (9, 'description: "Whalesay deep quotes"
-id: "dockstore-whalesay"
-label: "dockstore whalesay"
-
-dct:creator:
-  foaf:name: "Dockstore Test User2"
-', '/Dockstore.cwl', 'DOCKSTORE_CWL');
+INSERT INTO sourcefile VALUES (9, 'cwlVersion: v1.0 class: CommandLineTool baseCommand: echo inputs: message: type: string inputBinding: position: 1 outputs: []', '/Dockstore.cwl', 'DOCKSTORE_CWL');
 INSERT INTO sourcefile VALUES (10, 'FROM docker/whalesay:latest
 
 RUN apt-get -y update && apt-get install -y fortunes
 
 CMD /usr/games/fortune -a | cowsay
 ', '/Dockerfile', 'DOCKERFILE');
-INSERT INTO sourcefile VALUES (11, 'description: "Whalesay deep quotes"
-id: "dockstore-whalesay"
-label: "dockstore whalesay"
-
-dct:creator:
-  foaf:name: "Dockstore Test User2"
-', '/Dockstore.cwl', 'DOCKSTORE_CWL');
+INSERT INTO sourcefile VALUES (11, 'cwlVersion: v1.0 class: CommandLineTool baseCommand: echo inputs: message: type: string inputBinding: position: 1 outputs: []', '/Dockstore.cwl', 'DOCKSTORE_CWL');
 INSERT INTO sourcefile VALUES (12, 'FROM docker/whalesay:latest
 
 RUN apt-get -y update && apt-get install -y fortunes
@@ -1336,7 +1306,7 @@ SELECT pg_catalog.setval('tag_id_seq', 51, true);
 INSERT INTO token VALUES (1, 'imamafakedockstoretoken', NULL, 'dockstore', 1, 'user_A');
 INSERT INTO token VALUES (2, 'imamafakegithubtoken', NULL, 'github.com', 1, 'user_A');
 INSERT INTO token VALUES (4, 'imamafakequaytoken', NULL, 'quay.io', 1, 'user_A');
-INSERT INTO token VALUES (3, 'imamafakebitbuckettoken', 'imamafakebitbuckettokenhelper', 'bitbucket.org', 1, 'user_A');
+--INSERT INTO token VALUES (3, 'imamafakebitbuckettoken', 'imamafakebitbuckettokenhelper', 'bitbucket.org', 1, 'user_A');
 
 
 --
@@ -1350,11 +1320,11 @@ SELECT pg_catalog.setval('token_id_seq', 4, true);
 -- Data for Name: tool; Type: TABLE DATA; Schema: public; Owner: dockstore
 --
 
-INSERT INTO tool VALUES (1, 'Dockstore Test User', NULL, 'Whalesay deep quotes', NULL, 'git@github.com:DockstoreTestUser/dockstore-whalesay.git', false, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-02-16 17:04:59', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'testrepo2', 'dockstore2', 'quay.io/dockstore2/testrepo2', 'QUAY_IO', '', '', false);
-INSERT INTO tool VALUES (2, 'Dockstore Test User2', NULL, 'Whalesay deep quotes', NULL, 'git@github.com:DockstoreTestUser2/quayandgithub.git', false, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:35:29', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'quayandgithub', 'dockstoretestuser2', 'quay.io/dockstoretestuser2/quayandgithub', 'QUAY_IO', '', '', false);
-INSERT INTO tool VALUES (5, NULL, NULL, '', NULL, 'git@github.com:DockstoreTestUser2/dockstore-tool-imports.git', true, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-06-08 14:06:36', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'dockstore-tool-imports', 'dockstoretestuser2', 'quay.io/dockstoretestuser2/dockstore-tool-imports', 'QUAY_IO', '', '', false);
-INSERT INTO tool VALUES (4, NULL, NULL, NULL, NULL, 'git@github.com:DockstoreTestUser2/quayandgithubwdl.git', true, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:36:22', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'quayandgithubwdl', 'dockstoretestuser2', 'quay.io/dockstoretestuser2/quayandgithubwdl', 'QUAY_IO', '', '', false);
-INSERT INTO tool VALUES (3, NULL, NULL, NULL, NULL, 'git@github.com:DockstoreTestUser2/quayandgithubalternate.git', false, NULL, '2016-11-28 15:02:48.557', '/Dockstore.cwl', '/testDir/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:35:57', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'quayandgithubalternate', 'dockstoretestuser2', 'quay.io/dockstoretestuser2/quayandgithubalternate', 'QUAY_IO', '', '', false);
+INSERT INTO tool VALUES (1, 'testuser', NULL, 'Whalesay deep quotes', NULL, 'git@github.com:A/a.git', false, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-02-16 17:04:59', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'a', 'A', 'quay.io/A/a', 'AMAZON_ECR', '', 'test@email.com', true);
+INSERT INTO tool VALUES (2, 'testuser2', NULL, 'Whalesay deep quotes', NULL, 'git@github.com:A2/b1.git', false, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:35:29', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'b1', 'A2', 'quay.io/A2/b1', 'QUAY_IO', '', '', false);
+INSERT INTO tool VALUES (5, NULL, NULL, '', NULL, 'git@github.com:A2/a.git', true, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-06-08 14:06:36', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'a', 'A2', 'quay.io/A2/a', 'QUAY_IO', '', '', false);
+INSERT INTO tool VALUES (4, NULL, NULL, NULL, NULL, 'git@github.com:A2/b3.git', true, NULL, '2016-11-28 15:00:43.873', '/Dockstore.cwl', '/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:36:22', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'b3', 'A2', 'quay.io/A2/b3', 'QUAY_IO', '', '', false);
+INSERT INTO tool VALUES (3, NULL, NULL, NULL, NULL, 'git@github.com:A2/b2.git', false, NULL, '2016-11-28 15:02:48.557', '/Dockstore.cwl', '/testDir/Dockerfile', '/Dockstore.wdl', '2016-03-15 15:35:57', 'AUTO_DETECT_QUAY_TAGS_AUTOMATED_BUILDS', 'b2', 'A2', 'quay.io/A2/b2', 'QUAY_IO', '', '', false);
 
 
 --
@@ -1456,20 +1426,20 @@ INSERT INTO version_sourcefile VALUES (7, 36);
 -- Data for Name: workflow; Type: TABLE DATA; Schema: public; Owner: dockstore
 --
 
-INSERT INTO workflow VALUES (6, NULL, NULL, NULL, NULL, 'git@bitbucket.org:dockstore_testuser2/dockstore-workflow.git', false, NULL, '2016-11-28 15:00:57.148', '/Dockstore.cwl', 'cwl', 'STUB', 'dockstore_testuser2', 'dockstore_testuser2/dockstore-workflow', 'dockstore-workflow', NULL);
-INSERT INTO workflow VALUES (7, NULL, NULL, NULL, NULL, 'git@github.com:DockstoreTestUser2/dockstore-tool-imports.git', false, NULL, '2016-11-28 15:00:57.315', '/Dockstore.cwl', 'cwl', 'STUB', 'DockstoreTestUser2', 'DockstoreTestUser2/dockstore-tool-imports', 'dockstore-tool-imports', NULL);
-INSERT INTO workflow VALUES (8, NULL, NULL, NULL, NULL, 'git@github.com:DockstoreTestUser2/OxoG-Dockstore-Tools.git', false, NULL, '2016-11-28 15:00:57.419', '/Dockstore.cwl', 'cwl', 'STUB', 'DockstoreTestUser2', 'DockstoreTestUser2/OxoG-Dockstore-Tools', 'OxoG-Dockstore-Tools', NULL);
-INSERT INTO workflow VALUES (9, NULL, NULL, NULL, NULL, 'git@github.com:DockstoreTestUser2/test_lastmodified.git', false, NULL, '2016-11-28 15:00:57.482', '/Dockstore.cwl', 'cwl', 'STUB', 'DockstoreTestUser2', 'DockstoreTestUser2/test_lastmodified', 'test_lastmodified', NULL);
-INSERT INTO workflow VALUES (10, NULL, NULL, NULL, NULL, 'git@github.com:DockstoreTestUser2/hello-dockstore-workflow.git', false, NULL, '2016-11-28 15:00:57.593', '/Dockstore.cwl', 'cwl', 'STUB', 'DockstoreTestUser2', 'DockstoreTestUser2/hello-dockstore-workflow', 'hello-dockstore-workflow', NULL);
-INSERT INTO workflow VALUES (12, NULL, NULL, NULL, NULL, 'git@github.com:DockstoreTestUser2/parameter_test_workflow.git', false, NULL, '2016-11-28 15:00:57.788', '/Dockstore.cwl', 'cwl', 'STUB', 'DockstoreTestUser2', 'DockstoreTestUser2/parameter_test_workflow', 'parameter_test_workflow', NULL);
-INSERT INTO workflow VALUES (13, NULL, NULL, NULL, NULL, 'git@github.com:DockstoreTestUser2/quayandgithubwdl.git', false, NULL, '2016-11-28 15:00:57.792', '/Dockstore.cwl', 'cwl', 'STUB', 'DockstoreTestUser2', 'DockstoreTestUser2/quayandgithubwdl', 'quayandgithubwdl', NULL);
-INSERT INTO workflow VALUES (14, NULL, NULL, NULL, NULL, 'git@github.com:DockstoreTestUser2/test_workflow_wdl.git', false, NULL, '2016-11-28 15:00:57.859', '/Dockstore.cwl', 'cwl', 'STUB', 'DockstoreTestUser2', 'DockstoreTestUser2/test_workflow_wdl', 'test_workflow_wdl', NULL);
-INSERT INTO workflow VALUES (16, NULL, NULL, NULL, NULL, 'git@github.com:DockstoreTestUser2/dockstore-whalesay-imports.git', false, NULL, '2016-11-28 15:00:58.068', '/Dockstore.cwl', 'cwl', 'STUB', 'DockstoreTestUser2', 'DockstoreTestUser2/dockstore-whalesay-imports', 'dockstore-whalesay-imports', NULL);
-INSERT INTO workflow VALUES (17, NULL, NULL, NULL, NULL, 'git@github.com:DockstoreTestUser2/quayandgithubalternate.git', false, NULL, '2016-11-28 15:00:58.073', '/Dockstore.cwl', 'cwl', 'STUB', 'DockstoreTestUser2', 'DockstoreTestUser2/quayandgithubalternate', 'quayandgithubalternate', NULL);
-INSERT INTO workflow VALUES (18, NULL, NULL, NULL, NULL, 'git@github.com:DockstoreTestUser2/dockstore_empty_repo.git', false, NULL, '2016-11-28 15:00:58.153', '/Dockstore.cwl', 'cwl', 'STUB', 'DockstoreTestUser2', 'DockstoreTestUser2/dockstore_empty_repo', 'dockstore_empty_repo', NULL);
-INSERT INTO workflow VALUES (19, NULL, NULL, NULL, NULL, 'git@github.com:DockstoreTestUser2/quayandgithub.git', false, NULL, '2016-11-28 15:00:58.157', '/Dockstore.cwl', 'cwl', 'STUB', 'DockstoreTestUser2', 'DockstoreTestUser2/quayandgithub', 'quayandgithub', NULL);
-INSERT INTO workflow VALUES (20, NULL, NULL, NULL, NULL, 'git@github.com:DockstoreTestUser2/dockerhubandgithub.git', false, NULL, '2016-11-28 15:00:57.948', '/Dockstore.cwl', 'cwl', 'STUB', 'DockstoreTestUser2', 'DockstoreTestUser2/dockerhubandgithub', 'dockerhubandgithub', NULL);
-INSERT INTO workflow VALUES (11, NULL, NULL, NULL, NULL, 'git@github.com:DockstoreTestUser2/test_workflow_cwl.git', true, NULL, '2016-11-28 15:00:57.688', '/1st-workflow.cwl', 'cwl', 'FULL', 'DockstoreTestUser2', 'DockstoreTestUser2/test_workflow_cwl', 'test_workflow_cwl', NULL);
+INSERT INTO workflow VALUES (6, NULL, NULL, NULL, NULL, 'git@bitbucket.org:a/a.git', false, NULL, '2016-11-28 15:00:57.148', '/Dockstore.cwl', 'cwl', 'STUB', 'a', 'a/a', 'a', NULL);
+INSERT INTO workflow VALUES (7, NULL, NULL, NULL, NULL, 'git@github.com:A/c.git', false, NULL, '2016-11-28 15:00:57.315', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/c', 'c', NULL);
+INSERT INTO workflow VALUES (8, NULL, NULL, NULL, NULL, 'git@github.com:A/f.git', false, NULL, '2016-11-28 15:00:57.419', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/f', 'f', NULL);
+INSERT INTO workflow VALUES (9, NULL, NULL, NULL, NULL, 'git@github.com:A/k.git', false, NULL, '2016-11-28 15:00:57.482', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/k', 'k', NULL);
+INSERT INTO workflow VALUES (10, NULL, NULL, NULL, NULL, 'git@github.com:A/e.git', false, NULL, '2016-11-28 15:00:57.593', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/e', 'e', NULL);
+INSERT INTO workflow VALUES (12, NULL, NULL, NULL, NULL, 'git@github.com:A/g.git', false, NULL, '2016-11-28 15:00:57.788', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/g', 'g', NULL);
+INSERT INTO workflow VALUES (13, NULL, NULL, NULL, NULL, 'git@github.com:A/j.git', false, NULL, '2016-11-28 15:00:57.792', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/j', 'j', NULL);
+INSERT INTO workflow VALUES (14, NULL, NULL, NULL, NULL, 'git@github.com:A/m.git', false, NULL, '2016-11-28 15:00:57.859', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/m', 'm', NULL);
+INSERT INTO workflow VALUES (16, NULL, NULL, NULL, NULL, 'git@github.com:A/d.git', false, NULL, '2016-11-28 15:00:58.068', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/d', 'd', NULL);
+INSERT INTO workflow VALUES (17, NULL, NULL, NULL, NULL, 'git@github.com:A/i.git', false, NULL, '2016-11-28 15:00:58.073', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/i', 'i', NULL);
+INSERT INTO workflow VALUES (18, NULL, NULL, NULL, NULL, 'git@github.com:A/b.git', false, NULL, '2016-11-28 15:00:58.153', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/b', 'b', NULL);
+INSERT INTO workflow VALUES (19, NULL, NULL, NULL, NULL, 'git@github.com:A/h.git', false, NULL, '2016-11-28 15:00:58.157', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/h', 'h', NULL);
+INSERT INTO workflow VALUES (20, NULL, NULL, NULL, NULL, 'git@github.com:A/a.git', false, NULL, '2016-11-28 15:00:57.948', '/Dockstore.cwl', 'cwl', 'STUB', 'A', 'A/a', 'a', NULL);
+INSERT INTO workflow VALUES (11, NULL, NULL, NULL, NULL, 'git@github.com:A/l.git', true, NULL, '2016-11-28 15:00:57.688', '/1st-workflow.cwl', 'cwl', 'FULL', 'A', 'A/l', 'l', NULL);
 
 
 --

@@ -134,15 +134,6 @@ angular.module('dockstore.ui')
         return gitWebUrl;
       };
 
-      this.getImageReposProvider = function(path) {
-        for (var i = 0; i < dockerRegistryMap.length; i++) {
-          if (path.indexOf(dockerRegistryMap[i].dockerCommand) !== -1) {
-            return dockerRegistryMap[i].enum;
-          }
-        }
-        return null;
-      };
-
       this.getImageReposProviderName = function(imageReposProvider) {
         for (var i = 0; i < dockerRegistryMap.length; i++) {
           if (imageReposProvider === dockerRegistryMap[i].enum) {
@@ -174,7 +165,7 @@ angular.module('dockstore.ui')
         }
 
         // check that the docker registry can be linked to
-        if (imageReposWebUrl === 'empty') {
+        if (imageReposWebUrl === null) {
           return null;
         }
 

@@ -21,7 +21,7 @@ describe('Dockstore workflow search page', function() {
          .first()
          .click()
          .get('#workflow-path')
-         .should('contain', 'DockstoreTestUser2/test_workflow_cwl')
+         .should('contain', 'A/l')
      });
    });
 })

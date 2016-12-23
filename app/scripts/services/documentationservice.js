@@ -53,6 +53,18 @@ angular.module('dockstore.ui')
           path: 'docs/getting-started-with-dockstore.md'
         },
         {
+          slug: 'docker_registries',
+          description: 'This page talks about the various Docker registries supported by Dockstore, and the best practices for using these registries.',
+          name: 'Docker Registries',
+          path: 'docs/docker_registries.md'
+        },
+        {
+          slug: 'public_private_tools',
+          description: 'This page talks about the difference between public and private Dockstore tools.',
+          name: 'Public and Private Tools',
+          path: 'docs/public_private_tools.md'
+        },
+        {
           slug: 'about',
           description: 'This document gives background on Dockstore and what we are trying to accomplish',
           name: 'About Dockstore',

@@ -271,7 +271,9 @@ angular.module('dockstore.ui')
           default_wdl_test_parameter_file: '/test.wdl.json',
           is_published: false,
           scrProvider: 'GitHub',
-          irProvider: 'Quay.io'
+          irProvider: 'Quay.io',
+          private_access: false,
+          tool_maintainer_email: ''
         };
       };
 

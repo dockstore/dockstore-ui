@@ -62,10 +62,10 @@
 <div class="row" ng-show="containerObj">
   <div ng-class="editMode ? 'col-md-7' : 'col-md-8'">
     <h3 id="tool-path">
-      <span ng-show="isVerified()" uib-tooltip="Verified">
+      <span id="verifiedIcon" ng-show="isVerified()" uib-tooltip="Verified">
         <span class="glyphicon glyphicon-ok"></span>
       </span>
-      <span ng-show="containerObj.private_access" uib-tooltip="Private">
+      <span id="lockIcon" ng-show="containerObj.private_access" uib-tooltip="Private">
         <span class="glyphicon glyphicon-lock"></span>
       </span>
       {{
@@ -101,6 +101,7 @@
       <div class="pull-right">
         <div class="btn-group" role="group">
           <button uib-btn-checkbox
+                  id="publishToolButton"
               type="button"
               class="btn btn-warning"
               ng-class="!refreshingContainer && isContainerValid()? '' : 'disabled'"
@@ -110,7 +111,7 @@
               id="publishButton">
             {{ containerObj.is_published ? 'Unpublish' : 'Publish' }}
           </button>
-          <button type="button"
+          <button id="deregisterButton" type="button"
               class="btn btn-danger"
               ng-click="deregisterContainer(containerObj.id)"
               ng-if="containerObj.mode === 'MANUAL_IMAGE_PATH'">
@@ -132,7 +133,7 @@
             class="button contact-button"
             ng-if="!editMode && containerObj.private_access">
           <p>
-            <a href="mailto:{{getRequestAccessEmail()}}?subject=Dockstore%20Request%20for%20Access%20to%20{{containerObj.path}}&body=I%20would%20like%20to%20request%20access%20to%20your%20Docker%20image%20{{containerObj.path}}%20housed%20on%20{{gitReposProviderName}}. %20My%20username%20on%20{{gitReposProviderName}}%20is%20<username>.">
+            <a href="mailto:{{getRequestAccessEmail()}}?subject=Dockstore%20Request%20for%20Access%20to%20{{containerObj.path}}&body=I%20would%20like%20to%20request%20access%20to%20your%20Docker%20image%20{{containerObj.path}}.%20My%20username%20on%20{{getDockerRegistryName()}}%20is%20<username>.">
               Request Access on {{getDockerRegistryName()}}
             </a>
           </p>
@@ -177,11 +178,11 @@
               </a>
             </span>
           </li>
-          <li ng-if="imageReposProvider">
+          <li ng-if="containerObj.registry">
             <div>
               <strong uib-tooltip="Docker registry for the associated Docker images">{{imageReposProviderName}}</strong>:
-              <span ng-if="!imageReposWebUrl">n/a</span>
-              <span ng-if="imageReposWebUrl">
+              <span ng-if="!imageReposWebUrl || checkPrivateOnlyRegistry()">n/a</span>
+              <span ng-if="imageReposWebUrl && !checkPrivateOnlyRegistry()">
               <a ng-href="{{imageReposWebUrl}}" target="_blank">
                 {{imageReposWebUrl}}
               </a>
@@ -505,7 +506,8 @@
                 </span>
               </p>
               <p>Docker Registry:
-                <span ng-if="imageReposProvider">
+                <span ng-if="!imageReposWebUrl || checkPrivateOnlyRegistry()">{{imageReposProviderName}}</span>
+                <span ng-if="imageReposWebUrl && !checkPrivateOnlyRegistry()">
                   <a ng-if="imageReposWebUrl !== null" ng-href="{{imageReposWebUrl}}" target="_blank">
                     {{imageReposProviderName}}
                     <span class="glyphicon glyphicon-new-window"></span>

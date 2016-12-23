@@ -52,6 +52,7 @@
             </label>
             <div class="col-sm-9">
               <input
+                  id="versionTagInput"
                   type="text"
                   class="form-control"
                   name="name"
@@ -78,6 +79,7 @@
             </label>
             <div class="col-sm-9">
               <input
+                  id="gitReferenceInput"
                   type="text"
                   class="form-control"
                   name="reference"
@@ -349,7 +351,7 @@
               ng-disabled="tagEditorForm.$invalid">
             Save Changes
           </button>
-          <button type="submit"
+          <button id="addVersionTagButton" type="submit"
               class="btn btn-primary"
               ng-show="editMode && tagObj.create"
               ng-disabled="tagEditorForm.$invalid">
