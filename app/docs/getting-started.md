@@ -31,7 +31,7 @@ When going through the onboarding wizard, our various dependencies were introduc
 
 You can also call `dockstore --version` which should report the same version as the DockstoreApi shown below in the footer.
     
-In addition to the tools mentioned above you will probably want a editor capable of syntax highlighting Dockerfiles such as [Atom](https://atom.io/).
+In addition to the tools mentioned above you will probably want an editor capable of syntax highlighting Dockerfiles such as [Atom](https://atom.io/).
 
 ## Next Steps
 

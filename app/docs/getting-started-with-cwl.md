@@ -301,23 +301,23 @@ Log onto Quay now and setup a new repository (click the "+" icon).
 
 You must match the name to what I was using previously, so in this case it's `CancerCollaboratory/dockstore-tool-bamstats`.  Also, Dockstore will only work with `Public` repositories currently. Notice I'm selecting "Link to a GitHub Repository Push", this is because we want Quay to automatically build our Docker image every time we update the repository on GitHub.  Very slick!
 
+![Build Trigger](docs/build_all.png)
+
 It will automatically prompt you to setup a "build trigger" after GitHub authenticates you.  Here I select the GitHub repo for `CancerCollaboratory/dockstore-tool-bamstats`.
 
 ![Build Trigger](docs/build_trigger.png)
 
 It will then ask if there are particular branches you want to build, I typically just let it build everything:
 
-![Build Trigger](docs/build_all.png)
-
 So every time you do a commit to your GitHub repo Quay automatially builds and tags a Docker image.  If this is overkill for you, consider setting up particular build trigger regular expressions at this step.
+
+![Build Trigger](docs/run_trigger.png)
 
 It will then ask you where your Dockerfile is located.  Since the Dockerfile is in the root directory of this GitHub repo you can just click next:
 
 ![Build Trigger](docs/dockerfile.png)
 
 At this point you can confirm your settings and "Create Trigger" followed by "Run Trigger Now" to actually perform the build of the Docker images.
-
-![Build Trigger](docs/run_trigger.png)
 
 Build it for `1.25-3` and any or all other branches.  Typically, I build for each release and develop aka latest is built next time I check-in on that branch.
 
