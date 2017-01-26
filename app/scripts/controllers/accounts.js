@@ -34,16 +34,27 @@ angular.module('dockstore.ui')
     'TokenService',
     'WebService',
     'NotificationService',
-    function ($scope, $q, $auth, $location, $window,
-        UserService, TokenService, WebService, NtfnService) {
+    'md5',
+    function($scope, $q, $auth, $location, $window,
+      UserService, TokenService, WebService, NtfnService, md5) {
 
+      $scope.syncingWithGithub = false;
       $scope.userObj = UserService.getUserObj();
+      var gravatarUrl = function(email, defaultImg) {
+        if (email) {
+          return "https://www.gravatar.com/avatar/" + md5.createHash(email) + "?d=" + defaultImg;
+        } else {
+          return defaultImg;
+        }
+      };
+      //const gravatarUrl = (email, defaultImg) => {"https://www.gravatar.com/avatar/" + md5.createHash(email) + "?d=" + defaultImg};
+      $scope.userObj.avatarUrl = gravatarUrl($scope.userObj.email, $scope.userObj.avatarUrl);
 
       $scope.linkGitHubAccount = function() {
         UserService.logout({
           title: 'Link GitHub Account',
           content: 'Please select the option, ' +
-                    '"Sign in with GitHub" to continue.'
+            '"Sign in with GitHub" to continue.'
         });
       };
 
@@ -77,4 +88,17 @@ angular.module('dockstore.ui')
           }
         );
 
-  }]);
+      $scope.updateUserMetadata = function() {
+        $scope.syncingWithGithub = true;
+        UserService.updateUserMetadata()
+          .then(
+            function(user) {
+              $scope.userObj = user;
+              UserService.setUserObj(user);
+              $scope.syncingWithGithub = false;
+            }
+          );
+      };
+
+    }
+  ]);

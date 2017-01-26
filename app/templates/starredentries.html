@@ -1,0 +1,92 @@
+<style>
+  h1.panel-title {
+    font-size: 36px;
+}
+h2.panel-title {
+    font-size: 30px;
+}
+h3.panel-title {
+    font-size: 24px;
+}
+h4.panel-title {
+    font-size: 18px
+}
+h5.panel-title {
+    font-size: 14px
+}
+h6.panel-title {
+    font-size: 10px;
+}
+</style>
+
+<div id="container-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h3 class="available-containers">
+          <span class="glyphicon glyphicon-star"></span>
+          Starred Tools and Workflows
+        </h3>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container view-content">
+  <div class="row">
+    <h3>Starred Tools</h3>
+    <div class="alert alert-info" role="alert" ng-if="starredTools.length==0">
+      <span class="glyphicon glyphicon-warning-sign"></span>
+      You have no starred tools.
+    </div>
+    <div ng-repeat="entries in starredTools">
+      <div ng-if="entries.is_published || isOwner(entries.users)" class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><a href="/containers/{{entries.tool_path}}">{{entries.name + (entries.toolname ? '/' + entries.toolname : '')}}</a></h3>
+        </div>
+        <div class="panel-body">
+          <span class="label"
+                ng-class="entries.is_published ? 'label-primary' : 'label-warning'"
+                title="{{ entries.is_published ? 'Published' : 'Unpublished' }}"
+                uib-tooltip>
+                  {{ entries.is_published ? 'PUB' : 'UNPUB' }}
+          </span>
+          <starring class="pull-right" container-obj="entries"></starring>
+          <p class="update">By {{entries.namespace}}</p>
+          <p><a ng-href={{entries.gitReposWebUrl}}>{{entries.gitReposWebUrl}}</a></p>
+          <p><a ng-href={{entries.imageReposWebUrl}}>{{entries.imageReposWebUrl}}</a></p>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+<div class="row">
+  <h3>Starred Workflows</h3>
+  <div class="alert alert-info" role="alert" ng-if="starredWorkflows.length==0">
+    <span class="glyphicon glyphicon-warning-sign"></span>
+    You have no starred workflows.
+  </div>
+  <div ng-repeat="entries in starredWorkflows">
+    <div ng-if="entries.is_published || isOwner(entries.users)" class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><a href="/workflows/{{entries.path}}">{{entries.repository + (entries.workflowName ? ' (' + entries.workflowName + ')' : '')}}</a></h3>
+      </div>
+      <div class="panel-body">
+        <starring class="pull-right" workflow-obj="entries"></starring>
+        <span class="label"
+              ng-class="entries.is_published ? 'label-primary' : 'label-warning'"
+              title="{{ entries.is_published ? 'Published' : 'Unpublished' }}"
+              uib-tooltip>
+                  {{ entries.is_published ? 'PUB' : 'UNPUB' }}
+          </span>
+        <p class="update">By {{entries.organization}}</p>
+        <a ng-href={{entries.gitReposWebUrl}}>{{entries.gitReposWebUrl}}</a>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+</div>

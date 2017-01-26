@@ -33,7 +33,7 @@ angular.module('dockstore.ui')
     'NotificationService',
     'UtilityService',
     '$location',
-    function ($scope, $q, $sce, WorkflowService, FrmttSrvc, NtfnService, UtilityService, $location) {
+    function($scope, $q, $sce, WorkflowService, FrmttSrvc, NtfnService, UtilityService, $location) {
 
       $scope.labelsEditMode = false;
       $scope.descriptorEnabled = false;
@@ -43,12 +43,12 @@ angular.module('dockstore.ui')
       $scope.showEditWorkflowPath = true;
       $scope.showEditDescriptorType = true;
       $scope.showEditTestParameterPath = true;
-      $scope.pathExtensions = ['cwl','wdl','yml','yaml'];
+      $scope.pathExtensions = ['cwl', 'wdl', 'yml', 'yaml'];
       $scope.modeTooltip = $sce.trustAsHtml('Stub: Private workflow only containing basic metadata<br>Full:  Publishable workflow that can contain versions and sourcefiles');
       $scope.validVersions = [];
       $scope.workflowVersion = '';
       $scope.workflowVersionName = '';
-
+      $scope.starGazers = {};
       // There are 6 tabs, and only 1 tab can be active
       var notActiveTabs = 5;
       if (!$scope.activeTabs) {
@@ -56,7 +56,7 @@ angular.module('dockstore.ui')
         for (var i = 0; i < notActiveTabs; i++) $scope.activeTabs.push(false);
       }
 
-      $scope.checkPage = function(){
+      $scope.checkPage = function() {
         $scope.$broadcast('checkDescPageType');
       };
 
@@ -156,8 +156,8 @@ angular.module('dockstore.ui')
               });
               $scope.updateInfoURLs();
               return workflowObj;
-             },
-             function(response) {
+            },
+            function(response) {
               $scope.setWorkflowDetailsError(
                 'The webservice encountered an error trying to refresh this ' +
                 'workflow, please ensure that the associated ' +
@@ -166,55 +166,55 @@ angular.module('dockstore.ui')
                 response.data
               );
               return $q.reject(response);
-             }
-            );
+            }
+          );
       };
 
-      $scope.getMailToLink = function(workflowObj){
+      $scope.getMailToLink = function(workflowObj) {
         return UtilityService.getMailToLink("workflow", workflowObj.path, window.location, workflowObj.email);
       };
 
-      $scope.checkContentValid = function(){
+      $scope.checkContentValid = function() {
         //will print this when the 'Publish' button is clicked
         var message = 'The file is missing some required fields. Please make sure the file has all the required fields. ';
         var missingMessage = 'The missing field(s):';
-        if($scope.validContent){
-          if($scope.missingContent.length !== 0){
+        if ($scope.validContent) {
+          if ($scope.missingContent.length !== 0) {
             $scope.missingWarning = true;
           }
           return true;
 
-        } else{
-            if($scope.missingContent.length !== 0){
-              $scope.missingWarning = false;
-              for(var i=0;i<$scope.missingContent.length;i++){
-                missingMessage += ' \''+$scope.missingContent[i]+'\'';
-                if(i !== $scope.missingContent.length -1){
-                  missingMessage+=',';
-                }
-              }
-              if(!$scope.refreshingWorkflow){
-                if($scope.workflowObj.descriptorType === 'wdl'){
-                  $scope.setWorkflowDetailsError(
-                    message+missingMessage +
-                    '. Required fields in WDL file: \'task\', \'workflow\', \'call\', \'command\', and \'output\'',''
-                  );
-                }else{
-                  $scope.setWorkflowDetailsError(
-                    message+missingMessage +
-                    '. Required fields in CWL Workflow file: \'inputs\', \'outputs\', \'class: Workflow\', and \'steps\'',''
-                  );
-                }
+        } else {
+          if ($scope.missingContent.length !== 0) {
+            $scope.missingWarning = false;
+            for (var i = 0; i < $scope.missingContent.length; i++) {
+              missingMessage += ' \'' + $scope.missingContent[i] + '\'';
+              if (i !== $scope.missingContent.length - 1) {
+                missingMessage += ',';
               }
             }
+            if (!$scope.refreshingWorkflow) {
+              if ($scope.workflowObj.descriptorType === 'wdl') {
+                $scope.setWorkflowDetailsError(
+                  message + missingMessage +
+                  '. Required fields in WDL file: \'task\', \'workflow\', \'call\', \'command\', and \'output\'', ''
+                );
+              } else {
+                $scope.setWorkflowDetailsError(
+                  message + missingMessage +
+                  '. Required fields in CWL Workflow file: \'inputs\', \'outputs\', \'class: Workflow\', and \'steps\'', ''
+                );
+              }
+            }
+          }
 
-            if($scope.invalidClass){
-              //file is invalid because class is commandLineTool instead of Workflow
-              $scope.setContainerDetailsError(
-                'This CWL file is not a Workflow'+
-                '. Required fields in CWL Workflow file: \'inputs\', \'outputs\', \'class: Workflow\', and \'steps\'',''
-              );
-            }
+          if ($scope.invalidClass) {
+            //file is invalid because class is commandLineTool instead of Workflow
+            $scope.setContainerDetailsError(
+              'This CWL file is not a Workflow' +
+              '. Required fields in CWL Workflow file: \'inputs\', \'outputs\', \'class: Workflow\', and \'steps\'', ''
+            );
+          }
 
           return false;
         }
@@ -281,13 +281,13 @@ angular.module('dockstore.ui')
       $scope.updateInfoURLs = function() {
         /* Git Repository */
         $scope.gitReposProvider = $scope.getGitReposProvider(
-            $scope.workflowObj.gitUrl);
+          $scope.workflowObj.gitUrl);
         $scope.gitReposProviderName = $scope.getGitReposProviderName(
-            $scope.gitReposProvider);
+          $scope.gitReposProvider);
         $scope.gitReposWebUrlFromPath = $scope.getGitReposWebUrlFromPath(
-            $scope.workflowObj.organization,
-            $scope.workflowObj.repository,
-            $scope.gitReposProvider);
+          $scope.workflowObj.organization,
+          $scope.workflowObj.repository,
+          $scope.gitReposProvider);
       };
 
       $scope.getDateTimeString = FrmttSrvc.getDateTimeString;
@@ -300,7 +300,7 @@ angular.module('dockstore.ui')
         });
         var labelStrings = [];
         for (var i = 0; i < sortedLabels.length; i++) {
-            labelStrings.push(sortedLabels[i].value);
+          labelStrings.push(sortedLabels[i].value);
         }
         return labelStrings;
       };
@@ -308,36 +308,36 @@ angular.module('dockstore.ui')
       $scope.checkOverflow = function() {
 
         if ($('#label-values')[0].scrollHeight > $('#label-holder').height()) {
-           return true;
+          return true;
         } else {
           return false;
         }
       };
 
-       $scope.moveToStart = function(element) {
-         $('#label-button-holder').insertBefore($('#' + element));
+      $scope.moveToStart = function(element) {
+        $('#label-button-holder').insertBefore($('#' + element));
 
-       };
+      };
 
       $scope.selectLabelTab = function() {
-       for (var i = 0; i < notActiveTabs; i++) $scope.activeTabs[i] = false;
-       $scope.activeTabs[1] = true;
+        for (var i = 0; i < notActiveTabs; i++) $scope.activeTabs[i] = false;
+        $scope.activeTabs[1] = true;
       };
 
       $scope.toggleLabelsEditMode = function() {
         $scope.labelsEditMode = !$scope.labelsEditMode;
       };
 
-      $scope.submitWorkflowPathEdits = function(){
-        if($scope.workflowObj.workflow_path !== 'undefined'){
+      $scope.submitWorkflowPathEdits = function() {
+        if ($scope.workflowObj.workflow_path !== 'undefined') {
           //get the extension of the workflow path and check if it's within the extensions array
           $scope.checkExtension($scope.workflowObj.workflow_path, 'path');
           $scope.updateWorkflowAndVersions();
         }
       };
 
-      $scope.submitTestParameterPathEdits = function(){
-        if($scope.workflowObj.default_test_parameter_file !== 'undefined'){
+      $scope.submitTestParameterPathEdits = function() {
+        if ($scope.workflowObj.default_test_parameter_file !== 'undefined') {
           $scope.updateWorkflowAndVersions();
         }
       };
@@ -349,11 +349,11 @@ angular.module('dockstore.ui')
         //change on the webservice
         $scope.setDescriptorType($scope.workflowObj.id)
           .then(
-            function(workflowObj){
+            function(workflowObj) {
               $scope.updateWorkflowPathVersion($scope.workflowObj.id)
-              .then(function(workflowObj) {
-                $scope.refreshWorkflow($scope.workflowObj.id,0);
-              });
+                .then(function(workflowObj) {
+                  $scope.refreshWorkflow($scope.workflowObj.id, 0);
+                });
             });
       };
 
@@ -363,7 +363,7 @@ angular.module('dockstore.ui')
             $scope.updateWorkflowPathVersion($scope.workflowObj.id)
               .then(function(workflowObj) {
                 $scope.labelsEditMode = false;
-                $scope.refreshWorkflow($scope.workflowObj.id,0);
+                $scope.refreshWorkflow($scope.workflowObj.id, 0);
               });
           });
       };
@@ -384,53 +384,53 @@ angular.module('dockstore.ui')
         }
       };
 
-      $scope.checkExtension = function(path, type){
+      $scope.checkExtension = function(path, type) {
         // will never have indexPeriod = -1 because by default save button
         // is disabled when there is no extension provided in workflow path
         // and this function is called only when save button is clicked
         var indexPeriod = path.indexOf('.');
-        var ext = path.substring(indexPeriod+1,path.length);
-        if($scope.pathExtensions.indexOf(ext) !== -1){
+        var ext = path.substring(indexPeriod + 1, path.length);
+        if ($scope.pathExtensions.indexOf(ext) !== -1) {
           //extension is one of [cwl,wdl,yaml,yml]
-          if(ext !== $scope.workflowObj.descriptorType && type === 'path'){
+          if (ext !== $scope.workflowObj.descriptorType && type === 'path') {
             //changed made on the path, need to change dropdown
-            if(ext !== 'wdl'){
+            if (ext !== 'wdl') {
               $scope.workflowObj.descriptorType = 'cwl';
-            }else{
+            } else {
               $scope.workflowObj.descriptorType = 'wdl';
             }
-          }else if(ext !== $scope.workflowObj.descriptorType && type === 'dropdown'){
+          } else if (ext !== $scope.workflowObj.descriptorType && type === 'dropdown') {
             //changes made on the dropdown, need to change the path
-            $scope.changeExt(path,$scope.workflowObj.descriptorType);
+            $scope.changeExt(path, $scope.workflowObj.descriptorType);
           }
-        }else if(path === ""){
+        } else if (path === "") {
           //path is empty, should by default put "/Dockstore."+descriptorType
-           $scope.workflowObj.workflow_path = '/Dockstore.'+$scope.workflowObj.descriptorType;
+          $scope.workflowObj.workflow_path = '/Dockstore.' + $scope.workflowObj.descriptorType;
         }
       };
 
-      $scope.changeExt = function(path, desc){
+      $scope.changeExt = function(path, desc) {
         var indexPeriod = path.indexOf('.');
-        var nameNoExt = path.substring(0,indexPeriod);
-        var ext = path.substring(indexPeriod+1,path.length).toLowerCase();
-        if(desc === ""){
+        var nameNoExt = path.substring(0, indexPeriod);
+        var ext = path.substring(indexPeriod + 1, path.length).toLowerCase();
+        if (desc === "") {
           //change extension from uppercase to lowercase(not because of changes in dropdown)
-          $scope.workflowObj.workflow_path = nameNoExt+'.'+ ext;
-          if(ext !== 'wdl'){
+          $scope.workflowObj.workflow_path = nameNoExt + '.' + ext;
+          if (ext !== 'wdl') {
             $scope.workflowObj.descriptorType = 'cwl';
-          }else{
+          } else {
             $scope.workflowObj.descriptorType = 'wdl';
           }
-        }else{
+        } else {
           //change path based on changed on descriptor type
-          $scope.workflowObj.workflow_path = nameNoExt+'.'+desc;
+          $scope.workflowObj.workflow_path = nameNoExt + '.' + desc;
         }
       };
 
-      $scope.setDefaultWorkflowPath = function(workflowId){
+      $scope.setDefaultWorkflowPath = function(workflowId) {
         return WorkflowService.updateWorkflowDefaults(workflowId, $scope.workflowObj)
           .then(
-            function(workflowObj){
+            function(workflowObj) {
               $scope.workflowObj.workflow_path = workflowObj.workflow_path;
               $scope.updateWorkflowObj();
               return workflowObj;
@@ -449,10 +449,10 @@ angular.module('dockstore.ui')
           );
       };
 
-      $scope.setDefaultTestParameterPath = function(workflowId){
+      $scope.setDefaultTestParameterPath = function(workflowId) {
         return WorkflowService.updateWorkflowDefaults(workflowId, $scope.workflowObj)
           .then(
-            function(workflowObj){
+            function(workflowObj) {
               $scope.workflowObj.default_test_parameter_file = workflowObj.default_test_parameter_file;
               $scope.updateWorkflowObj();
               return workflowObj;
@@ -471,12 +471,12 @@ angular.module('dockstore.ui')
           );
       };
 
-      $scope.setDescriptorType = function(workflowId){
+      $scope.setDescriptorType = function(workflowId) {
         //we are calling updateWorkflowDefaults because PUT in this service will also change the descriptor type
         //and required to change the same values as when changing the default path
         return WorkflowService.updateWorkflowDefaults(workflowId, $scope.workflowObj)
           .then(
-            function(workflowObj){
+            function(workflowObj) {
               $scope.workflowObj.descriptorType = workflowObj.descriptorType;
               $scope.updateWorkflowObj();
               return workflowObj;
@@ -493,10 +493,10 @@ angular.module('dockstore.ui')
           );
       };
 
-      $scope.updateWorkflowPathVersion = function(workflowId){
+      $scope.updateWorkflowPathVersion = function(workflowId) {
         return WorkflowService.updateWorkflowPathVersion(workflowId, $scope.workflowObj)
           .then(
-            function(workflowObj){
+            function(workflowObj) {
               $scope.workflowObj.workflow_path = workflowObj.workflow_path;
               $scope.updateWorkflowObj();
               return workflowObj;
@@ -575,21 +575,21 @@ angular.module('dockstore.ui')
         }
       };
 
-     $scope.getRepoUrl = function(organization, repository, registry) {
-      if (registry !== undefined && registry !== null) {
-        if (registry.toLowerCase() === "github") {
-          return 'https://github.com/' + organization + '/' + repository;
-        } else if (registry.toLowerCase() === "bitbucket") {
-          return 'https://bitbucket.org/' + organization + '/' + repository;
-        } else if (registry.toLowerCase() === "gitlab") {
-          return 'https://gitlab.com/' + organization + '/' + repository;
+      $scope.getRepoUrl = function(organization, repository, registry) {
+        if (registry !== undefined && registry !== null) {
+          if (registry.toLowerCase() === "github") {
+            return 'https://github.com/' + organization + '/' + repository;
+          } else if (registry.toLowerCase() === "bitbucket") {
+            return 'https://bitbucket.org/' + organization + '/' + repository;
+          } else if (registry.toLowerCase() === "gitlab") {
+            return 'https://gitlab.com/' + organization + '/' + repository;
+          } else {
+            return null;
+          }
         } else {
           return null;
         }
-      } else {
-        return null;
-      }
-     };
+      };
 
       $scope.onSuccess = function(e) {
         e.clearSelection();
@@ -601,17 +601,17 @@ angular.module('dockstore.ui')
       };
 
       $scope.showLaunchWith = function() {
-      if($scope.workflowObj === undefined ||  $scope.workflowObj === null || $scope.workflowObj.workflowVersions.length === 0 ||
-                        $scope.validVersions.length === 0){
-        return false;
-      }
+        if ($scope.workflowObj === undefined || $scope.workflowObj === null || $scope.workflowObj.workflowVersions.length === 0 ||
+          $scope.validVersions.length === 0) {
+          return false;
+        }
 
         // assign default values
         var full_workflow_path = $scope.workflowObj === null ? "" : $scope.workflowObj.path;
 
         //get the tag name from tag id
-        for(var i=0;i<$scope.validVersions.length;i++){
-          if($scope.workflowVersion === $scope.validVersions[i].id){
+        for (var i = 0; i < $scope.validVersions.length; i++) {
+          if ($scope.workflowVersion === $scope.validVersions[i].id) {
             $scope.workflowVersionName = $scope.validVersions[i].name;
             break;
           }
@@ -619,27 +619,27 @@ angular.module('dockstore.ui')
 
         //get rid of blank option in version dropdown if exists
         // We should be able to replace this by
-        if(document.getElementById('workflowVersions')[0] !== undefined &&
+        if (document.getElementById('workflowVersions')[0] !== undefined &&
           (document.getElementById('workflowVersions')[0].value === '?' ||
-          document.getElementById('workflowVersions')[0].value === '')){
+            document.getElementById('workflowVersions')[0].value === '')) {
           var firstElement = $scope.workflowVersionName;
-          var validVersionsNameArray =[];
-          for(var j=0;j<$scope.validVersions.length;j++){
+          var validVersionsNameArray = [];
+          for (var j = 0; j < $scope.validVersions.length; j++) {
             validVersionsNameArray.push($scope.validVersions[j].name);
           }
           var tempWorkflowVersion = $("#workflowVersions");
-          tempWorkflowVersion.find("option").filter(function(){
+          tempWorkflowVersion.find("option").filter(function() {
             return $(this).text() === firstElement;
-          }).attr('selected',true);
-          tempWorkflowVersion.find("option").filter(function(){
-            return window.jQuery.inArray($(this).text(),validVersionsNameArray) === -1;
+          }).attr('selected', true);
+          tempWorkflowVersion.find("option").filter(function() {
+            return window.jQuery.inArray($(this).text(), validVersionsNameArray) === -1;
           }).remove();
         }
 
         $scope.launchWith =
           "# make a runtime JSON template and fill in desired inputs, outputs, and other parameters" +
-          "\ndockstore workflow convert entry2json --entry " + full_workflow_path + ":" + $scope.workflowVersionName +" > Dockstore.json" +
-          "\nvim Dockstore.json"+
+          "\ndockstore workflow convert entry2json --entry " + full_workflow_path + ":" + $scope.workflowVersionName + " > Dockstore.json" +
+          "\nvim Dockstore.json" +
           "\n# run it locally with the Dockstore CLI" +
           "\ndockstore workflow launch --entry " + full_workflow_path + ":" + $scope.workflowVersionName + " --json Dockstore.json";
 
@@ -654,27 +654,27 @@ angular.module('dockstore.ui')
 
       $scope.refreshVersionLaunchWith = function() {
         //get the workflow versions that are valid
-        if ($scope.workflowObj === null){
+        if ($scope.workflowObj === null) {
           return;
         }
         $scope.validVersions = [];
-        for(var i=0;i<$scope.workflowObj.workflowVersions.length;i++){
-          if($scope.isVersionValid($scope.workflowObj.workflowVersions[i])){
+        for (var i = 0; i < $scope.workflowObj.workflowVersions.length; i++) {
+          if ($scope.isVersionValid($scope.workflowObj.workflowVersions[i])) {
             $scope.validVersions.push($scope.workflowObj.workflowVersions[i]);
           }
         }
         var isVersionValid = false;
         var firstVersion;
-        if($scope.validVersions.length !==0){
+        if ($scope.validVersions.length !== 0) {
           if ($scope.workflowObj.defaultVersion === null) {
             $scope.workflowVersion = $scope.validVersions[0].id;
             $scope.workflowVersionName = $scope.validVersions[0].name;
           } else {
             for (i = 0; i < $scope.validVersions.length; i++) {
               if ($scope.validVersions[i].name === $scope.workflowObj.defaultVersion) {
-                 $scope.workflowVersion = $scope.validVersions[i].id;
-                 $scope.workflowVersionName = $scope.validVersions[i].name;
-                 isVersionValid = true;
+                $scope.workflowVersion = $scope.validVersions[i].id;
+                $scope.workflowVersionName = $scope.validVersions[i].name;
+                isVersionValid = true;
                 break;
               }
             }
@@ -706,4 +706,5 @@ angular.module('dockstore.ui')
       $scope.stripMailTo = function(email) {
         return email.replace(/^mailto:/, '');
       };
-  }]);
+    }
+  ]);

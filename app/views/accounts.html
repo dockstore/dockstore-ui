@@ -30,28 +30,56 @@
 
 <div class="container view-content">
   <div class="row">
-    <div class="col-md-12">
-      <h3>Collaboratory Account</h3>
-
-      <ul class="list-unstyled">
-        <li><strong>Username</strong>: <span id="account-username">{{userObj.username}}</span></li>
-        <li>
-          <strong>Administrator</strong>: <span id="account-is-admin">{{ userObj.isAdmin ? 'Yes' : 'No' }}</span>
-        </li>
-        <li><strong>Groups</strong>:
-          <span ng-show="!userObj.groups || userObj.groups.length <= 0">
-            None
-          </span>
-          <ul ng-show="userObj.groups.length > 0">
-            <li ng-repeat="group in userObj.groups">{{group.name}}</li>
-          </ul>
-        </li>
-      </ul>
-
-      <h3>External Accounts</h3>
-
-      <div accounts></div>
+      <h3>Dockstore Account</h3>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="col-lg-2 col-md-3 col-sm-4 hidden-xs thumbnail">
+            <img ng-src="{{userObj.avatarUrl}}" height="175"/>
+          </div>
+          <div class="col-lg-8 col-md-7 col-sm-6">
+            <ul class="list-unstyled">
+              <li>
+                <strong>Username</strong>: <span id="account-username">{{userObj.username}}</span>
+              </li>
+              <li>
+                <strong>Administrator</strong>: <span id="account-is-admin">{{ userObj.isAdmin ? 'Yes' : 'No' }}</span>
+              </li>
+              <li>
+                <strong>Groups</strong>:
+                <span ng-show="!userObj.groups || userObj.groups.length <= 0">
+                  None
+                </span>
+                <ul ng-show="userObj.groups.length > 0">
+                  <li ng-repeat="group in userObj.groups">{{group.name}}</li>
+                </ul>
+              </li>
+              <li ng-show="userObj.email">
+                <strong>Email</strong>: {{userObj.email}}
+              </li>
+              <li ng-show="userObj.bio">
+                <strong>Bio</strong>: {{userObj.bio}}
+              </li>
+              <li ng-show="userObj.company">
+                <strong>Company</strong>: {{userObj.company}}
+              </li>
+              <li ng-show="userObj.location">
+                <strong>Location</strong>: {{userObj.location}}
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-1">
+            <button id="githubSyncUserButton" type="button" class="btn btn-primary" ng-click="updateUserMetadata()" ng-disabled="syncingWithGithub">
+              <span class="glyphicon glyphicon-refresh"></span>
+              Sync with GitHub
+            </button>
+          </div>
+        </div>
     </div>
+  </div>
+  <div class="row">
+    <h3>External Accounts</h3>
+
+    <div accounts></div>
   </div>
 </div>
 

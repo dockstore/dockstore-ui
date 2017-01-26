@@ -40,7 +40,8 @@ angular
     'hljs',
     'hc.marked',
     'sn.addthis',
-    'ngclipboard'
+    'ngclipboard',
+    'angular-md5'
   ])
   .config(['$authProvider', 'WebService',
     function($authProvider, WebService) {
@@ -52,18 +53,21 @@ angular
         redirectUri: WebService.GITHUB_REDIRECT_URI,
         scope: [WebService.GITHUB_SCOPE]
       });
-  }])
+    }
+  ])
   .config(['localStorageServiceProvider',
     function(localStorageServiceProvider) {
       localStorageServiceProvider.setPrefix('dockstore.ui');
-  }])
+    }
+  ])
   .config(['hljsServiceProvider',
     function(hljsServiceProvider) {
       hljsServiceProvider.setOptions({
         tabReplace: '    '
       });
-  }])
-  .config(['markedProvider', function (markedProvider) {
+    }
+  ])
+  .config(['markedProvider', function(markedProvider) {
     markedProvider.setOptions({
       gfm: true,
       tables: true,
@@ -73,12 +77,17 @@ angular
     });
   }])
   .config(['$routeProvider', '$locationProvider',
-    function ($routeProvider, $locationProvider) {
+    function($routeProvider, $locationProvider) {
       $routeProvider
         .when('/login', {
           templateUrl: 'views/login.html',
           controller: 'LoginCtrl',
           controllerAs: 'Login'
+        })
+        .when('/starred', {
+          templateUrl: 'views/starred.html',
+          controller: 'StarredCtrl',
+          controllerAs: 'Starred'
         })
         .when('/search-containers', {
           templateUrl: 'views/search.html',
@@ -166,45 +175,48 @@ angular
           redirectTo: '/'
         });
       $locationProvider.html5Mode(true);
-  }])
+    }
+  ])
   .factory('webserviceResponseInterceptor', [
-      '$q',
-      '$window',
-      function($q, $window) {
-        return {
-          responseError: function(rejection) {
-            if (rejection.status === -1 && $window.location.pathname !== '/maintenance') {
-              $window.location.href = '/maintenance';
-              return;
-            }
-            return $q.reject(rejection);
+    '$q',
+    '$window',
+    function($q, $window) {
+      return {
+        responseError: function(rejection) {
+          if (rejection.status === -1 && $window.location.pathname !== '/maintenance') {
+            $window.location.href = '/maintenance';
+            return;
           }
-        };
-  }])
+          return $q.reject(rejection);
+        }
+      };
+    }
+  ])
   .factory('authHttpResponseInterceptor', [
-      '$q',
-      '$rootScope',
-      function($q, $rootScope) {
-        return {
-          response: function(response) {
-            if (response.status === 401) {
-              $rootScope.$emit('auth401Refused');
-            }
-            return response || $q.when(response);
-          },
-          responseError: function(rejection) {
-            if (rejection.status === 401) {
-              $rootScope.$emit('auth401Refused');
-            }
-            return $q.reject(rejection);
+    '$q',
+    '$rootScope',
+    function($q, $rootScope) {
+      return {
+        response: function(response) {
+          if (response.status === 401) {
+            $rootScope.$emit('auth401Refused');
           }
-        };
-  }])
+          return response || $q.when(response);
+        },
+        responseError: function(rejection) {
+          if (rejection.status === 401) {
+            $rootScope.$emit('auth401Refused');
+          }
+          return $q.reject(rejection);
+        }
+      };
+    }
+  ])
   .config(['$httpProvider', function($httpProvider) {
     $httpProvider.interceptors.push('webserviceResponseInterceptor');
     $httpProvider.interceptors.push('authHttpResponseInterceptor');
   }])
-  .run(['$rootScope', '$auth', '$location', 'UserService' , 'FormattingService',
+  .run(['$rootScope', '$auth', '$location', 'UserService', 'FormattingService',
     function($rootScope, $auth, $location, UserService, FrmttSrvc) {
       $rootScope.$on('auth401Refused', function() {
         UserService.logout({
@@ -225,7 +237,9 @@ angular
         ];
         var isViewPublic = function(path) {
           for (var i = 0; i < public_views.length; i++) {
-            if (path.indexOf(public_views[i]) !== -1) { return true; }
+            if (path.indexOf(public_views[i]) !== -1) {
+              return true;
+            }
           }
           return false;
         };
@@ -238,4 +252,5 @@ angular
 
       // Initialize the list of docker registries supported for manual tools
       FrmttSrvc.getDockerRegistryList();
-  }]);
+    }
+  ]);

@@ -1,0 +1,5 @@
+<div class=btn-group role="group">
+  <!-- <div class="btn btn-default" ng-disabled="!isLoggedIn()" ng-click="setStarring(userObj, entryId, entryType)" uib-rating ng-model="rate" max="max" on-hover="hoveringOver(value)" on-leave="overStar = null" aria-labelledby="default-rating"></div> -->
+  <button type="button" class="btn btn-default" ng-disabled="!isLoggedIn()" ng-model="rate" uib-btn-checkbox btn-checkbox-true="1" ng-click="setStarring(userObj, entryId, entryType)" btn-checkbox-false="0"><span ng-class="{'glyphicon glyphicon-star-empty': !rate, 'glyphicon glyphicon-star': rate}"></span</button>
+  <button ng-disabled="!starGazers" ng-click="getStargazers(entryId, entryType)" class="btn btn-default">{{total_stars}}</button>
+</div>

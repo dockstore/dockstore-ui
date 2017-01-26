@@ -9,7 +9,7 @@ services:
 jdk:
   - oraclejdk8
 env:
-  - WEBSERVICE_VERSION="1.2-alpha.0"
+  - WEBSERVICE_VERSION="1.2-alpha.1"
 addons:
   firefox: "latest"
   postgresql: "9.4"
