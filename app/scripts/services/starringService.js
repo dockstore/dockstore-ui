@@ -19,7 +19,7 @@
 /**
  * @ngdoc service
  * @name dockstore.ui.StarringService
- * @description
+ * @description Provides HTTP methods to star or unstar tools and workflows.
  * # StarringService
  * Service in the dockstore.ui.
  */
@@ -45,6 +45,16 @@ angular.module('dockstore.ui')
           });
         });
       };
+      /**
+       * @ngdoc function
+       * @name setStar
+       * @methodOf dockstore.ui.StarringService
+       * @description Stars the tool/workflow with the user
+       * @param  {obj} user      User object
+       * @param  {number} entryId   The ID of the tool/workflow
+       * @param  {string} entryType "workflow" or "container"
+       * @return {obj}           Reponse object
+       */
       this.setStar = function(user, entryId, entryType) {
         return $q(function(resolve, reject) {
           $http({
@@ -64,6 +74,17 @@ angular.module('dockstore.ui')
           });
         });
       };
+      /**
+       * @ngdoc method
+       * @name setUnstar
+       * @methodOf dockstore.ui.StarringService
+       * @description
+       * Unstars the tool/workflow with the user
+       * @param  {obj} user      The user object
+       * @param  {number} entryId   The ID of the tool/workflow
+       * @param  {string} entryType "workflow" or "container"
+       * @return {Obj}           Reponse
+       */
       this.setUnstar = function(user, entryId, entryType) {
         return $q(function(resolve, reject) {
           $http({

@@ -17,7 +17,7 @@
 'use strict';
 
 /**
- * @ngdoc function
+ * @ngdoc controller
  * @name dockstore.ui.controller:StarringCtrl
  * @description
  * # StarringCtrl
@@ -69,7 +69,6 @@ angular.module('dockstore.ui')
                 }
               });
               return match;
-
             },
             function(response) {
               $scope.setWorkflowDetailsError(

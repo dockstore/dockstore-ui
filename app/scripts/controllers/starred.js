@@ -17,10 +17,10 @@
 'use strict';
 
 /**
- * @ngdoc function
- * @name dockstore.ui.controller:LoginCtrl
+ * @ngdoc controller
+ * @name dockstore.ui.controller:StarredCtrl
  * @description
- * # LoginCtrl
+ * # StarredCtrl
  * Controller of the dockstore.ui
  */
 angular.module('dockstore.ui')

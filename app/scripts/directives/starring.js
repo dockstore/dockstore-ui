@@ -19,6 +19,7 @@
 /**
  * @ngdoc directive
  * @name dockstore.ui.directive:starring
+ * @restrict AE
  * @description
  * # starring
  */
@@ -31,7 +32,6 @@ angular.module('dockstore.ui')
         workflowObj: '=',
         containerObj: '=',
         starGazers: '='
-
       },
 
       link: function postLink(scope, element, attrs) {

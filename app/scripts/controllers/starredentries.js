@@ -17,8 +17,8 @@
 'use strict';
 
 /**
- * @ngdoc function
- * @name dockstore.ui.controller:starredEntries
+ * @ngdoc controller
+ * @name dockstore.ui.controller:StarredEntriesCtrl
  * @description
  * # StarredEntriesCtrl
  * Controller of the dockstore.ui

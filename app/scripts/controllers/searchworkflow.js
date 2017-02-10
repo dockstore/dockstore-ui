@@ -17,8 +17,8 @@
 'use strict';
 
 /**
- * @ngdoc function
- * @name dockstore.ui.controller:SearchCtrl
+ * @ngdoc controller
+ * @name dockstore.ui.controller:SearchWorkflowCtrl
  * @description
  * # SearchCtrl
  * Controller of the dockstore.ui

@@ -53,8 +53,10 @@ h6.panel-title {
           </span>
           <starring class="pull-right" container-obj="entries"></starring>
           <p class="update">By {{entries.namespace}}</p>
+
           <p><a ng-href={{entries.gitReposWebUrl}}>{{entries.gitReposWebUrl}}</a></p>
           <p><a ng-href={{entries.imageReposWebUrl}}>{{entries.imageReposWebUrl}}</a></p>
+
         </div>
       </div>
       </div>
@@ -65,10 +67,12 @@ h6.panel-title {
   <h3>Starred Workflows</h3>
   <div class="alert alert-info" role="alert" ng-if="starredWorkflows.length==0">
     <span class="glyphicon glyphicon-warning-sign"></span>
+
     You have no starred workflows.
   </div>
   <div ng-repeat="entries in starredWorkflows">
     <div ng-if="entries.is_published || isOwner(entries.users)" class="col-lg-4 col-md-6 col-sm-8 col-xs-12">
+
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><a href="/workflows/{{entries.path}}">{{entries.repository + (entries.workflowName ? ' (' + entries.workflowName + ')' : '')}}</a></h3>

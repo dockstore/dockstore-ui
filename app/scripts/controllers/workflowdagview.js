@@ -17,7 +17,7 @@
 'use strict';
 
 /**
- * @ngdoc function
+ * @ngdoc controller
  * @name dockstore.ui.controller:WorkflowDagView
  * @description
  * # WorkflowDagViewCtrl

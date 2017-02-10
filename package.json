@@ -24,6 +24,7 @@
     "grunt-insert": "^0.1.0",
     "grunt-newer": "^1.1.0",
     "grunt-ng-annotate": "^2.0.2",
+    "grunt-ngdocs": "^0.2.10",
     "grunt-svgmin": "^3.3.0",
     "grunt-usemin": "^3.0.0",
     "grunt-wiredep": "^3.0.1",

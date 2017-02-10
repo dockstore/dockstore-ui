@@ -19,6 +19,7 @@
 /**
  * @ngdoc directive
  * @name dockstore.ui.directive:starredEntries
+ * @restrict AE
  * @description
  * # starredEntries
  */

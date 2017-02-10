@@ -17,10 +17,10 @@
 'use strict';
 
 /**
- * @ngdoc function
- * @name dockstore.ui.controller:StarringCtrl
+ * @ngdoc controller
+ * @name dockstore.ui.controller:StargazersCtrl
  * @description
- * # StarringCtrl
+ * # StargazersCtrl
  * Controller of the dockstore.ui
  */
 

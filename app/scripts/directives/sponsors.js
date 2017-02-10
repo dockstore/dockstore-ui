@@ -19,6 +19,7 @@
 /**
  * @ngdoc directive
  * @name dockstore.ui.directive:sponsors
+ * @restrict AE
  * @description
  * # sponsors
  */

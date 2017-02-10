@@ -468,9 +468,12 @@ module.exports = function (grunt) {
           match: "<!-- git version -->"
       }
     },
+    ngdocs: {
+	all: ['app/scripts/**/*.js']
+    }
 
   });
-
+  grunt.loadNpmTasks('grunt-ngdocs');
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
@@ -484,7 +487,8 @@ module.exports = function (grunt) {
       'autoprefixer:server',
       'copy:styles',
       'connect:livereload',
-      'watch'
+      'watch',
+      'grunt-ngdocs'
     ]);
   });
 
@@ -532,6 +536,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', [
     'newer:jshint',
-    'build'
+    'build',
+    'ngdocs'
   ]);
 };
