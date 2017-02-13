@@ -166,7 +166,7 @@
                   ng-minlength="3"
                   ng-maxlength="128"
                   ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(cwl|yaml|yml)/i"
-                  required
+                  ng-required="!(tagObj.cwl_path.length || tagObj.wdl_path.length)"
                  uib-tooltip
                   title="Relative path to the CWL Descriptor in the Git repository."
                   placeholder="e.g. /Dockstore.cwl"
@@ -174,7 +174,7 @@
               <div
                   class="form-error-messages"
                   ng-messages="tagEditorForm.cwl_path.$error"
-                  ng-if="tagEditorForm.cwl_path.$touched">
+                  >
                 <div ng-messages-include="templates/validation/tags/descriptorpath.html">
                 </div>
               </div>
@@ -193,7 +193,7 @@
                 ng-minlength="3"
                 ng-maxlength="128"
                 ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.wdl$/i"
-                required
+                ng-required="!(tagObj.cwl_path.length || tagObj.wdl_path.length)"
                uib-tooltip
                 title="Relative path to the WDL Descriptor in the Git repository."
                 placeholder="e.g. /Dockstore.wdl"
@@ -201,7 +201,7 @@
               <div
                 class="form-error-messages"
                 ng-messages="tagEditorForm.wdl_path.$error"
-                ng-if="tagEditorForm.wdl_path.$touched">
+                >
                 <div ng-messages-include="templates/validation/tags/descriptorpath.html">
                 </div>
               </div>

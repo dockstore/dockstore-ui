@@ -206,8 +206,6 @@ angular.module('dockstore.ui')
                  }
                }
                return false;
-             } else{
-               return false;
              }
            }
          } else {
@@ -417,7 +415,6 @@ angular.module('dockstore.ui')
             $scope.expectedFilename = 'Descriptor';
             // prepare Descriptor Imports drop-down
             $scope.fileList = extracted(fileType);
-
             $scope.selectDropdownOptions(versionChange, descriptorTypeChange, fileNameChange);
 
             var file = $scope.getSecondaryDescriptorFile($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName, $scope.selFileName);
@@ -425,7 +422,6 @@ angular.module('dockstore.ui')
           case 'testparameter':
             $scope.expectedFilename = 'Test Parameter File';
             $scope.fileList = extracted(testFileType);
-
             $scope.selectDropdownOptions(versionChange, descriptorTypeChange, fileNameChange);
 
             var testjson = $scope.getTestJson($scope.containerObj.id, $scope.selTagName, $scope.selDescriptorName,$scope.selFileName, testFileType);
@@ -446,13 +442,19 @@ angular.module('dockstore.ui')
 
       $scope.selectDropdownOptions = function(versionChange, descriptorTypeChange, fileNameChange) {
         if (versionChange && $scope.filteredVersions.length > 0) {
-          $scope.selTagName = $scope.filteredVersions[0];
+          // Retain the previous selected version if possible
+          if (!$.inArray($scope.selTagName, $scope.filteredVersions)) {
+            $scope.selTagName = $scope.filteredVersions[0];
+          }
         }
         if (descriptorTypeChange && $scope.filteredDescriptorType.length > 0) {
-          $scope.selDescriptorName = $scope.filteredDescriptorType[0];
+          // Retain the previous selected descriptor name if possible
+          if (!$.inArray($scope.selDescriptorName, $scope.filteredDescriptorType)) {
+            $scope.selDescriptorName = $scope.filteredDescriptorType[0];
+          }
         }
         if (fileNameChange && $scope.fileList.length > 0) {
-          $scope.selFileName = $scope.fileList[0];
+            $scope.selFileName = $scope.fileList[0];
         }
       };
 
