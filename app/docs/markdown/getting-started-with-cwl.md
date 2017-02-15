@@ -9,20 +9,20 @@ It is recommended that you have the following minimum fields:
     doc: <description>
     id: <id>
     label: <label>
-    
+
     cwlVersion: v1.0
-    
+
     dct:creator:
       foaf:name: <name>
 
 Again, we provide an example from the [dockstore-tool-bamstats](https://github.com/CancerCollaboratory/dockstore-tool-bamstats) repository:
 
     #!/usr/bin/env cwl-runner
-    
+
     class: CommandLineTool
     id: "BAMStats"
     label: "BAMStats tool"
-    cwlVersion: v1.0 
+    cwlVersion: v1.0
     doc: |
         ![build_status](https://quay.io/repository/collaboratory/dockstore-tool-bamstats/status)
         A Docker container for the BAMStats command. See the [BAMStats](http://bamstats.sourceforge.net/) website for more information.
@@ -31,17 +31,17 @@ Again, we provide an example from the [dockstore-tool-bamstats](https://github.c
       "@id": "http://orcid.org/0000-0002-7681-6415"
       foaf:name: Brian O'Connor
       foaf:mbox: "mailto:briandoconnor@gmail.com"
-    
+
     requirements:
       - class: DockerRequirement
         dockerPull: "quay.io/collaboratory/dockstore-tool-bamstats:1.25-6"
-    
+
     hints:
       - class: ResourceRequirement
         coresMin: 1
         ramMin: 4092 #"the process requires at least 4G of RAM
         outdirMin: 512000
-    
+
     inputs:
       mem_gb:
         type: int
@@ -49,14 +49,14 @@ Again, we provide an example from the [dockstore-tool-bamstats](https://github.c
         doc: "The memory, in GB, for the reporting tool"
         inputBinding:
           position: 1
-    
+
       bam_input:
         type: File
         doc: "The BAM file used as input, it must be sorted."
-        format: "http://edamontology.org/format_2572" 
+        format: "http://edamontology.org/format_2572"
         inputBinding:
           position: 2
-    
+
     outputs:
       bamstats_report:
         type: File
@@ -65,7 +65,7 @@ Again, we provide an example from the [dockstore-tool-bamstats](https://github.c
           glob: bamstats_report.zip
         doc: "A zip file that contains the HTML report and various graphics."
 
-    
+
     baseCommand: ["bash", "/usr/local/bin/bamstats"]
 
 You can see this tool takes two inputs, a parameter to control memory usage and a BAM file (binary sequence alignment file).  It produces one output, a zip file, that contains various HTML reports that BamStats creates.
@@ -97,7 +97,7 @@ dct:creator:
 
 This section includes the tool author referenced by Dockstore. It is open to your interpretation whether that is the person that registers the tool, the person who made the Docker image, or the developer of the original tool.  I'm biased towards the person that registers the tool since that is likely to be the primary contact when asking questions about how the tool was setup.
 
-You can register for an [ORCID](http://orcid.org/) (a digital identifer for researchers) or use an email address for your id.  
+You can register for an [ORCID](http://orcid.org/) (a digital identifer for researchers) or use an email address for your id.
 
 ```
 requirements:
@@ -124,11 +124,11 @@ This may or may not be honoured by the tool calling this CWL but at least it giv
         doc: "The memory, in GB, for the reporting tool"
         inputBinding:
           position: 1
-    
+
       bam_input:
         type: File
         doc: "The BAM file used as input, it must be sorted."
-        format: "http://edamontology.org/format_2572" 
+        format: "http://edamontology.org/format_2572"
         inputBinding:
           position: 2
 
@@ -201,12 +201,12 @@ ore-tool-bamstats/./datastore/launcher-77a75bfe-8b88-49b2-9b81-94292b00e299/work
 cwltool stdout:
         {
             "bamstats_report": {
-                "format": "http://edamontology.org/format_3615", 
-                "checksum": "sha1$ae31df74f0c0f49f06dc2564a019659073d79335", 
-                "basename": "bamstats_report.zip", 
-                "location": "file:///home/dyuen/dockstore-tool-bamstats/./datastore/launcher-77a75bfe-8b88-49b2-9b81-94292b00e299/outputs/bamstats_report.zip", 
-                "path": "/home/dyuen/dockstore-tool-bamstats/./datastore/launcher-77a75bfe-8b88-49b2-9b81-94292b00e299/outputs/bamstats_report.zip", 
-                "class": "File", 
+                "format": "http://edamontology.org/format_3615",
+                "checksum": "sha1$ae31df74f0c0f49f06dc2564a019659073d79335",
+                "basename": "bamstats_report.zip",
+                "location": "file:///home/dyuen/dockstore-tool-bamstats/./datastore/launcher-77a75bfe-8b88-49b2-9b81-94292b00e299/outputs/bamstats_report.zip",
+                "path": "/home/dyuen/dockstore-tool-bamstats/./datastore/launcher-77a75bfe-8b88-49b2-9b81-94292b00e299/outputs/bamstats_report.zip",
+                "class": "File",
                 "size": 31975
             }
         }
@@ -273,7 +273,7 @@ cwltool --non-strict --enable-net --outdir /home/ubuntu/gitroot/dockstore-tool-b
 **Tip:** the `dockstore` CLI automatically create a `datastore` directory in the current working directory where you execute the command and uses it for inputs/outputs.  It can get quite large depending on the tool/inputs/outputs being used.  Plan accordingly e.g. execute the dockstore CLI in a directory located on a partition with sufficient storage.
 
 ## Adding a Test Parameter File
-We are able register the above input parameterization of the tool into Dockstore so that users can see and test an example with our tool. Users can manually add test parameter files for a given tool tag or workflow version through both the command line and the versions tab in the UI. 
+We are able register the above input parameterization of the tool into Dockstore so that users can see and test an example with our tool. Users can manually add test parameter files for a given tool tag or workflow version through both the command line and the versions tab in the UI.
 
 **Tip:** Make sure that any required input files are given as URLs so that a user can run the example successfully.
 
@@ -330,7 +330,7 @@ And I do, so this Docker image has been built successfully by Quay and is ready 
 
 ## Describe Your Tool in WDL
 
-It is also possible to describe tools via the [WDL language](https://github.com/broadinstitute/wdl). A tool can either be described in CWL-only or can be described with both WDL and CWL.   
+It is also possible to describe tools via the [WDL language](https://github.com/broadinstitute/wdl). A tool can either be described in CWL-only or can be described with both WDL and CWL.
 
 In WDL, a tool can also be described as a one task WDL workflow.
 
@@ -338,7 +338,7 @@ We provide a hello world example as follows:
 
     task hello {
       String name
-    
+
       command {
         echo 'hello ${name}!'
       }
@@ -346,7 +346,7 @@ We provide a hello world example as follows:
         File response = stdout()
       }
     }
-    
+
     workflow test {
       call hello
     }

@@ -14,7 +14,7 @@ For those of you that use [Docker Hub](https://hub.docker.com/), an extremely po
 * [Sign up for an account on Quay.io...](https://quay.io/) (Recommended)
 * [Sign up for an account on Docker Hub...](https://hub.docker.com/) (Optional if you've established a quay.io account)
 
-## Tool Development Environment 
+## Tool Development Environment
 
 When going through the onboarding wizard, our various dependencies were introduced. If you have not completed the onboarding wizard, please browse to [onboarding](/onboarding) and then return here.  Verify that the dependencies are properly installed by opening a terminal and executing the following. You should see very similar output. If there are errors make sure you follow the setup instructions carefully:
 
@@ -30,7 +30,7 @@ When going through the onboarding wizard, our various dependencies were introduc
     /usr/local/bin/cwltool 1.0.20161114152756
 
 You can also call `dockstore --version` which should report the same version as the DockstoreApi shown below in the footer.
-    
+
 In addition to the tools mentioned above you will probably want an editor capable of syntax highlighting Dockerfiles such as [Atom](https://atom.io/).
 
 ## Next Steps

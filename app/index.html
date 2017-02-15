@@ -27,188 +27,190 @@
   <!-- bower:css -->
   <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css" />
   <link rel="stylesheet" href="bower_components/highlightjs/styles/default.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap-toc/bootstrap-toc.css" />
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css(.tmp) styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
   <link rel="stylesheet" href="styles/jquery.qtip.css">
-
+  <link rel="stylesheet" href="bower_components/jquery-colorbox/example1/colorbox.css"/>
   <!-- endbuild -->
 </head>
-<body ng-app="dockstore.ui">
+<body data-spy="scroll" data-target="#toc" ng-app="dockstore.ui">
 
-  <!-- Navigation - Main Menu -->
-  <div navbar></div>
-  <div toaster-container></div>
+<!-- Navigation - Main Menu -->
+<div navbar></div>
+<div toaster-container></div>
 
-  <!-- Headers -->
+<!-- Headers -->
 
+<!-- Page Content - ngView -->
 
-  <!-- Page Content - ngView -->
-  <div ng-view></div>
+<div ng-view></div>
 
-  <!-- Footer -->
-  <div id="footer">
-    <div class="container">
-      <div class="footer">
+<!-- Footer -->
+<div id="footer">
+  <div class="container">
+    <div class="footer">
         <span class="about">
           <a class="white-link" href="/docs/about">About Dockstore</a>
         </span>
-        <span class="contact">
+      <span class="contact">
           Can't find what you're looking for?
           <a class="white-link" href="https://gitter.im/ga4gh/dockstore">Chat With Us on Gitter&raquo;</a>
         </span>
-        <span class="social">
+      <span class="social">
           <img src="images/github.png"><a href="https://github.com/ga4gh/dockstore">Github Repository</a>
           <img src="images/twitter.png"><a href="https://twitter.com/DockstoreOrg">Follow Us</a>
         </span>
-        <span style="font-size: 12px; line-height: 1em">
+      <span style="font-size: 12px; line-height: 1em">
 	        <!-- git version -->
           <div footnote></div>
         </span>
-      </div>
     </div>
   </div>
+</div>
 
+<!-- AddThis (Sharing Icons) -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-564e22ffb3fcb698&async=1"></script>
 
-  <!-- AddThis (Sharing Icons) -->
-  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-564e22ffb3fcb698&async=1"></script>
+<!-- build:js(.) scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/angular-touch/angular-touch.js"></script>
+<script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
+<script src="bower_components/AngularJS-Toaster/toaster.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/lodash/lodash.js"></script>
+<script src="bower_components/graphlib/dist/graphlib.core.js"></script>
+<script src="bower_components/cytoscape/dist/cytoscape.js"></script>
+<script src="bower_components/dagre/dist/dagre.core.js"></script>
+<script src="bower_components/dagre/dist/dagre.core.min.js"></script>
+<script src="bower_components/cytoscape-dagre/cytoscape-dagre.js"></script>
+<script src="bower_components/marked/lib/marked.js"></script>
+<script src="bower_components/angular-marked/dist/angular-marked.js"></script>
+<script src="bower_components/angular-messages/angular-messages.js"></script>
+<script src="bower_components/angular-addthis/dist/angular-addthis.js"></script>
+<script src="bower_components/ev-emitter/ev-emitter.js"></script>
+<script src="bower_components/imagesloaded/imagesloaded.js"></script>
+<script src="bower_components/qtip2/jquery.qtip.js"></script>
+<script src="bower_components/qtip2/basic/jquery.qtip.js"></script>
+<script src="bower_components/cytoscape-qtip/cytoscape-qtip.js"></script>
+<script src="bower_components/highlightjs/highlight.pack.js"></script>
+<script src="bower_components/angular-highlightjs/build/angular-highlightjs.js"></script>
+<script src="bower_components/clipboard/dist/clipboard.js"></script>
+<script src="bower_components/ngclipboard/dist/ngclipboard.js"></script>
+<script src="bower_components/angular-md5/angular-md5.js"></script>
+<script src="bower_components/jquery-colorbox/jquery.colorbox.js"></script>
+<script src="bower_components/bootstrap-toc/bootstrap-toc.js"></script>
+<script src="bower_components/showdown/dist/showdown.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+<!-- Satellizer - Modified for Dockstore -->
+<script src="scripts/libs/satellizer/satellizer-ds.js"></script>
 
-  <!-- build:js(.) scripts/vendor.js -->
-  <!-- bower:js -->
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="bower_components/jquery/dist/jquery.js"></script>
-  <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
-  <script src="bower_components/angular-animate/angular-animate.js"></script>
-  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-  <script src="bower_components/angular-resource/angular-resource.js"></script>
-  <script src="bower_components/angular-route/angular-route.js"></script>
-  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-  <script src="bower_components/angular-touch/angular-touch.js"></script>
-  <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
-  <script src="bower_components/AngularJS-Toaster/toaster.js"></script>
-  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-  <script src="bower_components/lodash/lodash.js"></script>
-  <script src="bower_components/graphlib/dist/graphlib.core.js"></script>
-  <script src="bower_components/cytoscape/dist/cytoscape.js"></script>
-  <script src="bower_components/dagre/dist/dagre.core.js"></script>
-  <script src="bower_components/dagre/dist/dagre.core.min.js"></script>
-  <script src="bower_components/cytoscape-dagre/cytoscape-dagre.js"></script>
-  <script src="bower_components/marked/lib/marked.js"></script>
-  <script src="bower_components/angular-marked/dist/angular-marked.js"></script>
-  <script src="bower_components/angular-messages/angular-messages.js"></script>
-  <script src="bower_components/angular-addthis/dist/angular-addthis.js"></script>
-  <script src="bower_components/ev-emitter/ev-emitter.js"></script>
-  <script src="bower_components/imagesloaded/imagesloaded.js"></script>
-  <script src="bower_components/qtip2/jquery.qtip.js"></script>
-  <script src="bower_components/qtip2/basic/jquery.qtip.js"></script>
-  <script src="bower_components/cytoscape-qtip/cytoscape-qtip.js"></script>
-  <script src="bower_components/highlightjs/highlight.pack.js"></script>
-  <script src="bower_components/angular-highlightjs/build/angular-highlightjs.js"></script>
-  <script src="bower_components/clipboard/dist/clipboard.js"></script>
-  <script src="bower_components/ngclipboard/dist/ngclipboard.js"></script>
-  <script src="bower_components/angular-md5/angular-md5.js"></script>
-  <!-- endbower -->
-  <!-- endbuild -->
-  <!-- Satellizer - Modified for Dockstore -->
-  <script src="scripts/libs/satellizer/satellizer-ds.js"></script>
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="scripts/app.js"></script>
+<script src="scripts/services/webservice.js"></script>
+<script src="scripts/controllers/login.js"></script>
+<script src="scripts/services/notificationservice.js"></script>
+<script src="scripts/services/userservice.js"></script>
+<script src="scripts/services/tokenservice.js"></script>
+<script src="scripts/services/containerservice.js"></script>
+<script src="scripts/services/workflowservice.js"></script>
+<script src="scripts/services/starringService.js"></script>
+<script src="scripts/directives/navbar.js"></script>
+<script src="scripts/controllers/navbar.js"></script>
+<script src="scripts/directives/footnote.js"></script>
+<script src="scripts/controllers/footnote.js"></script>
+<script src="scripts/controllers/search.js"></script>
+<script src="scripts/controllers/searchworkflow.js"></script>
+<script src="scripts/controllers/containereditor.js"></script>
+<script src="scripts/controllers/workfloweditor.js"></script>
+<script src="scripts/controllers/documentation.js"></script>
+<script src="scripts/controllers/tokens.js"></script>
+<script src="scripts/controllers/accounts.js"></script>
+<script src="scripts/controllers/starring.js"></script>
+<script src="scripts/controllers/stargazers.js"></script>
+<script src="scripts/directives/stargazers.js"></script>
+<script src="scripts/directives/starring.js"></script>
+<script src="scripts/directives/accounts.js"></script>
+<script src="scripts/directives/tokensgrid.js"></script>
+<script src="scripts/directives/containersgrid.js"></script>
+<script src="scripts/directives/workflowsgrid.js"></script>
+<script src="scripts/directives/copytext.js"></script>
+<script src="scripts/controllers/copytext.js"></script>
+<script src="scripts/controllers/containersgrid.js"></script>
+<script src="scripts/controllers/workflowsgrid.js"></script>
+<script src="scripts/filters/paginationfilter.js"></script>
+<script src="scripts/directives/containerdetails.js"></script>
+<script src="scripts/directives/workflowdetails.js"></script>
+<script src="scripts/controllers/containerdetails.js"></script>
+<script src="scripts/controllers/workflowdetails.js"></script>
+<script src="scripts/controllers/tokensgrid.js"></script>
+<script src="scripts/controllers/onboarding.js"></script>
+<script src="scripts/directives/workflowversionsgrid.js"></script>
+<script src="scripts/directives/workflowtoolsgrid.js"></script>
+<script src="scripts/directives/workflowdagview.js"></script>
+<script src="scripts/directives/versionsgrid.js"></script>
+<script src="scripts/controllers/versionsgrid.js"></script>
+<script src="scripts/controllers/workflowversionsgrid.js"></script>
+<script src="scripts/controllers/workflowtoolsgrid.js"></script>
+<script src="scripts/controllers/workflowdagview.js"></script>
+<script src="scripts/controllers/document.js"></script>
+<script src="scripts/services/documentationservice.js"></script>
+<script src="scripts/controllers/home.js"></script>
+<script src="scripts/filters/previewfilter.js"></script>
+<script src="scripts/controllers/registercontainer.js"></script>
+<script src="scripts/controllers/registerworkflow.js"></script>
+<script src="scripts/controllers/containerviewer.js"></script>
+<script src="scripts/controllers/workflowviewer.js"></script>
+<script src="scripts/directives/disquscomments.js"></script>
+<script src="scripts/controllers/authentication.js"></script>
+<script src="scripts/directives/registercontainer.js"></script>
+<script src="scripts/directives/registerworkflow.js"></script>
+<script src="scripts/directives/containerfileviewer.js"></script>
+<script src="scripts/directives/workflowfileviewer.js"></script>
+<script src="scripts/directives/fileviewer.js"></script>
+<script src="scripts/controllers/containerfileviewer.js"></script>
+<script src="scripts/controllers/workflowfileviewer.js"></script>
+<script src="scripts/controllers/fileviewer.js"></script>
+<script src="scripts/controllers/maintenance.js"></script>
+<script src="scripts/directives/tageditor.js"></script>
+<script src="scripts/directives/versiontageditor.js"></script>
+<script src="scripts/controllers/tageditor.js"></script>
+<script src="scripts/controllers/versiontageditor.js"></script>
+<script src="scripts/services/formatting.js"></script>
+<script src="scripts/services/UtilityService.js"></script>
+<script src="scripts/filters/hiddentagsfilter.js"></script>
+<script src="scripts/directives/homeFooter.js"></script>
+<script src="scripts/directives/sponsors.js"></script>
+<script src="scripts/directives/onFinishRender.js"></script>
+<script src="scripts/controllers/starred.js"></script>
+<script src="scripts/directives/starred.js"></script>
+<script src="scripts/controllers/starredentries.js"></script>
+<script src="scripts/directives/starredentries.js"></script>
+<!--<script src="http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>-->
+<!--<script src="https://cdn.rawgit.com/cpettitt/dagre/v0.7.4/dist/dagre.min.js"></script>-->
+<!--<script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-dagre/1.1.2/cytoscape-dagre.js"></script>-->
+<!-- endbuild -->
 
-  <!-- build:js({.tmp,app}) scripts/scripts.js -->
-  <script src="scripts/app.js"></script>
-  <script src="scripts/services/webservice.js"></script>
-  <script src="scripts/controllers/login.js"></script>
-  <script src="scripts/services/notificationservice.js"></script>
-  <script src="scripts/services/userservice.js"></script>
-  <script src="scripts/services/tokenservice.js"></script>
-  <script src="scripts/services/containerservice.js"></script>
-  <script src="scripts/services/workflowservice.js"></script>
-  <script src="scripts/services/starringService.js"></script>
-  <script src="scripts/directives/navbar.js"></script>
-  <script src="scripts/controllers/navbar.js"></script>
-  <script src="scripts/directives/footnote.js"></script>
-  <script src="scripts/controllers/footnote.js"></script>
-  <script src="scripts/controllers/search.js"></script>
-  <script src="scripts/controllers/searchworkflow.js"></script>
-  <script src="scripts/controllers/containereditor.js"></script>
-  <script src="scripts/controllers/workfloweditor.js"></script>
-  <script src="scripts/controllers/documentation.js"></script>
-  <script src="scripts/controllers/tokens.js"></script>
-  <script src="scripts/controllers/accounts.js"></script>
-  <script src="scripts/controllers/starring.js"></script>
-  <script src="scripts/controllers/stargazers.js"></script>
-  <script src="scripts/directives/stargazers.js"></script>
-  <script src="scripts/directives/starring.js"></script>
-  <script src="scripts/directives/accounts.js"></script>
-  <script src="scripts/directives/tokensgrid.js"></script>
-  <script src="scripts/directives/containersgrid.js"></script>
-  <script src="scripts/directives/workflowsgrid.js"></script>
-  <script src="scripts/directives/copytext.js"></script>
-  <script src="scripts/controllers/copytext.js"></script>
-  <script src="scripts/controllers/containersgrid.js"></script>
-  <script src="scripts/controllers/workflowsgrid.js"></script>
-  <script src="scripts/filters/paginationfilter.js"></script>
-  <script src="scripts/directives/containerdetails.js"></script>
-  <script src="scripts/directives/workflowdetails.js"></script>
-  <script src="scripts/controllers/containerdetails.js"></script>
-  <script src="scripts/controllers/workflowdetails.js"></script>
-  <script src="scripts/controllers/tokensgrid.js"></script>
-  <script src="scripts/controllers/onboarding.js"></script>
-  <script src="scripts/directives/workflowversionsgrid.js"></script>
-  <script src="scripts/directives/workflowtoolsgrid.js"></script>
-  <script src="scripts/directives/workflowdagview.js"></script>
-  <script src="scripts/directives/versionsgrid.js"></script>
-  <script src="scripts/controllers/versionsgrid.js"></script>
-  <script src="scripts/controllers/workflowversionsgrid.js"></script>
-  <script src="scripts/controllers/workflowtoolsgrid.js"></script>
-  <script src="scripts/controllers/workflowdagview.js"></script>
-  <script src="scripts/controllers/document.js"></script>
-  <script src="scripts/services/documentationservice.js"></script>
-  <script src="scripts/controllers/home.js"></script>
-  <script src="scripts/filters/previewfilter.js"></script>
-  <script src="scripts/controllers/registercontainer.js"></script>
-  <script src="scripts/controllers/registerworkflow.js"></script>
-  <script src="scripts/controllers/containerviewer.js"></script>
-  <script src="scripts/controllers/workflowviewer.js"></script>
-  <script src="scripts/directives/disquscomments.js"></script>
-  <script src="scripts/controllers/authentication.js"></script>
-  <script src="scripts/directives/registercontainer.js"></script>
-  <script src="scripts/directives/registerworkflow.js"></script>
-  <script src="scripts/directives/containerfileviewer.js"></script>
-  <script src="scripts/directives/workflowfileviewer.js"></script>
-  <script src="scripts/directives/fileviewer.js"></script>
-  <script src="scripts/controllers/containerfileviewer.js"></script>
-  <script src="scripts/controllers/workflowfileviewer.js"></script>
-  <script src="scripts/controllers/fileviewer.js"></script>
-  <script src="scripts/controllers/maintenance.js"></script>
-  <script src="scripts/directives/tageditor.js"></script>
-  <script src="scripts/directives/versiontageditor.js"></script>
-  <script src="scripts/controllers/tageditor.js"></script>
-  <script src="scripts/controllers/versiontageditor.js"></script>
-  <script src="scripts/services/formatting.js"></script>
-  <script src="scripts/services/UtilityService.js"></script>
-  <script src="scripts/filters/hiddentagsfilter.js"></script>
-
-  <!-- <script src="scripts/controllers/sponsors.js"></script> -->
-  <script src="scripts/directives/sponsors.js"></script>
-
-  <script src="scripts/controllers/starred.js"></script>
-  <script src="scripts/directives/starred.js"></script>
-
-  <script src="scripts/controllers/starredentries.js"></script>
-  <script src="scripts/directives/starredentries.js"></script>
-  <!--<script src="http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>-->
-  <!--<script src="https://cdn.rawgit.com/cpettitt/dagre/v0.7.4/dist/dagre.min.js"></script>-->
-  <!--<script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-dagre/1.1.2/cytoscape-dagre.js"></script>-->
-  <!-- endbuild -->
-
-  <!-- Google Analytics -->
-  <script>
+<!-- Google Analytics -->
+<script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
     ga('create', 'UA-80319775-2', 'auto');
     ga('send', 'pageview', { page: location.pathname });
-  </script>
+</script>
+
 </body>
 </html>

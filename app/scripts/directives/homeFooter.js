@@ -18,18 +18,16 @@
 
 /**
  * @ngdoc directive
- * @name dockstore.ui.directive:footnote
+ * @name dockstore.ui.directive:footer
  * @description
- * # footnote on every page
+ * # footer section on home page
  */
 angular.module('dockstore.ui')
-  .directive('footnote', function () {
+  .directive('footer', function() {
     return {
       restrict: 'AE',
-      controller: 'FootnoteCtrl',
-      templateUrl: 'templates/footnote.html',
-      link: function postLink(scope, element, attrs) {
-
-      }
+      scope: {},
+      link: function postLink(scope, element, attrs) {},
+      templateUrl: 'templates/homeFooter.html'
     };
   });

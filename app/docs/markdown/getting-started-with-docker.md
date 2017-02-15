@@ -12,7 +12,7 @@ Docker is a fantastic tool for creating light-weight containers to run your tool
 
 See the [dockstore-tool-bamstats](https://github.com/CancerCollaboratory/dockstore-tool-bamstats) repository on GitHub which we created as an example. This is linked to the quay.io repository at [dockstore-tool-bamstats](https://quay.io/repository/collaboratory/dockstore-tool-bamstats).
 
-For the rest of this tutorial, you may wish to work in your own repository with your own tool or "fork" the repository above into your own GitHub account. 
+For the rest of this tutorial, you may wish to work in your own repository with your own tool or "fork" the repository above into your own GitHub account.
 
 With a repository established in GitHub, the next step is to create the Docker image with BAMStats correctly installed.  You need to create a `Dockerfile`, this contains the instructions necessary for creating a Docker image that contains all the dependencies of BAMStats along with the executable itself.
 
@@ -24,17 +24,17 @@ Here's my sample [Dockerfile](https://github.com/CancerCollaboratory/dockstore-t
     #############################################################
     # Dockerfile to build a sample tool container for BAMStats
     #############################################################
-    
+
     # Set the base image to Ubuntu
     FROM ubuntu:14.04
-    
+
     # File Author / Maintainer
     MAINTAINER Brian OConnor <briandoconnor@gmail.com>
-    
+
     # Setup packages
     USER root
     RUN apt-get -m update && apt-get install -y wget unzip openjdk-7-jre zip
-    
+
     # get the tool and install it in /usr/local/bin
     RUN wget -q http://downloads.sourceforge.net/project/bamstats/BAMStats-1.25.zip
     RUN unzip BAMStats-1.25.zip && \
@@ -42,11 +42,11 @@ Here's my sample [Dockerfile](https://github.com/CancerCollaboratory/dockstore-t
         mv BAMStats-1.25 /opt/
     COPY bin/bamstats /usr/local/bin/
     RUN chmod a+x /usr/local/bin/bamstats
-    
+
     # switch back to the ubuntu user so this tool (and the files written) are not owned by root
     RUN groupadd -r -g 1000 ubuntu && useradd -r -g ubuntu -u 1000 ubuntu
     USER ubuntu
-    
+
     # by default /bin/bash is executed
     CMD ["/bin/bash"]
 
@@ -90,7 +90,7 @@ USER ubuntu
 # by default /bin/bash is executed
 CMD ["/bin/bash"]
 ```
-The user `ubuntu` is created and switched to in order to make file ownership easier and the default command for this Docker image is set to `/bin/bash` which is a typical default.  
+The user `ubuntu` is created and switched to in order to make file ownership easier and the default command for this Docker image is set to `/bin/bash` which is a typical default.
 
 An important thing to note, this `Dockerfile` just really scratches the surface.  Take a look at [Best practices for writing Dockerfiles](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/) for a really terrific in-depth look at writing Dockerfiles.
 
@@ -114,14 +114,14 @@ Really, you could use whatever you want for the tag but, practically, you want t
 
 Check that the tool is now in your local Docker image cache:
 
-    $> docker images | grep bamstats  
+    $> docker images | grep bamstats
     quay.io/collaboratory/dockstore-tool-bamstats   1.25-3  01a7ccf55063   2 minutes ago   538.3 MB
 
 Great! This looks fine!
 
 ## Testing the Docker Image Locally
 
-OK, so you've built the image.  Now what?  
+OK, so you've built the image.  Now what?
 
 The next step will be to test the tool directly via Docker to ensure that your `Dockerfile` is valid and correctly installed the tool.  If you were developing a new tool there might be multiple rounds of `docker build`, followed by tesing with `docker run` before you get your Dockerfile right.  Here I'm executing the Docker image, launching it as a container (make sure you launch on a host with at least 8GB of RAM and dozens of GB of disk space!):
 
@@ -157,7 +157,7 @@ You can now unzip and examine the `bamstats_report.zip` file on your computer to
 
 ![Sample report](docs/report.png)
 
-Rather than interactively working with the image, you could also run your Docker image from the command-line. 
+Rather than interactively working with the image, you could also run your Docker image from the command-line.
 
 ```
 wget ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/phase3/data/NA12878/alignment/NA12878.chrom20.ILLUMINA.bwa.CEU.low_coverage.20121211.bam

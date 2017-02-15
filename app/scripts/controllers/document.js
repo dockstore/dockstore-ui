@@ -23,14 +23,16 @@
  * # DocumentCtrl
  * Controller of the dockstore.ui
  */
+
+ /*global Toc*/
 angular.module('dockstore.ui')
   .controller('DocumentCtrl', [
     '$scope',
-    '$routeParams',
     '$location',
+    '$routeParams',
+    '$anchorScroll',
     'DocumentationService',
-    function ($scope, $routeParams, $location, DocumentationService) {
-
+    function ($scope, $location, $routeParams, $anchorScroll, DocumentationService) {
       $scope.docObj = (function(docObjs, urlSlug) {
         for (var i = 0; i < docObjs.length; i++) {
           if (docObjs[i].slug === urlSlug) return docObjs[i];
@@ -40,4 +42,19 @@ angular.module('dockstore.ui')
 
       if (!$scope.docObj) $location.path('/docs');
 
+      $scope.$on("finishedLoading", function(event) {
+          var url = $location.absUrl().split('#')[1];
+          $location.hash(url);
+          $anchorScroll();
+          var navSelector = '#toc';
+          var $myNav = $(navSelector);
+            $('body').scrollspy({
+               target: navSelector
+            });
+            Toc.init({
+              $nav: $myNav,
+              $scope: $('#doc')
+            });
+            event.preventDefault();
+      });
   }]);

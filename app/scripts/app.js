@@ -141,6 +141,11 @@ angular
           controller: 'DocumentCtrl',
           controllerAs: 'Document'
         })
+        .when('/docs/:urlSlug/#', {
+          templateUrl: 'views/document.html',
+          controller: 'DocumentCtrl',
+          controllerAs: 'Document'
+        })
         .when('/onboarding', {
           templateUrl: 'views/onboarding.html',
           controller: 'OnboardingCtrl',

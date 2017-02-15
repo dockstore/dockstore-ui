@@ -1,8 +1,8 @@
 # About the Dockstore
 
-The Dockstore concept is simple, provide a place where users can share tools encapsulated in Docker and described with the [Common Workflow Language](http://common-workflow-language.github.io/) (CWL), an emerging standard used by the [GA4GH](https://genomicsandhealth.org/) Containers and Workflow working group. This enables scientists, for example, to share analytical tools in a way that makes them machine readable and runnable in a variety of environments.  While the Dockstore is focused on serving researchers in the biosciences the combination of Docker + CWL can be used by anyone to describe the tools and services in their Docker images in a standardized, machine-readable way. 
+The Dockstore concept is simple, provide a place where users can share tools encapsulated in Docker and described with the [Common Workflow Language](http://common-workflow-language.github.io/) (CWL), an emerging standard used by the [GA4GH](https://genomicsandhealth.org/) Containers and Workflow working group. This enables scientists, for example, to share analytical tools in a way that makes them machine readable and runnable in a variety of environments.  While the Dockstore is focused on serving researchers in the biosciences the combination of Docker + CWL can be used by anyone to describe the tools and services in their Docker images in a standardized, machine-readable way.
 
-Dockstore also attempts to work with new and alternative languages/standards such as [WDL](https://github.com/broadinstitute/wdl) as an alternative to CWL and the [GA4GH Tool Registry](https://github.com/ga4gh/tool-registry-schemas) standard. We are also working on the task and workflow standards developing at the GA4GH.  
+Dockstore also attempts to work with new and alternative languages/standards such as [WDL](https://github.com/broadinstitute/wdl) as an alternative to CWL and the [GA4GH Tool Registry](https://github.com/ga4gh/tool-registry-schemas) standard. We are also working on the task and workflow standards developing at the GA4GH.
 
 ## Built with Quay.io and GitHub
 
@@ -17,7 +17,7 @@ First and foremost, the Dockstore has no requirements for what you register prov
 0. you can host the Docker image on Quay.io (and others in the future) which is linked to [GitHub](http://github.com) for automated building
 0. you have a corresponding `Dockstore.cwl` in CWL format that describes how to call the tools inside your Docker image
 
-You can also mix and match, substituting WDL for CWL, or Docker Hub for Quay.io. 
+You can also mix and match, substituting WDL for CWL, or Docker Hub for Quay.io.
 
 Over time, we find "skinny" Docker images, those with single tools installed in them, are more helpful for extending and building new workflows with.  That being said, "fat" Docker containers, which include multiple tools and even full workflows with frameworks like [SeqWare](http://seqware.io) or [Galaxy](https://galaxyproject.org/), can have their place as well.  Projects like the ICGC [PanCancer Analysis of Whole Genomes](https://dcc.icgc.org/pcawg) (PCAWG) made use of "fat" Docker containers that had complex workflows that fully encapsulated alignment and variant calling.  The self-contained nature of these Docker containers allowed for mobility between a wide variety of environments and greatly simplified the setup of these pipelines across a wide variety of HPC and cloud environments. Either approach works for the Dockstore so long as you can describe the tool or workflow inside the Docker container as a CWL-defined tool (which you can for most things).
 

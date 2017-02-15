@@ -18,18 +18,18 @@
 
 /**
  * @ngdoc directive
- * @name dockstore.ui.directive:footnote
+ * @name dockstore.ui.directive:onFinishRender
  * @description
- * # footnote on every page
+ * # emits event when ng-include has finished loading
  */
 angular.module('dockstore.ui')
-  .directive('footnote', function () {
+  .directive('onFinishRender', function($timeout) {
     return {
-      restrict: 'AE',
-      controller: 'FootnoteCtrl',
-      templateUrl: 'templates/footnote.html',
-      link: function postLink(scope, element, attrs) {
-
+      restrict: 'A',
+      link: function postLink(scope, element, attr) {
+          $timeout(function () {
+              scope.$emit(attr.onFinishRender);
+          });
       }
     };
   });

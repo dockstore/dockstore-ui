@@ -82,7 +82,7 @@ body {
   background-color: #2a3e6b;
   height: 100%;
   .button {
-    margin-top: 20px;
+    margin: 5px;
   }
   img.blue-rectangle {
     position: absolute;
@@ -448,14 +448,14 @@ ul.pagination li{
 }
 
 
-#documentation {
+#homeFooter {
   margin: 40px 0px;
   width: 100%;
   background-color:#eef0f6;
   border: 1px solid #cfd1d7;
   /*box-shadow: 0px 0px 10px #cfd1d7;*/
 }
-.button.documentation {
+.button.homeFooter {
   /*width: auto;*/
   text-align: center;
   margin: 10px;
@@ -464,16 +464,16 @@ ul.pagination li{
   width: 280px;
 }
 
-#documentation ul {
+#homeFooter ul {
   padding-left: 15px;
   margin-top: 0;
 }
 
-#documentation ul li {
+#homeFooter ul li {
   font-size: 14px;
 }
 
-#documentation h3 {
+#homeFooter h3 {
   font-size: 16px;
   margin-bottom: 10px;
 }
@@ -1026,6 +1026,33 @@ div.tabs > div:target > div, :target #info > div, #info > div {
 
 html, body {
   height:100%;
+}
+
+/* Video Button */
+
+.youtube, .youtube:active, .youtube:focus {
+  text-transform: uppercase;
+  padding: 8px 22px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  background: none;
+  border: 2px solid #a0adcc;
+  color: #a0adcc;
+}
+
+.youtube:hover {
+  background: none;
+  border: 2px solid white;
+  color: white;
+}
+
+/* Responsive Images in Documentation Page */
+
+#docPage img {
+  max-width: 100%;
+  height: auto;
+  display:block;
 }
 
 /* End Temporary Styles - Need to Refactor Later */

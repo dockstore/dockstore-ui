@@ -7,6 +7,6 @@ A `private Dockstore tool` is a tool which requires authentication to view on th
 
 It is important to note that descriptor files and tool metadata will be visible to other users when the tool is published. This is in order to make others aware of your tool. However, tool creators will be responsible for managing sharing of Docker images and they will not be available to others without authentication.
 
-## Next Steps
+# Next Steps
 
 Read up on background information on the Dockstore project at [About](/docs/about) page or see our [full list of documentation](/docs).
