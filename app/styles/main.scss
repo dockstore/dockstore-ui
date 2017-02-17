@@ -82,7 +82,7 @@ body {
   background-color: #2a3e6b;
   height: 100%;
   .button {
-    margin-top: 20px;
+    margin-top: 5px;
   }
   img.blue-rectangle {
     position: absolute;
@@ -1011,6 +1011,25 @@ div.tabs > div:target > div, :target #info > div, #info > div {
 
 html, body {
   height:100%;
+}
+
+/* Video Button */
+
+.youtube, .youtube:active, .youtube:focus {
+  text-transform: uppercase;
+  padding: 8px 22px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  background: none;
+  border: 2px solid #a0adcc;
+  color: #a0adcc;
+}
+
+.youtube:hover {
+  background: none;
+  border: 2px solid white;
+  color: white;
 }
 
 /* End Temporary Styles - Need to Refactor Later */

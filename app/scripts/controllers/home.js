@@ -34,6 +34,8 @@ angular.module('dockstore.ui')
     'UserService',
     'NotificationService',
     function ($scope, $rootScope, $q, $location, ContainerService, WorkflowService, UserService, NtfnService) {
+       // dockstore video
+       $(".youtube").colorbox({iframe:true, innerWidth:640, innerHeight:390});
 
       $scope.userObj = UserService.getUserObj();
       $scope.tabMode = 'Tool';
