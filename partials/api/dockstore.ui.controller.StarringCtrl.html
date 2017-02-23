@@ -1,0 +1,58 @@
+<h1><code ng:non-bindable="">StarringCtrl</code>
+<div><span class="hint">controller in module <code ng:non-bindable="">dockstore.ui</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="dockstore-ui-controller-page dockstore-ui-controller-starringctrl-page"><h3 id="description_starringctrl">StarringCtrl</h3>
+<p>Controller of the dockstore.ui</p>
+</div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_getstargazers">getStargazers(entryId, entryType)</h3>
+<div class="getstargazers"><div class="getstargazers-page"><p>Gets stargazers of this workflow/tool.</p>
+</div><h5 id="methods_getstargazers_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>entryId</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="getstargazers-page"><p>Workflow/tool ID</p>
+</div></td></tr><tr><td>entryType</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="getstargazers-page"><p>&quot;Workflow&quot; or &quot;Tool&quot;</p>
+</div></td></tr></tbody></table><h5 id="methods_getstargazers_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="getstargazers-page"><p>None</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_getstarredusers">getStarredUsers(userObj, entryId, entryType)</h3>
+<div class="getstarredusers"><div class="getstarredusers-page"><p>This function gets the number of users that starred the workflow or tool</p>
+</div><h5 id="methods_getstarredusers_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>userObj</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="getstarredusers-page"><p>The user object</p>
+</div></td></tr><tr><td>entryId</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="getstarredusers-page"><p>The ID of the workflow or tool</p>
+</div></td></tr><tr><td>entryType</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="getstarredusers-page"><p>&quot;workflow&quot; or &quot;tool&quot;</p>
+</div></td></tr></tbody></table><h5 id="methods_getstarredusers_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="getstarredusers-page"><p>The amount of users that starred the workflow or tool</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_getstarring">getStarring(userObj, entryId, entryType)</h3>
+<div class="getstarring"><div class="getstarring-page"><p>This function checks whether the user starred the workflow/tool</p>
+</div><h5 id="methods_getstarring_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>userObj</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="getstarring-page"><p>The user object</p>
+</div></td></tr><tr><td>entryId</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="getstarring-page"><p>The ID of the workflow or tool</p>
+</div></td></tr><tr><td>entryType</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="getstarring-page"><p>&quot;workflow&quot; or &quot;tool&quot;</p>
+</div></td></tr></tbody></table><h5 id="methods_getstarring_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="getstarring-page"><p>1 if the user starred the workflow or tool,
+0 otherwise.</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_setdocument">setDocument()</h3>
+<div class="setdocument"><div class="setdocument-page"><p>Determines whether we&#39;re dealing with workflow or tool</p>
+</div><h5 id="methods_setdocument_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-type">type</a></td><td><div class="setdocument-page"><p>description</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_setstar">setStar(userObj, entryId, entryType)</h3>
+<div class="setstar"><div class="setstar-page"><p>This function stars/unstars the workflow/tool by the user</p>
+</div><h5 id="methods_setstar_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>userObj</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="setstar-page"><p>The user object</p>
+</div></td></tr><tr><td>entryId</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="setstar-page"><p>The ID of the workflow or tool</p>
+</div></td></tr><tr><td>entryType</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="setstar-page"><p>&quot;workflow&quot; or &quot;tool&quot;</p>
+</div></td></tr></tbody></table><h5 id="methods_setstar_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-void">void</a></td><td><div class="setstar-page"><p>Void</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_setstarring">setStarring(userObj, entryId, entryType)</h3>
+<div class="setstarring"><div class="setstarring-page"><p>This function stars/unstars the workflow/tool and then updates total_stars</p>
+</div><h5 id="methods_setstarring_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>userObj</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="setstarring-page"><p>The user object</p>
+</div></td></tr><tr><td>entryId</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="setstarring-page"><p>The ID of the workflow or tool</p>
+</div></td></tr><tr><td>entryType</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="setstarring-page"><p>&quot;workflow&quot; or &quot;tool&quot;</p>
+</div></td></tr></tbody></table><h5 id="methods_setstarring_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-void">void</a></td><td><div class="setstarring-page"><p>Void</p>
+</div></td></tr></table></div>
+</li>
+</ul>
+</div>
+</div>
