@@ -40,6 +40,12 @@
         "dist/css/bootstrap.css",
         "dist/js/bootstrap.js"
       ]
+    },
+    "jquery-colorbox": {
+      "main": [
+        "./example1/colorbox.css",
+        "./jquery.colorbox.js"
+      ]
     }
   },
   "resolutions": {
