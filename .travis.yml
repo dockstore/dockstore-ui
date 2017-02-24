@@ -49,6 +49,9 @@ before_script:
   - java -jar dockstore-webservice-${WEBSERVICE_VERSION}.jar server travisci/web.yml 1>/dev/null &
   - 'sleep 20'
 
+after_success:
+  - bash deploy.sh
+
 script:
   - cypress ci #test using cypress for integration testing
 

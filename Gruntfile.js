@@ -50,7 +50,9 @@ module.exports = function (grunt) {
 
   // Define the configuration for all the tasks
   grunt.initConfig({
-
+    ngdocs: {
+      all: ['app/**/*.js']
+    },
     branch: execSync("git rev-parse --abbrev-ref HEAD  | xargs echo -n"),
     banner: "/*!\n <%= grunt.template.today('dddd, mmmm dS, yyyy, h:MM:ss TT') %>\n branch: <%= branch %>\n revision: "+gitRev+"\n */\n",
 
@@ -468,12 +470,7 @@ module.exports = function (grunt) {
           match: "<!-- git version -->"
       }
     },
-    ngdocs: {
-	all: ['app/scripts/**/*.js']
-    }
-
   });
-  grunt.loadNpmTasks('grunt-ngdocs');
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
@@ -487,8 +484,7 @@ module.exports = function (grunt) {
       'autoprefixer:server',
       'copy:styles',
       'connect:livereload',
-      'watch',
-      'grunt-ngdocs'
+      'watch'
     ]);
   });
 
@@ -504,6 +500,8 @@ module.exports = function (grunt) {
     'autoprefixer',
     'connect:test'
   ]);
+
+  grunt.loadNpmTasks('grunt-ngdocs');
 
   grunt.registerTask('build', function(target){
 
@@ -533,10 +531,9 @@ module.exports = function (grunt) {
       'cache_control'
     ]);
   });
-
+  grunt.registerTask('createDocs', ['ngdocs']);
   grunt.registerTask('default', [
     'newer:jshint',
-    'build',
-    'ngdocs'
+    'build'
   ]);
 };
