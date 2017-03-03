@@ -32,7 +32,8 @@ angular.module('dockstore.ui')
     'FormattingService',
     'UtilityService',
     'NotificationService',
-    function($scope, $q, $sce, ContainerService, FrmttSrvc, UtilityService, NtfnService) {
+    'confirmService',
+    function($scope, $q, $sce, ContainerService, FrmttSrvc, UtilityService, NtfnService, confirmService) {
       $scope.labelsEditMode = false;
       $scope.dockerfileEnabled = false;
       $scope.descriptorEnabled = false;
@@ -291,24 +292,33 @@ angular.module('dockstore.ui')
       };
 
       $scope.deregisterContainer = function(containerId) {
-        $scope.setContainerDetailsError(null);
-        return ContainerService.deleteContainer(containerId)
-          .then(
-            function() {
-              $scope.$emit('deregisterContainer', containerId);
-              return containerId;
-            },
-            function(response) {
-              $scope.setContainerDetailsError(
-                'The webservice encountered an error trying to delete this ' +
-                'container, please ensure that the container exists, and is ' +
-                'set to manual build mode.',
-                '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
-                response.data
-              );
-              return $q.reject(response);
-            }
-          );
+        var modalOptions = {
+                    closeButtonText: 'Close',
+                    actionButtonText: 'Continue',
+                    headerText: 'Are you sure you wish to deregister this tool?',
+                    bodyText: 'All information associated with this tool will be deleted.'
+                };
+
+        return confirmService.showModal({}, modalOptions).then(function (result) {
+          $scope.setContainerDetailsError(null);
+          return ContainerService.deleteContainer(containerId)
+            .then(
+              function() {
+                $scope.$emit('deregisterContainer', containerId);
+                return containerId;
+              },
+              function(response) {
+                $scope.setContainerDetailsError(
+                  'The webservice encountered an error trying to delete this ' +
+                  'container, please ensure that the container exists, and is ' +
+                  'set to manual build mode.',
+                  '[HTTP ' + response.status + '] ' + response.statusText + ': ' +
+                  response.data
+                );
+                return $q.reject(response);
+              }
+            );
+          });
       };
 
       $scope.refreshContainer = function(containerId, activeTabIndex) {

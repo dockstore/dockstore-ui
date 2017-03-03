@@ -1,6 +1,6 @@
 
 /* https://github.com/angular/protractor/blob/master/docs/getting-started.md */
-describe('dockstore homepage', function() {
+describe('Dockstore Home', function() {
   require('./helper.js')
 	beforeEach(function () {
 		cy.visit(String(global.baseUrl))
@@ -36,5 +36,21 @@ describe('dockstore homepage', function() {
         .get('#myWorkflowsNav')
           .should("visible")
     });
+  });
+
+  describe('Landing Video', function() {
+      it ('video button visible', function() {
+        cy
+          .get('.btn.youtube')
+            .should("visible")
+      });
+      it ('open and close video', function() {
+        cy
+          .get('.btn.youtube').click()
+          .get('#cboxContent').should("visible")
+          .get('#cboxOverlay').should("visible")
+          .get('#cboxClose').click()
+          .get('#cboxContent').should("not.visible")
+      });
   });
 })
