@@ -179,4 +179,55 @@ angular.module('dockstore.ui')
         });
       };
 
+      this.getGA4GHTools = function(organization) {
+        return $q(function(resolve, reject) {
+          $http({
+            method: 'GET',
+            url: WebService.API_URI + '/extendedGA4GH/' + organization
+          }).then(function(response) {
+            resolve(response.data);
+          }, function(response) {
+            reject(response);
+          });
+        });
+      };
+
+      this.getToolsByOrg = function(organization) {
+        return $q(function(resolve, reject) {
+          $http({
+            method: 'GET',
+            url: WebService.API_URI + '/extendedGA4GH/entries/' + organization
+          }).then(function(response) {
+            resolve(response.data);
+          }, function(response) {
+            reject(response);
+          });
+        });
+      };
+
+      this.getWorkflowsByOrg = function(organization) {
+        return $q(function(resolve, reject) {
+          $http({
+            method: 'GET',
+            url: WebService.API_URI + '/extendedGA4GH/workflows/' + organization
+          }).then(function(response) {
+            resolve(response.data);
+          }, function(response) {
+            reject(response);
+          });
+        });
+      };
+
+      this.getOrganizations = function() {
+        return $q(function(resolve, reject) {
+          $http({
+            method: 'GET',
+            url: WebService.API_URI + '/extendedGA4GH/organizations'
+          }).then(function(response) {
+            resolve(response.data);
+          }, function(response) {
+            reject(response);
+          });
+        });
+      };
   }]);

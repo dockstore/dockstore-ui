@@ -1,0 +1,63 @@
+<div id="container-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h3 class="available-containers">
+          <span class="glyphicon glyphicon-globe"></span>
+          Organizations
+        </h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container view-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div ng-if="organizations.length !== 0">
+        <div ng-repeat="organization in organizations">
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"
+               data-collapsible="expandable">
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="head{{organization}}">
+                <h4 class="panel-title">
+                  <a class="collapsed" role="button" data-toggle="collapse"
+                     ng-href="#collapse{{organization}}"
+                     aria-expanded="false" aria-controls="collapseTwo" target="_self">
+                    {{organization}}
+                  </a>
+                </h4>
+              </div>
+              <div id="collapse{{organization}}" class="panel-collapse collapse" role="tabpanel"
+                   aria-labelledby="head{{organization}}">
+                <div class="panel-body">
+                  <div ng-if="orgToTools[organization].length !== 0">
+                    <h3>Tools</h3>
+                    <ul ng-repeat="tool in orgToTools[organization]">
+                      <li>
+                        <a href="{{tool['id'] | ContainerFilter}}">{{tool["toolname"]}}</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div ng-if="orgToWorkflows[organization].length !== 0">
+                    <h3>Workflows</h3>
+                    <ul ng-repeat="workflow in orgToWorkflows[organization]">
+                      <li>
+                        <a href="{{workflow['id'] | WorkflowFilter}}">{{workflow["id"] | WorkflowFilter}}</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-if="organizations.length === 0">
+        <div class="alert alert-info" role="alert" style="margin-top: 12px;">
+          There are no organizations which have published tools to the site yet.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

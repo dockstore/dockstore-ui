@@ -1028,31 +1028,4 @@ html, body {
   height:100%;
 }
 
-/* Video Button */
-
-.youtube, .youtube:active, .youtube:focus {
-  text-transform: uppercase;
-  padding: 8px 22px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-
-  background: none;
-  border: 2px solid #a0adcc;
-  color: #a0adcc;
-}
-
-.youtube:hover {
-  background: none;
-  border: 2px solid white;
-  color: white;
-}
-
-/* Responsive Images in Documentation Page */
-
-#docPage img {
-  max-width: 100%;
-  height: auto;
-  display:block;
-}
-
 /* End Temporary Styles - Need to Refactor Later */
