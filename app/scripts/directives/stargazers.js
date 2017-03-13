@@ -18,7 +18,7 @@
 
 /**
  * @ngdoc directive
- * @name dockstore.ui.directive:stagazers
+ * @name dockstore.ui.directive:stargazers
  * @restrict AE
  * @description
  * # stargazers

@@ -150,6 +150,7 @@ Documents written in Markdown should be placed in the `app/docs/` directory, the
   path: 'docs/getting-started.md'
 }
 ```
+Additionally, ngdocs documentation can be viewed from the [Dockstore-ui Github Page](https://ga4gh.github.io/dockstore-ui)
 
 ### Resources
 
