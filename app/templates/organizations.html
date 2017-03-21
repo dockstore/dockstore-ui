@@ -11,27 +11,31 @@
   </div>
 </div>
 
-<div class="container view-content">
+<div class="container view-content" style="margin-top: 20px">
   <div class="row">
     <div class="col-md-12">
       <div ng-if="organizations.length !== 0">
         <div ng-repeat="organization in organizations">
-          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true"
-               data-collapsible="expandable">
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" data-collapsible="expandable">
             <div class="panel panel-default">
-              <div class="panel-heading" role="tab" id="head{{organization}}">
-                <h4 class="panel-title">
-                  <a class="collapsed" role="button" data-toggle="collapse"
-                     ng-href="#collapse{{organization}}"
-                     aria-expanded="false" aria-controls="collapseTwo" target="_self">
-                    {{organization}}
-                  </a>
-                </h4>
+              <div class="panel-heading clearfix" role="tab" id="head{{organization}}">
+                    <h4 class="panel-title pull-left">
+                      <a class="collapsed" role="button" data-toggle="collapse"
+                         ng-href="#collapse{{organization}}"
+                         aria-expanded="false" aria-controls="collapseTwo" target="_self">
+                        {{organization}}
+                      </a>
+                    </h4>
+                    <div class="btn-group pull-right">
+                      <a ng-href="/organizations/{{organization}}" class="btn btn-primary-outline"><i class="glyphicon glyphicon-globe organizations redirect"></i></a>
+                      <a ng-href="/search-containers?namespace={{organization}}" class="btn btn-primary-outline"><img class="site-icons-small" src="images/dockstore-tools-purple.png"></a>
+                      <a ng-href="/search-workflows?organization={{organization}}" class="btn btn-primary-outline"><img class="site-icons-small" src="images/dockstore-workflows-purple.png"></a>
+                    </div>
               </div>
               <div id="collapse{{organization}}" class="panel-collapse collapse" role="tabpanel"
                    aria-labelledby="head{{organization}}">
                 <div class="panel-body">
-                  <div ng-if="orgToTools[organization].length !== 0">
+                  <div ng-if="orgToTools[organization].length > 0">
                     <h3>Tools</h3>
                     <ul ng-repeat="tool in orgToTools[organization]">
                       <li>
@@ -39,7 +43,7 @@
                       </li>
                     </ul>
                   </div>
-                  <div ng-if="orgToWorkflows[organization].length !== 0">
+                  <div ng-if="orgToWorkflows[organization].length > 0">
                     <h3>Workflows</h3>
                     <ul ng-repeat="workflow in orgToWorkflows[organization]">
                       <li>

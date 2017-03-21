@@ -29,8 +29,10 @@ angular.module('dockstore.ui')
     '$rootScope',
     'FormattingService',
     'UtilityService',
+    'ContainerService',
     '$filter',
-    function ($scope, $rootScope, FrmttSrvc, UtilityService, $filter) {
+    '$location',
+    function ($scope, $rootScope, FrmttSrvc, UtilityService, ContainerService, $filter, $location) {
 
       $scope.sortColumn = 'name';
       $scope.sortReverse = false;
@@ -56,6 +58,17 @@ angular.module('dockstore.ui')
 //          return '';
 //        }
       };
+
+      /* Filter by namespace */
+      var location = $location.search();
+      if (location.hasOwnProperty("namespace")) {
+
+        ContainerService.getPublishedContainersByNamespace(location.namespace)
+          .then(
+            function(containers) {
+              $scope.filteredTools = containers;
+            });
+      }
 
       $scope.getDockerPullCmd = function(path) {
         return FrmttSrvc.getFilteredDockerPullCmd(path);
@@ -101,6 +114,7 @@ angular.module('dockstore.ui')
 
       $scope.$watch('containers', function() {
         $scope.filteredTools = $filter('filter')($scope.containers, $scope.searchQueryContainer);
+        //console.log(JSON.stringify($scope.filteredTools));
         if ($scope.filteredTools !== undefined) {
           $scope.entryCount = $scope.filteredTools.length;
         }

@@ -380,4 +380,16 @@ angular.module('dockstore.ui')
       });
     };
 
+    this.getPublishedWorkflowByOrganization = function(organization) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: WebService.API_URI + '/workflows/organization/' + organization + '/published',
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
   }]);

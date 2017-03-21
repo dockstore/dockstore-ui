@@ -29,8 +29,10 @@ angular.module('dockstore.ui')
     '$rootScope',
     'FormattingService',
     'UtilityService',
+    'WorkflowService',
     '$filter',
-    function ($scope, $rootScope, FrmttSrvc, UtilityService, $filter) {
+    '$location',
+    function ($scope, $rootScope, FrmttSrvc, UtilityService, WorkflowService, $filter, $location) {
       $scope.sortColumn = 'name';
       $scope.sortReverse = false;
       $scope.numContsPage = 10;
@@ -53,6 +55,16 @@ angular.module('dockstore.ui')
 //          return '';
 //        }
       };
+
+      /* Filter by organization */
+      var location = $location.search();
+      if (location.hasOwnProperty("organization")) {
+        WorkflowService.getPublishedWorkflowByOrganization(location.organization)
+          .then(
+            function(workflows) {
+              $scope.filteredWorkflows = workflows;
+            });
+      }
 
       /* Column Sorting */
       $scope.clickSortColumn = function(columnName) {

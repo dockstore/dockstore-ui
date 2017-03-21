@@ -181,6 +181,11 @@ angular
           controller: 'OrganizationsCtrl',
           controllerAs: 'Organizations'
         })
+        .when('/organizations/:org', {
+          templateUrl: 'views/org.html',
+          controller: 'OrganizationsCtrl',
+          controllerAs: 'Organizations'
+        })
         .otherwise({
           redirectTo: '/'
         });

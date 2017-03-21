@@ -38,6 +38,14 @@ angular.module('dockstore.ui')
     'NotificationService',
     function ($scope, $rootScope, $q, $window, $location, $auth, $routeParams,
         WorkflowService, UserService, TokenService, NtfnService) {
+      $scope.org = $routeParams.organization;
+
+      if ($scope.org === undefined) {
+        $scope.workflowsHeader = "Available Workflows";
+      } else {
+        $scope.workflowsHeader = "Available Workflows - " + $scope.org;
+      }
+
 
       $scope.userObj = UserService.getUserObj();
       $scope.workflows = [];

@@ -38,6 +38,13 @@ angular.module('dockstore.ui')
     'NotificationService',
     function ($scope, $rootScope, $q, $window, $location, $auth, $routeParams,
         ContainerService, UserService, TokenService, NtfnService) {
+      $scope.org = $routeParams.namespace;
+
+      if ($scope.org === undefined) {
+        $scope.toolsHeader = "Available Tools";
+      } else {
+        $scope.toolsHeader = "Available Tools - " + $scope.org;
+      }
 
       $scope.userObj = UserService.getUserObj();
       $scope.containers = [];

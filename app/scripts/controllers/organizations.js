@@ -26,11 +26,14 @@
 angular.module('dockstore.ui')
   .controller('OrganizationsCtrl', [
     '$scope',
-    'TokenService',
+    'OrganizationService',
     '$q',
-    function($scope, TokenService, $q) {
+    '$routeParams',
+    function($scope, OrganizationService, $q, $routeParams) {
+      $scope.org = $routeParams.org;
+
       var getOrgs = function() {
-        return TokenService.getOrganizations();
+        return OrganizationService.getOrganizations();
       },
 
       assignTools = function(resultFromApi) {
@@ -38,7 +41,7 @@ angular.module('dockstore.ui')
         var promises = [];
         for(var i = 0; i < $scope.organizations.length; i++) {
           var org = $scope.organizations[i];
-          var promise = TokenService.getToolsByOrg(org);
+          var promise = OrganizationService.getContainersByOrg(org);
           promises.push(promise);
         }
         return $q.all(promises);
@@ -49,7 +52,7 @@ angular.module('dockstore.ui')
         var promises = [];
         for(var i = 0; i < $scope.organizations.length; i++) {
           var org = $scope.organizations[i];
-          var promise = TokenService.getWorkflowsByOrg(org);
+          var promise = OrganizationService.getWorkflowsByOrg(org);
           promises.push(promise);
         }
         return $q.all(promises);
@@ -77,12 +80,14 @@ angular.module('dockstore.ui')
         return $q.reject(fault);
       };
 
-      getOrgs()
+      var getOrgsPromise = getOrgs();
+
+      getOrgsPromise
         .then(assignTools)
           .then(mapTools)
         .catch(reportProblems);
 
-      getOrgs()
+      getOrgsPromise
         .then(assignWorkflows)
           .then(mapWorkflows)
         .catch(reportProblems);

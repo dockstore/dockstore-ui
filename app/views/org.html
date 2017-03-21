@@ -1,0 +1,41 @@
+<div id="container-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h3 class="available-containers">
+          <span class="glyphicon glyphicon-globe"></span>
+          Organization - {{org}}
+        </h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container view-content">
+  <div class="row">
+    <div ng-if="orgToTools[org].length > 0">
+      <h3>Tools</h3>
+      <ul ng-repeat="tool in orgToTools[org]">
+        <li>
+          <a href="{{tool['id'] | ContainerFilter}}">{{tool["toolname"]}}</a>
+        </li>
+      </ul>
+    </div>
+    <div ng-if="orgToWorkflows[org].length > 0">
+      <h3>Workflows</h3>
+      <ul ng-repeat="workflow in orgToWorkflows[org]">
+        <li>
+          <a href="{{workflow['id'] | WorkflowFilter}}">{{workflow["id"] | WorkflowFilter}}</a>
+        </li>
+      </ul>
+    </div>
+    <div ng-if="!orgToWorkflows[org] && !orgToWorkflows[org]" style="margin-top: 20px;">
+      <div class="alert alert-info" role="alert">
+        The organization "{{org}}" does not exist.
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<sponsors></sponsors>
