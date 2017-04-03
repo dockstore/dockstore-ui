@@ -23,6 +23,24 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "dockstore.ui.ContainerService",
+      "shortName": "dockstore.ui.ContainerService",
+      "type": "service",
+      "moduleName": "dockstore.ui",
+      "shortDescription": "ContainerService",
+      "keywords": "api containerservice dockstore service ui"
+    },
+    {
+      "section": "api",
+      "id": "dockstore.ui.ContainerService",
+      "shortName": "dockstore.ui.ContainerService",
+      "type": "service",
+      "moduleName": "dockstore.ui",
+      "shortDescription": "ContainerService",
+      "keywords": "api containerservice dockstore service ui"
+    },
+    {
+      "section": "api",
       "id": "dockstore.ui.controller:AccountsCtrl",
       "shortName": "AccountsCtrl",
       "type": "controller",
@@ -218,6 +236,15 @@ NG_DOCS={
       "moduleName": "dockstore.ui",
       "shortDescription": "StargazersCtrl",
       "keywords": "api controller dockstore stargazersctrl ui"
+    },
+    {
+      "section": "api",
+      "id": "dockstore.ui.controller:StarredCtrl",
+      "shortName": "StarredCtrl",
+      "type": "controller",
+      "moduleName": "dockstore.ui",
+      "shortDescription": "StarredCtrl",
+      "keywords": "api controller dockstore starredctrl ui"
     },
     {
       "section": "api",
@@ -464,6 +491,15 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "dockstore.ui.directive:organizations",
+      "shortName": "organizations",
+      "type": "directive",
+      "moduleName": "dockstore.ui",
+      "shortDescription": "organizations",
+      "keywords": "api directive dockstore organizations ui"
+    },
+    {
+      "section": "api",
       "id": "dockstore.ui.directive:registerContainer",
       "shortName": "registerContainer",
       "type": "directive",
@@ -491,8 +527,8 @@ NG_DOCS={
     },
     {
       "section": "api",
-      "id": "dockstore.ui.directive:stagazers",
-      "shortName": "stagazers",
+      "id": "dockstore.ui.directive:stargazers",
+      "shortName": "stargazers",
       "type": "directive",
       "moduleName": "dockstore.ui",
       "shortDescription": "stargazers",
@@ -623,6 +659,24 @@ NG_DOCS={
       "moduleName": "dockstore.ui",
       "shortDescription": "DocumentationService",
       "keywords": "api dockstore documentationservice service ui"
+    },
+    {
+      "section": "api",
+      "id": "dockstore.ui.filter:ContainerFilter",
+      "shortName": "ContainerFilter",
+      "type": "filter",
+      "moduleName": "dockstore.ui",
+      "shortDescription": "WorkflowFilter",
+      "keywords": "api dockstore filter ui workflowfilter"
+    },
+    {
+      "section": "api",
+      "id": "dockstore.ui.filter:ContainerFilter",
+      "shortName": "ContainerFilter",
+      "type": "filter",
+      "moduleName": "dockstore.ui",
+      "shortDescription": "ContainerFilter",
+      "keywords": "api containerfilter dockstore filter ui"
     },
     {
       "section": "api",
