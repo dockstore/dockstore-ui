@@ -387,14 +387,30 @@
                       ng-change="tagLaunchWith(toolTag)">
               </select>
             </div>
-            <div class="well well-sm" uib-tooltip="Commands for launching tool through Dockstore CLI (Supports file provisioning)">
-                            <div>
-                              <pre>{{launchWith}}</pre>
-                            </div>
-                          </div>
-            <div ng-show="desc === 'cwl'" class="well well-sm" uib-tooltip="Commands for launching tool through CWLtool (Does not support file provisioning)">
+            <div class="well well-sm" uib-tooltip="Commands for creating a runtime JSON template">
+              Make a runtime JSON template and fill in desired inputs, outputs, and other parameters
               <div>
-                <pre>{{launchWithCWLTool}}</pre>
+                <pre style="white-space: pre-wrap;word-break: normal">{{createParamFile}}</pre>
+              </div>
+            </div>
+            <div class="well well-sm" uib-tooltip="Commands for launching tool through Dockstore CLI: adds file provisioning to cwltool">
+              <a href="https://dockstore.org/docs/launch">Run locally with the Dockstore CLI</a>
+              <div>
+                <pre style="white-space: pre-wrap;word-break: normal">{{launchWith}}</pre>
+              </div>
+            </div>
+            <div ng-show="desc === 'cwl'" class="well well-sm"
+                 uib-tooltip="Commands for launching tools through CWLtool: the CWL reference implementation. cwltool can run a tool directly when all inputs and outputs are available on the local filesystem">
+              <a href="https://github.com/common-workflow-language/cwltool">Run locally with cwltool</a>
+              <div>
+                <pre style="white-space: pre-wrap;word-break: normal">{{launchWithCWLTool}}</pre>
+              </div>
+            </div>
+            <div ng-show="desc === 'cwl'" class="well well-sm" uib-tooltip="Commands for launching tool through Consonance: a DIY open-source
+framework for spinning up VMs and running tools on AWS EC2">
+              <a href="https://github.com/Consonance/consonance/wiki">Run on AWS VMs with Consonance</a>
+              <div>
+                <pre style="white-space: pre-wrap;word-break: normal">{{launchWithConsonance}}</pre>
               </div>
             </div>
           </li>

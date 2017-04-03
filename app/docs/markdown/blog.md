@@ -1,11 +1,24 @@
 # News and Events
 
-## February 31, 2017 - Dockstore 1.2 Release
+## April X, 2017 - Dockstore 1.2 Release
 
-### Highlighted New Features and Fixes
+The latest Dockstore major release includes a large number of new features and fixes.
+A subset of highlighted new features follows.
 
+### Highlighted New Features 
+
+* Support for private tools
+  * users can register tools where users will need to ask the original author for access
+* Support for Docker images hosted in GitLab and Amazon ECR 
 * Allow users to star tools and workflows
 * Stargazers page to show all users who have starred a particular tool or workflow
+* Support for file provisioning plugins
+* Better error messaging passed along from a newer cwltool version
+* Compatibility with a Write API service for programmatically adding tools
+
+## February 27, 2017 - Dockstore Paper
+
+A Dockstore paper has been published and indexed as [The Dockstore: enabling modular, community-focused sharing of Docker-based genomics tools and workflows.](https://doi.org/10.12688/f1000research.10137.1)!
 
 ## November 25, 2016 - Dockstore 1.1 Release
 

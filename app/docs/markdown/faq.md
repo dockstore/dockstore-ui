@@ -17,7 +17,9 @@ Versions of your tool for most tools are harvested from the list of Tags for an 
 
 ## How do I cite Dockstore?
 
-Currently, we recommend looking at our Zenodo entry. You will find a variety of citation styles and ways to export it at  [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.154185.svg)](https://doi.org/10.5281/zenodo.154185)
+For citing Dockstore as a paper, take a look at our [F1000 paper](http://dx.doi.org/10.12688/f1000research.10137.1).
+
+For citing the actual code, we recommend looking at our Zenodo entry. You will find a variety of citation styles and ways to export it at [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.321679.svg)](https://doi.org/10.5281/zenodo.321679). 
 
 ## How do I get more space inside my CWL tool running in a container?
 
@@ -63,7 +65,7 @@ export TMPDIR=/tmp/docker_tmp
 
 ## Any last tips on using Dockstore?
 
-* the Dockstore CLI uses `./datastore` for temp files so if you're processing large files make sure this partition hosting the current directory is large.
+* the Dockstore CLI uses `./datastore` in the working directory for temp files so if you're processing large files make sure this partition hosting the current directory is large.
 * you can use a single Docker image with multiple tools, each of them registered via a different CWL
 * you can use a Git repository with multiple CWL files
 * related to the two above, you can use non-standard file paths if you customize your registrations in the Version tab of Dockstore

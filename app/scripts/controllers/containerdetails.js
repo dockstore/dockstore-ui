@@ -203,22 +203,22 @@ angular.module('dockstore.ui')
           }).remove();
         }
 
-        $scope.launchWith =
-          "# make a runtime JSON template and fill in desired inputs, outputs, and other parameters" +
-          "\ndockstore tool convert entry2json --entry " + tool_path + ":" + $scope.toolTagName + " > Dockstore.json" +
-          "\nvim Dockstore.json" +
-          "\n# run it locally with the Dockstore CLI" +
-          "\ndockstore tool launch --entry " + tool_path + ":" + $scope.toolTagName + " --json Dockstore.json";
+        $scope.createParamFile = "$ dockstore tool convert entry2json --entry " + tool_path + ":" + $scope.toolTagName + " > Dockstore.json" +
+          "\n$ vim Dockstore.json";
+
+        $scope.launchWith = "$ dockstore tool launch --entry " + tool_path + ":" + $scope.toolTagName + " --json Dockstore.json";
+
+        $scope.launchWithConsonance = "$ consonance run --tool-dockstore-id " + tool_path + ":" + $scope.toolTagName + " --run-descriptor Dockstore.json --flavour \<AWS instance-type\>";
 
         if ($scope.desc !== 'cwl') {
           $scope.launchWith += " --descriptor " + $scope.desc;
+          $scope.createParamFile = $scope.createParamFile.replace("entry2json", "entry2json --descriptor " + $scope.desc);
         }
 
         var escapedPath = encodeURIComponent(tool_path);
         var escapedVersion = encodeURIComponent($scope.toolTagName);
 
-        $scope.launchWithCWLTool = "# alternatively, cwltool can run a tool directly when all inputs and outputs are available on the local filesystem" +
-          "\ncwltool --non-strict https://www.dockstore.org:8443/api/ga4gh/v1/tools/" + escapedPath + "/versions/" + escapedVersion + "/plain-CWL/descriptor Dockstore.json";
+        $scope.launchWithCWLTool = "$ cwltool --non-strict https://www.dockstore.org:8443/api/ga4gh/v1/tools/" + escapedPath + "/versions/" + escapedVersion + "/plain-CWL/descriptor Dockstore.json";
         return $scope.validContent; //only show LaunchWith when content is valid
       };
 
