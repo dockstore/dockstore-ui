@@ -441,6 +441,19 @@ angular.module('dockstore.ui')
       });
     };
 
+    this.getSchema = function(containerId) {
+      return $q(function(resolve, reject) {
+        $http({
+          method: 'GET',
+          url: WebService.API_URI + '/containers/schema/' + containerId + '/published',
+        }).then(function(response) {
+          resolve(response.data);
+        }, function(response) {
+          reject(response);
+        });
+      });
+    };
+
     this.getPublishedContainersByNamespace = function(namespace) {
       return $q(function(resolve, reject) {
         $http({

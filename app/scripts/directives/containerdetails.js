@@ -55,6 +55,10 @@ angular.module('dockstore.ui')
         scope.$on('refreshFiles', function() {
           scope.refreshTagLaunchWith();
         });
+
+        scope.$on('bioschemaSet', function(event, newSchema) {
+          scope.bioschema = newSchema;
+        });
       }
     };
   });

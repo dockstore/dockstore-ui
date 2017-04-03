@@ -58,6 +58,7 @@ angular.module('dockstore.ui')
       $scope.dockerPullTag = '';
       $scope.dockerRegistryMap = {};
       $scope.starGazers = {};
+      $scope.bioschema = {};
 
       //There are 5 tabs, and only 1 can be active
       // so there are 4 other tabs that are not active
