@@ -51,7 +51,7 @@ arams.json
 ```
 ## Write-API Conversion Process
 ### Client Configuration
-The configuration file used by the write-api-client is located at ~/.dockstore/config.properties
+The configuration file used by the write-api-client is located at ~/.dockstore/write.api.config.properties
 It should look something like this:
 
 ```
@@ -77,7 +77,10 @@ githubToken: abcdefghijklmnopqrstuvwxyz1234567890
 ...
 ```
 The github token can be attained by following the instructions from [GitHub Help](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/)
-The quay.io token can be attained by following the instruction from [Quay.io API docs](https://docs.quay.io/api/) -> OAuth 2 Access Tokens -> Generating a Token (for internal application use)
+The quay.io token can be attained by following the instruction from [Quay.io API docs](https://docs.quay.io/api/) -> OAuth 2 Access Tokens -> Generating a Token (for internal application use).  When generating the token, provide these 3 permissions:
+* Create Repositories
+* View all visible repositories
+* Read/Write to any accessible repositories
 
 ### Client Usage
 ```

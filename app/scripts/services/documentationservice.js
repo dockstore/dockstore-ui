@@ -99,6 +99,12 @@ angular.module('dockstore.ui')
           description: 'This page gathers tools and tips on using Dockstore along with tips on creating tools with Docker and CWL 1.0',
           name: 'FAQ',
           markdown: 'docs/markdown/faq.md'
+        },
+        {
+          slug: 'developers',
+          description: 'This page is for developers working with Dockstore',
+          name: 'For Developers',
+          markdown: 'docs/markdown/developers.md'
         }
       ];
 

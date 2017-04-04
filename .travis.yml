@@ -9,7 +9,7 @@ services:
 jdk:
   - oraclejdk8
 env:
-  - WEBSERVICE_VERSION="1.2-alpha.1"
+  - WEBSERVICE_VERSION="1.2.0-beta.0"
 addons:
   firefox: "latest"
   postgresql: "9.4"
@@ -31,7 +31,7 @@ before_install:
   - 'wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
   - 'sudo dpkg -i google-chrome*.deb'
   - 'npm install -g cypress-cli' #test using cypress cli for integrationg testing
-  - 'wget https://seqwaremaven.oicr.on.ca/artifactory/collab-release/io/dockstore/dockstore-webservice/$WEBSERVICE_VERSION/dockstore-webservice-${WEBSERVICE_VERSION}.jar'
+  - 'wget https://artifacts.oicr.on.ca/artifactory/collab-release/io/dockstore/dockstore-webservice/${WEBSERVICE_VERSION}/dockstore-webservice-${WEBSERVICE_VERSION}.jar'
   - 'chmod u+x dockstore-webservice-${WEBSERVICE_VERSION}.jar'
   - 'sleep 3' # https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI
 install:
