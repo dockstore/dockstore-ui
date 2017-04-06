@@ -5,11 +5,11 @@
 The Dockstore CLI has utilities to generate JSON parameter files from entries on Dockstore (`dockstore tool convert`).
 
 When launching tools, the Dockstore CLI makes it easy to specify entries from Dockstore.
-We can also provision input and output files from and to HTTP, ftp, and S3. We also have preliminary support for [Synapse](https://www.synapse.org/) and the [ICGC Storage client](http://docs.icgc.org/cloud/guide/#storage-client-usage), please contact us to get more information on these two file transfer sources.
+We can also provision input and output files from and to HTTP, ftp, and S3. We also have preliminary support for [Synapse](https://www.synapse.org/) and the [ICGC Storage client](http://docs.icgc.org/cloud/guide/#storage-client-usage), please see [file provisioning plugins](https://github.com/ga4gh/dockstore/tree/develop/dockstore-file-plugin-parent) get more information on these two file transfer sources.
 
 ## What environment do you test tools in?
 
-Typically, we test running tools in Ubuntu Linux 14.04 LTS and 16.04 LTS on VMs in [OpenStack](https://www.openstack.org/) with 8 vCPUs and 96 GB of RAM and above. If you are only listing and editing tools, we have achieved success with much lower system requirements. However, launching tools will have higher system requirements dependent on the specific tool. Consult a tool's README when in doubt.
+Typically, we test running tools in Ubuntu Linux 14.04 LTS and 16.04 LTS on VMs in [OpenStack](https://www.openstack.org/) with 8 vCPUs and 96 GB of RAM and above. If you are only listing and editing tools, we have achieved success with much lower system requirements. However, launching tools will have higher system requirements dependent on the specific tool. Consult a tool's README or CWL description when in doubt.
 
 ## There are too many versions of my tool, how do I delete some?
 
@@ -25,11 +25,9 @@ For citing the actual code, we recommend looking at our Zenodo entry. You will f
 
 There are a couple different answers here. Different directories inside a container run by CWL are mounted from different locations and will impose different storage requirements.
 
-Outside the container, the Dockstore CLI will create a directory called `datastore` which contains input files provisioned for the running container.
+Outside the container, the Dockstore CLI will create a directory called `datastore` which contains input files provisioned for the running container. For CWL tools, this directory will include the working directory (`datastore/<uuid>/working`), the temporary directory (`datastore/<uuid>/tmp/<random>`), and input files (`datastore/<uuid>/inputs`). 
 
-By default, the working directory inside a CWL tool (`/var/spool/cwl`) is mounted from a randomly generated directory on the host in `/tmp` (on Linux). Depending on your filesystem structure, you may not have enough space allocated to this directory. Override this by exporting a new temporary directory, for example `export TMPDIR=/media/large_temporary_volume`. Depending on your OS, add this to a startup or login script to persist this value.
-
-Also be aware that some directories will use space from your root filesystem. For example, Docker's storage driver and data volumes will by default install to and use space on your root filesystem.
+Also be aware that some tools will use space from your root filesystem. For example, Docker's storage driver and data volumes will by default install to and use space on your root filesystem.
 
 ## Do you have tips on creating Dockerfiles?
 

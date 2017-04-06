@@ -70,7 +70,7 @@ Again, we provide an example from the [dockstore-tool-bamstats](https://github.c
 
 You can see this tool takes two inputs, a parameter to control memory usage and a BAM file (binary sequence alignment file).  It produces one output, a zip file, that contains various HTML reports that BamStats creates.
 
-There's a lot going on here.  Let's break it down.  The CWL is actually recognized and parsed by Dockstore (when we register this later). By default it recognizes `Dockstore.cwl` but you can customize this if you need to.  One of the most important items below is the [CWL version](http://www.commonwl.org/v1.0/CommandLineTool.html#CWLVersion), you should label your CWL with the version you are using so CWL tools that cannot run this version can error out appropriately. Our tools have been tested with draft-3 and v1.0 (we recommend the latter).
+There's a lot going on here.  Let's break it down.  The CWL is actually recognized and parsed by Dockstore (when we register this later). By default it recognizes `Dockstore.cwl` but you can customize this if you need to.  One of the most important items below is the [CWL version](http://www.commonwl.org/v1.0/CommandLineTool.html#CWLVersion), you should label your CWL with the version you are using so CWL tools that cannot run this version can error out appropriately. Our tools have been tested with v1.0.
 
 ```
 class: CommandLineTool
@@ -189,64 +189,48 @@ You can see in the above I give the full path to the input under `bam_input` and
 At this point, let's run the tool with our local inputs and outputs via the JSON config file:
 
 ```
-$> dockstore tool launch --entry Dockstore.cwl --local-entry --json sample_configs.local.json
-Creating directories for run of Dockstore launcher at: ./datastore//launcher-1e43745b-3127-4c56-8204-1e56abb81df2
-Provisioning your input files to your local machine
-Downloading: #bam_input from /tmp/NA12878.chrom20.ILLUMINA.bwa.CEU.low_coverage.20121211.bam into directory: /home/ubuntu/gitroot/dockstore-tool-bamstats/./datastore/launcher-1e43745b-3127-4c56-8204-1e56abb81df2/inputs/91155c9c-fd3b-4edf-871d-b31019ffa0f2
-[##################################################] 100%
-Calling out to cwltool to run your tool
-Executing: cwltool --enable-dev --non-strict --enable-net --outdir /home/dyuen/dockstore-tool-bamstats/./datastore/launcher-77a75bfe-8b88-49b2-9b81-94292b00e299/outputs/ --tmpdir-prefix /home/dyuen/dockst
-ore-tool-bamstats/./datastore/launcher-77a75bfe-8b88-49b2-9b81-94292b00e299/working/ /home/dyuen/dockstore-tool-bamstats/Dockstore.cwl /home/dyuen/dockstore-tool-bamstats/./datastore/launcher-77a75bfe-8b8
-8-49b2-9b81-94292b00e299/workflow_params.json
-cwltool stdout:
-        {
-            "bamstats_report": {
-                "format": "http://edamontology.org/format_3615",
-                "checksum": "sha1$ae31df74f0c0f49f06dc2564a019659073d79335",
-                "basename": "bamstats_report.zip",
-                "location": "file:///home/dyuen/dockstore-tool-bamstats/./datastore/launcher-77a75bfe-8b88-49b2-9b81-94292b00e299/outputs/bamstats_report.zip",
-                "path": "/home/dyuen/dockstore-tool-bamstats/./datastore/launcher-77a75bfe-8b88-49b2-9b81-94292b00e299/outputs/bamstats_report.zip",
-                "class": "File",
-                "size": 31975
-            }
-        }
-
-cwltool stderr:
-        /usr/local/bin/cwltool 1.0.20160712154127
-        [job Dockstore.cwl] /tmp/tmpLXA80l$ docker \
-            run \
-            -i \
-            --volume=/home/dyuen/dockstore-tool-bamstats/./datastore/launcher-77a75bfe-8b88-49b2-9b81-94292b00e299/inputs/d1dd351a-436e-4411-b8c0-57f7df57ff74/bam_input:/var/lib/cwl/stg29cb92e4-5231-4468$
-8976-8e72fe01e1c2/bam_input:ro \
-            --volume=/tmp/tmpLXA80l:/var/spool/cwl:rw \
-            --volume=/home/dyuen/dockstore-tool-bamstats/datastore/launcher-77a75bfe-8b88-49b2-9b81-94292b00e299/working8HUvKn:/tmp:rw \
-            --workdir=/var/spool/cwl \
-            --read-only=true \
-            --user=1000 \
-            --rm \
-            --env=TMPDIR=/tmp \
-            --env=HOME=/var/spool/cwl \
-            quay.io/collaboratory/dockstore-tool-bamstats:1.25-6 \
-            bash \
-            /usr/local/bin/bamstats \
-            4 \
-            /var/lib/cwl/stg29cb92e4-5231-4468-8976-8e72fe01e1c2/bam_input
-        Total time: 12 seconds
-          adding: bamstats_report.html (deflated 52%)
-          adding: bamstats_report.html.data/ (stored 0%)
-          adding: bamstats_report.html.data/Coverage_boxAndWhisker.png (deflated 1%)
-          adding: bamstats_report.html.data/20_Coverage_histogram.png (deflated 13%)
-          adding: bamstats_report.html.data/20_Coverage.html (deflated 60%)
-          adding: bamstats_report.html.data/20_Coverage_cumulativeHistogram.png (deflated 14%)
-          adding: bamstats_report.html.data/20_Coverage_boxAndWhisker.png (deflated 12%)
+$> dockstore tool launch --local-entry Dockstore.cwl --json sample_configs.local.json
+   Creating directories for run of Dockstore launcher at: ./datastore//launcher-9d9c9bf1-7094-4a21-b2a3-1b3ad330a0a3
+   Provisioning your input files to your local machine
+   Downloading: #bam_input from /tmp/NA12878.chrom20.ILLUMINA.bwa.CEU.low_coverage.20121211.bam into directory: /media/dyuen/Data/large_volume/dockstore_tools/dockstore-tool-bamstats/./datastore/launcher-9d9
+   c9bf1-7094-4a21-b2a3-1b3ad330a0a3/inputs/78a05989-6978-45b0-b6e9-5f81e7aa34ad
+   Calling out to cwltool to run your tool
+   Executing: cwltool --enable-dev --non-strict --outdir /media/dyuen/Data/large_volume/dockstore_tools/dockstore-tool-bamstats/./datastore/launcher-9d9c9bf1-7094-4a21-b2a3-1b3ad330a0a3/outputs/ --tmpdir-pre
+   fix /media/dyuen/Data/large_volume/dockstore_tools/dockstore-tool-bamstats/./datastore/launcher-9d9c9bf1-7094-4a21-b2a3-1b3ad330a0a3/tmp/ --tmp-outdir-prefix /media/dyuen/Data/large_volume/dockstore_tools
+   /dockstore-tool-bamstats/./datastore/launcher-9d9c9bf1-7094-4a21-b2a3-1b3ad330a0a3/working/ /media/dyuen/Data/large_volume/dockstore_tools/dockstore-tool-bamstats/Dockstore.cwl /media/dyuen/Data/large_vol
+   ume/dockstore_tools/dockstore-tool-bamstats/./datastore/launcher-9d9c9bf1-7094-4a21-b2a3-1b3ad330a0a3/workflow_params.json
+   /usr/local/bin/cwltool 1.0.20170217172322
+   Resolved '/media/dyuen/Data/large_volume/dockstore_tools/dockstore-tool-bamstats/Dockstore.cwl' to 'file:///media/dyuen/Data/large_volume/dockstore_tools/dockstore-tool-bamstats/Dockstore.cwl'
+   [job Dockstore.cwl] /media/dyuen/Data/large_volume/dockstore_tools/dockstore-tool-bamstats/datastore/launcher-9d9c9bf1-7094-4a21-b2a3-1b3ad330a0a3/working/BHsHWq$ docker \
+       run \
+       -i \
+       --volume=/media/dyuen/Data/large_volume/dockstore_tools/dockstore-tool-bamstats/./datastore/launcher-9d9c9bf1-7094-4a21-b2a3-1b3ad330a0a3/inputs/78a05989-6978-45b0-b6e9-5f81e7aa34ad/NA12878.chrom20.IL
+   LUMINA.bwa.CEU.low_coverage.20121211.bam:/var/lib/cwl/stgc0a728c7-a8c0-44d3-be58-031fd656eb96/NA12878.chrom20.ILLUMINA.bwa.CEU.low_coverage.20121211.bam:ro \
+       --volume=/media/dyuen/Data/large_volume/dockstore_tools/dockstore-tool-bamstats/datastore/launcher-9d9c9bf1-7094-4a21-b2a3-1b3ad330a0a3/working/BHsHWq:/var/spool/cwl:rw \
+       --volume=/media/dyuen/Data/large_volume/dockstore_tools/dockstore-tool-bamstats/datastore/launcher-9d9c9bf1-7094-4a21-b2a3-1b3ad330a0a3/tmp/Z8umDA:/tmp:rw \
+       --workdir=/var/spool/cwl \
+       --read-only=true \
+       --user=1001 \
+       --rm \
+       --env=TMPDIR=/tmp \
+       --env=HOME=/var/spool/cwl \
+       quay.io/collaboratory/dockstore-tool-bamstats:1.25-6_1.0 \
+       bash \
+       /usr/local/bin/bamstats \
+       4 \
+       /var/lib/cwl/stgc0a728c7-a8c0-44d3-be58-031fd656eb96/NA12878.chrom20.ILLUMINA.bwa.CEU.low_coverage.20121211.bam
+...
+        [job Dockstore.cwl] completed success
         Final process status is success
 
-Saving copy of cwltool stdout to: /home/dyuen/dockstore-tool-bamstats/./datastore/launcher-77a75bfe-8b88-49b2-9b81-94292b00e299/outputs/cwltool.stdout.txt
-Saving copy of cwltool stderr to: /home/dyuen/dockstore-tool-bamstats/./datastore/launcher-77a75bfe-8b88-49b2-9b81-94292b00e299/outputs/cwltool.stderr.txt
+Saving copy of cwltool stdout to: /media/dyuen/Data/large_volume/dockstore_tools/dockstore-tool-bamstats/./datastore/launcher-9d9c9bf1-7094-4a21-b2a3-1b3ad330a0a3/outputs/cwltool.stdout.txt
+Saving copy of cwltool stderr to: /media/dyuen/Data/large_volume/dockstore_tools/dockstore-tool-bamstats/./datastore/launcher-9d9c9bf1-7094-4a21-b2a3-1b3ad330a0a3/outputs/cwltool.stderr.txt
 
 Provisioning your output files to their final destinations
-Uploading: #bamstats_report from /home/dyuen/dockstore-tool-bamstats/./datastore/launcher-77a75bfe-8b88-49b2-9b81-94292b00e299/outputs/bamstats_report.zip to : /tmp/bamstats_report.zip
+Uploading: #bamstats_report from /media/dyuen/Data/large_volume/dockstore_tools/dockstore-tool-bamstats/./datastore/launcher-9d9c9bf1-7094-4a21-b2a3-1b3ad330a0a3/outputs/bamstats_report.zip to : /tmp/bams
+tats_report.zip
 [##################################################] 100%
+
 ```
 
 So that's a lot of information but you can see the process was a success.  We get output from the command we ran and also see the file being moved to the correct output location:
@@ -275,7 +259,7 @@ cwltool --non-strict --enable-net --outdir /home/ubuntu/gitroot/dockstore-tool-b
 ## Adding a Test Parameter File
 We are able register the above input parameterization of the tool into Dockstore so that users can see and test an example with our tool. Users can manually add test parameter files for a given tool tag or workflow version through both the command line and the versions tab in the UI.
 
-**Tip:** Make sure that any required input files are given as URLs so that a user can run the example successfully.
+**Tip:** Make sure that any required input files are given as publically accessible URLs so that a user can run the example successfully.
 
 ## Releasing on GitHub
 

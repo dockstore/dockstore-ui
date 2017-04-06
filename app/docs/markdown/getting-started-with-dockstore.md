@@ -2,9 +2,7 @@
 
 ## [Linking GitHub, Bitbucket, GitLab and Quay.io](#Linking-services)
 
-If you have not gone through the onboarding wizard yet, first step is to log in to the Dockstore which will link your accounts for GitHub, Bitbucket, GitLab, and Quay.io along with providing you the command line tool we will use for most of the tasks in this tutorial.  Make sure you have your GitHub, Bitbucket, GitLab and/or Quay.io accounts established and follow the onboarding wizard:
-
-https://www.dockstore.org/login
+If you have not gone through the onboarding wizard yet, first step is to log in to the Dockstore which will link your accounts for GitHub, Bitbucket, GitLab, and Quay.io along with providing you the command line tool we will use for most of the tasks in this tutorial.  Make sure you have your GitHub, Bitbucket, GitLab and/or Quay.io accounts established and follow the []onboarding wizard](https://www.dockstore.org/login).
 
 Your link to GitHub is established on login and you will then be prompted to link your other accounts.
 

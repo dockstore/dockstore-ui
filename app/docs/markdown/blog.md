@@ -16,6 +16,11 @@ A subset of highlighted new features follows.
 * Better error messaging passed along from a newer cwltool version
 * Compatibility with a Write API service for programmatically adding tools
 
+### Breaking Changes
+
+* The default Dockstore install no longer includes S3 support. Instead, S3 support is provided by a plugin that can be installed via `dockstore plugin download` 
+* The command `dockstore tool launch` used to use `--local-entry` as a flag to indicate that `--entry` was pointing at a local file. Now, it replaces `--entry`. i.e. use `dockstore tool launch --local-entry <your local file>` rather than `dockstore tool launch --local-entry --entry <your local file>`
+
 ## February 27, 2017 - Dockstore Paper
 
 A Dockstore paper has been published and indexed as [The Dockstore: enabling modular, community-focused sharing of Docker-based genomics tools and workflows.](https://doi.org/10.12688/f1000research.10137.1)!
