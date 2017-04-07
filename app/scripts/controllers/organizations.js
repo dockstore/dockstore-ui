@@ -31,6 +31,7 @@ angular.module('dockstore.ui')
     '$routeParams',
     function($scope, OrganizationService, $q, $routeParams) {
       $scope.org = $routeParams.org;
+      $scope.display = false;
 
       var getOrgs = function() {
         return OrganizationService.getOrganizations();
@@ -74,6 +75,7 @@ angular.module('dockstore.ui')
           var workflows = ordered[i];
           $scope.orgToWorkflows[$scope.organizations[i]] = workflows;
         }
+        $scope.display = true;
       },
 
       reportProblems = function(fault) {

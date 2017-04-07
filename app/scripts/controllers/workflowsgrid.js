@@ -56,14 +56,12 @@ angular.module('dockstore.ui')
 //        }
       };
 
+      var organization = '';
+
       /* Filter by organization */
       var location = $location.search();
       if (location.hasOwnProperty("organization")) {
-        WorkflowService.getPublishedWorkflowByOrganization(location.organization)
-          .then(
-            function(workflows) {
-              $scope.filteredWorkflows = workflows;
-            });
+        organization = location.namespace;
       }
 
       /* Column Sorting */
@@ -107,7 +105,16 @@ angular.module('dockstore.ui')
       });
 
       $scope.$watch('workflows', function() {
-        $scope.filteredWorkflows = $filter('filter')($scope.workflows, $scope.searchQueryWorkflow);
+        if (organization) {
+          WorkflowService.getPublishedWorkflowByOrganization(location.organization)
+            .then(
+              function(workflows) {
+                $scope.filteredWorkflows = workflows;
+              });
+        } else {
+          $scope.filteredWorkflows = $filter('filter')($scope.workflows, $scope.searchQueryWorkflow);
+        }
+
         $scope.entryCount = $scope.filteredWorkflows.length;
       });
 

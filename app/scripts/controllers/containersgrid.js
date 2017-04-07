@@ -59,15 +59,12 @@ angular.module('dockstore.ui')
 //        }
       };
 
+      var namespace = '';
+
       /* Filter by namespace */
       var location = $location.search();
       if (location.hasOwnProperty("namespace")) {
-
-        ContainerService.getPublishedContainersByNamespace(location.namespace)
-          .then(
-            function(containers) {
-              $scope.filteredTools = containers;
-            });
+        namespace = location.namespace;
       }
 
       $scope.getDockerPullCmd = function(path) {
@@ -113,8 +110,16 @@ angular.module('dockstore.ui')
       });
 
       $scope.$watch('containers', function() {
-        $scope.filteredTools = $filter('filter')($scope.containers, $scope.searchQueryContainer);
-        //console.log(JSON.stringify($scope.filteredTools));
+        if (namespace) {
+          ContainerService.getPublishedContainersByNamespace(location.namespace)
+            .then(
+              function(containers) {
+                $scope.filteredTools = containers;
+              });
+        } else {
+          $scope.filteredTools = $filter('filter')($scope.containers, $scope.searchQueryContainer);
+        }
+
         if ($scope.filteredTools !== undefined) {
           $scope.entryCount = $scope.filteredTools.length;
         }
