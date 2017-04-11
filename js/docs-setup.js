@@ -401,6 +401,15 @@ NG_DOCS={
     },
     {
       "section": "api",
+      "id": "dockstore.ui.directive:bioschema",
+      "shortName": "bioschema",
+      "type": "directive",
+      "moduleName": "dockstore.ui",
+      "shortDescription": "bioschema",
+      "keywords": "api bioschema directive dockstore ui"
+    },
+    {
+      "section": "api",
       "id": "dockstore.ui.directive:containerDetails",
       "shortName": "containerDetails",
       "type": "directive",
