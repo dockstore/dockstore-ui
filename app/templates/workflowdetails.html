@@ -117,7 +117,7 @@
 
 <stargazers workflow-obj="workflowObj" star-gazers="starGazers" ng-if="starGazers.clicked"></stargazers>
 <div class="row" ng-show="workflowObj" ng-if="!starGazers.clicked">
-  <div class="ds-tabs" ng-class="editMode ? 'col-md-12' : 'col-md-9'">
+  <div class="ds-tabs" ng-class="editMode ? 'col-md-12' : 'col-md-10'">
     <uib-tabset justified="true">
       <uib-tab active="activeTabs[0]" id="infoTab">
         <uib-tab-heading>Info</uib-tab-heading>
@@ -304,7 +304,7 @@
       </uib-tab>
     </uib-tabset>
   </div>
-  <div class="side-block col-md-3" ng-if="!editMode">
+  <div class="side-block col-md-2" ng-if="!editMode">
     <table>
       <thead>
         <th>
