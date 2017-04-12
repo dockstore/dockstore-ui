@@ -177,9 +177,7 @@ angular
           controllerAs: 'Maintenance'
         })
         .when('/organizations', {
-          templateUrl: 'views/organizations.html',
-          controller: 'OrganizationsCtrl',
-          controllerAs: 'Organizations'
+          templateUrl: 'views/organizations.html'
         })
         .when('/organizations/:org', {
           templateUrl: 'views/org.html',

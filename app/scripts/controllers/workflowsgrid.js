@@ -61,7 +61,7 @@ angular.module('dockstore.ui')
       /* Filter by organization */
       var location = $location.search();
       if (location.hasOwnProperty("organization")) {
-        organization = location.namespace;
+        organization = location.organization;
       }
 
       /* Column Sorting */

@@ -31,7 +31,8 @@ angular.module('dockstore.ui')
     '$routeParams',
     function($scope, OrganizationService, $q, $routeParams) {
       $scope.org = $routeParams.org;
-      $scope.display = false;
+      $scope.tools = false;
+      $scope.workflows = false;
 
       var getOrgs = function() {
         return OrganizationService.getOrganizations();
@@ -66,6 +67,7 @@ angular.module('dockstore.ui')
           var tools = ordered[i];
           $scope.orgToTools[$scope.organizations[i]] = tools;
         }
+        $scope.tools = true;
       },
 
       mapWorkflows = function(resultFromApi) {
@@ -75,23 +77,42 @@ angular.module('dockstore.ui')
           var workflows = ordered[i];
           $scope.orgToWorkflows[$scope.organizations[i]] = workflows;
         }
-        $scope.display = true;
+        $scope.workflows = true;
       },
 
       reportProblems = function(fault) {
         return $q.reject(fault);
       };
 
-      var getOrgsPromise = getOrgs();
+      var setUp = function () {
+        var org = $scope.org;
 
-      getOrgsPromise
-        .then(assignTools)
-          .then(mapTools)
-        .catch(reportProblems);
+        if (org) {
+          var organizations = [];
+         organizations.push(org);
 
-      getOrgsPromise
-        .then(assignWorkflows)
-          .then(mapWorkflows)
-        .catch(reportProblems);
+          assignTools(organizations)
+            .then(mapTools)
+            .catch(reportProblems);
+
+          assignWorkflows(organizations)
+            .then(mapWorkflows)
+            .catch(reportProblems);
+        } else {
+          var getOrgsPromise = getOrgs();
+
+          getOrgsPromise
+            .then(assignTools)
+              .then(mapTools)
+            .catch(reportProblems);
+
+          getOrgsPromise
+            .then(assignWorkflows)
+              .then(mapWorkflows)
+            .catch(reportProblems);
+        }
+      };
+
+      setUp();
     }
   ]);

@@ -11,10 +11,13 @@
   </div>
 </div>
 
-<div class="container view-content" style="margin-top: 20px">
+<div class="container view-content centerPageSection" style="margin-top: 20px">
   <div class="row">
     <div class="col-md-12">
-      <div ng-if="organizations.length !== 0">
+      <div ng-if="!workflows || !tools">
+        <img class="center-block" src="styles/images/loading.gif">
+      </div>
+      <div ng-if="workflows && tools">
         <div ng-repeat="organization in organizations">
           <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" data-collapsible="expandable">
             <div class="panel panel-default">
