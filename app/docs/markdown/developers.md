@@ -49,6 +49,15 @@ arams.json
 /usr/local/bin/cwltool 1.0.20170217172322
 ...
 ```
+
+To disable or enable plugins, create a disabled.txt file or enabled.txt file in the plugins folder.  If an enabled.txt file exists, only the plugins listed in the file will be enabled.  If a disabled.txt file exists, the plugins listed in the file will be disabled.  The disabled.txt file is ignored if the enabled.txt exists.  Here is a sample enabled.txt or disabled.txt file:
+
+```
+dockstore-file-s3-plugin
+dockstore-file-synapse-plugin
+```
+
+See https://github.com/decebals/pf4j#enabledisable-plugins more details.
 ## Write-API Conversion Process
 ### Client Configuration
 The configuration file used by the write-api-client is located at ~/.dockstore/write.api.config.properties
