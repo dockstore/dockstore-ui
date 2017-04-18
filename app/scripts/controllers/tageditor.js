@@ -150,7 +150,6 @@ angular.module('dockstore.ui')
             toAddCwl = $scope.cwlItems;
             toRemoveWdl = $($scope.wdlValuesInDatabase).not($scope.wdlItems);
             toAddWdl = $scope.wdlItems;
-
             $scope.removeTestParameterFileToDb(toRemoveCwl.toArray(), toAddCwl, 'CWL');
             $scope.removeTestParameterFileToDb(toRemoveWdl.toArray(), toAddWdl, 'WDL');
           });
@@ -191,6 +190,7 @@ angular.module('dockstore.ui')
           .then(
             function(versionTags) {
               $scope.closeEditTagModal(true);
+              $scope.updateTestParameterFiles().then(function() {
               var savedTagObj = null;
               for (var i = 0; i < versionTags.length; i++) {
                 if (versionTags[i].name === tagObj.name) {
@@ -199,6 +199,7 @@ angular.module('dockstore.ui')
                 }
               }
               $scope.$emit('tagEditorRefreshContainer', $scope.containerId);
+              });
               return versionTags;
             },
             function(response) {
