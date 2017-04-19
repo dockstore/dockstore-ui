@@ -1,6 +1,6 @@
 # News and Events
 
-## April X, 2017 - Dockstore 1.2 Release
+## April 19, 2017 - Dockstore 1.2 Release
 
 The latest Dockstore major release includes a large number of new features and fixes.
 A subset of highlighted new features follows.
@@ -9,17 +9,18 @@ A subset of highlighted new features follows.
 
 * Support for private tools
   * users can register tools where users will need to ask the original author for access
-* Support for Docker images hosted in GitLab and Amazon ECR 
-* Allow users to star tools and workflows
+* Support for [private](https://dockstore.org/docs/docker_registries) Docker images hosted in GitLab and Amazon ECR 
+* Allow users to star tools and workflows 
 * Stargazers page to show all users who have starred a particular tool or workflow
-* Support for file provisioning plugins
-* Better error messaging passed along from a newer cwltool version
+* Support for [file provisioning plugins](https://github.com/ga4gh/dockstore/tree/develop/dockstore-file-plugin-parent)
+* Better error messaging passed along from a newer cwltool version 
 * Compatibility with a Write API service for programmatically adding tools
 
 ### Breaking Changes
 
 * The default Dockstore install no longer includes S3 support. Instead, S3 support is provided by a plugin that can be installed via `dockstore plugin download` 
 * The command `dockstore tool launch` used to use `--local-entry` as a flag to indicate that `--entry` was pointing at a local file. Now, it replaces `--entry`. i.e. use `dockstore tool launch --local-entry <your local file>` rather than `dockstore tool launch --local-entry --entry <your local file>`
+* Update your cwltool install, details in the onboarding wizard
 
 ## February 27, 2017 - Dockstore Paper
 
