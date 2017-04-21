@@ -33,8 +33,9 @@ angular.module('dockstore.ui')
     'localStorageService',
     'WebService',
     'NotificationService',
+    'md5',
     function($rootScope, $auth, $q, $http, $location, localStorageService,
-      WebService, NtfnService) {
+      WebService, NtfnService, md5) {
 
       this.getUserById = function(userId) {
         return $q(function(resolve, reject) {
@@ -47,6 +48,18 @@ angular.module('dockstore.ui')
             reject(response);
           });
         });
+      };
+
+      this.gravatarUrl = function(email, defaultImg) {
+        if (email) {
+          return "https://www.gravatar.com/avatar/" + md5.createHash(email) + "?d=" + defaultImg + "&s=500";
+        } else {
+          if (defaultImg) {
+            return defaultImg;
+          } else {
+            return "http://www.imcslc.ca/imc/includes/themes/imc/images/layout/img_placeholder_avatar.jpg";
+          }
+        }
       };
 
       this.getUserByUsername = function(username) {

@@ -34,21 +34,12 @@ angular.module('dockstore.ui')
     'TokenService',
     'WebService',
     'NotificationService',
-    'md5',
     function($scope, $q, $auth, $location, $window,
       UserService, TokenService, WebService, NtfnService, md5) {
 
       $scope.syncingWithGithub = false;
       $scope.userObj = UserService.getUserObj();
-      var gravatarUrl = function(email, defaultImg) {
-        if (email) {
-          return "https://www.gravatar.com/avatar/" + md5.createHash(email) + "?d=" + defaultImg;
-        } else {
-          return defaultImg;
-        }
-      };
-      //const gravatarUrl = (email, defaultImg) => {"https://www.gravatar.com/avatar/" + md5.createHash(email) + "?d=" + defaultImg};
-      $scope.userObj.avatarUrl = gravatarUrl($scope.userObj.email, $scope.userObj.avatarUrl);
+      $scope.userObj.avatarUrl = UserService.gravatarUrl($scope.userObj.email, $scope.userObj.avatarUrl);
 
       $scope.linkGitHubAccount = function() {
         UserService.logout({
@@ -94,6 +85,7 @@ angular.module('dockstore.ui')
           .then(
             function(user) {
               $scope.userObj = user;
+              $scope.userObj.avatarUrl = UserService.gravatarUrl($scope.userObj.email, $scope.userObj.avatarUrl);
               UserService.setUserObj(user);
               $scope.syncingWithGithub = false;
             }

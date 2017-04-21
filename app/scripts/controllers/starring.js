@@ -31,7 +31,6 @@ angular.module('dockstore.ui')
     '$auth',
     'UserService',
     'StarringService',
-    'md5',
     function($scope, $q, $auth, UserService, StarringService, md5) {
       $scope.userObj = UserService.getUserObj();
       $scope.max = 1;
@@ -177,18 +176,7 @@ angular.module('dockstore.ui')
           $scope.entryType = 'container';
         }
       };
-      var gravatarUrl = function(email, defaultImg) {
-        if (email) {
-          return "https://www.gravatar.com/avatar/" + md5.createHash(email) + "?d=" + defaultImg;
-        } else {
-          if (defaultImg) {
-            return defaultImg;
-          } else {
-            return "http://www.imcslc.ca/imc/includes/themes/imc/images/layout/img_placeholder_avatar.jpg";
-          }
-        }
-      };
-      //const gravatarUrl = (email, defaultImg) => ("https://www.gravatar.com/avatar/" + md5.createHash(email) + "?d=" + defaultImg);
+
       /**
        * @ngdoc method
        * @name getStargazers
@@ -206,7 +194,7 @@ angular.module('dockstore.ui')
             function(starring) {
               $scope.starGazers.users = starring;
               $scope.starGazers.users.forEach(function(user) {
-                user.avatarUrl = gravatarUrl(user.email, user.avatarUrl);
+                user.avatarUrl = UserService.gravatarUrl(user.email, user.avatarUrl);
               });
               $scope.starGazers.clicked = true;
             },
