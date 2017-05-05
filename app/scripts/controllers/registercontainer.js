@@ -29,10 +29,7 @@ angular.module('dockstore.ui')
     '$q',
     'ContainerService',
     'FormattingService',
-    function ($scope, $q, ContainerService, FrmttSrvc) {
-    $scope.dockerRegistryMap = {};
-    $scope.customDockerRegistryPath = null;
-    $scope.showCustomDockerRegistryPath = false;
+    function($scope, $q, ContainerService, FrmttSrvc) {
 
       $scope.registerContainer = function() {
         $scope.setContainerEditError(null);
@@ -131,10 +128,10 @@ angular.module('dockstore.ui')
       };
 
       /**
-      * Given a friendly name of a registry, determine the enum
-      * @param {string} friendly name of docker registry
-      * @returns the docker path of a registry
-      */
+       * Given a friendly name of a registry, determine the enum
+       * @param {string} friendly name of docker registry
+       * @returns the docker path of a registry
+       */
       $scope.getContainerRegistry = function(irProvider) {
         for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
           if (irProvider === $scope.dockerRegistryMap[i].friendlyName) {
@@ -143,11 +140,13 @@ angular.module('dockstore.ui')
         }
       };
 
+
+
       /**
-      * Given a friendly name of a registry, determine the docker path
-      * @param {string} friendly name of docker registry
-      * @returns the docker path of a registry
-      */
+       * Given a friendly name of a registry, determine the docker path
+       * @param {string} friendly name of docker registry
+       * @returns the docker path of a registry
+       */
       $scope.getImageRegistryPath = function(irProvider) {
         for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
           if (irProvider === $scope.dockerRegistryMap[i].friendlyName) {
@@ -180,11 +179,14 @@ angular.module('dockstore.ui')
         return normContainerObj;
       };
 
+
+
       $scope.closeRegisterContainerModal = function(toggle) {
         $scope.setContainerEditError(null);
         $scope.registerContainerForm.$setUntouched();
         if (toggle) $scope.toggleModal = true;
       };
+
 
       $scope.setContainerEditError = function(message, errorDetails) {
         if (message) {
@@ -197,14 +199,26 @@ angular.module('dockstore.ui')
         }
       };
 
-      $scope.setContainerEditError(null);
-
-      $scope.dockerRegistryMap = FrmttSrvc.returnDockerRegistryList();
+      /**
+       * @ngdoc function
+       * @name ngOnInit
+       * @description Similar to ngOnInit of Angular 2+
+       */
+      $scope.ngOnInit = function() {
+        $scope.dockerRegistryMap = {};
+        $scope.customDockerRegistryPath = null;
+        $scope.showCustomDockerRegistryPath = false;
+        $scope.setContainerEditError(null);
+        FrmttSrvc.getAndReturnDockerRegistryList().then(function(response) {
+          $scope.dockerRegistryMap = response;
+        });
+      };
+      $scope.ngOnInit();
 
       /**
-      * Will create a path for the given tool, properly setting the docker registry path
-      * @returns path on the tool
-      */
+       * Will create a path for the given tool, properly setting the docker registry path
+       * @returns path on the tool
+       */
       $scope.createPath = function() {
         var path = "";
         if ($scope.customDockerRegistryPath !== null) {
@@ -217,22 +231,22 @@ angular.module('dockstore.ui')
       };
 
       /**
-      * Will customize the form for registering a tool based on the Docker registry chosen
-      * @returns nothing
-      */
+       * Will customize the form for registering a tool based on the Docker registry chosen
+       * @returns nothing
+       */
       $scope.checkForSpecialDockerRegistry = function() {
         for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
           if ($scope.containerObj.irProvider === $scope.dockerRegistryMap[i].friendlyName) {
             if ($scope.dockerRegistryMap[i].privateOnly === "true") {
               $scope.containerObj.private_access = true;
-              $("#privateTool").attr('disabled','disabled');
+              $("#privateTool").attr('disabled', 'disabled');
             } else {
               $("#privateTool").removeAttr('disabled');
             }
 
             if ($scope.dockerRegistryMap[i].customDockerPath === "true") {
               $scope.showCustomDockerRegistryPath = true;
-              $scope.customDockerRegistryPath =  null;
+              $scope.customDockerRegistryPath = null;
             } else {
               $scope.showCustomDockerRegistryPath = false;
               $scope.customDockerRegistryPath = $scope.getImageRegistryPath($scope.containerObj.irProvider);
@@ -242,17 +256,17 @@ angular.module('dockstore.ui')
       };
 
       /**
-      * Basic private tool specific checks
-      * @returns True if invalid private tool, False if valid
-      */
+       * Basic private tool specific checks
+       * @returns True if invalid private tool, False if valid
+       */
       $scope.isInvalidPrivateTool = function() {
         return $scope.containerObj.private_access === true && ($scope.containerObj.tool_maintainer_email === null || $scope.containerObj.tool_maintainer_email === '');
       };
 
       /**
-      * Basic custom docker registry path checks
-      * @returns True if invalid custom docker registry, False if valid
-      */
+       * Basic custom docker registry path checks
+       * @returns True if invalid custom docker registry, False if valid
+       */
       $scope.isInvalidCustomRegistry = function() {
         for (var i = 0; i < $scope.dockerRegistryMap.length; i++) {
           if ($scope.containerObj.irProvider === $scope.dockerRegistryMap[i].friendlyName) {
@@ -268,4 +282,5 @@ angular.module('dockstore.ui')
           }
         }
       };
-  }]);
+    }
+  ]);
