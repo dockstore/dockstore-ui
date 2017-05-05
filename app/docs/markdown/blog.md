@@ -1,5 +1,18 @@
 # News and Events
 
+## May 5, 2017 - Upcoming Features
+
+To give you a taste of what we're working on for the next major version of Dockstore, we're looking at features in the following main areas:
+
+* Searching!
+  * As Dockstore grows, we've noticed that our current solution for searching tools (go to [Tools](/search-containers) or [Workflows](/search-workflows) and type in the search box) is becoming less useful. Look for more useful ways to search and filter tools and workflows in the next version
+* More ways to launch tools and workflows
+  * We're working with partners to promote new ways to run CWL and WDL tools and workflows
+* UI rewrite
+  * We're currently migrating our UI from AngularJS to Angular (2), watch for performance improvements and usability improvements in this area
+  
+As usual, we're open to suggestions. If you have one or if you spot a bug, drop us a line on [GitHub](https://github.com/ga4gh/dockstore/issues)
+
 ## April 19, 2017 - Dockstore 1.2 Release
 
 The latest Dockstore major release includes a large number of new features and fixes.
