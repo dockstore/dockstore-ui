@@ -643,11 +643,11 @@ angular.module('dockstore.ui')
           "\n# run it locally with the Dockstore CLI" +
           "\ndockstore workflow launch --entry " + full_workflow_path + ":" + $scope.workflowVersionName + " --json Dockstore.json";
 
-        var escapedPath = encodeURIComponent(full_workflow_path);
+        var escapedPath = encodeURIComponent("#workflow/"+full_workflow_path);
         var escapedVersion = encodeURIComponent($scope.workflowVersionName);
 
         $scope.launchWithCWLTool = "# alternatively, cwltool can run a workflow directly when all inputs and outputs are available on the local filesystem" +
-          "\ncwltool --non-strict https://www.dockstore.org:8443/api/ga4gh/v1/workflows/" + escapedPath + "/versions/" + escapedVersion + "/plain-CWL/descriptor Dockstore.json";
+          "\ncwltool --non-strict https://dockstore.org:8443/api/ga4gh/v1/tools/" + escapedPath + "/versions/" + escapedVersion + "/plain-CWL/descriptor Dockstore.json";
 
         return $scope.validContent; //only show LaunchWith when content is valid
       };
