@@ -361,15 +361,20 @@
             <strong uib-tooltip="Date and time of the last update to the Tool entry">Last Update</strong>:
             {{ containerObj.lastUpdated ? getDateTimeString(containerObj.lastUpdated) : 'n/a' }}
           </li>
-          <li>
+          <li ng-show="containerObj.description">
             <strong uib-tooltip="Description of tool obtained from tool descriptor">Description</strong>:
             <div class="well well-sm">
               <div
                 ng-show="containerObj.description"
                 marked="containerObj.description">
               </div>
+            </div>
+          </li>
+          <li ng-show="!containerObj.description && editMode">
+            <div class="well well-sm">
+              <span class = "glyphicon glyphicon-warning-sign"></span>
               <span ng-show="!containerObj.description">
-                No description associated with this container. Please select a version.
+                No description associated with this tool.  See <a href="https://dockstore.org/docs/getting-started-with-cwl">Dockstore's Getting Started With CWL</a> and <a href="http://www.commonwl.org/v1.0/CommandLineTool.html#CommandLineTool">commonwl.org</a> for how to define a description for this tool.
               </span>
             </div>
           </li>
