@@ -785,6 +785,15 @@ NG_DOCS={
       "moduleName": "dockstore.ui",
       "shortDescription": "WorkflowService",
       "keywords": "api dockstore service ui workflowservice"
+    },
+    {
+      "section": "api",
+      "id": "ngOnInit",
+      "shortName": "ngOnInit",
+      "type": "function",
+      "moduleName": "ngOnInit",
+      "shortDescription": "Similar to ngOnInit of Angular 2+",
+      "keywords": "angular api function ngoninit"
     }
   ],
   "apis": {
