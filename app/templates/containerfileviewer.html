@@ -60,9 +60,14 @@
   </div>
 </div>
 <div class="alert alert-warning" role="alert"
-    ng-show="fileLoaded && !fileContents">
+    ng-show="fileLoaded && !fileContents && !isTestJson()">
   <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
-  A {{expectedFilename}} associated with this Docker container could not be found.
+  A {{expectedFilename}} associated with this Docker container and version could not be found.
+</div>
+<div class="alert alert-warning" role="alert"
+    ng-show="fileLoaded && !fileContents && isTestJson()">
+  <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;
+  A {{expectedFilename}} associated with this Docker container, descriptor type and version could not be found.
 </div>
 
 <div file-viewer
