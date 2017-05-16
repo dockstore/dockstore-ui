@@ -160,7 +160,7 @@ angular.module('dockstore.ui')
         }
 
         // assign default values
-        var tool_path = $scope.containerObj === null ? "" : $scope.containerObj.path;
+        var tool_path = $scope.containerPath === null ? "" : $scope.containerPath;
 
         //get the tag name from tag id
         for (var i = 0; i < $scope.validTags.length; i++) {
