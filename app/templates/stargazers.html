@@ -4,7 +4,7 @@
       <div ng-repeat="stargazer in starGazers.users">
         <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
           <div>
-          <img src="{{stargazer.avatarUrl}}" width="400" height="400" class="img-responsive" alt="http://www.imcslc.ca/imc/includes/themes/imc/images/layout/img_placeholder_avatar.jpg"/>
+          <img ng-src="{{stargazer.avatarUrl}}" width="400" height="400" class="img-responsive" alt="http://www.imcslc.ca/imc/includes/themes/imc/images/layout/img_placeholder_avatar.jpg"/>
           <div class="caption">
             <h5>{{stargazer.username}}</h5>
           </div>
@@ -22,4 +22,3 @@
 </div>
 
 <button id="backButton" type="button" ng-click="starGazers.clicked=false" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i>Back to details</button>
-
