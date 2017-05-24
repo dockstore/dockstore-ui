@@ -2,7 +2,7 @@
 
 ## [Linking GitHub, Bitbucket, GitLab and Quay.io](#Linking-services)
 
-If you have not gone through the onboarding wizard yet, first step is to log in to the Dockstore which will link your accounts for GitHub, Bitbucket, GitLab, and Quay.io along with providing you the command line tool we will use for most of the tasks in this tutorial.  Make sure you have your GitHub, Bitbucket, GitLab and/or Quay.io accounts established and follow the []onboarding wizard](https://www.dockstore.org/login).
+If you have not gone through the onboarding wizard yet, first step is to log in to the Dockstore which will link your accounts for GitHub, Bitbucket, GitLab, and Quay.io along with providing you the command line tool we will use for most of the tasks in this tutorial.  Make sure you have your GitHub, Bitbucket, GitLab and/or Quay.io accounts established and follow the [onboarding wizard](https://www.dockstore.org/login).
 
 Your link to GitHub is established on login and you will then be prompted to link your other accounts.
 
@@ -26,7 +26,7 @@ Now that you have your `Dockerfile` and `Dockstore.cwl` in GitHub, have setup Qu
 
 ### Quick Registration via the Web UI
 
-In the authenticated Web UI, navigate to 'My Tools' to begin managing Docker images imported through your linked account(s). These pages will allow you to quickly register tools that follow a particularly simple format (look below to manual registration for more complex formats). For quick registration, we look through your quay.io images and see if any are setup as [automated builds](https://docs.quay.io/guides/building.html). Using those to track back to your github, bitbucket, or gitlab accounts, we list all pairs of Docker images with git repositories that contain a `Dockstore.cwl` and a `Dockerfile`. When we discover both of these, we create an unregistered entry in the interface below.
+In the authenticated Web UI, navigate to 'My Tools' to begin managing Docker images imported through your linked account(s). These pages will allow you to quickly register tools that follow a particularly simple format (look below to manual registration for more complex formats). For quick registration, click 'Refresh All Tools'.  We look through your Quay.io images and see if any are setup as [automated builds](https://docs.quay.io/guides/building.html). Using those to track back to your GitHub, Bitbucket, or GitLab accounts, we list all pairs of Docker images with git repositories that contain a `Dockstore.cwl` and a `Dockerfile`. When we discover both of these, we create an unregistered entry in the interface below.  Note that the Build Mode is 'Fully-Automated' due to the quick registration.
 
 ![My Tools](docs/register_ui.png)
 
@@ -249,6 +249,65 @@ The `dockstore tool manual_publish` command can be used to manually register a t
       --version-name <version>     Version tag name for Dockerhub containers only, defaults to latest
 
     ------------------
+
+## Additional Information on Build Modes
+
+#### [Fully-Automated](#Fully-Automated)
+
+How to create it:
+
+Create by using the "Refresh All Tools" button.  This will scan through your Quay.io repositories and automatically register the tool on Dockstore.
+
+Requirements:
+
+- Using a Quay.io registry with Quay.io linked to Dockstore.
+
+Benefits:
+
+This build mode automatically adds versions to your tool with Quay tags and Git reference using the Quay.io build trigger.
+
+Limitations:
+
+- Unable to easily deregister the tool
+- Unable to manually add versions
+- Cannot uniquely name the tool
+- Currently only works with Quay.io image registry
+
+When to use:  
+
+Recommended when you are using a Quay.io registry, want a quick and easy way to register the tool, and want to avoid manually adding new versions to the tool.  Generally recommended for most tools.
+
+#### [Manual](#Manual)
+
+How to create it:
+
+- Click Add Tool, fill in details
+
+Requirements:
+
+- Registry that has at least one tag
+- Token to the corresponding registry (if using Quay.io)
+
+Limitations:
+
+- Have to manually the tool and also manually add each version (refresh will not work)
+
+When to use:
+
+Recommended when you're not using Quay.io or if someone else has the same tool name already and you want your own tool instead.  Also if you are not using build triggers.
+
+### Converting Between Build Modes
+
+Manual -> Fully-Automated:
+
+1. Deregister the manual tool
+2. Create a new Fully-Automated one (simply click "Refresh All Tools")
+
+Fully-Automated -> Manual:
+
+1. Delete Quay.io repository
+2. "Refresh All Tools" (this will remove the tool from Dockstore)
+3. Create a new Manual tool (will have to recreate the Quay.io repository)
 
 ## Sharing the Tool
 
