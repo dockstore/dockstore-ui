@@ -75,6 +75,22 @@ your input files are available locally. The equivalent of the previous example w
 
 A similar invocation can be attempted in other CWL-compatible systems. 
 
+## Batch Services 
+
+Dockstore tools and workflows can also be run through a number of online services that we're going to loosely call "commercial batch services." These services share the following characteristics: they spin up the underlying infrastructure and run commands, often in Docker containers, while freeing you from running the batch computing software yourself. While not having any understanding of CWL, these services can be used naively to run tools and workflows, and in a more sophisticated way to implement a CWL-compatible workflow engine.  
+
+### AWS Batch
+
+[AWS Batch](https://aws.amazon.com/batch/) is built by Amazon Web Services. Look [here](/docs/aws-batch) for a tutorial on how to run a few sample tools via AWS. 
+
+### Azure Batch
+
+[Azure Batch](https://azure.microsoft.com/en-us/services/batch/) and the associated [batch-shipyard](https://github.com/Azure/batch-shipyard) is built by Microsoft. Look [here](/docs/azure-batch) for a tutorial on how to run a few sample tools via Azure. 
+
+### Google Pipelines 
+
+Google Pipeline and [Google dsub](https://github.com/googlegenomics/dsub) are also worth a look. In particular, both [Google Genomics Pipelines](https://cloud.google.com/genomics/v1alpha2/pipelines) and [dsub](https://cloud.google.com/genomics/v1alpha2/dsub) provide tutorials on how to run  (Dockstore!) tools if you have some knowledge on how to construct the command-line for a tool yourself. 
+
 ## Consonance 
 
 Consonance pre-dates Dockstore and was the framework used to run much of the data analysis for the [PCAWG](https://dcc.icgc.org/pcawg#!%2Fmutations) project by running [Seqware](https://seqware.github.io/) workflows. Documentation for this incarnation of Dockstore can be found at [Working with PanCancer Data on AWS](http://icgc.org/working-pancancer-data-aws) and [ICGC on AWS](https://aws.amazon.com/public-datasets/icgc/).
