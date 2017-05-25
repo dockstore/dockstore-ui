@@ -105,6 +105,18 @@ angular.module('dockstore.ui')
           description: 'This page is for developers working with Dockstore',
           name: 'For Developers',
           markdown: 'docs/markdown/developers.md'
+        },
+        {
+          slug: 'aws-batch',
+          description: 'This page is for users of AWS, specifically AWS Batch',
+          name: 'AWS Batch',
+          markdown: 'docs/markdown/aws-batch-tutorial.md'
+        },
+        {
+          slug: 'azure-batch',
+          description: 'This page is for users of Azure, specifically Azure Batch',
+          name: 'Azure Batch',
+          markdown: 'docs/markdown/azure-batch-tutorial.md'
         }
       ];
 
