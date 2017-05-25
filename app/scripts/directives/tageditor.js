@@ -54,7 +54,7 @@ angular.module('dockstore.ui')
         });
         scope.$watch('tagObj.name', function(newValue, oldValue) {
           if (newValue !== undefined) {
-            //scope.setItems();
+            scope.setItems();
           }
         });
       }

@@ -219,6 +219,11 @@ angular.module('dockstore.ui')
 
       // Filter descriptor select element  (CWL/WDL)
       $scope.filterDescriptor = function(element) {
+
+        // Don't filter out the previous descriptor type even if it doesn't exist
+        if ($scope.selDescriptorName === element) {
+          return true;
+        }
       if ($scope.isDescriptor()){
         for(var i=0;i<$scope.successContent.length;i++){
           if($scope.successContent[i].descriptor === element && $scope.successContent[i].tag === $scope.selTagName){
@@ -247,6 +252,12 @@ angular.module('dockstore.ui')
 
       // Filter version select element (Tags)
       $scope.filterVersion = function (element) {
+
+        // Don't filter out the previous tag name even if it doesn't exist
+        if ($scope.selTagName === element) {
+          return true;
+        }
+
         if ($scope.isDockerfile() || $scope.isDescriptor()) {
           for (var i = 0; i < $scope.successContent.length; i++) {
             if ($scope.successContent[i].tag === element) {

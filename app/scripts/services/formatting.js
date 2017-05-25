@@ -191,6 +191,14 @@ angular.module('dockstore.ui')
             }
           );
       };
+      this.getAndReturnDockerRegistryList = function () {
+        return ContainerService.getDockerRegistryList().then(
+          function(result) {
+            dockerRegistryMap = result;
+            return dockerRegistryMap;
+          }
+        );
+      };
 
       this.returnDockerRegistryList = function() {
         return dockerRegistryMap;

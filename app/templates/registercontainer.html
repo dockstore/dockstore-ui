@@ -139,7 +139,7 @@
                   ng-minlength="3"
                   ng-maxlength="256"
                   ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(cwl|yaml|yml)$/i"
-                  required
+                  ng-required="!(containerObj.default_cwl_path.length || containerObj.default_wdl_path.length)"
                   uib-tooltip
                   title="Default relative path to the CWL Descriptor in the Git repository."
                   placeholder="e.g. /Dockstore.cwl" />
@@ -152,6 +152,7 @@
               </div>
             </div>
           </div>
+
           <div class="form-group form-group-sm">
             <label class="col-sm-3 control-label">
               WDL Descriptor Path:
@@ -165,7 +166,7 @@
                 ng-minlength="3"
                 ng-maxlength="256"
                 ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.wdl$/i"
-                required
+                ng-required="!(containerObj.default_cwl_path.length || containerObj.default_wdl_path.length)"
                 uib-tooltip
                 title="Default relative path to the WDL Descriptor in the Git repository."
                 placeholder="e.g. /Dockstore.wdl" />
@@ -178,6 +179,60 @@
               </div>
             </div>
           </div>
+
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              CWL Test Parameter File:
+            </label>
+            <div class="col-sm-9">
+              <input
+                type="text"
+                class="form-control"
+                name="default_cwl_test_parameter_file"
+                ng-model="containerObj.default_cwl_test_parameter_file"
+                ng-minlength="3"
+                ng-maxlength="128"
+                ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(json|yml|yaml)$/i"
+                uib-tooltip
+                title="Relative path to a CWL Test Parameter File in the Git repository."
+                placeholder="e.g. /test.cwl.json"/>
+              <div
+                class="form-error-messages"
+                ng-messages="registerContainerForm.default_cwl_test_parameter_file.$error"
+                ng-if="registerContainerForm.default_cwl_test_parameter_file.$touched">
+                <div ng-messages-include="templates/validation/containers/testparameterfile.html">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">
+              WDL Test Parameter File:
+            </label>
+            <div class="col-sm-9">
+              <input
+                type="text"
+                class="form-control"
+                name="default_wdl_test_parameter_file"
+                ng-model="containerObj.default_wdl_test_parameter_file"
+                ng-minlength="3"
+                ng-maxlength="128"
+                ng-pattern="/^\/([^\\\/\?\:\*\|\<\>]+\/)*[^\\\/\?\:\*\|\<\>]+\.(json|yml|yaml)$/i"
+                uib-tooltip
+                title="Relative path to a WDL Test Parameter File in the Git repository."
+                placeholder="e.g. /test.wdl.json"/>
+              <div
+                class="form-error-messages"
+                ng-messages="registerContainerForm.default_wdl_test_parameter_file.$error"
+                ng-if="registerContainerForm.default_wdl_test_parameter_file.$touched">
+                <div ng-messages-include="templates/validation/containers/testparameterfile.html">
+                </div>
+              </div>
+            </div>
+          </div>
+
+
           <div class="form-group form-group-sm">
             <label class="col-sm-3 control-label">
               Image Registry:

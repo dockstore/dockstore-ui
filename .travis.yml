@@ -3,7 +3,7 @@ dist: trusty
 language: node_js
 node_js:
   - 'stable'
-  - '4.2.1'
+  - '7.9'
 services:
   - postgresql
 jdk:
