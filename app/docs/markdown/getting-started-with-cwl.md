@@ -293,7 +293,7 @@ It will automatically prompt you to setup a "build trigger" after GitHub authent
 
 It will then ask if there are particular branches you want to build, I typically just let it build everything:
 
-So every time you do a commit to your GitHub repo Quay automatially builds and tags a Docker image.  If this is overkill for you, consider setting up particular build trigger regular expressions at this step.
+So every time you do a commit to your GitHub repo Quay automatically builds and tags a Docker image.  If this is overkill for you, consider setting up particular build trigger regular expressions at this step.
 
 ![Build Trigger](docs/run_trigger.png)
 
