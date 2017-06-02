@@ -38,7 +38,7 @@ install:
   - 'npm install --global grunt-cli bower yo generator-karma generator-angular'
   - 'sudo apt-get install -y ruby ruby-dev make'
   - 'gem install compass'
-  - 'npm update'
+  - 'npm install'
   - 'bower update'
 
 before_script:
