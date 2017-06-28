@@ -33,7 +33,8 @@ angular.module('dockstore.ui')
     'NotificationService',
     'UtilityService',
     '$location',
-    function($scope, $q, $sce, WorkflowService, FrmttSrvc, NtfnService, UtilityService, $location) {
+    'WebService',
+    function($scope, $q, $sce, WorkflowService, FrmttSrvc, NtfnService, UtilityService, $location, WebService) {
 
       $scope.labelsEditMode = false;
       $scope.descriptorEnabled = false;
@@ -76,6 +77,9 @@ angular.module('dockstore.ui')
           .then(
             function(workflowObj) {
               $scope.workflowObj = workflowObj;
+              if (workflowObj.path && workflowObj.descriptorType === 'wdl') {
+                $scope.dnastackURL = WebService.DNASTACK_IMPORT_URL + '?path=' + workflowObj.path + '&descriptorType=wdl';
+              }
             },
             function(response) {
               $scope.setWorkflowDetailsError(
