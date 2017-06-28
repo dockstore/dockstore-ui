@@ -34,7 +34,7 @@ Again, we provide an example from the [dockstore-tool-bamstats](https://github.c
 
     requirements:
       - class: DockerRequirement
-        dockerPull: "quay.io/collaboratory/dockstore-tool-bamstats:1.25-6"
+        dockerPull: "quay.io/collaboratory/dockstore-tool-bamstats:1.25-6_1.1"
 
     hints:
       - class: ResourceRequirement
@@ -102,7 +102,7 @@ You can register for an [ORCID](http://orcid.org/) (a digital identifer for rese
 ```
 requirements:
   - class: DockerRequirement
-    dockerPull: "quay.io/collaboratory/dockstore-tool-bamstats:1.25-3"
+    dockerPull: "quay.io/collaboratory/dockstore-tool-bamstats:1.25-6_1.1"
 ```
 
 This section links the Docker image used to this CWL.  Notice it's exactly the same as the `-t` you used when building your image.
@@ -263,13 +263,13 @@ We are able register the above input parameterization of the tool into Dockstore
 
 ## Releasing on GitHub
 
-At this point we've successfully created our tool in Docker, tested it, written a CWL that describes how to run it, and tested running this via the Dockstore command line.  All of this work has been done locally, so if we encounter problems along the way its fast to perform debug cycles, fixing problems as we go.  At this point we're confident that the tool is ready to share with others and bug free.  It's time to release `1.25-3`
+At this point we've successfully created our tool in Docker, tested it, written a CWL that describes how to run it, and tested running this via the Dockstore command line.  All of this work has been done locally, so if we encounter problems along the way its fast to perform debug cycles, fixing problems as we go.  At this point we're confident that the tool is ready to share with others and bug free.  It's time to release `1.25-6_1.1`
 
-Releasing will tag your GitHub repository with a version tag so you always can get back to this particular release.  I'm going to use the tag `1.25-3` which you can see referenced in my Docker image tag and also my CWL file.  GitHub makes it very easy to release:
+Releasing will tag your GitHub repository with a version tag so you always can get back to this particular release.  I'm going to use the tag `1.25-6_1.1` which you can see referenced in my Docker image tag and also my CWL file. Note that if you're following the tutorial using a forked version of the bamstats repo, your organization name should be different. GitHub makes it very easy to release:
 
 ![Release](docs/release.png)
 
-I click on "releases" in my GitHub project [page](https://github.com/CancerCollaboratory/dockstore-tool-bamstats) and then follow the directions to create a new release. Simple as that!
+I click on "releases" in my forked version of the GitHub project [page](https://github.com/CancerCollaboratory/dockstore-tool-bamstats) and then follow the directions to create a new release. Simple as that!
 
 **Tip:** [HubFlow](https://datasift.github.io/gitflow/) is an excellent way to manage the lifecycle of releases on GitHub.  Take a look!
 
@@ -283,29 +283,28 @@ Log onto Quay now and setup a new repository (click the "+" icon).
 
 ![New Quay Repo](docs/quay_new_repo.png)
 
-You must match the name to what I was using previously, so in this case it's `CancerCollaboratory/dockstore-tool-bamstats`.  Also, Dockstore will only work with `Public` repositories currently. Notice I'm selecting "Link to a GitHub Repository Push", this is because we want Quay to automatically build our Docker image every time we update the repository on GitHub.  Very slick!
+For your sanity, you should match the name to what you were using previously, so in this case it's my username then the same repo name as in GitHub `denis-yuen/dockstore-tool-bamstats`. Also, Dockstore will only work with `Public` repositories currently. Notice I'm selecting "Link to a GitHub Repository Push", this is because we want Quay to automatically build our Docker image every time we update the repository on GitHub.  Very slick!
 
 ![Build Trigger](docs/build_all.png)
 
-It will automatically prompt you to setup a "build trigger" after GitHub authenticates you.  Here I select the GitHub repo for `CancerCollaboratory/dockstore-tool-bamstats`.
+Click through to select the organization and repo that will act as the source for your image. Here I select the GitHub repo for `denis-yuen/dockstore-tool-bamstats` but this should be your username or organization in your tutorial run-through. 
 
-![Build Trigger](docs/build_trigger.png)
-
-It will then ask if there are particular branches you want to build, I typically just let it build everything:
+It will then ask if there are particular branches you want to build, I typically just let it build everything.
 
 So every time you do a commit to your GitHub repo Quay automatically builds and tags a Docker image.  If this is overkill for you, consider setting up particular build trigger regular expressions at this step.
 
 ![Build Trigger](docs/run_trigger.png)
 
-It will then ask you where your Dockerfile is located.  Since the Dockerfile is in the root directory of this GitHub repo you can just click next:
+It will also ask you where your Dockerfile is located and where your build context is (normally the root). 
 
-![Build Trigger](docs/dockerfile.png)
+At this point you can confirm your settings and "Create Trigger" followed by "Run Trigger Now" to actually perform the initial build of the Docker images.  You'll need to click on the little gear icon next to your build trigger to accomplish this.
 
-At this point you can confirm your settings and "Create Trigger" followed by "Run Trigger Now" to actually perform the build of the Docker images.
+![Manual Trigger](docs/manual_trigger.png)
 
-Build it for `1.25-3` and any or all other branches.  Typically, I build for each release and develop aka latest is built next time I check-in on that branch.
 
-In my example I should see a `1.25-3` listed in the "tags" for this Quay Docker repository:
+Build it for `1.25-6_1.1` for this tutorial.  Typically, I build for each release and develop aka latest is built next time I check-in on that branch.
+
+In my example I should see a `1.25-6_1.1` listed for this Quay Docker repository:
 
 ![Build Tags](docs/build_tags.png)
 

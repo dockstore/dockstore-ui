@@ -95,10 +95,22 @@ angular.module('dockstore.ui')
           markdown: 'docs/markdown/advanced-features.md'
         },
         {
+          slug: 'best-practices',
+          description: 'This page covers our recommended best practices for CWL-based tools and workflows',
+          name: 'Best Practices',
+          markdown: 'docs/markdown/best-practices.md'
+        },
+        {
           slug: 'faq',
           description: 'This page gathers tools and tips on using Dockstore along with tips on creating tools with Docker and CWL 1.0',
           name: 'FAQ',
           markdown: 'docs/markdown/faq.md'
+        },
+        {
+          slug: 'user-created',
+          description: 'This page gathers user-created code and documentation for how to work with Dockstore formatted tools in various contexts',
+          name: 'User Created Projects',
+          markdown: 'docs/markdown/user-created.md'
         },
         {
           slug: 'developers',

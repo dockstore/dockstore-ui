@@ -1,7 +1,7 @@
 {
   "name": "dockstore.ui",
   "private": true,
-  "devDependencies": {
+  "dependencies": {
     "connect-modrewrite": "0.9.0",
     "grunt": "0.4.5",
     "grunt-angular-templates": "1.1.0",
@@ -11,14 +11,12 @@
     "grunt-contrib-clean": "1.0.0",
     "grunt-contrib-compass": "1.1.1",
     "grunt-contrib-concat": "1.0.1",
-    "grunt-contrib-connect": "1.0.2",
     "grunt-contrib-copy": "1.0.0",
     "grunt-contrib-cssmin": "1.0.2",
     "grunt-contrib-htmlmin": "2.2.0",
     "grunt-contrib-imagemin": "1.0.1",
     "grunt-contrib-jshint": "1.1.0",
     "grunt-contrib-uglify": "2.1.0",
-    "grunt-contrib-watch": "1.0.0",
     "grunt-filerev": "2.3.1",
     "grunt-google-cdn": "0.4.3",
     "grunt-insert": "0.1.0",
@@ -39,5 +37,8 @@
   "scripts": {
     "test": "grunt test & cypress run"
   },
-  "dependencies": {}
+  "devDependencies": {
+    "grunt-contrib-watch": "1.0.0",
+    "grunt-contrib-connect": "1.0.2"
+  }
 }
