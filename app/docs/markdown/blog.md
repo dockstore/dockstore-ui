@@ -2,7 +2,9 @@
 
 ## July 5, 2017 - Dockstore 1.2.5 
 
-This is mainly a hotfix release that includes fixes for the following:
+Visit our [https://discuss.dockstore.org/](new forum). Discuss tools, tooling, bioinformatics cloud computing, etc. This will replace both the private OICR-based mailing list and the Disqus integration that we've been using to provide discussion and commenting on tools respectively.
+
+Additionally, our hotfix release (with a few hidden features to be formally released later) includes fixes for the following:
  
 * File provisioning changes to support GA4GH-DREAM workflows including whole directory provision 
 * Fixes for workflow parameter json creation and CWL download
