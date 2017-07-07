@@ -31,5 +31,6 @@ angular.module('dockstore.ui')
 
       $scope.containerPath = $routeParams.containerPath;
       $scope.containerObj = null;
+      document.title = $scope.containerPath;
 
   }]);

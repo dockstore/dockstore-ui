@@ -31,5 +31,5 @@ angular.module('dockstore.ui')
 
       $scope.workflowPath = $routeParams.workflowPath;
       $scope.workflowObj = null;
-
+      document.title = $scope.workflowPath;
   }]);
