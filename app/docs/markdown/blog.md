@@ -1,5 +1,23 @@
 # News and Events
 
+## July 5, 2017 - Dockstore 1.2.5 
+
+Visit our [https://discuss.dockstore.org/](new forum). Discuss tools, tooling, bioinformatics cloud computing, etc. This will replace both the private OICR-based mailing list and the Disqus integration that we've been using to provide discussion and commenting on tools respectively.
+
+Additionally, our hotfix release (with a few hidden features to be formally released later) includes fixes for the following:
+ 
+* File provisioning changes to support GA4GH-DREAM workflows including whole directory provision 
+* Fixes for workflow parameter json creation and CWL download
+* Several file provisioning fixes based on user feedback
+* Issues saving workflow test json files
+
+### Breaking Changes
+
+* We needed to clear out unpublished workflows to do some clean-up. Let us know if you had anything important stored in unpublished as opposed to published workflows.
+* Potentially breaking, if a destination is not specified for a particular file, by default we will provision it to the current working directory after a warning
+
+See more details on [GitHub](https://github.com/ga4gh/dockstore/milestone/12).
+
 ## May 5, 2017 - Upcoming Features
 
 To give you a taste of what we're working on for the next major version of Dockstore, we're looking at features in the following main areas:
