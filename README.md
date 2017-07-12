@@ -8,6 +8,8 @@ The Dockstore brings together tools in Docker images with CWL-based descriptors.
 
 Code documentation for the UI is available at https://ga4gh.github.io/dockstore-ui/#/api
 
+Please file issues for this repository and Web site at [the ga4gh/dockstore repository](https://github.com/ga4gh/dockstore/issues)!
+
 ### Configuration Parameters
 
 All configuration settings for the Web UI is done in the `app/scripts/services/webservice.js` file. This file is compiled along with the rest of the application, it must be set before running `grunt`.
