@@ -1,8 +1,3 @@
-# User generated projects, content and posters
-
-* [User Created Projects](#user-created-projects)
-* [Use Case Posters](#use-case-posters)
-
 # User Created Projects
 
 Of course, the Dockstore team is not the only ones that write code or documentation to work with CWL tools and Dockstore. Here we list some user-created projects that make it easier to work with Dockstore in various ways
@@ -27,5 +22,5 @@ for various conferences.  Feel free to create a fork and add yours.
 
 ## 2017
 ### BOSC
-* [CGP as a Service: From data submission to results using your web-browser](./user_posters/2017_BOSC_Sanger_keiranmraine.pdf)
+* [CGP as a Service: From data submission to results using your web-browser](https://github.com/keiranmraine/dockstore-ui/raw/7b18a9ccf4a853088c677e463f8f9cd924b6533c/app/docs/markdown/user_posters/2017_BOSC_Sanger_keiranmraine.pdf)
   * Wellcome Trust Sanger Institute, Keiran M Raine
