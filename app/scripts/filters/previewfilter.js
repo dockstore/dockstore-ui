@@ -28,11 +28,9 @@ angular.module('dockstore.ui')
   .filter('PreviewFilter', [function () {
     return function (containers, contLimit) {
       if (!contLimit) return containers;
-      var sortedByBuildTime = containers.sort(function(a, b) {
-      	if (!a.lastBuild) a.lastBuild = Number.MAX_VALUE;
-      	if (!b.lastBuild) b.lastBuild = Number.MAX_VALUE;
-        return a.lastBuild - b.lastBuild;
+      var sortedByStars = containers.sort(function(a, b) {
+        return  b.starredUsers.length - a.starredUsers.length;
       });
-      return sortedByBuildTime.slice(0, contLimit - 1);
+      return sortedByStars.slice(0, contLimit - 1);
     };
   }]);

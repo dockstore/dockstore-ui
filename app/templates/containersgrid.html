@@ -29,6 +29,13 @@
                 </span>
               </th>
               <th>
+                Stars
+                <span class="glyphicon"
+                      ng-class="getIconClass('starredUsers.length')"
+                      ng-click="clickSortColumn('starredUsers.length')">
+                </span>
+              </th>
+              <th>
                 Author
                 <span class="glyphicon"
                       ng-class="getIconClass('author')"
@@ -54,6 +61,9 @@
                   <span class="glyphicon glyphicon-lock"></span>
                 </span>
                 <a href="/containers/{{container.tool_path}}">{{container.name + (container.toolname ? '/' + container.toolname : '')}}</a>
+              </td>
+              <td>
+                {{ container.starredUsers.length === 0 ? '' : container.starredUsers.length }}
               </td>
               <td>
                 {{ container.author ? container.author : 'n/a' }}
