@@ -38,6 +38,7 @@
     "test": "grunt test & cypress run"
   },
   "devDependencies": {
+    "cypress": "0.20.0",
     "grunt-contrib-watch": "1.0.0",
     "grunt-contrib-connect": "1.0.2"
   }

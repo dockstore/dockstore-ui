@@ -30,7 +30,6 @@ before_install:
   - 'sudo apt install -y oracle-java8-set-default'
   - 'wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
   - 'sudo dpkg -i google-chrome*.deb'
-  - 'npm install -g cypress-cli' #test using cypress cli for integrationg testing
   - 'wget --tries=10 https://github.com/ga4gh/dockstore/releases/download/${WEBSERVICE_VERSION}/dockstore-webservice-${WEBSERVICE_VERSION}.jar'
   - 'chmod u+x dockstore-webservice-${WEBSERVICE_VERSION}.jar'
   - 'sleep 3' # https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI
