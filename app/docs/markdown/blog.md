@@ -1,5 +1,25 @@
 # News and Events
 
+## September 20, 2017 - Dockstore 1.2.9
+
+We're hard at work on the next major version of Dockstore. 
+
+In the meantime, our hotfix release includes fixes for the following:
+* fixes for file provisioning with the [GA4GH/DREAM challenge](https://www.synapse.org/#!Synapse:syn8507133/wiki/415976) series of workflows
+* spelling and verbiage fixes, some contributed from our users
+* fixes for display of test files and registry locations
+* fixes for consistency with the GA4GH Tool Registry Schema
+
+Plus the following small features
+* browsing tools and workflows defaults to popularity order (starring), allowing popular tools and workflows to rise to the top
+* new documentation sections highlighting posters that mention Dockstore and software projects that use or integrate with Dockstore
+
+## August, 2017 - DNAstack Integration 
+
+For those not following Twitter, we're pleased (and excited!) to announce our first integration with a cloud-based genomics software platform. 
+
+Go to [Introducing Workflows, the new standard in cloud bioinformatics](https://blog.dnastack.com/introducing-workflows-the-new-standard-in-cloud-bioinformatics-787a59b1d5c6) to read more about how DNAstack makes it easier to launch and manage WDL-based workflows from both the Dockstore UI and from DNAstack directly.  
+
 ## July 11, 2017 - Dockstore 1.2.5 
 
 Visit our [new forum](https://discuss.dockstore.org/). Discuss tools, tooling, bioinformatics cloud computing, etc. This will replace both the private OICR-based mailing list and the Disqus integration that we've been using to provide discussion and commenting on tools respectively.

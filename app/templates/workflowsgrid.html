@@ -29,6 +29,13 @@
                 </span>
             </th>
             <th>
+              Stars
+              <span class="glyphicon"
+                    ng-class="getIconClass('starredUsers.length')"
+                    ng-click="clickSortColumn('starredUsers.length')">
+                </span>
+            </th>
+            <th>
               Author
                 <span class="glyphicon"
                       ng-class="getIconClass('author')"
@@ -51,6 +58,9 @@
                   <span class="glyphicon glyphicon-ok"></span>
               </span>
               <a ng-href="/workflows/{{workflow.path}}">{{workflow.repository + (workflow.workflowName ? ' (' + workflow.workflowName + ')' : '')}}</a>
+            </td>
+            <td>
+              {{ workflow.starredUsers.length === 0 ? '' : workflow.starredUsers.length }}
             </td>
             <td>
               {{ workflow.author ? workflow.author : 'n/a' }}

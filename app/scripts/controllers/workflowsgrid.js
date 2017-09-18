@@ -33,11 +33,11 @@ angular.module('dockstore.ui')
     '$filter',
     '$location',
     function ($scope, $rootScope, FrmttSrvc, UtilityService, WorkflowService, $filter, $location) {
-      $scope.sortColumn = 'name';
-      $scope.sortReverse = false;
+      $scope.sortColumn = 'starredUsers.length';
+      $scope.sortReverse = true;
       $scope.numContsPage = 10;
       $scope.currPage = 1;
-      $scope.contLimit = $scope.previewMode ? 5 : undefined;
+      $scope.contLimit = $scope.previewMode ? 6 : undefined;
       $scope.descriptionLimit = 150;
 
       $scope.getGitReposProvider = FrmttSrvc.getGitReposProvider;
