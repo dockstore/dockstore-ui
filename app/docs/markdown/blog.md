@@ -1,6 +1,6 @@
 # News and Events
 
-## September 20, 2017 - Dockstore 1.2.9
+## September 21, 2017 - Dockstore 1.2.10
 
 We're hard at work on the next major version of Dockstore. 
 
